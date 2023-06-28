@@ -76,3 +76,5 @@ password:
 | Refactor: | 리팩토링                                                                           |
 | Chore:    | 위에 걸리지 않는 기타 변경사항(빌드 스크립트 수정, assets image, 패키지 매니저 등) |
 | Init:     | 프로젝트 초기 생성                                                                 |
+
+낄낄낄
