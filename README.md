@@ -20,7 +20,7 @@ password:
 
 |황찬우 (FE 팀장)|이은희 (FE 팀원)|김민재 (FE 팀원)|노재경 (BE 부팀장)|박태양 (BE 팀원)|김수민 (BE 팀원)|
 | :-: | :-: | :-: | :-: | :-: | :-: |
-| <img src="https://images-ext-1.discordapp.net/external/kQhSS4IkcxGfV-3wNzTUXgmrU4C46M82rsWScdIZ0s4/%3Fv%3D4/https/avatars.githubusercontent.com/u/49116370?width=924&height=924" width=150> | <img src="https://avatars.githubusercontent.com/u/82435813?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/88226519?v=4" width=150 > | <img src="https://avatars.githubusercontent.com/u/85445649?v=4" alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/124670911?v=4" width=150> | <img src="https://avatars.githubusercontent.com/u/109536532?v=4" width=150> |
+| <img src="https://images-ext-1.discordapp.net/external/kQhSS4IkcxGfV-3wNzTUXgmrU4C46M82rsWScdIZ0s4/%3Fv%3D4/https/avatars.githubusercontent.com/u/49116370?width=924&height=924" width=150> | <img src="https://avatars.githubusercontent.com/u/82435813?v=4"  alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/88226519?v=4"  alt="beucol" width="150" height="150" > | <img src="https://avatars.githubusercontent.com/u/85445649?v=4" alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/124670911?v=4"  alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/109536532?v=4"  alt="beucol" width="150" height="150"> |
 |[@HChanWoo](https://github.com/HChanWoo)|[@joywhy](https://github.com/joywhy)|[@crowcrow07](https://github.com/crowcrow07)|[@jkroh1995](https://github.com/jkroh1995)|[@park-tae-yang](https://github.com/park-tae-yang)|[@soomni95](https://github.com/soomni95)|
 
 <br />
