@@ -1,1 +1,1 @@
-export default function Detail() {}
+export default function RecipeDetail() {}
