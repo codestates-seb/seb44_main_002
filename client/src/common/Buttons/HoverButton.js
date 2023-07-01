@@ -49,7 +49,7 @@ const Button = tw.button`
   shadow-lg
   border
   border-solid
-  font-bold
+  font-extrabold
   ${({ color }) => color}
   ${({ hoverColor }) => hoverColor}
   ${({ size }) => size}
