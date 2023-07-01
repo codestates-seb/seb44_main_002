@@ -1,9 +1,9 @@
 import tw from 'tailwind-styled-components';
 
 //버튼 컴포넌트 사용방법 :
-// import CustomButton from './common/Button';
+// import HoverButton from './common/Buttons/HoverButton';
 
-/* <CustomButton>버튼 이름</CustomButton> */
+/* <HoverButton>버튼 이름</HoverButton> */
 
 // 사용가능한 props : 아무것도 안적으면 기본값 적용됨
 // -> onClick : 버튼 클릭시 실행할 함수
