@@ -64,6 +64,7 @@ const HeaderContainer = tw.header`
   items-center
   text-white
   duration-500 
+  z-50
   ${(props) => props.position && 'bg-white text-black shadow-lg'}
 `;
 
