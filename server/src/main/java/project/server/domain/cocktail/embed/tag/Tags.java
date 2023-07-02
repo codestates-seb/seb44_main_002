@@ -2,7 +2,6 @@ package project.server.domain.cocktail.embed.tag;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Pageable;
 
 import javax.persistence.*;
 import java.util.List;
