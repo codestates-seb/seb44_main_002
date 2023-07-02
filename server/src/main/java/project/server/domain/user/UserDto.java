@@ -28,4 +28,12 @@ public class UserDto {
         private String email;
         private long subscriberCount;
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class Patch {
+        private long userId;
+        private String password;
+    }
 }
