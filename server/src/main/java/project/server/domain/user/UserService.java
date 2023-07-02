@@ -1,5 +1,6 @@
 package project.server.domain.user;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
@@ -11,15 +12,20 @@ public class UserService {
 
     UserRepository userRepository;
     UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User createUser(UserDto.post requestBody) {
         verifyExistsEmail(requestBody.getEmail());
         User user = userMapper.userPostDtoToUser(requestBody);
+
+        String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
+        user.setPassword(encodedPassword);
 
         return userRepository.save(user);
     }
