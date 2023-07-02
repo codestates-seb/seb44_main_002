@@ -14,7 +14,6 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;
