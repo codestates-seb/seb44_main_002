@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.cocktail.dto.CocktailDto;
+import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.coment.Comment;
@@ -14,6 +15,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+/**
+ * 유저가 작성한 칵테일과 관리자가 작성한 칵테일을 구분하는 로직 필요
+ */
 
 @Entity(name = "cocktails")
 @Getter
@@ -49,6 +54,9 @@ public class Cocktail {
     @Embedded
     private Tags tags;
 
+    @Embedded
+    private Rating rating;
+
     @Transient
     private List<Cocktail> recommends;
 
@@ -77,9 +85,9 @@ public class Cocktail {
 
     private CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
         CocktailDto.SimpleResponse response = new CocktailDto.SimpleResponse();
-        response.setCocktailId(cocktailId);
-        response.setName(name);
-        response.setImageUrl(imageUrl);
+        response.setCocktailId(cocktail.cocktailId);
+        response.setName(cocktail.name);
+        response.setImageUrl(cocktail.imageUrl);
         response.setBookmarked(false);
         return response;
     }

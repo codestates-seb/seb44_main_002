@@ -2,6 +2,7 @@ package project.server.domain.cocktail.embed.tag;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,9 +13,11 @@ import java.util.stream.Collectors;
 @Getter
 public class Tags {
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @Enumerated(value = EnumType.STRING)
-    @CollectionTable(name = "cocktail_tag", joinColumns = @JoinColumn(name = "cocktail_id"))
+    @CollectionTable(
+            name = "cocktail_tag",
+            joinColumns = @JoinColumn(name = "cocktail_id"))
     @Column(name = "tag")
     private List<Tag> tags;
 
@@ -34,5 +37,9 @@ public class Tags {
 
     private TagDto.Response createResponseDto(String tag) {
         return new TagDto.Response(tag);
+    }
+
+    public Tag getRandomTag() {
+        return tags.get((int)(Math.random() * tags.size()));
     }
 }
