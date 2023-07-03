@@ -1,6 +1,10 @@
 import { Button } from '@mui/base';
 import { useState } from 'react';
-import { CategoryFilter } from '../../common/Data';
+import {
+  CategoryFilter,
+  tagFrequencyData,
+  tagTasteData,
+} from '../../common/Data';
 import CategoryBtn from './CategoryBtn';
 import ClickButton from '../../common/Buttons/ClickButton';
 export default function Filter({ setfitlerCondtion }) {
@@ -16,9 +20,8 @@ export default function Filter({ setfitlerCondtion }) {
   };
 
   return (
-    <div className="w-[100%]  ">
-      카테고리
-      {/* CategoryFilter */}
+    <div className="w-[100%] ">
+      {/* 카테고리 */}
       <div className="flex border-b-2 border-solid border-white">
         {CategoryFilter.map((data, idx) => (
           <CategoryBtn
@@ -29,10 +32,33 @@ export default function Filter({ setfitlerCondtion }) {
           />
         ))}
       </div>
-      {/* TagFilter */}
-      <div className=" ">
-        {}
-        <ClickButton># 도수 높음</ClickButton>
+
+      {/* 태그 */}
+      <div className="flex pt-10 pb-10 gap-3">
+        {tagFrequencyData.map((data, idx) => (
+          <ClickButton
+            key={data.id}
+            data={data}
+            idx={idx}
+            radius="rounded-[30px]"
+            fontSize="text-[1rem]"
+            size="w-[110px] h-[30px]"
+          >
+            # {data.title}
+          </ClickButton>
+        ))}
+        {tagTasteData.map((data, idx) => (
+          <ClickButton
+            key={data.id}
+            data={data}
+            idx={idx}
+            radius="rounded-[30px]"
+            fontSize="text-[1rem]"
+            size="w-[75px] h-[30px]"
+          >
+            # {data.title}
+          </ClickButton>
+        ))}
       </div>
       {/* sortFilter */}
       <div>sortFilter</div>

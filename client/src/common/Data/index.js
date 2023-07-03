@@ -34,7 +34,7 @@ export const tagFrequencyData = [
   },
   {
     id: 1,
-    title: '도수 중간',
+    title: '도수 보통',
     type: 'frequency_medium',
   },
   {
@@ -54,12 +54,12 @@ export const tagTasteData = [
   },
   {
     id: 1,
-    title: '쓴맛',
-    type: 'bitter',
+    title: '새콤',
+    type: 'sour',
   },
   {
     id: 2,
-    title: '새콤',
-    type: 'sour',
+    title: '쓴맛',
+    type: 'bitter',
   },
 ];
