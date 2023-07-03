@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 // {
 //     “name” : “kim”,
 //     “profileImageUrl” : “sample image url”
