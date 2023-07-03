@@ -5,8 +5,11 @@ import lombok.Getter;
 public enum Tag {
 
     SWEET("sweet"),
-    SOAR("soar"),
-    BITTER("bitter");
+    SOUR("sour"),
+    BITTER("bitter"),
+    FREQUENCY_HIGH("high"),
+    FREQUENCY_MEDIUM("medium"),
+    FREQUENCY_LOW("low");
 
     @Getter
     private final String tag;
