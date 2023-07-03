@@ -2,7 +2,6 @@ package project.server.domain.cocktail.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.entity.Cocktail;
@@ -18,7 +17,6 @@ import java.util.List;
 public class CocktailDto {
 
     @Getter
-    @Setter
     public static class Post {
         private String name;
         private String imageUrl;
@@ -40,28 +38,28 @@ public class CocktailDto {
     }
 
     @Getter
-    @Setter
+    @Builder
     public static class SimpleResponse {
-        private long cocktailId;
-        private String name;
-        private String imageUrl;
-        private boolean isBookmarked;
+        private final long cocktailId;
+        private final String name;
+        private final String imageUrl;
+        private final boolean isBookmarked;
     }
 
     @Getter
     @Builder
     public static class Response {
-        private long cocktailId;
-        private long userId;
-        private String userName;
-        private String name;
-        private String imageUrl;
-        private List<RecipeDto.Response> recipe;
-        private List<TagDto.Response> tags;
-        private int viewCount;
-        private LocalDateTime createdAt;
-        private List<CommentDto.Response> comments;
-        private List<CocktailDto.SimpleResponse> recommends;
-        private boolean isBookmarked;
+        private final long cocktailId;
+        private final long userId;
+        private final String userName;
+        private final String name;
+        private final String imageUrl;
+        private final List<RecipeDto.Response> recipe;
+        private final List<TagDto.Response> tags;
+        private final int viewCount;
+        private final LocalDateTime createdAt;
+        private final List<CommentDto.Response> comments;
+        private final List<CocktailDto.SimpleResponse> recommends;
+        private final boolean isBookmarked;
     }
 }
