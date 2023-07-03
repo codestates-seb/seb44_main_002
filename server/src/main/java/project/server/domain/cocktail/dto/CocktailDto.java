@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.rating.Rating;
-import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;

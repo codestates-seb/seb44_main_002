@@ -17,8 +17,6 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
 
     List<Cocktail> findDistinctTop5ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(Tag tag, long id);
 
-    Page<Cocktail> findAll(Specification<Cocktail>spec, Pageable pageable);
-
     Page<Cocktail> findByTagsTagsIn(List<Tag>tags, Pageable pageable);
 
     Page<Cocktail> findByCategory(Category category, Pageable pageable);

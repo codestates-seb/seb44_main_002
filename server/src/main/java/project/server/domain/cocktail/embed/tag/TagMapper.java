@@ -1,7 +1,6 @@
 package project.server.domain.cocktail.embed.tag;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TagMapper {
