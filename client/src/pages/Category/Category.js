@@ -5,10 +5,7 @@ export default function Category() {
   //
   return (
     <div className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-screen flex items-center justify-center">
-      <div className="w-[900px] h-auto border-2 border-solid border-black ">
-        Categorypage
-        <Card />
-      </div>
+      <Card />
     </div>
   );
 }
