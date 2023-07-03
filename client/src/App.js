@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import Main from './pages/Main';
-import Category from './pages/Category';
+import Category from './pages/Category/Category';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 
 import Community from './pages/Community/Community';
