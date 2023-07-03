@@ -2,7 +2,6 @@ package project.server.domain.cocktail.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.tag.Tag;
