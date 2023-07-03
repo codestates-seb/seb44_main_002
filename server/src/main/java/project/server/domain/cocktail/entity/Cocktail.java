@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.cocktail.dto.CocktailDto;
+import project.server.domain.cocktail.embed.Ingredients;
+import project.server.domain.cocktail.embed.Liquor;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.embed.recipe.Recipe;
@@ -62,6 +64,12 @@ public class Cocktail {
     @Enumerated(value = EnumType.STRING)
     private Category category;
 
+    @Enumerated(value = EnumType.STRING)
+    private Liquor liquor;
+
+    @Embedded
+    private Ingredients ingredients;
+
     @Transient
     private List<Cocktail> recommends;
 
@@ -91,12 +99,12 @@ public class Cocktail {
     }
 
     public CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
-        CocktailDto.SimpleResponse response = new CocktailDto.SimpleResponse();
-        response.setCocktailId(cocktail.cocktailId);
-        response.setName(cocktail.name);
-        response.setImageUrl(cocktail.imageUrl);
-        response.setBookmarked(false);
-        return response;
+        return CocktailDto.SimpleResponse.builder()
+                .cocktailId(cocktail.cocktailId)
+                .name(cocktail.name)
+                .imageUrl(cocktail.imageUrl)
+                .isBookmarked(false)
+                .build();
     }
 
     public boolean containsAll(List<Tag> tags) {
