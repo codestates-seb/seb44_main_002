@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from '../../redux/slice/isLoginSlice';
+
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,6 +15,10 @@ export default function Hamburger() {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
+  //리덕스툴킷
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const dispatch = useDispatch();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,13 +27,8 @@ export default function Hamburger() {
     setAnchorEl(null);
   };
 
-  const openHome = () => {
-    navigate('/');
-    setAnchorEl(null);
-  };
-
-  const openCategory = () => {
-    navigate('/category');
+  const openPage = (path) => {
+    navigate(path);
     setAnchorEl(null);
   };
 
@@ -54,32 +56,56 @@ export default function Hamburger() {
       >
         <MenuIcon sx={{ color: 'white', fontSize: 50 }} />
       </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-        PaperProps={{
-          sx: {
-            backgroundColor: '#3D4E83',
-          },
-        }}
-      >
-        {window.innerWidth <= 768 && (
-          <MenuItem>
-            <HeaderModal />
+      {!isLogin ? (
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+          PaperProps={{
+            sx: {
+              backgroundColor: '#3D4E83',
+            },
+          }}
+        >
+          {window.innerWidth <= 768 && (
+            <MenuItem>
+              <HeaderModal />
+            </MenuItem>
+          )}
+          <MenuItem onClick={() => openPage('/')}>
+            <HoverButton>HOME</HoverButton>
           </MenuItem>
-        )}
-        <MenuItem onClick={openHome}>
-          <HoverButton>HOME</HoverButton>
-        </MenuItem>
-        <MenuItem onClick={openCategory}>
-          <HoverButton>Category</HoverButton>
-        </MenuItem>
-      </Menu>
+          <MenuItem onClick={() => openPage('/category')}>
+            <HoverButton>Category</HoverButton>
+          </MenuItem>
+        </Menu>
+      ) : (
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+          PaperProps={{
+            sx: {
+              backgroundColor: '#3D4E83',
+            },
+          }}
+        >
+          <MenuItem onClick={() => openPage('/mypage')}>
+            <HoverButton>Mypage</HoverButton>
+          </MenuItem>
+          <MenuItem onClick={() => dispatch(logout())}>
+            <HoverButton>Logout</HoverButton>
+          </MenuItem>
+        </Menu>
+      )}
     </div>
   );
 }
