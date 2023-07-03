@@ -16,7 +16,7 @@ export default function Category() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-screen pt-[12.5rem] flex justify-center ">
+    <div className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[12.5rem] flex justify-center ">
       <section className="w-[55rem] ">
         {/* 레시피 등록 버튼 */}
         <div className="flex justify-end pb-5">
@@ -32,7 +32,11 @@ export default function Category() {
           {/* 필터 */}
           <Filter setfitlerCondtion={setfitlerCondtion} />
           {/* 필터에 따라 출력되는 데이터 */}
-          <div className="w-[100%] border-2 border-solid border-red flex justify-between">
+          <div className="w-[100%] border-2 border-solid border-red flex justify-between  flex-wrap ">
+            <Card item={item} isBookmarked={isBookmarked} />
+            <Card item={item} isBookmarked={isBookmarked} />
+            <Card item={item} isBookmarked={isBookmarked} />
+            <Card item={item} isBookmarked={isBookmarked} />
             <Card item={item} isBookmarked={isBookmarked} />
             <Card item={item} isBookmarked={isBookmarked} />
             <Card item={item} isBookmarked={isBookmarked} />
