@@ -33,6 +33,7 @@ public class CocktailService {
 
     public CocktailDto.Response readCocktail(long cocktailId) {
         Cocktail cocktail = findCocktailById(cocktailId);
+        cocktail.setRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         return cocktail.entityToResponse();
     }
 
