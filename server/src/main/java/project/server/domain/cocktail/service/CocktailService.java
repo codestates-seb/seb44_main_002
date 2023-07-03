@@ -1,9 +1,6 @@
 package project.server.domain.cocktail.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
@@ -63,19 +60,32 @@ public class CocktailService {
         if (isNotSelectTag(tag)) {
             return readFilteringByCategoryCocktails(category, pageable);
         }
-        return readFilteringByTagsAndCategoryCockatails(category, tag, pageable);
+        return readFilteringByTagsAndCategoryCocktails(category, tag, pageable);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsAndCategoryCockatails(String category, String tag, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsAndCategoryCocktails(String category, String tag, Pageable pageable) {
         List<Tag> tags = createTagList(tag);
         Category selectedCategory = CategoryMapper.map(category);
         Page<Cocktail> cocktailPage = cocktailRepository.findByCategoryAndTagsTagsIn(selectedCategory, tags, pageable);
+        return createMultiResponseDto(pageable, tags, cocktailPage);
+    }
+
+    private MultiResponseDto<CocktailDto.SimpleResponse> createMultiResponseDto(Pageable pageable, List<Tag> tags, Page<Cocktail> cocktailPage) {
         List<Cocktail>filteredCocktails = cocktailPage.get()
                 .collect(Collectors.toSet()).stream()
                 .filter(cocktail -> cocktail.containsAll(tags))
                 .collect(Collectors.toList());
         List<CocktailDto.SimpleResponse> responses = createSimpleResponses(filteredCocktails);
+        cocktailPage = resetPageValues(pageable, filteredCocktails);
         return new MultiResponseDto<>(responses, cocktailPage);
+    }
+
+    private static Page<Cocktail> resetPageValues(Pageable pageable, List<Cocktail> filteredCocktails) {
+        Page<Cocktail> cocktailPage;
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filteredCocktails.size());
+        cocktailPage = new PageImpl<>(filteredCocktails.subList(start,end), pageable, filteredCocktails.size());
+        return cocktailPage;
     }
 
     private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByCategoryCocktails(String category, Pageable pageable) {
@@ -88,12 +98,7 @@ public class CocktailService {
     private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsCocktails(String tag, Pageable pageable) {
         List<Tag> tags = createTagList(tag);
         Page<Cocktail> cocktailPage = cocktailRepository.findByTagsTagsIn(tags, pageable);
-        List<Cocktail>filteredCocktails = cocktailPage.get()
-                .collect(Collectors.toSet()).stream()
-                .filter(cocktail -> cocktail.containsAll(tags))
-                .collect(Collectors.toList());
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(filteredCocktails);
-        return new MultiResponseDto<>(responses, cocktailPage);
+        return createMultiResponseDto(pageable, tags, cocktailPage);
     }
 
     private static List<Tag> createTagList(String tag) {
