@@ -6,7 +6,8 @@
     "node": true
   },
   "extends": [
-   "eslint:recommended",
+    // FIXME: 최종배포작업때 주석을 풀어야함.
+    // "eslint:recommended",
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:jsx-a11y/recommended",

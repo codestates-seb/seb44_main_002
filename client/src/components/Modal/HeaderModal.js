@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/slice/isLoginSlice';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -21,6 +24,8 @@ export default function HeaderModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const dispatch = useDispatch();
+
   return (
     <div>
       <HoverButton>
@@ -37,7 +42,7 @@ export default function HeaderModal() {
         <Box sx={style}>
           <div>Welcome!</div>
           <div>인풋</div>
-          <div>버튼</div>
+          <HoverButton onClick={() => dispatch(login())}>로그인</HoverButton>
         </Box>
       </Modal>
     </div>
