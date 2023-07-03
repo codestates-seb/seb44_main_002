@@ -6,10 +6,15 @@ import {
   tagTasteData,
 } from '../../common/Data';
 import CategoryBtn from './CategoryBtn';
+
+import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
 export default function Filter({ setfitlerCondtion }) {
-  const [focusCategory, setfocusCategory] = useState(null);
-
+  const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
+  const [focusFrequencyTag, setfocusFrequencyTag] = useState(
+    tagFrequencyData[0].type
+  );
+  //console.log(focusFrequencyTag);
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   // ,  로 구분
 
@@ -39,16 +44,14 @@ export default function Filter({ setfitlerCondtion }) {
       <div className="flex pt-10 pb-10 gap-3">
         {/* 도수별 태그 */}
         {tagFrequencyData.map((data, idx) => (
-          <ClickButton
+          <TagFrequencyButton
             key={data.id}
             data={data}
             idx={idx}
-            radius="rounded-[30px]"
-            fontSize="text-[1rem]"
-            size="w-[110px] h-[30px]"
-          >
-            # {data.title}
-          </ClickButton>
+            focusFrequencyTag={focusFrequencyTag}
+            setfocusFrequencyTag={setfocusFrequencyTag}
+            selectMenuHandler={selectMenuHandler}
+          />
         ))}
         {tagTasteData.map((data, idx) => (
           <ClickButton
