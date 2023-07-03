@@ -13,7 +13,7 @@ public class Recipe {
     @ElementCollection
     @CollectionTable(name = "cocktail_recipe", joinColumns = @JoinColumn(name = "cocktail_id"))
     @Column(name = "recipe")
-    List<String> recipe;
+    private List<String> recipe;
 
     public Recipe(List<RecipeDto.Post> recipe) {
         this.recipe = recipe.stream()
