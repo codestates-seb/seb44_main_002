@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.cocktail.dto.CocktailDto;
+import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.embed.recipe.Recipe;
+import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.coment.Comment;
 import project.server.domain.user.User;
@@ -39,13 +41,13 @@ public class Cocktail {
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt;
+//    @Column(name = "LAST_MODIFIED_AT")
+//    private LocalDateTime modifiedAt;
 
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cocktail")
     private List<Comment> comments = new ArrayList<>();
 
     @Embedded
@@ -56,6 +58,9 @@ public class Cocktail {
 
     @Embedded
     private Rating rating;
+
+    @Enumerated(value = EnumType.STRING)
+    private Category category;
 
     @Transient
     private List<Cocktail> recommends;
@@ -83,12 +88,16 @@ public class Cocktail {
                 .build();
     }
 
-    private CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
+    public CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
         CocktailDto.SimpleResponse response = new CocktailDto.SimpleResponse();
         response.setCocktailId(cocktail.cocktailId);
         response.setName(cocktail.name);
         response.setImageUrl(cocktail.imageUrl);
         response.setBookmarked(false);
         return response;
+    }
+
+    public boolean containsAll(List<Tag> tags) {
+        return this.tags.containsAll(tags);
     }
 }

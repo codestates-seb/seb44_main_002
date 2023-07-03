@@ -3,6 +3,7 @@ package project.server.domain.cocktail.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.embed.recipe.Recipe;
@@ -23,6 +24,7 @@ public class CocktailDto {
         private String imageUrl;
         private List<RecipeDto.Post> recipe;
         private List<TagDto.Post> tags;
+        private String category;
 
         public Cocktail postToEntity(){
             Cocktail cocktail = new Cocktail();
@@ -30,6 +32,7 @@ public class CocktailDto {
             cocktail.setImageUrl(imageUrl);
             cocktail.setRecipe(new Recipe(recipe));
             cocktail.setTags(new Tags(tags));
+            cocktail.setCategory(CategoryMapper.map(category));
             cocktail.setRating(new Rating());
 
             return cocktail;
