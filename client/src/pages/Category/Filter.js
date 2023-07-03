@@ -13,7 +13,7 @@ export default function Filter({ setfitlerCondtion }) {
   //   };
 
   return (
-    <div>
+    <div className="w-[100%] border-2 border-solid border-red ">
       {/* CategoryFilter */}
       <div>
         {CategoryFilter.map((data, idx) => (

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
+import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Category() {
   //선택된 카테고리조건 (카테고리&태그&정렬)
@@ -15,13 +16,28 @@ export default function Category() {
   };
 
   return (
-    <section className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-screen flex items-center justify-center">
-      {/* 필터 */}
-      <Filter setfitlerCondtion={setfitlerCondtion} />
-      {/* 필터에 따라 출력되는 데이터 */}
-      <div>
-        <Card item={item} isBookmarked={isBookmarked} />
-      </div>
-    </section>
+    <div className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-screen pt-[12.5rem] flex justify-center ">
+      <section className="w-[55rem] ">
+        {/* 레시피 등록 버튼 */}
+        <div className="flex justify-end pb-5">
+          <HoverButton
+            size="w-[240px] h-[36px]"
+            className="absolute bottom-0 right-0"
+          >
+            나만의 레시피 등록하기
+          </HoverButton>
+        </div>
+
+        <div className=" border-2 border-solid border-red">
+          {/* 필터 */}
+          <Filter setfitlerCondtion={setfitlerCondtion} />
+          {/* 필터에 따라 출력되는 데이터 */}
+          <div className="w-[100%] border-2 border-solid border-red ">
+            필터에 따라 출력되는 데이터가보여집니다.
+            <Card item={item} isBookmarked={isBookmarked} />
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
