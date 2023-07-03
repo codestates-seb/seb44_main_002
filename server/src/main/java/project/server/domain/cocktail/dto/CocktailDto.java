@@ -10,7 +10,7 @@ import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.embed.tag.Tags;
-import project.server.domain.coment.Comment;
+import project.server.domain.comment.dto.CommentDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +26,7 @@ public class CocktailDto {
         private List<TagDto.Post> tags;
         private String category;
 
-        public Cocktail postToEntity(){
+        public Cocktail postToEntity() {
             Cocktail cocktail = new Cocktail();
             cocktail.setName(name);
             cocktail.setImageUrl(imageUrl);
@@ -41,7 +41,7 @@ public class CocktailDto {
 
     @Getter
     @Setter
-    public static class SimpleResponse{
+    public static class SimpleResponse {
         private long cocktailId;
         private String name;
         private String imageUrl;
@@ -50,7 +50,7 @@ public class CocktailDto {
 
     @Getter
     @Builder
-    public static class Response{
+    public static class Response {
         private long cocktailId;
         private long userId;
         private String userName;
@@ -60,7 +60,7 @@ public class CocktailDto {
         private List<TagDto.Response> tags;
         private int viewCount;
         private LocalDateTime createdAt;
-        private List<Comment> comments;
+        private List<CommentDto.Response> comments;
         private List<CocktailDto.SimpleResponse> recommends;
         private boolean isBookmarked;
     }

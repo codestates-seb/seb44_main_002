@@ -9,7 +9,7 @@ import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
-import project.server.domain.coment.Comment;
+import project.server.domain.comment.entity.Comment;
 import project.server.domain.user.User;
 
 import javax.persistence.*;
@@ -80,7 +80,9 @@ public class Cocktail {
                 .tags(tags.createResponseList())
                 .viewCount(viewCount)
                 .createdAt(createdAt)
-                .comments(comments)
+                .comments(comments.stream()
+                        .map(Comment::entityToResponse)
+                        .collect(Collectors.toList()))
                 .isBookmarked(false)
                 .recommends(recommends.stream()
                         .map(this::entityToSimpleResponse)

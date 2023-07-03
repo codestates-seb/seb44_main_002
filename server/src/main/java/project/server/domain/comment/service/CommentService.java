@@ -26,12 +26,12 @@ public class CommentService {
     public CommentDto.Response createComment(CommentDto.Post post) {
         Comment comment = post.postToEntity();
         Comment savedComment = commentReposiotry.save(comment);
-        return savedComment.entityToRespose();
+        return savedComment.entityToResponse();
     }
 
     public CommentDto.Response readComment(long commentId) {
         Comment comment = findCommentById(commentId);
-        return comment.entityToRespose();
+        return comment.entityToResponse();
     }
 
     public Comment findCommentById(long commentId) {
