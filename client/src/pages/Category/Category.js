@@ -28,7 +28,7 @@ export default function Category() {
           </HoverButton>
         </div>
 
-        <div className=" border-2 border-solid border-red">
+        <div className=" border-1 border-solid border-red">
           {/* 필터 */}
           <Filter setfitlerCondtion={setfitlerCondtion} />
           {/* 필터에 따라 출력되는 데이터 */}
