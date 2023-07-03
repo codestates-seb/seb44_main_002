@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import tw from 'tailwind-styled-components';
-import BasicModal from './Modal/HeaderModal';
+import HeaderModal from './Modal/HeaderModal';
 import Hamburger from './Hamburger/Hamburger';
 
 export default function Header() {
@@ -49,9 +49,9 @@ export default function Header() {
         <div className="max-[768px]:hidden">???</div>
       </HeaderDiv>
       <HeaderDiv className="justify-end max-[768px]:hidden">
-        <BasicModal />
+        <HeaderModal />
       </HeaderDiv>
-      <HeaderDiv className="justify-end min-[768px]:hidden">
+      <HeaderDiv className="justify-end min-[769px]:hidden">
         <Hamburger />
       </HeaderDiv>
     </HeaderContainer>

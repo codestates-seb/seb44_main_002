@@ -12,12 +12,11 @@ const style = {
   width: 400,
   height: 600,
   bgcolor: '#3D4E83',
-  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
-export default function BasicModal() {
+export default function HeaderModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
