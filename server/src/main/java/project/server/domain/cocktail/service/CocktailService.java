@@ -1,5 +1,8 @@
 package project.server.domain.cocktail.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.tag.Tags;
@@ -34,6 +37,7 @@ public class CocktailService {
     public CocktailDto.Response readCocktail(long cocktailId) {
         Cocktail cocktail = findCocktailById(cocktailId);
         cocktail.setRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+        cocktail.setViewCount(cocktail.getViewCount()+1);
         return cocktail.entityToResponse();
     }
 
