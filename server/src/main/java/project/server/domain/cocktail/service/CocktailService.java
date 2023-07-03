@@ -63,29 +63,16 @@ public class CocktailService {
         return readFilteringByTagsAndCategoryCocktails(category, tag, pageable);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsAndCategoryCocktails(String category, String tag, Pageable pageable) {
-        List<Tag> tags = createTagList(tag);
-        Category selectedCategory = CategoryMapper.map(category);
-        Page<Cocktail> cocktailPage = cocktailRepository.findByCategoryAndTagsTagsIn(selectedCategory, tags, pageable);
-        return createMultiResponseDto(pageable, tags, cocktailPage);
-    }
-
-    private MultiResponseDto<CocktailDto.SimpleResponse> createMultiResponseDto(Pageable pageable, List<Tag> tags, Page<Cocktail> cocktailPage) {
-        List<Cocktail>filteredCocktails = cocktailPage.get()
-                .collect(Collectors.toSet()).stream()
-                .filter(cocktail -> cocktail.containsAll(tags))
-                .collect(Collectors.toList());
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(filteredCocktails);
-        cocktailPage = resetPageValues(pageable, filteredCocktails);
+    private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Pageable pageable) {
+        Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
+        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(cocktailPage.getContent());
         return new MultiResponseDto<>(responses, cocktailPage);
     }
 
-    private static Page<Cocktail> resetPageValues(Pageable pageable, List<Cocktail> filteredCocktails) {
-        Page<Cocktail> cocktailPage;
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), filteredCocktails.size());
-        cocktailPage = new PageImpl<>(filteredCocktails.subList(start,end), pageable, filteredCocktails.size());
-        return cocktailPage;
+    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsCocktails(String tag, Pageable pageable) {
+        List<Tag> tags = createTagList(tag);
+        Page<Cocktail> cocktailPage = cocktailRepository.findByTagsTagsIn(tags, pageable);
+        return removeDuplicateCocktailsAndCreateMultiResponseDto(pageable, tags, cocktailPage);
     }
 
     private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByCategoryCocktails(String category, Pageable pageable) {
@@ -95,10 +82,19 @@ public class CocktailService {
         return new MultiResponseDto<>(responses, cocktailPage);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsCocktails(String tag, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsAndCategoryCocktails(String category, String tag, Pageable pageable) {
         List<Tag> tags = createTagList(tag);
-        Page<Cocktail> cocktailPage = cocktailRepository.findByTagsTagsIn(tags, pageable);
-        return createMultiResponseDto(pageable, tags, cocktailPage);
+        Category selectedCategory = CategoryMapper.map(category);
+        Page<Cocktail> cocktailPage = cocktailRepository.findByCategoryAndTagsTagsIn(selectedCategory, tags, pageable);
+        return removeDuplicateCocktailsAndCreateMultiResponseDto(pageable, tags, cocktailPage);
+    }
+
+    private static Page<Cocktail> resetPageValues(Pageable pageable, List<Cocktail> filteredCocktails) {
+        Page<Cocktail> cocktailPage;
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filteredCocktails.size());
+        cocktailPage = new PageImpl<>(filteredCocktails.subList(start,end), pageable, filteredCocktails.size());
+        return cocktailPage;
     }
 
     private static List<Tag> createTagList(String tag) {
@@ -120,22 +116,27 @@ public class CocktailService {
         return Sort.by(Sort.Order.asc("rating.rate"));
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Pageable pageable) {
-        Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(cocktailPage.getContent());
-        return new MultiResponseDto<>(responses, cocktailPage);
-    }
-
     private List<CocktailDto.SimpleResponse> createSimpleResponses(List<Cocktail> cocktails) {
         return cocktails.stream()
                 .map(cocktail -> cocktail.entityToSimpleResponse(cocktail))
                 .collect(Collectors.toList());
     }
 
+    private MultiResponseDto<CocktailDto.SimpleResponse> removeDuplicateCocktailsAndCreateMultiResponseDto(Pageable pageable, List<Tag> tags, Page<Cocktail> cocktailPage) {
+        List<Cocktail>filteredCocktails = cocktailPage.get()
+                .collect(Collectors.toSet()).stream()
+                .filter(cocktail -> cocktail.containsAll(tags))
+                .collect(Collectors.toList());
+        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(filteredCocktails);
+        cocktailPage = resetPageValues(pageable, filteredCocktails);
+        return new MultiResponseDto<>(responses, cocktailPage);
+    }
+
     private Cocktail findCocktailById(long cocktailId) {
         return cocktailRepository.findById(cocktailId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
     }
+
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
         return cocktailRepository.findDistinctTop5ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(tags.getRandomTag(), cocktailId);
