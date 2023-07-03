@@ -1,6 +1,13 @@
 import { useState } from 'react';
 
-export default function CategoryBtn({ data, idx, selectMenuHandler, onClick }) {
+export default function CategoryBtn({
+  data,
+  idx,
+  selectMenuHandler,
+  setfocusCategory,
+  onClick,
+  focusCategory,
+}) {
   const [isClicked, setIsClicked] = useState(false);
   const buttonClicked = () => {
     setIsClicked(!isClicked);
@@ -11,6 +18,7 @@ export default function CategoryBtn({ data, idx, selectMenuHandler, onClick }) {
   return (
     <button
       onClick={() => {
+        setfocusCategory(data.type);
         selectMenuHandler(idx, 'category');
         buttonClicked();
       }}
@@ -23,12 +31,14 @@ export default function CategoryBtn({ data, idx, selectMenuHandler, onClick }) {
          rounded-tr-3xl 
          font-bold
         
+   
+      
        ${
-         isClicked
+         focusCategory === data.type
            ? 'text-[#ffffff] border-[#ffffff]'
            : ' text-[#8F8F8F] border-[#8F8F8F]'
-       }
-     `}
+       }`}
+      //  onFocus={() => setFocused(true)}}
     >
       {data.title}
     </button>

@@ -8,9 +8,9 @@ import {
 import CategoryBtn from './CategoryBtn';
 import ClickButton from '../../common/Buttons/ClickButton';
 export default function Filter({ setfitlerCondtion }) {
-  // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
-  //카테고리 category_one / category_two / cateory_three
+  const [focusCategory, setfocusCategory] = useState(null);
 
+  // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   // ,  로 구분
 
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 idx 적용
@@ -28,6 +28,8 @@ export default function Filter({ setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
+            focusCategory={focusCategory}
+            setfocusCategory={setfocusCategory}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -35,6 +37,7 @@ export default function Filter({ setfitlerCondtion }) {
 
       {/* 태그 */}
       <div className="flex pt-10 pb-10 gap-3">
+        {/* 도수별 태그 */}
         {tagFrequencyData.map((data, idx) => (
           <ClickButton
             key={data.id}
