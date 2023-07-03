@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { CategoryFilter } from '../../common/Data';
-import FilterBtn from './FilterBtn';
+import CategoryBtn from './CategoryBtn';
 
-export default function Filter({ isBookmarked }) {
+export default function Filter({ setfitlerCondtion }) {
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   //카테고리 category_one / category_two / cateory_three
 
@@ -17,7 +17,7 @@ export default function Filter({ isBookmarked }) {
       {/* CategoryFilter */}
       <div>
         {CategoryFilter.map((data, idx) => (
-          <FilterBtn key={data.id} data={data} idx={idx} />
+          <CategoryBtn key={data.id} data={data} idx={idx} />
         ))}
       </div>
       {/* TagFilter */}

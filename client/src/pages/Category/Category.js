@@ -3,7 +3,7 @@ import Card from '../../components/Card/Card';
 import Filter from './Filter';
 
 export default function Category() {
-  //선택된 카테고리
+  //선택된 카테고리조건 (카테고리&태그&정렬)
   const [fitlerCondtion, setfitlerCondtion] = useState(null);
 
   //가상데이터
