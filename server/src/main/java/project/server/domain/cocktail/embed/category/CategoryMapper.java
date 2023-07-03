@@ -14,7 +14,7 @@ public class CategoryMapper {
         categoryMap.put("category_three", Category.CATEGORY3);
     }
 
-    public static Category map(String category) {
-        return categoryMap.get(category);
+    public static Category map(String key) {
+        return categoryMap.get(key);
     }
 }
