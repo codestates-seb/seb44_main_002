@@ -4,27 +4,44 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+import HeaderModal from '../Modal/HeaderModal';
+import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Hamburger() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const openProductList = () => {
-    navigate('/products/list');
+  const openHome = () => {
+    navigate('/');
     setAnchorEl(null);
   };
 
-  const openBookMark = () => {
-    navigate('/bookmark');
+  const openCategory = () => {
+    navigate('/category');
     setAnchorEl(null);
   };
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        handleClose();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div>
@@ -45,10 +62,23 @@ export default function Hamburger() {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
+        PaperProps={{
+          sx: {
+            backgroundColor: '#3D4E83',
+          },
+        }}
       >
-        <MenuItem onClick={handleClose}>까악이님, 안녕하세요!</MenuItem>
-        <MenuItem onClick={openProductList}>상품리스트 페이지</MenuItem>
-        <MenuItem onClick={openBookMark}> 북마크 페이지</MenuItem>
+        {window.innerWidth <= 768 && (
+          <MenuItem>
+            <HeaderModal />
+          </MenuItem>
+        )}
+        <MenuItem onClick={openHome}>
+          <HoverButton>HOME</HoverButton>
+        </MenuItem>
+        <MenuItem onClick={openCategory}>
+          <HoverButton>Category</HoverButton>
+        </MenuItem>
       </Menu>
     </div>
   );
