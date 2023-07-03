@@ -15,7 +15,7 @@ export default function Filter({ setfitlerCondtion }) {
   };
 
   return (
-    <div className="w-[100%] border-[1px] border-solid border-red ">
+    <div className="w-[100%]  ">
       카테고리
       {/* CategoryFilter */}
       <div className="flex border-b-2 border-solid border-white">
