@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import HoverButton from '../common/Buttons/HoverButton';
+
 import tw from 'tailwind-styled-components';
 
 export default function Header() {
@@ -49,7 +51,9 @@ export default function Header() {
         </div>
         <div>???</div>
       </HeaderDiv>
-      <HeaderDiv className="justify-end">login</HeaderDiv>
+      <HeaderDiv className="justify-end">
+        <HoverButton>로그인</HoverButton>
+      </HeaderDiv>
     </HeaderContainer>
   );
 }
