@@ -67,7 +67,7 @@ export default function Filter({ setfitlerCondtion }) {
         ))}
       </div>
       {/* sortFilter */}
-      <div>sortFilter</div>
+      <div className="flex justify-end text-white pt-10 pb-2">sortFilter</div>
     </div>
   );
 }
