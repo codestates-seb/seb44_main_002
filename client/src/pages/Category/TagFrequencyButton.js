@@ -27,12 +27,12 @@ export default function TagFrequencyButton({
       size="w-[110px] h-[30px]"
       color={`${
         focusFrequencyTag === data.type
-          ? 'text-[#ffffff] bg-transparent'
+          ? 'text-[#BB40F1] bg-transparent'
           : 'text-[#7B7B7B] bg-transparent'
       }`}
       borderColor={`${
         focusFrequencyTag === data.type
-          ? 'border-[#ffffff]'
+          ? 'border-[#BB40F1]'
           : 'border-[#7B7B7B]'
       }`}
       onClick={() => {
