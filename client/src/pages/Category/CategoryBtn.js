@@ -27,9 +27,10 @@ export default function CategoryBtn({
         border-2 
         border-solid 
         
-         rounded-tl-3xl 
-         rounded-tr-3xl 
+         rounded-tl-[40px] 
+         rounded-tr-[40px]
          font-bold
+         text-[15px]
         
    
       
