@@ -62,7 +62,7 @@ const userInfoSlice = createSlice({
   name: 'changeInfo',
   initialState,
   reducers: {
-    UPDATE: (state) => {
+    UPDATE: (action) => {
       return action.payload;
     },
   },

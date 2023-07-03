@@ -6,12 +6,6 @@ export default function Card({ item, isBookmarked }) {
   const navigate = useNavigate();
   // background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(20210707095408-69BNH.jpg);
   // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), -4px -4px 16px rgba(0, 0, 0, 0.25);
-  //   const isBookmarked = true;
-  //   const item = {
-  //     id: 99,
-  //     img: 'images/cocktailSample.jpg',
-  //     title: '타이틀',
-  //   };
 
   return (
     <div className=" relative w-[180px] h-[200px] ">

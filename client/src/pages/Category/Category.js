@@ -1,9 +1,5 @@
 import Card from '../../components/Card/Card';
 export default function Category() {
-  //category 변경함 루트 변경했습니다.->import app.js
-  //reset.css는 어디있나용?
-  //
-
   const isBookmarked = true;
   const item = {
     itemid: '99',
