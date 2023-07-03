@@ -41,13 +41,13 @@ public class Cocktail {
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt;
+//    @Column(name = "LAST_MODIFIED_AT")
+//    private LocalDateTime modifiedAt;
 
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cocktail")
     private List<Comment> comments = new ArrayList<>();
 
     @Embedded
