@@ -32,8 +32,10 @@ export default function Category() {
           {/* 필터 */}
           <Filter setfitlerCondtion={setfitlerCondtion} />
           {/* 필터에 따라 출력되는 데이터 */}
-          <div className="w-[100%] border-2 border-solid border-red ">
-            필터에 따라 출력되는 데이터가보여집니다.
+          <div className="w-[100%] border-2 border-solid border-red flex justify-between">
+            <Card item={item} isBookmarked={isBookmarked} />
+            <Card item={item} isBookmarked={isBookmarked} />
+            <Card item={item} isBookmarked={isBookmarked} />
             <Card item={item} isBookmarked={isBookmarked} />
           </div>
         </div>

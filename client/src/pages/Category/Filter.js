@@ -1,7 +1,8 @@
+import { Button } from '@mui/base';
 import { useState } from 'react';
 import { CategoryFilter } from '../../common/Data';
 import CategoryBtn from './CategoryBtn';
-
+import ClickButton from '../../common/Buttons/ClickButton';
 export default function Filter({ setfitlerCondtion }) {
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   //카테고리 category_one / category_two / cateory_three
@@ -29,7 +30,10 @@ export default function Filter({ setfitlerCondtion }) {
         ))}
       </div>
       {/* TagFilter */}
-      <div className=" ">TagFilter</div>
+      <div className=" ">
+        {}
+        <ClickButton># 도수 높음</ClickButton>
+      </div>
       {/* sortFilter */}
       <div>sortFilter</div>
     </div>
