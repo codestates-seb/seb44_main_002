@@ -3,7 +3,6 @@ package project.server.domain.comment.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.bytebuddy.asm.Advice;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,7 +11,6 @@ import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.user.User;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "comments")
@@ -28,7 +26,7 @@ public class Comment {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cocktatil_id")
     private Cocktail cocktail;
 
@@ -48,7 +46,7 @@ public class Comment {
     @Column(updatable = false)
     private String createdBy;
 
-    public CommentDto.Response entityToRespose() {
+    public CommentDto.Response entityToResponse() {
         return CommentDto.Response.builder()
                 .commentId(commentId)
                 .userId(1)
