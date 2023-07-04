@@ -17,6 +17,26 @@ export default function Category() {
     title: '타이틀',
   };
 
+  const apiUrl =
+    '/cocktails/filter?category=<CATEGORY>&tag=<TAG>&page=<PAGE>&size=<SIZE>&sort=<SORT>';
+
+  fetch(apiUrl)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    })
+    .then((data) => {
+      // 응답 결과를 처리하는 로직
+      console.log(data);
+      // data를 사용하여 UI를 업데이트하거나 다른 작업을 수행할 수 있습니다.
+    })
+    .catch((error) => {
+      // 에러 처리
+      console.error('Error:', error);
+    });
+
   return (
     <>
       <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[10rem] flex justify-center ">
