@@ -37,15 +37,16 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
   const selectMenuHandler = (idx, type) => {
     //console.log('동작');
     if (type === 'category') {
-      console.log('동작');
       setfitlerCondtion({
         ...fitlerCondtion,
         category: CategoryFilter[idx].type,
       });
     }
     if (type === 'frequencyTag') {
-      setfitlerCondtion(fitlerCondtion, {
-        frequencyTag: CategoryFilter[idx].type,
+      console.log('동작');
+      setfitlerCondtion({
+        ...fitlerCondtion,
+        frequencyTag: tagFrequencyData[idx].type,
       });
     }
     if (type === 'tasteTag') {
@@ -84,8 +85,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            // focusFrequencyTag={focusFrequencyTag}
-            // setfocusFrequencyTag={setfocusFrequencyTag}
+            fitlerCondtion={fitlerCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -97,6 +97,9 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             radius="rounded-[30px]"
             fontSize="text-[1rem]"
             size="w-[75px] h-[30px]"
+            onClick={() => {
+              selectMenuHandler(idx, 'category');
+            }}
           >
             # {data.title}
           </ClickButton>
