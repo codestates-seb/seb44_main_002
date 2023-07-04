@@ -1,5 +1,7 @@
 package project.server.domain.cocktail.embed.liquor;
 
+import lombok.Getter;
+
 public enum Liquor {
     RUM("럼"),
     WHISKEY("위스키"),
@@ -8,6 +10,7 @@ public enum Liquor {
     LIQUEUR("리큐르"),
     JIN("진");
 
+    @Getter
     private final String liquor;
 
     Liquor(String liquor) {

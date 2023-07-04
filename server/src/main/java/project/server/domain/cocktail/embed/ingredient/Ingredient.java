@@ -1,5 +1,7 @@
 package project.server.domain.cocktail.embed.ingredient;
 
+import lombok.Getter;
+
 public enum Ingredient {
 
     ICE("얼음"),
@@ -11,6 +13,7 @@ public enum Ingredient {
     BEVERAGE("과일음료");
 
 
+    @Getter
     private final String ingredient;
 
     Ingredient(String ingredient) {

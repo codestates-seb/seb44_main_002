@@ -28,15 +28,11 @@ public class Tags {
                 .collect(Collectors.toList());
     }
 
-    public List<TagDto.Response> createResponseList() {
+    public List<TagDto.Response> createResponseDtoList() {
         return tags.stream()
                 .map(Tag::getTag)
                 .map(this::createResponseDto)
                 .collect(Collectors.toList());
-    }
-
-    private TagDto.Response createResponseDto(String tag) {
-        return new TagDto.Response(tag);
     }
 
     public Tag getRandomTag() {
@@ -45,5 +41,9 @@ public class Tags {
 
     public boolean containsAll(List<Tag> tags) {
         return new HashSet<>(this.tags).containsAll(tags);
+    }
+
+    private TagDto.Response createResponseDto(String tag) {
+        return new TagDto.Response(tag);
     }
 }

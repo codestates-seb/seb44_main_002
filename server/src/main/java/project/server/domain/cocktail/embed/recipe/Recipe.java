@@ -22,7 +22,7 @@ public class Recipe {
                 .collect(Collectors.toList());
     }
 
-    public List<RecipeDto.Response> createResponseList() {
+    public List<RecipeDto.Response> createResponseDtoList() {
         return recipe.stream()
                 .map(this::makeResponse)
                 .collect(Collectors.toList());

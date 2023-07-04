@@ -22,4 +22,15 @@ public class Ingredients {
                 .map(IngredientMapper::map)
                 .collect(Collectors.toList());
     }
+
+    public List<IngredientDto.Response> createResponseDtoList() {
+        return ingredients.stream()
+                .map(Ingredient::getIngredient)
+                .map(this::createResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    private IngredientDto.Response createResponseDto(String ingredient) {
+        return new IngredientDto.Response(ingredient);
+    }
 }
