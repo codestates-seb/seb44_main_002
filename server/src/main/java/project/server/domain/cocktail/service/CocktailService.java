@@ -114,7 +114,7 @@ public class CocktailService {
         return new MultiResponseDto<>(responses, cocktailPage);
     }
 
-    private static List<Tag> createTagList(String tag) {
+    private List<Tag> createTagList(String tag) {
         return Arrays.stream(tag.split(SEPARATOR))
                 .map(TagMapper::map)
                 .collect(Collectors.toList());
@@ -149,15 +149,15 @@ public class CocktailService {
         return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(tags.getRandomTag(), cocktailId);
     }
 
-    private static boolean isNotSelectTag(String tag) {
+    private boolean isNotSelectTag(String tag) {
         return tag == null;
     }
 
-    private static boolean isNotSelectCategory(String category) {
+    private boolean isNotSelectCategory(String category) {
         return category == null;
     }
 
-    private static boolean isNotSelectCategoryAndTag(String category, String tag) {
+    private boolean isNotSelectCategoryAndTag(String category, String tag) {
         return category == null && tag == null;
     }
 }
