@@ -1,5 +1,6 @@
 package project.server.domain.cocktail.embed.recipe;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -7,13 +8,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Embeddable
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Recipe {
 
     @ElementCollection
     @CollectionTable(name = "cocktail_recipe", joinColumns = @JoinColumn(name = "cocktail_id"))
     @Column(name = "recipe")
-    List<String> recipe;
+    private List<String> recipe;
 
     public Recipe(List<RecipeDto.Post> recipe) {
         this.recipe = recipe.stream()
@@ -21,7 +22,7 @@ public class Recipe {
                 .collect(Collectors.toList());
     }
 
-    public List<RecipeDto.Response> createResponseList() {
+    public List<RecipeDto.Response> createResponseDtoList() {
         return recipe.stream()
                 .map(this::makeResponse)
                 .collect(Collectors.toList());
