@@ -16,13 +16,18 @@ export default function Category() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[12.5rem] flex justify-center ">
+    <div className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[10rem] flex justify-center ">
       <section className="w-[55rem] ">
         {/* 레시피 등록 버튼 */}
-        <div className="flex justify-end pb-5">
+        <div className="flex justify-end pb-5 ">
           <HoverButton
-            size="w-[240px] h-[36px]"
+            size="w-[240px] h-[60px]"
             className="absolute bottom-0 right-0"
+            radius="rounded-[30px]"
+            color="text-[#BB40F1] bg-transparent"
+            // border-gradient border border-solid from-red-500 to-yellow-500
+            borderColor="border-[#BB40F1]"
+            hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
           >
             나만의 레시피 등록하기
           </HoverButton>

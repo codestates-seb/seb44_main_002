@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ClickButton from '../../common/Buttons/ClickButton';
+import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function TagFrequencyButton({
   data,
@@ -10,6 +10,7 @@ export default function TagFrequencyButton({
   focusFrequencyTag,
 }) {
   const [isClicked, setIsClicked] = useState(false);
+  console.log(focusFrequencyTag === data.type);
   const buttonClicked = () => {
     setIsClicked(!isClicked);
     if (onClick) {
@@ -18,13 +19,10 @@ export default function TagFrequencyButton({
   };
 
   return (
-    <ClickButton
-      key={data.id}
-      data={data}
-      idx={idx}
-      radius="rounded-[30px]"
-      fontSize="text-[1rem]"
+    <HoverButton
       size="w-[110px] h-[30px]"
+      fontSize="text-[1rem]"
+      radius="rounded-[30px]"
       color={`${
         focusFrequencyTag === data.type
           ? 'text-[#BB40F1] bg-transparent'
@@ -40,13 +38,8 @@ export default function TagFrequencyButton({
         selectMenuHandler(idx, 'TagFrequency');
         buttonClicked();
       }}
-      //    ${
-      //     focusFrequencyTag === data.type
-      //        ? 'text-[#ffffff] border-[#ffffff]'
-      //        : ' text-[#8F8F8F] border-[#8F8F8F]'
-      //    }
     >
       # {data.title}
-    </ClickButton>
+    </HoverButton>
   );
 }
