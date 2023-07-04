@@ -124,4 +124,12 @@ public class Cocktail {
     public boolean containsAll(List<Tag> tags) {
         return this.tags.containsAll(tags);
     }
+
+    public void assignRecommends(List<Cocktail> recommends) {
+        this.recommends = recommends;
+    }
+
+    public void incrementViewCount() {
+        viewCount++;
+    }
 }

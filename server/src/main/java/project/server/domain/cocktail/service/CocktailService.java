@@ -37,14 +37,14 @@ public class CocktailService {
     public CocktailDto.Response createCocktail(CocktailDto.Post post) {
         Cocktail cocktail = post.postToEntity();
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
-        savedCocktail.setRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
+        savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
         return savedCocktail.entityToResponse();
     }
 
     public CocktailDto.Response readCocktail(long cocktailId) {
         Cocktail cocktail = findCocktailById(cocktailId);
-        cocktail.setRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
-        cocktail.setViewCount(cocktail.getViewCount() + 1);
+        cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+        cocktail.incrementViewCount();
         return cocktail.entityToResponse();
     }
 
