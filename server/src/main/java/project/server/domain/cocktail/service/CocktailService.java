@@ -75,6 +75,11 @@ public class CocktailService {
         return cocktail.entityToResponse();
     }
 
+    public void removeCocktail(long cocktailId) {
+        Cocktail cocktail = findCocktailById(cocktailId);
+        cocktailRepository.delete(cocktail);
+    }
+
     private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Pageable pageable) {
         Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
         List<CocktailDto.SimpleResponse> responses = createSimpleResponses(cocktailPage.getContent());

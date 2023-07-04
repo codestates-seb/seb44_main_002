@@ -44,4 +44,10 @@ public class CocktailController {
         CocktailDto.Response response = cocktailService.updateCocktail(cocktailId, patch);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
+    @DeleteMapping("/{cocktail-id}")
+    public ResponseEntity deleteCocktail(@PathVariable("cocktail-id") long cocktailId){
+        cocktailService.removeCocktail(cocktailId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }
