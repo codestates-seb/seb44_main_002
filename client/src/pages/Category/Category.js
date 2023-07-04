@@ -28,19 +28,35 @@ export default function Category() {
           </HoverButton>
         </div>
 
-        <div className=" border-1 border-solid border-red">
+        <div className="border-1 border-solid border-red">
           {/* 필터 */}
           <Filter setfitlerCondtion={setfitlerCondtion} />
           {/* 필터에 따라 출력되는 데이터 */}
-          <div className="w-[100%] border-2 border-solid border-red flex justify-between  flex-wrap ">
-            <Card item={item} isBookmarked={isBookmarked} />
-            <Card item={item} isBookmarked={isBookmarked} />
-            <Card item={item} isBookmarked={isBookmarked} />
-            <Card item={item} isBookmarked={isBookmarked} />
-            <Card item={item} isBookmarked={isBookmarked} />
-            <Card item={item} isBookmarked={isBookmarked} />
-            <Card item={item} isBookmarked={isBookmarked} />
-            <Card item={item} isBookmarked={isBookmarked} />
+          <div className="w-[100%] border-2 border-solid border-red  grid grid-cols-4 gap-10">
+            <div className="pr-4.5">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
+            <div className="pr-4.5">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
+            <div className="pr-4.5">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
+            <div className="">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
+            <div className="p-4">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
+            <div className="p-4">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
+            <div className="p-4">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
+            <div className="p-4">
+              <Card item={item} isBookmarked={isBookmarked} />
+            </div>
           </div>
         </div>
       </section>
