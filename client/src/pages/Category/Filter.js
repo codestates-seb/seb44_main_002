@@ -4,7 +4,6 @@ import {
   CategoryFilter,
   tagFrequencyData,
   tagTasteData,
-  descendingData,
   sortTypeData,
 } from '../../common/Data';
 import CategoryBtn from './CategoryBtn';
