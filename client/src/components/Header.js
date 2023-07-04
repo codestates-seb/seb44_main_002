@@ -96,6 +96,7 @@ export default function Header() {
               />
             </div>
             <div className="mx-2">
+              {/* 로그아웃 dispatch를 보내고있습니다 alert창이 한번 더뜨면 좋을거같네요 */}
               <LogoutIcon
                 onClick={() => dispatch(logout())}
                 fontSize="large"
