@@ -37,7 +37,7 @@ export default function Category() {
           {/* 필터 setfitlerCondtion={setfitlerCondtion}*/}
           <Filter />
           {/* 필터에 따라 출력되는 데이터 */}
-          <div className="w-[100%]   grid grid-cols-4 gap-10">
+          <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[300px]">
             <Card item={item} isBookmarked={isBookmarked} className="pr-4 " />
             <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
             <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
