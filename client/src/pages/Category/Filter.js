@@ -6,14 +6,18 @@ import {
   tagTasteData,
 } from '../../common/Data';
 import CategoryBtn from './CategoryBtn';
-
 import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
+import Sort from './Sort';
 export default function Filter() {
+  // 포커싱된 카테고리
   const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
+  //포커싱된 도수별 태그
   const [focusFrequencyTag, setfocusFrequencyTag] = useState(
     tagFrequencyData[0].type
   );
+  //내림차순 여부
+  const [isdescendingOrder, setIsdescendingOrder] = useState(true);
 
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   // ,  로 구분
@@ -70,7 +74,12 @@ export default function Filter() {
         ))}
       </div>
       {/* sortFilter */}
-      <div className="flex justify-end text-white pt-10 pb-2">sortFilter</div>
+      <div className="flex justify-end text-white pt-10 pb-2">
+        <Sort
+          setIsdescendingOrder={setIsdescendingOrder}
+          isdescendingOrder={isdescendingOrder}
+        />
+      </div>
     </div>
   );
 }
