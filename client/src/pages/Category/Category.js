@@ -1,9 +1,11 @@
 //import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Category() {
+  const navigate = useNavigate();
   //선택된 카테고리조건 (카테고리&태그&정렬)
   //const [fitlerCondtion, setfitlerCondtion] = useState(null);
 
@@ -22,13 +24,13 @@ export default function Category() {
         <img
           src="/images/background/music-dynamic-gradient.png"
           alt="음표"
-          className="absolute top-0 right-[-400px]"
+          className="absolute top-0 right-[-400px] pointer-events-none"
         />
         {/* 배경 왕별 */}
         <img
           src="/images/background/star-dynamic-gradient.png"
           alt="별"
-          className="absolute bottom-[-400px] right-[900px]"
+          className="absolute bottom-[-400px] right-[900px] pointer-events-none"
         />
         <section className="w-[55rem] ">
           {/* 레시피 등록 버튼 */}
@@ -41,6 +43,7 @@ export default function Category() {
               // border-gradient border border-solid from-red-500 to-yellow-500
               borderColor="border-[#BB40F1]"
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
+              onClick={() => navigate('/cocktail')}
             >
               나만의 레시피 등록하기
             </HoverButton>
