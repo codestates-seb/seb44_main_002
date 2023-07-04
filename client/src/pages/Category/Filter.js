@@ -35,30 +35,65 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
   // });
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 idx 적용
   const selectMenuHandler = (idx, type) => {
-    //console.log('동작');
-    if (type === 'category') {
-      setfitlerCondtion({
-        ...fitlerCondtion,
-        category: CategoryFilter[idx].type,
-      });
-    }
-    if (type === 'frequencyTag') {
-      console.log('동작');
-      setfitlerCondtion({
-        ...fitlerCondtion,
-        frequencyTag: tagFrequencyData[idx].type,
-      });
-    }
-    if (type === 'tasteTag') {
-      setfitlerCondtion(fitlerCondtion, { tasteTag: CategoryFilter[idx].type });
-    }
-    if (type === 'descendingOrder') {
-      setfitlerCondtion(fitlerCondtion, {
-        descendingOrder: descendingOrder[idx].type,
-      });
-    }
-    if (type === 'sortType') {
-      setfitlerCondtion(fitlerCondtion, { sortType: CategoryFilter[idx].type });
+    switch (type) {
+      case 'category':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          category: CategoryFilter[idx].type,
+        });
+        break;
+      case 'frequencyTag':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          frequencyTag: tagFrequencyData[idx].type,
+        });
+        break;
+      case 'tasteTag':
+        //그전에 눌렀던걸 또 눌렀다면 취소
+        if (fitlerCondtion.tasteTag.length === 0) {
+          const ClickedTag = fitlerCondtion.tasteTag;
+          const tag = tagTasteData[idx].type;
+          ClickedTag.push(tag);
+
+          setfitlerCondtion({ ...fitlerCondtion, tasteTag: ClickedTag });
+          break;
+        }
+
+        const alreadyClickedTag = [...fitlerCondtion.tasteTag];
+        const Tag = tagTasteData[idx].type;
+
+        if (alreadyClickedTag.indexOf(Tag) > 0) {
+          //이미클릭된태그를 지울때
+          console.log('제거해야할때');
+          const newclickedList = alreadyclickedTag.filter((number, index) => {
+            return number !== tagTasteData[idx].type;
+          });
+          setfitlerCondtion({ ...fitlerCondtion, tasteTag: newclickedList });
+        } else {
+          //태그를 추가할때
+          alreadyClickedTag.push(tagTasteData[idx].type);
+
+          setfitlerCondtion({
+            ...fitlerCondtion,
+            tasteTag: [...alreadyClickedTag],
+          });
+        }
+
+        break;
+      case 'descendingOrder':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          descendingOrder: descendingOrder[idx].type,
+        });
+        break;
+      case 'sortType':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          sortType: CategoryFilter[idx].type,
+        });
+        break;
+      default:
+        break;
     }
   };
 
@@ -98,7 +133,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             fontSize="text-[1rem]"
             size="w-[75px] h-[30px]"
             onClick={() => {
-              selectMenuHandler(idx, 'category');
+              selectMenuHandler(idx, 'tasteTag');
             }}
           >
             # {data.title}

@@ -18,7 +18,7 @@ export default function Category() {
   const [fitlerCondtion, setfitlerCondtion] = useState({
     category: CategoryFilter[0].type,
     frequencyTag: tagFrequencyData[0].type,
-    tasteTag: null,
+    tasteTag: [],
     descendingOrder: true,
     sortType: sortTypeData[0].type,
   });
