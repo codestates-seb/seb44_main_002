@@ -11,28 +11,54 @@ import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
 import Sort from './Sort';
 import SortConditionButton from './SortConditionButton';
-export default function Filter() {
+export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
   // 포커싱된 카테고리
-  const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
-  //포커싱된 도수별 태그->도수높음 default
-  const [focusFrequencyTag, setfocusFrequencyTag] = useState(
-    tagFrequencyData[0].type
-  );
-  //내림차순 여부 ->내림차순 default
-  const [descendingOrder, setdescendingOrder] = useState(true);
-  //정렬조건 조회순인지/별점순인지 ->조회순 default
-  const [sortType, setSortType] = useState(sortTypeData[0].type);
+  // const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
+  // //포커싱된 도수별 태그->도수높음 default
+  // const [focusFrequencyTag, setfocusFrequencyTag] = useState(
+  //   tagFrequencyData[0].type
+  // );
+  // //내림차순 여부 ->내림차순 default
+  // const [descendingOrder, setdescendingOrder] = useState(true);
+  // //정렬조건 조회순인지/별점순인지 ->조회순 default
+  // const [sortType, setSortType] = useState(sortTypeData[0].type);
 
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   // ,  로 구분
 
+  // const [fitlerCondtion, setfitlerCondtion] = useState({
+  //   category: CategoryFilter[0].type,
+  //   frequencyTag: tagFrequencyData[0].type,
+  //   tasteTag: null,
+  //   descendingOrder: true,
+  //   sortType: sortTypeData[0].type,
+  // });
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 idx 적용
   const selectMenuHandler = (idx, type) => {
+    //console.log('동작');
     if (type === 'category') {
-      //  setfitlerCondtion({ category });
+      console.log('동작');
+      setfitlerCondtion({
+        ...fitlerCondtion,
+        category: CategoryFilter[idx].type,
+      });
     }
-    //setfitlerCondtion({});
-    // setType(filterBtnData[idx].type);
+    if (type === 'frequencyTag') {
+      setfitlerCondtion(fitlerCondtion, {
+        frequencyTag: CategoryFilter[idx].type,
+      });
+    }
+    if (type === 'tasteTag') {
+      setfitlerCondtion(fitlerCondtion, { tasteTag: CategoryFilter[idx].type });
+    }
+    if (type === 'descendingOrder') {
+      setfitlerCondtion(fitlerCondtion, {
+        descendingOrder: descendingOrder[idx].type,
+      });
+    }
+    if (type === 'sortType') {
+      setfitlerCondtion(fitlerCondtion, { sortType: CategoryFilter[idx].type });
+    }
   };
 
   return (
@@ -44,8 +70,7 @@ export default function Filter() {
             key={data.id}
             data={data}
             idx={idx}
-            focusCategory={focusCategory}
-            setfocusCategory={setfocusCategory}
+            fitlerCondtion={fitlerCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -59,8 +84,8 @@ export default function Filter() {
             key={data.id}
             data={data}
             idx={idx}
-            focusFrequencyTag={focusFrequencyTag}
-            setfocusFrequencyTag={setfocusFrequencyTag}
+            // focusFrequencyTag={focusFrequencyTag}
+            // setfocusFrequencyTag={setfocusFrequencyTag}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -80,8 +105,8 @@ export default function Filter() {
       {/* sortFilter */}
       <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px]">
         <Sort
-          setdescendingOrder={setdescendingOrder}
-          descendingOrder={descendingOrder}
+        // setdescendingOrder={setdescendingOrder}
+        // descendingOrder={descendingOrder}
         />
         {/* <SortConditionButton setSortType={setSortType} sortType={sortType} /> */}
 
@@ -90,8 +115,8 @@ export default function Filter() {
             key={data.id}
             data={data}
             idx={idx}
-            setSortType={setSortType}
-            sortType={sortType}
+            // setSortType={setSortType}
+            // sortType={sortType}
             selectMenuHandler={selectMenuHandler}
           />
         ))}

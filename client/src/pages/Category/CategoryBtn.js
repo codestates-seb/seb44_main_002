@@ -4,9 +4,8 @@ export default function CategoryBtn({
   data,
   idx,
   selectMenuHandler,
-  setfocusCategory,
   onClick,
-  focusCategory,
+  fitlerCondtion,
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const buttonClicked = () => {
@@ -18,7 +17,6 @@ export default function CategoryBtn({
   return (
     <button
       onClick={() => {
-        setfocusCategory(data.type);
         selectMenuHandler(idx, 'category');
         buttonClicked();
       }}
@@ -32,11 +30,10 @@ export default function CategoryBtn({
          text-[15px]
 
        ${
-         focusCategory === data.type
+         fitlerCondtion.category === data.type
            ? 'text-[#ffffff] border-[#ffffff]'
            : ' text-[#8F8F8F] border-[#8F8F8F]'
        }`}
-      //  onFocus={() => setFocused(true)}}
     >
       {data.title}
     </button>
