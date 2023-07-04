@@ -14,7 +14,7 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
 //    @Query("select distinct c from cocktails c where c.cocktailId != :id order by c.rating.rate desc")
 //    List<Cocktail> findRecommendedCocktails(@Param("id")long id);
 
-    List<Cocktail> findDistinctTop5ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(Tag tag, long id);
+    List<Cocktail> findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(Tag tag, long id);
 
     Page<Cocktail> findByTagsTagsIn(List<Tag>tags, Pageable pageable);
 

@@ -151,7 +151,7 @@ public class CocktailService {
 
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
-        return cocktailRepository.findDistinctTop5ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(tags.getRandomTag(), cocktailId);
+        return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(tags.getRandomTag(), cocktailId);
     }
 
     private static boolean isNotSelectTag(String tag) {
