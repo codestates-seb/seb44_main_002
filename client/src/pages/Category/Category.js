@@ -31,7 +31,7 @@ export default function Category() {
         fitlerCondtion.category
       }&tag=${fitlerCondtion.frequencyTag},${fitlerCondtion.tasteTag.join(
         ','
-      )}&descendingOrder=${fitlerCondtion.descendingOrder}&sortType=${
+      )}&page=**&size=16&sort=${fitlerCondtion.descendingOrder}${
         fitlerCondtion.sortType
       }`;
 
