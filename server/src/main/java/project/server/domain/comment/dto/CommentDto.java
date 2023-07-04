@@ -13,7 +13,6 @@ public class CommentDto {
     @Getter
     @Setter
     public static class Post {
-        private Cocktail cocktail;
         private String content;
 
         public Comment postToEntity() {

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.service.CommentService;
-import project.server.domain.cocktail.entity.Cocktail;
 
 import javax.validation.Valid;
 
@@ -19,8 +18,8 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping
-    public ResponseEntity postComment(@PathVariable Cocktail cocktailId, @RequestBody CommentDto.Post post) {
+    @PostMapping("/{cocktail-id}")
+    public ResponseEntity postComment(@PathVariable Long cocktailId, @Valid @RequestBody CommentDto.Post post) {
         CommentDto.Response response = commentService.createComment(cocktailId, post);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

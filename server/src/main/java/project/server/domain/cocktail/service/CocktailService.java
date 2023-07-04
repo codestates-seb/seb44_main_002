@@ -37,7 +37,7 @@ public class CocktailService {
         return cocktail.entityToResponse();
     }
 
-    private Cocktail findCocktailById(long cocktailId) {
+    public Cocktail findCocktailById(long cocktailId) {
         return cocktailRepository.findById(cocktailId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
     }
