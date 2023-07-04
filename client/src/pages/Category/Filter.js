@@ -83,13 +83,13 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
       case 'descendingOrder':
         setfitlerCondtion({
           ...fitlerCondtion,
-          descendingOrder: descendingOrder[idx].type,
+          descendingOrder: !fitlerCondtion.descendingOrder,
         });
         break;
       case 'sortType':
         setfitlerCondtion({
           ...fitlerCondtion,
-          sortType: CategoryFilter[idx].type,
+          sortType: sortTypeData[idx].type,
         });
         break;
       default:
@@ -142,13 +142,17 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
       </div>
       {/* sortFilter */}
       <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px]">
-        <Sort />
+        <Sort
+          fitlerCondtion={fitlerCondtion}
+          selectMenuHandler={selectMenuHandler}
+        />
 
         {sortTypeData.map((data, idx) => (
           <SortConditionButton
             key={data.id}
             data={data}
             idx={idx}
+            fitlerCondtion={fitlerCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
