@@ -1,6 +1,8 @@
 package project.server.domain.cocktail.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.embed.ingredient.Ingredients;
 import project.server.domain.cocktail.embed.liquor.Liquor;
@@ -37,14 +39,13 @@ public class Cocktail {
 
     private int viewCount = 0;
 
-    @Column(name = "CREATED_AT")
+    @CreatedDate
+    @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    /**
-     * 레시피 수정 기능이 생기면 활성화
-     */
-//    @Column(name = "LAST_MODIFIED_AT")
-//    private LocalDateTime modifiedAt;
+    @LastModifiedDate
+    @Column(name = "LAST_MODIFIED_AT")
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @ManyToOne
     private User user;
@@ -102,6 +103,7 @@ public class Cocktail {
                 .tags(tags.createResponseDtoList())
                 .viewCount(viewCount)
                 .createdAt(createdAt)
+                .modifiedAt(modifiedAt)
                 .comments(comments.stream()
                         .map(Comment::entityToResponse)
                         .collect(Collectors.toList()))

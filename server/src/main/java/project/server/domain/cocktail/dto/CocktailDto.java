@@ -27,7 +27,6 @@ public class CocktailDto {
         private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
         private List<TagDto.Post> tags;
-        private String category;
 
         public Cocktail postToEntity() {
             return Cocktail.builder()
@@ -35,7 +34,7 @@ public class CocktailDto {
                     .imageUrl(imageUrl)
                     .recipe(new Recipe(recipe))
                     .tags(new Tags(tags))
-                    .category(CategoryMapper.map(category))
+                    .category(CategoryMapper.map(liquor))
                     .rating(new Rating())
                     .liquor(LiquorMapper.map(liquor))
                     .ingredients(new Ingredients(ingredients))
@@ -66,6 +65,7 @@ public class CocktailDto {
         private final List<TagDto.Response> tags;
         private final int viewCount;
         private final LocalDateTime createdAt;
+        private final LocalDateTime modifiedAt;
         private final List<CommentDto.Response> comments;
         private final List<CocktailDto.SimpleResponse> recommends;
         private final boolean isBookmarked;
