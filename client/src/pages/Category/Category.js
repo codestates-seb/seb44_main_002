@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -12,9 +12,9 @@ import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Category() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   //선택된 카테고리조건 (카테고리&태그&정렬)
-
   const [fitlerCondtion, setfitlerCondtion] = useState({
     category: CategoryFilter[0].type,
     frequencyTag: tagFrequencyData[0].type,
@@ -22,8 +22,35 @@ export default function Category() {
     descendingOrder: true,
     sortType: sortTypeData[0].type,
   });
-  console.log(fitlerCondtion);
+  // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
+  // ,  로 구분
 
+  useEffect(() => {
+    const fetchCocktails = async () => {
+      const url = `${BASE_URL}/cocktails/filter?category=${
+        fitlerCondtion.category
+      }&tag=${fitlerCondtion.frequencyTag},${fitlerCondtion.tasteTag.join(
+        ','
+      )}&descendingOrder=${fitlerCondtion.descendingOrder}&sortType=${
+        fitlerCondtion.sortType
+      }`;
+
+      try {
+        const response = await fetch(url, { method: 'GET' });
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        const data = await response.json();
+        // 데이터 처리
+      } catch (error) {
+        // 에러 처리
+        // console.error('Error:', error);
+        //navigation('/error');
+      }
+    };
+
+    fetchCocktails();
+  }, [fitlerCondtion]);
   //가상데이터
   const isBookmarked = true;
   const item = {

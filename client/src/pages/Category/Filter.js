@@ -12,28 +12,7 @@ import ClickButton from '../../common/Buttons/ClickButton';
 import Sort from './Sort';
 import SortConditionButton from './SortConditionButton';
 export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
-  // 포커싱된 카테고리
-  // const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
-  // //포커싱된 도수별 태그->도수높음 default
-  // const [focusFrequencyTag, setfocusFrequencyTag] = useState(
-  //   tagFrequencyData[0].type
-  // );
-  // //내림차순 여부 ->내림차순 default
-  // const [descendingOrder, setdescendingOrder] = useState(true);
-  // //정렬조건 조회순인지/별점순인지 ->조회순 default
-  // const [sortType, setSortType] = useState(sortTypeData[0].type);
-
-  // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
-  // ,  로 구분
-
-  // const [fitlerCondtion, setfitlerCondtion] = useState({
-  //   category: CategoryFilter[0].type,
-  //   frequencyTag: tagFrequencyData[0].type,
-  //   tasteTag: null,
-  //   descendingOrder: true,
-  //   sortType: sortTypeData[0].type,
-  // });
-  //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 idx 적용
+  //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 필터상태 저장
   const selectMenuHandler = (idx, type) => {
     switch (type) {
       case 'category':
