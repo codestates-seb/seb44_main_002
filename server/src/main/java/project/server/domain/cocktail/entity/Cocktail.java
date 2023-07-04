@@ -1,15 +1,17 @@
 package project.server.domain.cocktail.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.cocktail.dto.CocktailDto;
+import project.server.domain.cocktail.embed.ingredient.Ingredients;
+import project.server.domain.cocktail.embed.liquor.Liquor;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
-import project.server.domain.coment.Comment;
+import project.server.domain.comment.entity.Comment;
 import project.server.domain.user.User;
 
 import javax.persistence.*;
@@ -24,8 +26,7 @@ import java.util.stream.Collectors;
 
 @Entity(name = "cocktails")
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cocktail {
 
     @Id
@@ -38,11 +39,13 @@ public class Cocktail {
 
     private int viewCount = 0;
 
-    @Column(name = "CREATED_AT")
+    @CreatedDate
+    @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-//    @Column(name = "LAST_MODIFIED_AT")
-//    private LocalDateTime modifiedAt;
+    @LastModifiedDate
+    @Column(name = "LAST_MODIFIED_AT")
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @ManyToOne
     private User user;
@@ -62,9 +65,27 @@ public class Cocktail {
     @Enumerated(value = EnumType.STRING)
     private Category category;
 
+    @Enumerated(value = EnumType.STRING)
+    private Liquor liquor;
+
+    @Embedded
+    private Ingredients ingredients;
+
     @Transient
     private List<Cocktail> recommends;
 
+    @Builder
+    public Cocktail(String name, String imageUrl, Recipe recipe, Tags tags,
+                    Rating rating, Category category, Liquor liquor, Ingredients ingredients){
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.recipe = recipe;
+        this.tags = tags;
+        this.rating = rating;
+        this.category = category;
+        this.liquor = liquor;
+        this.ingredients = ingredients;
+    }
     /**
      * 유저 정보 담는 로직 생성 해야함.
      * 북마크 체크도 해야함. 유저가 하면 될 듯?
@@ -76,11 +97,16 @@ public class Cocktail {
                 .userName("kim")
                 .name(name)
                 .imageUrl(imageUrl)
-                .recipe(recipe.createResponseList())
-                .tags(tags.createResponseList())
+                .liquor(liquor.getLiquor())
+                .ingredients(ingredients.createResponseDtoList())
+                .recipe(recipe.createResponseDtoList())
+                .tags(tags.createResponseDtoList())
                 .viewCount(viewCount)
                 .createdAt(createdAt)
-                .comments(comments)
+                .modifiedAt(modifiedAt)
+                .comments(comments.stream()
+                        .map(Comment::entityToResponse)
+                        .collect(Collectors.toList()))
                 .isBookmarked(false)
                 .recommends(recommends.stream()
                         .map(this::entityToSimpleResponse)
@@ -89,15 +115,32 @@ public class Cocktail {
     }
 
     public CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
-        CocktailDto.SimpleResponse response = new CocktailDto.SimpleResponse();
-        response.setCocktailId(cocktail.cocktailId);
-        response.setName(cocktail.name);
-        response.setImageUrl(cocktail.imageUrl);
-        response.setBookmarked(false);
-        return response;
+        return CocktailDto.SimpleResponse.builder()
+                .cocktailId(cocktail.cocktailId)
+                .name(cocktail.name)
+                .imageUrl(cocktail.imageUrl)
+                .isBookmarked(false)
+                .build();
     }
 
     public boolean containsAll(List<Tag> tags) {
         return this.tags.containsAll(tags);
+    }
+
+    public void assignRecommends(List<Cocktail> recommends) {
+        this.recommends = recommends;
+    }
+
+    public void incrementViewCount() {
+        viewCount++;
+    }
+
+    public void modify(CocktailDto.Patch patch) {
+        this.name = patch.getName();
+        this.imageUrl = patch.getImageUrl();
+        this.ingredients = new Ingredients(patch.getIngredients());
+        this.recipe = new Recipe(patch.getRecipe());
+        this.tags = new Tags(patch.getTags());
+        this.modifiedAt = LocalDateTime.now();
     }
 }
