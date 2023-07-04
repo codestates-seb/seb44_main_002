@@ -79,6 +79,11 @@ public class CocktailService {
         Cocktail cocktail = findCocktailById(cocktailId);
         cocktailRepository.delete(cocktail);
     }
+  
+    public Cocktail findCocktailById(long cocktailId) {
+        return cocktailRepository.findById(cocktailId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
+    }
 
     private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Pageable pageable) {
         Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
@@ -138,12 +143,6 @@ public class CocktailService {
                 .map(cocktail -> cocktail.entityToSimpleResponse(cocktail))
                 .collect(Collectors.toList());
     }
-
-    private Cocktail findCocktailById(long cocktailId) {
-        return cocktailRepository.findById(cocktailId).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
-    }
-
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
         return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(tags.getRandomTag(), cocktailId);
