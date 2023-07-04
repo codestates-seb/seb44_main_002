@@ -31,32 +31,16 @@ export default function Category() {
         <div className="border-1 border-solid border-red">
           {/* 필터 */}
           <Filter setfitlerCondtion={setfitlerCondtion} />
-          {/* 필터에 따라 출력되는 데이터 */}
-          <div className="w-[100%] border-2 border-solid border-red  grid grid-cols-4 gap-10">
-            <div className="pr-4.5">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
-            <div className="pr-4.5">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
-            <div className="pr-4.5">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
-            <div className="">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
-            <div className="p-4">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
-            <div className="p-4">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
-            <div className="p-4">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
-            <div className="p-4">
-              <Card item={item} isBookmarked={isBookmarked} />
-            </div>
+          {/* 필터에 따라 출력되는 데이터 border-2 border-solid border-red*/}
+          <div className="w-[100%]   grid grid-cols-4 gap-10">
+            <Card item={item} isBookmarked={isBookmarked} className="pr-4 " />
+            <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
+            <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
+            <Card item={item} isBookmarked={isBookmarked} className="pl-2" />
+            <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
+            <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
+            <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
+            <Card item={item} isBookmarked={isBookmarked} className="pl-2" />
           </div>
         </div>
       </section>
