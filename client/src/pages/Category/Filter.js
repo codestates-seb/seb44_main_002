@@ -1,4 +1,4 @@
-import { Button } from '@mui/base';
+//import { Button } from '@mui/base';
 import { useState } from 'react';
 import {
   CategoryFilter,
@@ -9,18 +9,21 @@ import CategoryBtn from './CategoryBtn';
 
 import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
-export default function Filter({ setfitlerCondtion }) {
+export default function Filter() {
   const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
   const [focusFrequencyTag, setfocusFrequencyTag] = useState(
     tagFrequencyData[0].type
   );
-  //console.log(focusFrequencyTag);
+
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   // ,  로 구분
 
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 idx 적용
   const selectMenuHandler = (idx, type) => {
-    // setfitlerCondtion(idx);
+    if (type === 'category') {
+      //  setfitlerCondtion({ category });
+    }
+    //setfitlerCondtion({});
     // setType(filterBtnData[idx].type);
   };
 

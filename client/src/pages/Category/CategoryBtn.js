@@ -26,14 +26,11 @@ export default function CategoryBtn({
         h-[50px] 
         border-2 
         border-solid 
-        
          rounded-tl-[40px] 
          rounded-tr-[40px]
          font-bold
          text-[15px]
-        
-   
-      
+
        ${
          focusCategory === data.type
            ? 'text-[#ffffff] border-[#ffffff]'

@@ -1,11 +1,11 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Category() {
   //선택된 카테고리조건 (카테고리&태그&정렬)
-  const [fitlerCondtion, setfitlerCondtion] = useState(null);
+  //const [fitlerCondtion, setfitlerCondtion] = useState(null);
 
   //가상데이터
   const isBookmarked = true;
@@ -34,9 +34,9 @@ export default function Category() {
         </div>
 
         <div className="border-1 border-solid border-red">
-          {/* 필터 */}
-          <Filter setfitlerCondtion={setfitlerCondtion} />
-          {/* 필터에 따라 출력되는 데이터 border-2 border-solid border-red*/}
+          {/* 필터 setfitlerCondtion={setfitlerCondtion}*/}
+          <Filter />
+          {/* 필터에 따라 출력되는 데이터 */}
           <div className="w-[100%]   grid grid-cols-4 gap-10">
             <Card item={item} isBookmarked={isBookmarked} className="pr-4 " />
             <Card item={item} isBookmarked={isBookmarked} className="pr-4" />

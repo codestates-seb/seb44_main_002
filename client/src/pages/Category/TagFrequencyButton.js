@@ -10,7 +10,7 @@ export default function TagFrequencyButton({
   focusFrequencyTag,
 }) {
   const [isClicked, setIsClicked] = useState(false);
-  console.log(focusFrequencyTag === data.type);
+
   const buttonClicked = () => {
     setIsClicked(!isClicked);
     if (onClick) {
