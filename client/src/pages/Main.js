@@ -1,4 +1,5 @@
 import Slider from '../components/Slider/Slider';
+import Ranking from '../components/Ranking/Ranking';
 
 export default function Main() {
   return (
@@ -6,7 +7,9 @@ export default function Main() {
       <section className="h-screen">
         <Slider />
       </section>
-      <section>ranking</section>
+      <section className="flex justify-center">
+        <Ranking />
+      </section>
       <section>community</section>
     </main>
   );
