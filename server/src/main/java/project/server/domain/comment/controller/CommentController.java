@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.service.CommentService;
+import project.server.domain.cocktail.entity.Cocktail;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/comments")
@@ -20,15 +20,14 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity postComment(@RequestBody CommentDto.Post post) {
-        CommentDto.Response response = commentService.createComment(post);
+    public ResponseEntity postComment(@PathVariable Cocktail cocktailId, @RequestBody CommentDto.Post post) {
+        CommentDto.Response response = commentService.createComment(cocktailId, post);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
-    public ResponseEntity patchComment(@PathVariable("comment-id") @Positive long commentId,
+    public ResponseEntity patchComment(@PathVariable("comment-id")
                                        @Valid @RequestBody CommentDto.Patch patch) {
-        patch.setCommentId(commentId);
         Comment response = commentService.updateComment(patch);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

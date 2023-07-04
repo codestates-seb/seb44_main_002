@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.entity.Comment;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class CommentDto {
     @Getter
     @Setter
     public static class Post {
+        private Cocktail cocktail;
         private String content;
 
         public Comment postToEntity() {

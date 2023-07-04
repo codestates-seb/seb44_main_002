@@ -44,10 +44,6 @@ public class Comment {
     @Column(name = "last_modified_at")
     private LocalDateTime modifiedAt;
 
-    @CreatedBy
-    @Column(updatable = false)
-    private String createdBy;
-
     public CommentDto.Response entityToRespose() {
         return CommentDto.Response.builder()
                 .commentId(commentId)
