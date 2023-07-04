@@ -30,15 +30,30 @@ export default function Slider() {
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
-        <SwiperSlide className="swiper-slide">Slide 1</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 2</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 3</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 4</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 5</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 6</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 7</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 8</SwiperSlide>
-        <SwiperSlide className="swiper-slide">Slide 9</SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플.jpg" alt="sample" />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플2.jpg" alt="sample" />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플.jpg" alt="sample" />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플2.jpg" alt="sample" />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플.jpg" alt="sample" />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플2.jpg" alt="sample" />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플.jpg" alt="sample" />
+        </SwiperSlide>
+        <SwiperSlide className="swiper-slide">
+          <img src="images/슬라이더샘플2.jpg" alt="sample" />
+        </SwiperSlide>
         <div className="autoplay-progress" slot="container-end">
           <svg viewBox="0 0 48 48" ref={progressCircle}>
             <circle cx="24" cy="24" r="20"></circle>
