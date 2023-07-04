@@ -62,10 +62,10 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
         const alreadyClickedTag = [...fitlerCondtion.tasteTag];
         const Tag = tagTasteData[idx].type;
 
-        if (alreadyClickedTag.indexOf(Tag) > 0) {
+        if (fitlerCondtion.tasteTag.indexOf(Tag) >= 0) {
           //이미클릭된태그를 지울때
           console.log('제거해야할때');
-          const newclickedList = alreadyclickedTag.filter((number, index) => {
+          const newclickedList = fitlerCondtion.tasteTag.filter((number) => {
             return number !== tagTasteData[idx].type;
           });
           setfitlerCondtion({ ...fitlerCondtion, tasteTag: newclickedList });
@@ -142,19 +142,13 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
       </div>
       {/* sortFilter */}
       <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px]">
-        <Sort
-        // setdescendingOrder={setdescendingOrder}
-        // descendingOrder={descendingOrder}
-        />
-        {/* <SortConditionButton setSortType={setSortType} sortType={sortType} /> */}
+        <Sort />
 
         {sortTypeData.map((data, idx) => (
           <SortConditionButton
             key={data.id}
             data={data}
             idx={idx}
-            // setSortType={setSortType}
-            // sortType={sortType}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
