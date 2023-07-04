@@ -11,8 +11,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import project.server.auth.handler.UserAccessDeniedHandler;
+import project.server.auth.handler.UserAuthenticationEntryPoint;
 import project.server.auth.jwt.JwtTokenizer;
-import project.server.domain.user.UserService;
+import project.server.domain.user.UserRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,29 +25,33 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserService userService) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserRepository userRepository) {
         this.jwtTokenizer = jwtTokenizer;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .headers().frameOptions().sameOrigin()
-//                .and()
-//                .csrf().disable()
-//                .cors(withDefaults())
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .formLogin().disable()
-//                .httpBasic().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint()
-//                .accessDeniedHandler()
-//                .and()
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .headers().frameOptions().sameOrigin()
+                .and()
+                .csrf().disable()
+                .cors(withDefaults())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new UserAuthenticationEntryPoint())
+                .accessDeniedHandler(new UserAccessDeniedHandler())
+                .and()
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().permitAll()
+                );
+        return http.build();
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

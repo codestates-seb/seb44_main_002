@@ -22,7 +22,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/join")
+    @PostMapping("/signup")
     public ResponseEntity postUser(@Valid @RequestBody UserDto.post requestBody) {
         User user = userService.createUser(requestBody);
         UserDto.Response response = userMapper.userToUserResponseDto(user);
@@ -38,8 +38,7 @@ public class UserController {
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
                                     @Valid @RequestBody UserDto.Patch requestBody) {
-        requestBody.setUserId(userId);
-        User user = userService.updateUser(requestBody);
+        User user = userService.updateUser(requestBody,userId);
         return new ResponseEntity<>(userMapper.userToUserResponseDto(user),HttpStatus.OK);
     }
 

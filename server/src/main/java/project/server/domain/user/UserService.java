@@ -39,9 +39,9 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUNT));
     }
 
-    public User updateUser(UserDto.Patch Dto) {
-        User user = findUser(Dto.getUserId());
-        user.setPassword(Dto.getPassword());
+    public User updateUser(UserDto.Patch dto, long userId) {
+        User user = findUser(userId);
+        user.setPassword(dto.getPassword());
         return userRepository.save(user);
     }
 
