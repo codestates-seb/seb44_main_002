@@ -13,9 +13,9 @@ const BookmarkButton = ({ item, isBookmarked, isLogin }) => {
       }}
     >
       {isBookmarked ? (
-        <img src="/images/bookmarkOn.png" alt="활성화된 북마크" />
+        <img src="/images/bookmark/bookmarkOn.png" alt="활성화된 북마크" />
       ) : (
-        <img src="/images/bookmarkOff.png" alt="활성화된 북마크" />
+        <img src="/images/bookmark/bookmarkOff.png" alt="활성화된 북마크" />
       )}
     </button>
   );

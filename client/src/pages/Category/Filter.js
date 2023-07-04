@@ -4,16 +4,24 @@ import {
   CategoryFilter,
   tagFrequencyData,
   tagTasteData,
+  sortTypeData,
 } from '../../common/Data';
 import CategoryBtn from './CategoryBtn';
-
 import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
+import Sort from './Sort';
+import SortConditionButton from './SortConditionButton';
 export default function Filter() {
+  // 포커싱된 카테고리
   const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
+  //포커싱된 도수별 태그->도수높음 default
   const [focusFrequencyTag, setfocusFrequencyTag] = useState(
     tagFrequencyData[0].type
   );
+  //내림차순 여부 ->내림차순 default
+  const [descendingOrder, setdescendingOrder] = useState(true);
+  //정렬조건 조회순인지/별점순인지 ->조회순 default
+  const [sortType, setSortType] = useState(sortTypeData[0].type);
 
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   // ,  로 구분
@@ -70,7 +78,24 @@ export default function Filter() {
         ))}
       </div>
       {/* sortFilter */}
-      <div className="flex justify-end text-white pt-10 pb-2">sortFilter</div>
+      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px]">
+        <Sort
+          setdescendingOrder={setdescendingOrder}
+          descendingOrder={descendingOrder}
+        />
+        {/* <SortConditionButton setSortType={setSortType} sortType={sortType} /> */}
+
+        {sortTypeData.map((data, idx) => (
+          <SortConditionButton
+            key={data.id}
+            data={data}
+            idx={idx}
+            setSortType={setSortType}
+            sortType={sortType}
+            selectMenuHandler={selectMenuHandler}
+          />
+        ))}
+      </div>
     </div>
   );
 }

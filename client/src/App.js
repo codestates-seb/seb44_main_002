@@ -10,7 +10,7 @@ import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import Community from './pages/Community/Community';
 import LostPage from './pages/LostPage';
 import Mypage from './pages/User/Mypage';
-
+import CocktailForm from './pages/CocktailForm';
 import './App.css';
 
 function App() {
@@ -31,6 +31,7 @@ const Routing = () => {
       <Route path="/detail/:id" element={<RecipeDetail />} />
       <Route path="/community" element={<Community />} />
       <Route path="/mypage" element={<Mypage />} />
+      <Route path="/cocktail" element={<CocktailForm />} />
       <Route path="*" element={<LostPage />} />
     </Routes>
   );
