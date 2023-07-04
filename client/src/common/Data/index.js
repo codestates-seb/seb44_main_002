@@ -63,3 +63,31 @@ export const tagTasteData = [
     type: 'bitter',
   },
 ];
+// 조회수 높은 순 : most_viewed
+// 조회수 낮은 순 : least_viewed
+// 별점 높은 순 : highest_rate
+// 별잠 낮은 순 : lowest_rate
+export const descendingData = [
+  {
+    id: 0,
+    title: '내림차순',
+    type: 'descendingOrder',
+  },
+  {
+    id: 1,
+    title: '오름차순',
+    type: 'ascendingOrder',
+  },
+];
+export const sortTypeData = [
+  {
+    id: 0,
+    title: '조회순',
+    type: 'viewed',
+  },
+  {
+    id: 1,
+    title: '별점순',
+    type: 'rate',
+  },
+];
