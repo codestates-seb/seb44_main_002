@@ -70,4 +70,13 @@ public class CocktailDto {
         private final List<CocktailDto.SimpleResponse> recommends;
         private final boolean isBookmarked;
     }
+
+    @Getter
+    public static class Patch {
+        private String name;
+        private String imageUrl;
+        private List<IngredientDto.Post> ingredients;
+        private List<RecipeDto.Post> recipe;
+        private List<TagDto.Post> tags;
+    }
 }

@@ -63,6 +63,18 @@ public class CocktailService {
         return readFilteringByTagsAndCategoryCocktails(category, tag, pageable);
     }
 
+    /**
+     * cocktailId 로 칵테일 찾아오고
+     * 찾아온 칵테일에서 유저 정보 찾아오고
+     * 추후 적용할 Authentication 으로 유저 찾아서 검증하셈
+     */
+    public CocktailDto.Response updateCocktail(long cocktailId, CocktailDto.Patch patch) {
+        Cocktail cocktail = findCocktailById(cocktailId);
+        cocktail.modify(patch);
+        cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
+        return cocktail.entityToResponse();
+    }
+
     private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Pageable pageable) {
         Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
         List<CocktailDto.SimpleResponse> responses = createSimpleResponses(cocktailPage.getContent());

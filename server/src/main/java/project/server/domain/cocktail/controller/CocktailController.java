@@ -37,4 +37,11 @@ public class CocktailController {
         MultiResponseDto responses = cocktailService.readFilteredCocktails(category, tag, page, sort);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
+    @PatchMapping("/{cocktail-id}")
+    public ResponseEntity patchCocktail(@PathVariable("cocktail-id") long cocktailId,
+                                        @RequestBody CocktailDto.Patch patch){
+        CocktailDto.Response response = cocktailService.updateCocktail(cocktailId, patch);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

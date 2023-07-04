@@ -134,4 +134,13 @@ public class Cocktail {
     public void incrementViewCount() {
         viewCount++;
     }
+
+    public void modify(CocktailDto.Patch patch) {
+        this.name = patch.getName();
+        this.imageUrl = patch.getImageUrl();
+        this.ingredients = new Ingredients(patch.getIngredients());
+        this.recipe = new Recipe(patch.getRecipe());
+        this.tags = new Tags(patch.getTags());
+        this.modifiedAt = LocalDateTime.now();
+    }
 }
