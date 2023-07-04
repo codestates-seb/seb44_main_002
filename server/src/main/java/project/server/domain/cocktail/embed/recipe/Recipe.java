@@ -1,5 +1,6 @@
 package project.server.domain.cocktail.embed.recipe;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Embeddable
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Recipe {
 
     @ElementCollection

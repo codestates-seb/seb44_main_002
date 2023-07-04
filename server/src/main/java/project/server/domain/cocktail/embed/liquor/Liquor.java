@@ -1,4 +1,4 @@
-package project.server.domain.cocktail.embed;
+package project.server.domain.cocktail.embed.liquor;
 
 public enum Liquor {
     RUM("럼"),

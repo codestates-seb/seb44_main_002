@@ -1,11 +1,9 @@
 package project.server.domain.cocktail.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import project.server.domain.cocktail.dto.CocktailDto;
-import project.server.domain.cocktail.embed.Ingredients;
-import project.server.domain.cocktail.embed.Liquor;
+import project.server.domain.cocktail.embed.ingredient.Ingredients;
+import project.server.domain.cocktail.embed.liquor.Liquor;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.embed.recipe.Recipe;
@@ -26,8 +24,7 @@ import java.util.stream.Collectors;
 
 @Entity(name = "cocktails")
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cocktail {
 
     @Id
@@ -43,6 +40,9 @@ public class Cocktail {
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    /**
+     * 레시피 수정 기능이 생기면 활성화
+     */
 //    @Column(name = "LAST_MODIFIED_AT")
 //    private LocalDateTime modifiedAt;
 
@@ -73,6 +73,18 @@ public class Cocktail {
     @Transient
     private List<Cocktail> recommends;
 
+    @Builder
+    public Cocktail(String name, String imageUrl, Recipe recipe, Tags tags,
+                    Rating rating, Category category, Liquor liquor, Ingredients ingredients){
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.recipe = recipe;
+        this.tags = tags;
+        this.rating = rating;
+        this.category = category;
+        this.liquor = liquor;
+        this.ingredients = ingredients;
+    }
     /**
      * 유저 정보 담는 로직 생성 해야함.
      * 북마크 체크도 해야함. 유저가 하면 될 듯?

@@ -3,6 +3,9 @@ package project.server.domain.cocktail.dto;
 import lombok.Builder;
 import lombok.Getter;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
+import project.server.domain.cocktail.embed.ingredient.IngredientDto;
+import project.server.domain.cocktail.embed.ingredient.Ingredients;
+import project.server.domain.cocktail.embed.liquor.LiquorMapper;
 import project.server.domain.cocktail.embed.rating.Rating;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.embed.recipe.Recipe;
@@ -20,20 +23,23 @@ public class CocktailDto {
     public static class Post {
         private String name;
         private String imageUrl;
+        private String liquor;
+        private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
         private List<TagDto.Post> tags;
         private String category;
 
         public Cocktail postToEntity() {
-            Cocktail cocktail = new Cocktail();
-            cocktail.setName(name);
-            cocktail.setImageUrl(imageUrl);
-            cocktail.setRecipe(new Recipe(recipe));
-            cocktail.setTags(new Tags(tags));
-            cocktail.setCategory(CategoryMapper.map(category));
-            cocktail.setRating(new Rating());
-
-            return cocktail;
+            return Cocktail.builder()
+                    .name(name)
+                    .imageUrl(imageUrl)
+                    .recipe(new Recipe(recipe))
+                    .tags(new Tags(tags))
+                    .category(CategoryMapper.map(category))
+                    .rating(new Rating())
+                    .liquor(LiquorMapper.map(liquor))
+                    .ingredients(new Ingredients(ingredients))
+                    .build();
         }
     }
 
@@ -54,6 +60,8 @@ public class CocktailDto {
         private final String userName;
         private final String name;
         private final String imageUrl;
+        private final String liquor;
+        private final List<IngredientDto.Response> ingredients;
         private final List<RecipeDto.Response> recipe;
         private final List<TagDto.Response> tags;
         private final int viewCount;

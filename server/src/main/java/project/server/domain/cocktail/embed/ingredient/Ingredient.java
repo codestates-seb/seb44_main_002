@@ -1,4 +1,4 @@
-package project.server.domain.cocktail.embed;
+package project.server.domain.cocktail.embed.ingredient;
 
 public enum Ingredient {
 
