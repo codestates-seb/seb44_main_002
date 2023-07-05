@@ -176,9 +176,9 @@ export default function Category() {
         </section>
       </div>
       {/* css 를 위한 임시 footer */}
-      <footer className="absolute w-full h-[400px] bg-black z-10 flex text-white">
+      {/* <footer className="absolute w-full h-[400px] bg-black z-10 flex text-white">
         footer
-      </footer>
+      </footer> */}
     </div>
   );
 }
