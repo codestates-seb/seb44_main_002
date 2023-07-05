@@ -32,4 +32,19 @@ public class User {
     private long subscriberCount;
 
     private String profileImageUrl;
+
+    @Embedded
+    private RatedCocktails ratedCocktails = new RatedCocktails();
+
+    public boolean isAlreadyRated(long cocktailId) {
+        return ratedCocktails.containCocktail(cocktailId);
+    }
+
+    public int getOldRate(long cocktailId) {
+        return ratedCocktails.findValue(cocktailId);
+    }
+
+    public void putRatedCocktail(long cocktailId, int value) {
+        ratedCocktails.put(cocktailId, value);
+    }
 }

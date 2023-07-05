@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
+import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.user.User;
 import project.server.dto.MultiResponseDto;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
@@ -24,6 +26,8 @@ public class CocktailService {
 
     public static final int DEFAULT_SIZE = 16;
     public static final String SEPARATOR = ",";
+    public static final int MAX_RATE_VALUE = 5;
+    public static final int MIN_RATE_VALUE = 1;
 
     private final CocktailRepository cocktailRepository;
 
@@ -80,6 +84,35 @@ public class CocktailService {
         cocktailRepository.delete(cocktail);
     }
 
+    public RateDto.Response rateCocktail(long cocktailId, int value) {
+        verifyRateValue(value);
+        User user = new User();
+        Cocktail cocktail = findCocktailById(cocktailId);
+        if (user.isAlreadyRated(cocktailId)) {
+            return reCalculateCocktailsRate(cocktailId, value, user, cocktail);
+        }
+        return calculateCocktailsRate(cocktailId, value, user, cocktail);
+    }
+
+    private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
+        cocktail.rate(value);
+        user.putRatedCocktail(cocktailId, value);
+        return new RateDto.Response(cocktail.getRatedScore());
+    }
+
+    private RateDto.Response reCalculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
+        int oldValue = user.getOldRate(cocktailId);
+        cocktail.reRate(oldValue, value);
+        user.putRatedCocktail(cocktailId, value);
+        return new RateDto.Response(cocktail.getRatedScore());
+    }
+
+    private void verifyRateValue(int value) {
+        if (value > MAX_RATE_VALUE || value < MIN_RATE_VALUE) {
+            throw new BusinessLogicException(ExceptionCode.INVALID_RATE_VALUE);
+        }
+    }
+
     private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Pageable pageable) {
         Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
         List<CocktailDto.SimpleResponse> responses = createSimpleResponses(cocktailPage.getContent());
@@ -107,7 +140,7 @@ public class CocktailService {
     }
 
     private MultiResponseDto<CocktailDto.SimpleResponse> createFilteredByTagCockatilsMultiResponseDto(List<Tag> tags, Page<Cocktail> cocktailPage) {
-        List<Cocktail>filteredCocktails = cocktailPage.get()
+        List<Cocktail> filteredCocktails = cocktailPage.get()
                 .filter(cocktail -> cocktail.containsAll(tags))
                 .collect(Collectors.toList());
         List<CocktailDto.SimpleResponse> responses = createSimpleResponses(filteredCocktails);
@@ -146,7 +179,7 @@ public class CocktailService {
 
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
-        return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRatingRateDesc(tags.getRandomTag(), cocktailId);
+        return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRateRateDesc(tags.getRandomTag(), cocktailId);
     }
 
     private boolean isNotSelectTag(String tag) {
