@@ -7,17 +7,17 @@ public class RecipeDto {
 
     @Getter
     @Setter
-    public static class Post{
+    public static class Post {
         private String process;
     }
 
     @Getter
     @Setter
-    public static class Response{
+    public static class Response {
         private String process;
 
         public Response(String process) {
-            this.process =process;
+            this.process = process;
         }
     }
 }

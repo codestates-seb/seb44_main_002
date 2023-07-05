@@ -37,4 +37,16 @@ public class User {
     private long subscriberCount;
 
     private String profileImageUrl;
+
+    public UserDto.Response entityToResponse() {
+        return UserDto.Response.builder()
+                .userId(userId)
+                .name(name)
+                .profileImageUrl(profileImageUrl)
+                .gender(gender)
+                .age(age)
+                .email(email)
+                .subscriberCount(subscriberCount)
+                .build();
+    }
 }

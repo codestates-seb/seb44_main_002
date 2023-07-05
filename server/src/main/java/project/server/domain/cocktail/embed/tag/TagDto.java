@@ -7,13 +7,13 @@ public class TagDto {
 
     @Getter
     @Setter
-    public static class Post{
+    public static class Post {
         String tag;
     }
 
     @Getter
     @Setter
-    public static class Response{
+    public static class Response {
         String tag;
 
         public Response(String tag) {

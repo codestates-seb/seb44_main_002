@@ -11,7 +11,7 @@
 //import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RestController;
-//import project.server.auth.dto.LoginDto;
+//import project.server.auth.dto.SignInDto;
 //import project.server.auth.jwt.JwtTokenizer;
 //import project.server.domain.user.UserRepository;
 //
@@ -34,9 +34,10 @@
 //    }
 //
 //    @PostMapping("/signin")
-//    public ResponseEntity authenticateUser(@Valid @RequestBody LoginDto requestBody) {
+//    public void authenticateUser(@Valid @RequestBody SignInDto requestBody) {
 //        Authentication authentication = authenticationManager.authenticate(
 //                new UsernamePasswordAuthenticationToken(requestBody.getEmail(),requestBody.getPassword()));
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
 //    }
 //}

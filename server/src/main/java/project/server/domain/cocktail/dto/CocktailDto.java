@@ -4,11 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import project.server.domain.cocktail.embed.rating.Rating;
-import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.embed.tag.Tags;
+import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.coment.Comment;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class CocktailDto {
         private List<RecipeDto.Post> recipe;
         private List<TagDto.Post> tags;
 
-        public Cocktail postToEntity(){
+        public Cocktail postToEntity() {
             Cocktail cocktail = new Cocktail();
             cocktail.setName(name);
             cocktail.setImageUrl(imageUrl);
@@ -38,7 +38,7 @@ public class CocktailDto {
 
     @Getter
     @Setter
-    public static class SimpleResponse{
+    public static class SimpleResponse {
         private long cocktailId;
         private String name;
         private String imageUrl;
@@ -47,7 +47,7 @@ public class CocktailDto {
 
     @Getter
     @Builder
-    public static class Response{
+    public static class Response {
         private long cocktailId;
         private long userId;
         private String userName;

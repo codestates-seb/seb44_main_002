@@ -2,32 +2,38 @@ package project.server.domain.user;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import project.server.auth.utils.CustomAuthorityUtils;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
-    UserRepository userRepository;
-    UserMapper userMapper;
-    PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
 
-    public User createUser(UserDto.post requestBody) {
+    public UserDto.Response createUser(UserDto.post requestBody) {
         verifyExistsEmail(requestBody.getEmail());
-        User user = userMapper.userPostDtoToUser(requestBody);
+        User user = requestBody.postToEntity();
 
         String encodedPassword = passwordEncoder.encode(requestBody.getPassword());
         user.setPassword(encodedPassword);
 
-        return userRepository.save(user);
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
+        user.setRoles(roles);
+
+        userRepository.save(user);
+        return user.entityToResponse();
     }
 
     public void verifyExistsEmail(String email) {
@@ -37,6 +43,10 @@ public class UserService {
 
     public User findUser(long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUNT));
+    }
+
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUNT));
     }
 
     public User updateUser(UserDto.Patch dto, long userId) {

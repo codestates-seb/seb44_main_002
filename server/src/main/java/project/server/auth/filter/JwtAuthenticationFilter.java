@@ -6,9 +6,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import project.server.auth.dto.LoginDto;
+import project.server.auth.dto.SignInDto;
 import project.server.auth.jwt.JwtTokenizer;
 import project.server.domain.user.User;
+import project.server.domain.user.UserService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,10 +23,12 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
+    private final UserService userService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+        this.userService = userService;
     }
 
     @SneakyThrows
@@ -33,10 +36,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+        SignInDto signInDto = objectMapper.readValue(request.getInputStream(), SignInDto.class);
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(signInDto.getEmail(), signInDto.getPassword());
 
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -51,23 +54,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(user);
-        String memberId = String.valueOf(user.getUserId());
-        String DisplayName = String.valueOf(user.getName());
+        String userId = String.valueOf(user.getUserId());
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
-        response.setHeader("MemberId", memberId);
-        response.setHeader("DisplayName", DisplayName);
+        response.setHeader("UserId", userId);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
     private String delegateAccessToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("memberId", user.getUserId());   // 추가
-        claims.put("username", user.getEmail());
+        claims.put("userId", user.getUserId());   // 추가
+        claims.put("email", user.getEmail());
         claims.put("roles", user.getRoles());
-        claims.put("Name", user.getName());     // 추가
+        claims.put("name", user.getName());
 
         String subject = user.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
