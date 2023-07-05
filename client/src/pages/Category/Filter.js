@@ -78,7 +78,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
   return (
     <div className="w-[100%] ">
       {/* 카테고리 */}
-      <div className="flex border-b-2 border-solid border-white">
+      <div className="flex border-b-2 border-solid border-white ">
         {CategoryFilter.map((data, idx) => (
           <CategoryBtn
             key={data.id}
@@ -91,7 +91,8 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
       </div>
 
       {/* 태그 */}
-      <div className="flex pt-10 pb-10 gap-3">
+      {/* max-[700px]: border-2 border-solid border-red-50 */}
+      <div className="flex pt-10 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0">
         {/* 도수별 태그 */}
         {tagFrequencyData.map((data, idx) => (
           <TagFrequencyButton
@@ -119,7 +120,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
         ))}
       </div>
       {/* sortFilter */}
-      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px]">
+      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3">
         <Sort
           fitlerCondtion={fitlerCondtion}
           selectMenuHandler={selectMenuHandler}

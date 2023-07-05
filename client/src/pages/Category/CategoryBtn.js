@@ -28,6 +28,8 @@ export default function CategoryBtn({
          rounded-tr-[40px]
          font-bold
          text-[15px]
+         max-[700px]:text-[10px]
+         max-[700px]:h-[35px]
 
        ${
          fitlerCondtion.category === data.type
