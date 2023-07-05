@@ -41,7 +41,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
 
         if (fitlerCondtion.tasteTag.indexOf(Tag) >= 0) {
           //이미클릭된태그를 지울때
-          console.log('제거해야할때');
+          //  console.log('제거해야할때');
           const newclickedList = fitlerCondtion.tasteTag.filter((number) => {
             return number !== tagTasteData[idx].type;
           });
