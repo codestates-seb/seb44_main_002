@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout } from '../redux/slice/isLoginSlice';
 
@@ -12,7 +12,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Header() {
   const [position, setPosition] = useState(0);
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   // 리덕스 툴킷
   const isLogin = useSelector((state) => state.isLogin.isLogin);
@@ -33,7 +35,7 @@ export default function Header() {
   // useNavigate 함수
   const MenuItem = ({ path, label }) => (
     <div
-      className="cursor-pointer mr-[10px] max-[768px]:hidden"
+      className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden`}
       role="presentation"
       onClick={() => navigate(path)}
       onKeyDown={() => navigate(path)}
@@ -55,14 +57,38 @@ export default function Header() {
         />
       </HeaderDiv>
       <HeaderDiv className="justify-center">
-        <MenuItem path="/" label="HOME" />
-        <MenuItem path="/category" label="Category" />
-        <div className="max-[768px]:hidden">???</div>
+        <div
+          className={`text-xl cursor-pointer mr-[10px] max-[768px]:hidden ${
+            location.pathname === '/'
+              ? `${position ? 'text-black' : 'text-white'} font-bold`
+              : 'text-gray-200 font-normal'
+          }`}
+          role="presentation"
+          onClick={() => navigate('/')}
+          onKeyDown={() => navigate('/')}
+        >
+          HOME
+        </div>
+        <div
+          className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden ${
+            location.pathname === '/category'
+              ? `${position ? 'text-black' : 'text-white'} font-bold`
+              : 'text-gray-200 font-normal'
+          }`}
+          role="presentation"
+          onClick={() => navigate('/category')}
+          onKeyDown={() => navigate('/category')}
+        >
+          CATEGORY
+        </div>
+        <div className="font-bold text-xl max-[768px]:hidden text-gray-200">
+          ???
+        </div>
       </HeaderDiv>
       {isLogin ? (
         <>
           <HeaderDiv className="justify-end max-[768px]:hidden">
-            <div className="flex mx-2 items-center">일이삼사</div>
+            <div className="flex mx-2 font-bold items-center">일이삼사</div>
             <div className="mx-2">
               <MenuItem
                 path="/mypage"
@@ -70,6 +96,7 @@ export default function Header() {
               />
             </div>
             <div className="mx-2">
+              {/* 로그아웃 dispatch를 보내고있습니다 alert창이 한번 더뜨면 좋을거같네요 */}
               <LogoutIcon
                 onClick={() => dispatch(logout())}
                 fontSize="large"
@@ -107,6 +134,17 @@ const HeaderContainer = tw.header`
   duration-500 
   z-50
   ${(props) => props.position && 'bg-white text-black shadow-lg'}
+`;
+
+const MenuItem = tw.div`
+  text-xl
+  cursor-pointer
+  mr-[10px]
+  max-[768px]:hidden
+  ${(props) =>
+    props.isActive
+      ? `${props.position ? 'text-black' : 'text-white'} font-bold`
+      : 'text-gray-200 font-normal'}
 `;
 
 const HeaderDiv = tw.div`

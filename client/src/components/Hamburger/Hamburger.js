@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout } from '../../redux/slice/isLoginSlice';
@@ -11,6 +12,20 @@ import HeaderModal from '../Modal/HeaderModal';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Hamburger() {
+  const [position, setPosition] = useState(0);
+
+  // 스크롤 이벤트
+  const onScroll = () => {
+    setPosition(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -54,7 +69,9 @@ export default function Hamburger() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <MenuIcon sx={{ color: 'white', fontSize: 50 }} />
+        <MenuIcon
+          sx={{ color: position === 0 ? 'white' : 'black', fontSize: 50 }}
+        />
       </Button>
       {!isLogin ? (
         <Menu
@@ -101,6 +118,7 @@ export default function Hamburger() {
           <MenuItem onClick={() => openPage('/mypage')}>
             <HoverButton>Mypage</HoverButton>
           </MenuItem>
+          {/* 로그아웃 dispatch를 바로 보내고있습니다 alert가 한번 더 뜨게 해야됩니다 */}
           <MenuItem onClick={() => dispatch(logout())}>
             <HoverButton>Logout</HoverButton>
           </MenuItem>

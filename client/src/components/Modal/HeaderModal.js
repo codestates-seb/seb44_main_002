@@ -41,7 +41,8 @@ export default function HeaderModal() {
       >
         <Box sx={style}>
           <div>Welcome!</div>
-          <div>인풋</div>
+          <div>{/* 로그인 인풋창이 들어갈곳 */}</div>
+          {/* 로그인 dispatch를 바로 보내고있는데 검사를 하고 dispatch를 보내는걸로 변경해야합니다 */}
           <HoverButton onClick={() => dispatch(login())}>로그인</HoverButton>
         </Box>
       </Modal>
