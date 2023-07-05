@@ -89,14 +89,29 @@ public class CocktailService {
                 new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
     }
 
+    /**
+     * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
+     */
     public RateDto.Response rateCocktail(long cocktailId, int value) {
         verifyRateValue(value);
-        User user = new User();
+        User user = new User(); // 수정 필요
         Cocktail cocktail = findCocktailById(cocktailId);
         if (user.isAlreadyRated(cocktailId)) {
             return reCalculateCocktailsRate(cocktailId, value, user, cocktail);
         }
         return calculateCocktailsRate(cocktailId, value, user, cocktail);
+    }
+    /**
+     * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
+     * 근데 얘는 user로 가야하는거 아닌가...?
+     */
+    public void bookmarkCocktail(long cocktailId) {
+       User user = new User();
+       if(user.isBookmarked(cocktailId)){
+           user.cancelBookmark(cocktailId);
+           return;
+       }
+       user.bookmark(cocktailId);
     }
 
     private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {

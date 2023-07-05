@@ -58,4 +58,10 @@ public class CocktailController {
         RateDto.Response response = cocktailService.rateCocktail(cocktailId, value);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @PostMapping("/{cocktail-id}/bookmark")
+    public ResponseEntity postBookmark(@PathVariable("cocktail-id") long cocktailId){
+        cocktailService.bookmarkCocktail(cocktailId);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }

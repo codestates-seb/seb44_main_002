@@ -36,6 +36,9 @@ public class User {
     @Embedded
     private RatedCocktails ratedCocktails = new RatedCocktails();
 
+    @Embedded
+    private BookmarkedCocktails bookmarkedCocktails = new BookmarkedCocktails();
+
     public boolean isAlreadyRated(long cocktailId) {
         return ratedCocktails.containCocktail(cocktailId);
     }
@@ -46,5 +49,17 @@ public class User {
 
     public void putRatedCocktail(long cocktailId, int value) {
         ratedCocktails.put(cocktailId, value);
+    }
+
+    public void bookmark(long cocktailId) {
+        bookmarkedCocktails.add(cocktailId);
+    }
+
+    public void cancelBookmark(long cocktailId) {
+        bookmarkedCocktails.remove(cocktailId);
+    }
+
+    public boolean isBookmarked(long cocktailId) {
+        return bookmarkedCocktails.containCocktail(cocktailId);
     }
 }
