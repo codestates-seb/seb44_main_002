@@ -35,7 +35,7 @@ export default function Slider() {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
         {/* TODO: 커스텀이미지 넣을거면 밑에 코드 사용할것 */}
-        <SwiperCustomSlide>
+        <SwiperSlide className="swiper-slide flex justify-around max-[768px]:flex-col max-[768px]:justify-center">
           <SliderCustomText>
             <p>
               <span className="text-pointPurple-100">오늘</span>
@@ -52,7 +52,7 @@ export default function Slider() {
           </SliderCustomText>
           <></>
           <SliderCustomImg src="images/slideimg.png" alt="sample" />
-        </SwiperCustomSlide>
+        </SwiperSlide>
         {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
         <SwiperSlide className="swiper-slide">
           <img
@@ -91,12 +91,4 @@ const SliderCustomImg = tw.img`
   max-[768px]:w-[24rem] 
   max-[768px]:h-[24rem] 
   max-[768px]:order-1
-`;
-
-const SwiperCustomSlide = tw.SwiperSlide`
-  swiper-slide
-  flex
-  justify-around 
-  max-[768px]:flex-col 
-  max-[768px]:justify-center
 `;
