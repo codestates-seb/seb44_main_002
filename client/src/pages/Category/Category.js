@@ -10,11 +10,13 @@ import {
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
+import ClickButton from '../../common/Buttons/ClickButton';
 
 export default function Category() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   //선택된 카테고리조건 (카테고리&태그&정렬)
+
   const [fitlerCondtion, setfitlerCondtion] = useState({
     category: CategoryFilter[0].type,
     frequencyTag: tagFrequencyData[0].type,
@@ -22,6 +24,9 @@ export default function Category() {
     descendingOrder: true,
     sortType: sortTypeData[0].type,
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(16);
   // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
   // ,  로 구분
 
@@ -31,9 +36,9 @@ export default function Category() {
         fitlerCondtion.category
       }&tag=${fitlerCondtion.frequencyTag},${fitlerCondtion.tasteTag.join(
         ','
-      )}&page=**&size=16&sort=${fitlerCondtion.descendingOrder}${
-        fitlerCondtion.sortType
-      }`;
+      )}&page=${currentPage}&size=${pageSize}&sort=${
+        fitlerCondtion.descendingOrder
+      }${fitlerCondtion.sortType}`;
 
       try {
         const response = await fetch(url, { method: 'GET' });
@@ -50,47 +55,42 @@ export default function Category() {
     };
 
     fetchCocktails();
-  }, [fitlerCondtion]);
+    setCurrentPage(1);
+  }, [fitlerCondtion, currentPage]);
   //가상데이터
-  const isBookmarked = true;
-  const item = {
-    itemid: '99',
-    img: 'images/cocktailSample.jpg',
-    title: '타이틀',
-  };
+  // const isBookmarked = true;
+  // const item = {
+  //   itemid: '99',
+  //   img: 'images/cocktailSample.jpg',
+  //   title: '타이틀',
+  // };
 
-  // const dummyData = [
-  //   {
-  //     cocktailId: 1,
-  //     name: 'sample cocktail',
-  //     imageUrl: 'images/슬라이더샘플.jpg',
-  //     isBookmarked: false,
-  //   },
-  //   {
-  //     cocktailId: 2,
-  //     name: 'sample cocktail',
-  //     imageUrl: 'images/슬라이더샘플.jpg',
-  //     isBookmarked: true,
-  //   },
-  //   {
-  //     cocktailId: 3,
-  //     name: 'sample cocktail',
-  //     imageUrl: 'images/슬라이더샘플.jpg',
-  //     isBookmarked: false,
-  //   },
-  //   {
-  //     cocktailId: 4,
-  //     name: 'sample cocktail',
-  //     imageUrl: 'images/슬라이더샘플.jpg',
-  //     isBookmarked: false,
-  //   },
-  //   {
-  //     cocktailId: 5,
-  //     name: 'sample cocktail',
-  //     imageUrl: 'images/슬라이더샘플.jpg',
-  //     isBookmarked: true,
-  //   },
-  // ];
+  const dummyData = [
+    {
+      cocktailId: 1,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail1.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 2,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail2.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 3,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail3.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 4,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail4.jpg',
+      isBookmarked: false,
+    },
+  ];
   // const apiUrl =
   //   '/cocktails/filter?category=<CATEGORY>&tag=<TAG>&page=<PAGE>&size=<SIZE>&sort=<SORT>';
 
@@ -150,35 +150,21 @@ export default function Category() {
               fitlerCondtion={fitlerCondtion}
             />
             {/* 필터에 따라 출력되는 데이터 */}
-            <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[300px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap ">
-              <Card
-                item={item}
-                isBookmarked={isBookmarked}
-                className="pr-4  "
-              />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pl-2" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pl-2" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pl-2" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
-              <Card item={item} isBookmarked={isBookmarked} className="pl-2" />
+            <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[100px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap ">
+              {dummyData.map((item, index) => (
+                <Card item={item} className="pr-4" key={index} />
+              ))}
+            </div>
+            <div className="flex justify-start mb-[100px] gap-2">
+              {[1, 2, 3].map((i, idx) => (
+                <ClickButton size="w-[20px] h-[30px]" key={idx}>
+                  {i}
+                </ClickButton>
+              ))}
             </div>
           </div>
         </section>
       </div>
-      {/* css 를 위한 임시 footer */}
-      {/* <footer className="absolute w-full h-[400px] bg-black z-10 flex text-white">
-        footer
-      </footer> */}
     </div>
   );
 }
