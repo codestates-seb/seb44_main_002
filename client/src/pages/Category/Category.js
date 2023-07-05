@@ -11,6 +11,7 @@ import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 import Pagination from '../../components/Pagination/Pagination';
+// import HoverButton from '../../common/Buttons/HoverButton';
 export default function Category() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
@@ -25,6 +26,11 @@ export default function Category() {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
+  console.log(currentPage);
+  const [obj, setObj] = useState({
+    totalCount: 200,
+    totalPages: 5,
+  });
 
   useEffect(() => {
     const page = currentPage + 1;
@@ -77,6 +83,18 @@ export default function Category() {
     },
     {
       cocktailId: 4,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail4.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 5,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail3.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 6,
       name: 'sample cocktail',
       imageUrl: 'images/cocktail/cocktail4.jpg',
       isBookmarked: false,
@@ -147,11 +165,40 @@ export default function Category() {
               ))}
             </div>
             <div className="flex justify-start mb-[100px] gap-2">
-              <Pagination
-              // currentPage={currentPage}
-              // setCurrentPage={setCurrentPage}
-              // pageInfo={obj}--> 레시피 갯수에 따라서 페이지 수가 달라짐
-              />
+              {obj && (
+                <>
+                  {obj.totalCount > 16 && (
+                    <>
+                      {/* <Pagination
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        pageInfo={obj}
+                      /> */}
+                      {[1, 2, 3].map((i, idx) => (
+                        <HoverButton
+                          size="w-[20px] h-[30px]"
+                          key={idx}
+                          color={`${
+                            currentPage === idx
+                              ? 'text-[#BB40F1] bg-transparent'
+                              : 'text-[#7B7B7B] bg-transparent'
+                          }`}
+                          borderColor={`${
+                            currentPage === idx
+                              ? 'border-[#BB40F1]'
+                              : 'border-[#7B7B7B]'
+                          }`}
+                          onClick={() => {
+                            setCurrentPage(idx);
+                          }}
+                        >
+                          {i}
+                        </HoverButton>
+                      ))}
+                    </>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </section>
