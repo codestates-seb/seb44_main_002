@@ -10,7 +10,7 @@ import {
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
-import Pagination from '../../components/Pagination/Pagination';
+// import Pagination from '../../components/Pagination/Pagination';
 // import HoverButton from '../../common/Buttons/HoverButton';
 export default function Category() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -26,7 +26,7 @@ export default function Category() {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
-  console.log(currentPage);
+  //console.log(currentPage);
   const [obj, setObj] = useState({
     totalCount: 200,
     totalPages: 5,
@@ -59,6 +59,10 @@ export default function Category() {
     };
 
     fetchCocktails();
+    setObj({
+      totalCount: 200,
+      totalPages: 5,
+    });
   }, [fitlerCondtion, currentPage]);
   //더미데이터
 
@@ -100,24 +104,6 @@ export default function Category() {
       isBookmarked: false,
     },
   ];
-  // const apiUrl =
-  //   '/cocktails/filter?category=<CATEGORY>&tag=<TAG>&page=<PAGE>&size=<SIZE>&sort=<SORT>';
-
-  // fetch(apiUrl)
-  //   .then((response) => {
-  //     if (response.ok) {
-  //       return response.json();
-  //     }
-  //     throw new Error('Network response was not ok.');
-  //   })
-  //   .then((data) => {
-  //     // 응답 결과를 처리하는 로직
-  //     //   console.log(data);
-  //     // data를 사용하여 UI를 업데이트하거나 다른 작업을 수행할 수 있습니다.
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error:', error);
-  //   });
 
   return (
     <div className="overflow-hidden">
