@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+
+// import { RootState } from '../../redux/store';
+
+const CHANGE_PAGE_LIST_CNT = 4;
 const PAGE_BLOCK_SIZE = 5;
 
 export default function Pagination({ currentPage, setCurrentPage, pageInfo }) {
+  const navigate = useNavigate();
   const [paginationList, setPaginationList] = useState([]);
 
   const createPageList = (current) => {
-    //숫자배열이 나옴
     return Array.from({ length: PAGE_BLOCK_SIZE }, (_, idx) => {
       return current - 2 + idx;
     });
   };
 
-  //버튼을 클릭하면 페이지 이동
   const handleButtonClick = (page) => {
     setCurrentPage(page);
+    // navigate(`?page=${page}`);
   };
+
   const updatePaginationList = () => {
     if (currentPage <= CHANGE_PAGE_LIST_CNT) {
       if (pageInfo.totalPages <= PAGE_BLOCK_SIZE) {
@@ -30,27 +37,81 @@ export default function Pagination({ currentPage, setCurrentPage, pageInfo }) {
     return createPageList(currentPage);
   };
 
+  useEffect(() => {
+    setPaginationList(() => updatePaginationList());
+  }, [currentPage, searchKeyword]);
+
+  useEffect(() => {
+    console.log(pageInfo);
+  });
+
   return (
-    <div>
-      {/* {[1, 2, 3].map((i, idx) => (
-        <ClickButton
-          size="w-[20px] h-[30px]"
-          key={idx}
-          color={`${
-            currentPage === idx
-              ? 'text-[#BB40F1] bg-transparent'
-              : 'text-[#7B7B7B] bg-transparent'
-          }`}
-          borderColor={`${
-            currentPage === idx ? 'border-[#BB40F1]' : 'border-[#7B7B7B]'
-          }`}
-          onClick={() => {
-            setCurrentPage(idx);
-          }}
-        >
-          {i}
-        </ClickButton>
-      ))} */}
-    </div>
+    <>
+      <div className="float-left">
+        {currentPage > 1 && (
+          <button
+            onClick={() => {
+              handleButtonClick(currentPage - 1);
+            }}
+          >
+            Prev
+          </button>
+        )}
+        {currentPage >= PAGE_BLOCK_SIZE &&
+          PAGE_BLOCK_SIZE !== pageInfo.totalPages && (
+            <>
+              <button
+                onClick={() => {
+                  handleButtonClick(1);
+                }}
+              >
+                1
+              </button>
+              {/* <PaginationExtension>...</PaginationExtension> */}
+            </>
+          )}
+        {paginationList &&
+          paginationList.map((page) => {
+            return (
+              <button
+                className={`${
+                  page === currentPage
+                    ? 'text-white bg-orange-point hover:bg-orange-point border-transparent hover:border-transparent'
+                    : ''
+                }`}
+                onClick={() => {
+                  handleButtonClick(page);
+                }}
+                key={page}
+              >
+                {page}
+              </button>
+            );
+          })}
+        {currentPage <
+          pageInfo.totalPages - (pageInfo.totalPages % PAGE_BLOCK_SIZE) &&
+          !(pageInfo.totalPages <= PAGE_BLOCK_SIZE) && (
+            <>
+              {/* <PaginationExtension>...</PaginationExtension> */}
+              <button
+                onClick={() => {
+                  handleButtonClick(pageInfo.totalPages);
+                }}
+              >
+                {pageInfo.totalPages}
+              </button>
+            </>
+          )}
+        {currentPage < pageInfo.totalPages && (
+          <button
+            onClick={() => {
+              handleButtonClick(currentPage + 1);
+            }}
+          >
+            Next
+          </button>
+        )}
+      </div>
+    </>
   );
 }
