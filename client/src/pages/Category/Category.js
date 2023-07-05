@@ -40,7 +40,7 @@ export default function Category() {
         if (!response.ok) {
           throw new Error('Network response was not ok.');
         }
-        const data = await response.json();
+        //const data = await response.json();
         // 데이터 처리
       } catch (error) {
         // 에러 처리
@@ -59,8 +59,8 @@ export default function Category() {
     title: '타이틀',
   };
 
-  const apiUrl =
-    '/cocktails/filter?category=<CATEGORY>&tag=<TAG>&page=<PAGE>&size=<SIZE>&sort=<SORT>';
+  // const apiUrl =
+  //   '/cocktails/filter?category=<CATEGORY>&tag=<TAG>&page=<PAGE>&size=<SIZE>&sort=<SORT>';
 
   // fetch(apiUrl)
   //   .then((response) => {

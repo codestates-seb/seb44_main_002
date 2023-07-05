@@ -1,5 +1,3 @@
-//import { Button } from '@mui/base';
-import { useState } from 'react';
 import {
   CategoryFilter,
   tagFrequencyData,
@@ -27,7 +25,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
           frequencyTag: tagFrequencyData[idx].type,
         });
         break;
-      case 'tasteTag':
+      case 'tasteTag': {
         //그전에 눌렀던걸 또 눌렀다면 취소
         if (fitlerCondtion.tasteTag.length === 0) {
           const ClickedTag = fitlerCondtion.tasteTag;
@@ -59,6 +57,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
         }
 
         break;
+      }
       case 'descendingOrder':
         setfitlerCondtion({
           ...fitlerCondtion,
