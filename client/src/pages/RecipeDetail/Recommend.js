@@ -17,7 +17,9 @@ export default function Recommend({ cocktailDetail }) {
           };
           return (
             <Link to={`/detail/${ele.cocktailId}`} key={ele.cocktailId}>
-              <Card item={item} isBookmarked={ele.isBookmarked} />
+              <div className="mb-12 mr-4">
+                <Card item={item} isBookmarked={ele.isBookmarked} />
+              </div>
             </Link>
           );
         })}
@@ -36,6 +38,7 @@ text-center
 `;
 const CardContainer = tw.div`
 flex
+flex-wrap
 justify-around
 mt-14
 `;

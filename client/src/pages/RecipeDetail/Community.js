@@ -13,32 +13,44 @@ export default function Community({ cocktailDetail }) {
           return (
             <>
               <CommentContainer key={ele.userId}>
-                <div>
-                  <CommentWriter>{ele.name}</CommentWriter>
-                  <CommentContent>{ele.content}</CommentContent>
+                <CommentWriter>{ele.name}</CommentWriter>
+                <CommentContent>{ele.content}</CommentContent>
+                <CommentAndButton>
                   <CommentDate>{ele.date}</CommentDate>
-                </div>
-                {ele.userId === 3 ? (
-                  <div>
-                    <CommentButton>삭제하기</CommentButton>
-                    <CommentButton>수정하기</CommentButton>
-                    <CommentButton>답변하기</CommentButton>
-                  </div>
-                ) : (
-                  <CommentButton>답변하기</CommentButton>
-                )}
+                  <ButtonContainer>
+                    {ele.userId === 3 ? (
+                      <>
+                        <CommentButton>삭제하기</CommentButton>
+                        <CommentButton>수정하기</CommentButton>
+                        <CommentButton>답변하기</CommentButton>
+                      </>
+                    ) : (
+                      <CommentButton>답변하기</CommentButton>
+                    )}
+                  </ButtonContainer>
+                </CommentAndButton>
               </CommentContainer>
               {ele.replies.map((rp) => {
                 return (
                   <ReplyContainer key={rp.userId}>
-                    <div>
-                      <CommentWriter>{rp.name}</CommentWriter>
-                      <CommentContent>
-                        {'@' + rp.taggedUserName + ' ' + rp.content}
-                      </CommentContent>
+                    <CommentWriter>{rp.name}</CommentWriter>
+                    <CommentContent>
+                      {'@' + rp.taggedUserName + ' ' + rp.content}
+                    </CommentContent>
+                    <CommentAndButton>
                       <CommentDate>{rp.date}</CommentDate>
-                    </div>
-                    <CommentButton>답변하기</CommentButton>
+                      <ButtonContainer>
+                        {rp.userId === 3 ? (
+                          <>
+                            <CommentButton>삭제하기</CommentButton>
+                            <CommentButton>수정하기</CommentButton>
+                            <CommentButton>답변하기</CommentButton>
+                          </>
+                        ) : (
+                          <CommentButton>답변하기</CommentButton>
+                        )}
+                      </ButtonContainer>
+                    </CommentAndButton>
                   </ReplyContainer>
                 );
               })}
@@ -68,11 +80,13 @@ border-gray-300/50
 text-xs 
 text-gray-200 
 items-end
+max-md:flex-col
 `;
 const InputTextArea = tw.textarea`
 h-24 
 w-[calc(100%-100px)]
 bg-transparent 
+max-md:w-full
 `;
 const InputButton = tw.button`
 h-8 
@@ -86,14 +100,17 @@ inline-block
 text-gray-400
 hover:text-pointPurple-100
 hover:border-pointPurple-100
+max-md:mt-4
 `;
 const CommentContainer = tw.div`
-flex
+flex-col
 items-end
 justify-between
 py-3
 border-b-[1px]
 border-gray-300/50
+max-md:flex-col
+max-md:items-start
 `;
 const CommentWriter = tw.p`
 text-gray-200 
@@ -107,6 +124,16 @@ const CommentDate = tw.p`
 mt-1.5
 text-gray-200 
 text-xs
+`;
+const CommentAndButton = tw.div`
+flex 
+justify-between 
+max-md:flex-col
+`;
+const ButtonContainer = tw.div`
+mt-3 
+max-md:mt-0 
+max-md:text-right
 `;
 const ReplyContainer = tw(CommentContainer)`
 ml-12
@@ -123,4 +150,7 @@ text-gray-400
 px-2
 hover:text-white
 hover:border-white
+max-md:ml-0
+max-md:mr-1
+max-md:mt-4
 `;

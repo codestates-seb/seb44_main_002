@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import tw from 'tailwind-styled-components';
 
 import RecipeInfo from './RecipeInfo';
@@ -6,21 +8,27 @@ import Community from './Community';
 import Recommend from './Recommend';
 
 export default function RecipeDetail() {
-  const DrawBookmark = ({ isSelected = 1 }) => {
+  const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
+
+  const DrawBookmark = () => {
     const bookmark = process.env.PUBLIC_URL + '/images/bookmark.png';
     const selectedMookmark =
       process.env.PUBLIC_URL + '/images/bookmark_selected.png';
     return (
-      <img src={isSelected ? bookmark : selectedMookmark} alt="bookmark" />
+      <BookmarkIcon onClick={() => setIsBookmarked(!isBookmarked)}>
+        <img
+          width={50}
+          src={isBookmarked ? bookmark : selectedMookmark}
+          alt="bookmark"
+        />
+      </BookmarkIcon>
     );
   };
   return (
     <>
       <Background>
         <Container>
-          <BookmarkIcon>
-            <DrawBookmark />
-          </BookmarkIcon>
+          <DrawBookmark />
           <RecipeInfo cocktailDetail={cocktailDetail} recipeList={recipeList} />
           <Process cocktailDetail={cocktailDetail} />
           <Community cocktailDetail={cocktailDetail} />
@@ -52,7 +60,6 @@ rounded-ee-[3.125rem]
 const BookmarkIcon = tw.div`
 absolute
 top-0 right-14
-text-7xl
 cursor-pointer
 `;
 
@@ -68,9 +75,10 @@ const recipeList = [
 ];
 const cocktailDetail = {
   cocktailId: 1,
-  name: 'sample',
+  name: 'Admin',
   imageUrl: 'sample image url',
   liquor: '럼',
+  date: '2023-02-13',
   Ingredients: [
     {
       ingredient: '설탕',
@@ -79,6 +87,7 @@ const cocktailDetail = {
       ingredient: '레몬즙',
     },
   ],
+  // Ingredients: ['설탕', '레몬즙'],
   recipe: [
     `Pour the rum and top with soda water.`,
     'Pour the rum and top with soda water.with soda water.',
@@ -97,7 +106,8 @@ const cocktailDetail = {
     {
       userId: 2,
       name: 'kim',
-      content: '깔끔하고 맛있네요!',
+      content:
+        '깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!',
       date: '2023-02-16',
       replies: [
         {
@@ -113,7 +123,8 @@ const cocktailDetail = {
     {
       userId: 3,
       name: 'chan',
-      content: '그놈은 멋있었다...백엔드는 멋있었다.',
+      content:
+        '그놈은 멋있었다...백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.',
       date: '2023-02-16',
       replies: [
         {
@@ -121,15 +132,16 @@ const cocktailDetail = {
           name: 'jae',
           content: '백엔드는 멋있다.',
           taggedUserId: 3,
-          taggedUserName: 'kim',
+          taggedUserName: 'chan',
           date: '2023-02-16',
         },
         {
-          userId: 5,
+          userId: 3,
           name: 'euni',
-          content: '이제 아셨습니까. 휴면',
+          content:
+            '이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면',
           taggedUserId: 4,
-          taggedUserName: 'kim',
+          taggedUserName: 'jae',
           date: '2023-02-16',
         },
       ],
@@ -155,5 +167,5 @@ const cocktailDetail = {
       isBookmarked: true,
     },
   ],
-  isBookmarked: 'true',
+  isBookmarked: true,
 };

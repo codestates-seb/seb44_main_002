@@ -1,8 +1,12 @@
+import { useState } from 'react';
+
 import tw from 'tailwind-styled-components';
 import { BsArrowRightShort } from 'react-icons/bs';
 import { MdIosShare } from 'react-icons/md';
+import { PiUserCircleFill } from 'react-icons/pi';
 
 export default function RecipeInfo({ cocktailDetail, recipeList }) {
+  const [score, setScore] = useState(0);
   const urlCu = encodeURI(
     `https://pocketcu.co.kr/search/stock/product/main?searchWord=${cocktailDetail.liquor}`
   );
@@ -12,19 +16,22 @@ export default function RecipeInfo({ cocktailDetail, recipeList }) {
     alert('현재 주소가 클립보드에 복사되었습니다.');
   };
 
-  const DrawStar = ({ num = 1 }) => {
+  const DrawStar = () => {
     const repetitions = 5;
     const star = process.env.PUBLIC_URL + '/images/star.png';
     const selectedStar = process.env.PUBLIC_URL + '/images/star_selected.png';
     return (
-      <div className="flex items-end">
-        {Array.from({ length: repetitions }, (_, index) => (
-          <StarIcon
-            key={index}
-            src={index < num ? selectedStar : star}
-            alt="star"
-          />
-        ))}
+      <div className="flex items-end max-lg:flex-col max-lg:items-start max-md:flex-row">
+        <div className="flex">
+          {Array.from({ length: repetitions }, (_, index) => (
+            <StarIcon
+              key={index}
+              src={index - 1 < score ? selectedStar : star}
+              onClick={() => setScore(index)}
+              alt="star"
+            />
+          ))}
+        </div>
         <StarAverage>{`평균 : ${cocktailDetail.rating}`}</StarAverage>
       </div>
     );
@@ -39,21 +46,29 @@ export default function RecipeInfo({ cocktailDetail, recipeList }) {
       <InfoRightContainer>
         <StarCotiner>
           <DrawStar num={1} />
-          <div className="flex text-gray-300 text-xs">
+          <ModifyContainer>
             <ModifyP>수정하기</ModifyP>
-            <p>|</p>
+            <p className="mx-2">|</p>
             <ModifyP>삭제하기</ModifyP>
-          </div>
+          </ModifyContainer>
         </StarCotiner>
-        <div className="flex items-end">
+        <div className="flex flex-wrap items-end">
           <InfoTitle>체리주</InfoTitle>
           <ShareContainer onClick={CopyToClipBoard}>
             <p>공유하기</p>
             <MdIosShare />
           </ShareContainer>
         </div>
-        <div className="flex items-end">
-          <p className="text-sm text-gray-300 w-20">{cocktailDetail.name}</p>
+        <div className="flex flex-wrap mt-6 justify-between text-sm text-gray-100">
+          <div className="flex flex-wrap">
+            <div className="flex">
+              <PiUserCircleFill size="24px" />
+              <p className="mt-0.5 ml-0.5 mr-2.5 text-sm">
+                {cocktailDetail.name}
+              </p>
+            </div>
+            <p className="mt-1 text-[10px]">{cocktailDetail.date}</p>
+          </div>
           <LinkToCU href={urlCu} target="_blank">
             <LinkToCUP>편의점 앱으로 이동</LinkToCUP> <BsArrowRightShort />
           </LinkToCU>
@@ -76,6 +91,7 @@ export default function RecipeInfo({ cocktailDetail, recipeList }) {
 
 const InfoContainer = tw.section`
 flex
+max-md:flex-col
 `;
 const InfoImage = tw.img`
 w-80
@@ -84,27 +100,40 @@ rounded-[0.625rem]
 const InfoRightContainer = tw.section`
 ml-8
 w-full
+max-md:ml-0
+max-md:mt-4
 `;
 const StarCotiner = tw.section`
 flex
 justify-between
 text-xl
+max-lg:flex-col
 `;
 const StarIcon = tw.img`
 mr-1
+cursor-pointer
 `;
 const StarAverage = tw.p`
 ml-4 
 text-yellow-400 
 text-xs
+max-lg:ml-0
+max-lg:mt-2
+max-md:ml-2
+`;
+const ModifyContainer = tw.div`
+flex
+text-gray-300 
+text-xs
+max-lg:mt-2
 `;
 const ModifyP = tw.p`
-mx-2
 cursor-pointer
 hover:text-white
 `;
 const InfoTitle = tw.p`
 mt-5
+mr-4
 text-3xl
 text-gray-100
 font-bold
@@ -117,17 +146,17 @@ px-2
 py-1 
 text-xs 
 text-gray-200 
-items-end 
+items-center 
 bg-gray-300 
 rounded-full
 cursor-pointer
 hover:text-gray-300
 hover:bg-white
+max-lg:ml-0
+max-lg:mt-2
 `;
 const LinkToCU = tw.a`
 flex
-w-full
-mt-6
 items-center
 justify-end
 text-gray-300
@@ -138,7 +167,7 @@ const LinkToCUP = tw.p`
 cursor-pointer
 `;
 const RecipeContiner = tw.div`
-mt-7
+mt-5
 pb-4
 text-xs
 border-b-[1px]
