@@ -113,6 +113,7 @@ export default function Header() {
           <HeaderDiv className="justify-end max-[768px]:hidden">
             <HeaderModal />
           </HeaderDiv>
+
           <HeaderDiv className="justify-end min-[769px]:hidden">
             <Hamburger />
           </HeaderDiv>

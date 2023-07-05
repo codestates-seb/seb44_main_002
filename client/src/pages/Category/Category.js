@@ -111,8 +111,8 @@ export default function Category() {
   //   });
 
   return (
-    <>
-      <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[10rem] flex justify-center ">
+    <div className="overflow-hidden">
+      <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[10rem] flex justify-center  ">
         {/* 배경 음표 */}
         <img
           src="/images/background/music-dynamic-gradient.png"
@@ -125,14 +125,15 @@ export default function Category() {
           alt="별"
           className="absolute bottom-[-400px] right-[900px] pointer-events-none"
         />
-        <section className="w-[55rem] ">
+        <section className="w-[55rem] max-[990px]:w-[40rem] max-[700px]:w-[30rem] max-[500px]:w-[20rem]">
           {/* 레시피 등록 버튼 */}
           <div className="flex justify-end pb-5 ">
             <HoverButton
-              size="w-[240px] h-[60px]"
+              size="w-[15.6rem] h-[60px] max-[990px]:w-[10rem] max-[700px]:w-[8rem] max-[700px]:h-[40px] "
               className="absolute bottom-0 right-0"
               radius="rounded-[30px]"
               color="text-[#BB40F1] bg-transparent"
+              fontSize="max-[990px]:text-sm max-[700px]:text-xs max-[500px]:text-[10px]"
               // border-gradient border border-solid from-red-500 to-yellow-500
               borderColor="border-[#BB40F1]"
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
@@ -149,8 +150,12 @@ export default function Category() {
               fitlerCondtion={fitlerCondtion}
             />
             {/* 필터에 따라 출력되는 데이터 */}
-            <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[300px]">
-              <Card item={item} isBookmarked={isBookmarked} className="pr-4 " />
+            <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[300px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap ">
+              <Card
+                item={item}
+                isBookmarked={isBookmarked}
+                className="pr-4  "
+              />
               <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
               <Card item={item} isBookmarked={isBookmarked} className="pr-4" />
               <Card item={item} isBookmarked={isBookmarked} className="pl-2" />
@@ -174,6 +179,6 @@ export default function Category() {
       <footer className="absolute w-full h-[400px] bg-black z-10 flex text-white">
         footer
       </footer>
-    </>
+    </div>
   );
 }
