@@ -8,7 +8,7 @@ export const CategoryFilter = [
   {
     id: 0,
     title: 'All',
-    type: null,
+    type: 'all',
   },
   {
     id: 1,

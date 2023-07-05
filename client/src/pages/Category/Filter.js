@@ -1,5 +1,3 @@
-//import { Button } from '@mui/base';
-import { useState } from 'react';
 import {
   CategoryFilter,
   tagFrequencyData,
@@ -11,28 +9,70 @@ import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
 import Sort from './Sort';
 import SortConditionButton from './SortConditionButton';
-export default function Filter() {
-  // 포커싱된 카테고리
-  const [focusCategory, setfocusCategory] = useState(CategoryFilter[0].type);
-  //포커싱된 도수별 태그->도수높음 default
-  const [focusFrequencyTag, setfocusFrequencyTag] = useState(
-    tagFrequencyData[0].type
-  );
-  //내림차순 여부 ->내림차순 default
-  const [descendingOrder, setdescendingOrder] = useState(true);
-  //정렬조건 조회순인지/별점순인지 ->조회순 default
-  const [sortType, setSortType] = useState(sortTypeData[0].type);
-
-  // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
-  // ,  로 구분
-
-  //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 idx 적용
+export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
+  //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 필터상태 저장
   const selectMenuHandler = (idx, type) => {
-    if (type === 'category') {
-      //  setfitlerCondtion({ category });
+    switch (type) {
+      case 'category':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          category: CategoryFilter[idx].type,
+        });
+        break;
+      case 'frequencyTag':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          frequencyTag: tagFrequencyData[idx].type,
+        });
+        break;
+      case 'tasteTag': {
+        //그전에 눌렀던걸 또 눌렀다면 취소
+        if (fitlerCondtion.tasteTag.length === 0) {
+          const ClickedTag = fitlerCondtion.tasteTag;
+          const tag = tagTasteData[idx].type;
+          ClickedTag.push(tag);
+
+          setfitlerCondtion({ ...fitlerCondtion, tasteTag: ClickedTag });
+          break;
+        }
+
+        const alreadyClickedTag = [...fitlerCondtion.tasteTag];
+        const Tag = tagTasteData[idx].type;
+
+        if (fitlerCondtion.tasteTag.indexOf(Tag) >= 0) {
+          //이미클릭된태그를 지울때
+          console.log('제거해야할때');
+          const newclickedList = fitlerCondtion.tasteTag.filter((number) => {
+            return number !== tagTasteData[idx].type;
+          });
+          setfitlerCondtion({ ...fitlerCondtion, tasteTag: newclickedList });
+        } else {
+          //태그를 추가할때
+          alreadyClickedTag.push(tagTasteData[idx].type);
+
+          setfitlerCondtion({
+            ...fitlerCondtion,
+            tasteTag: [...alreadyClickedTag],
+          });
+        }
+
+        break;
+      }
+      case 'descendingOrder':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          descendingOrder: !fitlerCondtion.descendingOrder,
+        });
+        break;
+      case 'sortType':
+        setfitlerCondtion({
+          ...fitlerCondtion,
+          sortType: sortTypeData[idx].type,
+        });
+        break;
+      default:
+        break;
     }
-    //setfitlerCondtion({});
-    // setType(filterBtnData[idx].type);
   };
 
   return (
@@ -44,8 +84,7 @@ export default function Filter() {
             key={data.id}
             data={data}
             idx={idx}
-            focusCategory={focusCategory}
-            setfocusCategory={setfocusCategory}
+            fitlerCondtion={fitlerCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -59,8 +98,7 @@ export default function Filter() {
             key={data.id}
             data={data}
             idx={idx}
-            focusFrequencyTag={focusFrequencyTag}
-            setfocusFrequencyTag={setfocusFrequencyTag}
+            fitlerCondtion={fitlerCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -72,6 +110,9 @@ export default function Filter() {
             radius="rounded-[30px]"
             fontSize="text-[1rem]"
             size="w-[75px] h-[30px]"
+            onClick={() => {
+              selectMenuHandler(idx, 'tasteTag');
+            }}
           >
             # {data.title}
           </ClickButton>
@@ -80,18 +121,16 @@ export default function Filter() {
       {/* sortFilter */}
       <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px]">
         <Sort
-          setdescendingOrder={setdescendingOrder}
-          descendingOrder={descendingOrder}
+          fitlerCondtion={fitlerCondtion}
+          selectMenuHandler={selectMenuHandler}
         />
-        {/* <SortConditionButton setSortType={setSortType} sortType={sortType} /> */}
 
         {sortTypeData.map((data, idx) => (
           <SortConditionButton
             key={data.id}
             data={data}
             idx={idx}
-            setSortType={setSortType}
-            sortType={sortType}
+            fitlerCondtion={fitlerCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
