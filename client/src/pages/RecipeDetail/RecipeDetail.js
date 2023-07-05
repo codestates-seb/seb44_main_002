@@ -18,7 +18,7 @@ export default function RecipeDetail() {
       <BookmarkIcon onClick={() => setIsBookmarked(!isBookmarked)}>
         <img
           width={50}
-          src={isBookmarked ? bookmark : selectedMookmark}
+          src={isBookmarked ? selectedMookmark : bookmark}
           alt="bookmark"
         />
       </BookmarkIcon>

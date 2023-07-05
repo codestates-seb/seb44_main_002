@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import tw from 'tailwind-styled-components';
 
 export default function Process({ cocktailDetail }) {
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
   return (
     <ProcessContainer>
       <ProcessHeader>
@@ -9,8 +12,16 @@ export default function Process({ cocktailDetail }) {
       </ProcessHeader>
       {cocktailDetail.recipe.map((ele, idx) => {
         return (
-          <ProcessP key={idx}>
-            <ProcessNum>{idx + 1}</ProcessNum>
+          <ProcessP
+            key={idx}
+            onMouseEnter={() => setHoveredIndex(idx)}
+            onMouseLeave={() => setHoveredIndex(-1)}
+          >
+            {hoveredIndex === idx ? (
+              <HoverdNum>{idx + 1}</HoverdNum>
+            ) : (
+              <ProcessNum>{idx + 1}</ProcessNum>
+            )}
             <p>{ele}</p>
           </ProcessP>
         );
@@ -52,4 +63,7 @@ border-[1px]
 border-[#7b7b7b]/50
 h-5
 text-[10px]
+`;
+const HoverdNum = tw(ProcessNum)`
+border-pointPurple-100
 `;
