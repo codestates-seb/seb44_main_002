@@ -10,8 +10,7 @@ import {
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
-import ClickButton from '../../common/Buttons/ClickButton';
-
+import Pagination from '../../components/Pagination/Pagination';
 export default function Category() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
@@ -25,20 +24,19 @@ export default function Category() {
     sortType: sortTypeData[0].type,
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(16);
-  // /cocktails/filter?category=**&tag=**&page=**&size=**&sort=**
-  // ,  로 구분
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
+    const page = currentPage + 1;
+    //console.log(page);
     const fetchCocktails = async () => {
       const url = `${BASE_URL}/cocktails/filter?category=${
         fitlerCondtion.category
       }&tag=${fitlerCondtion.frequencyTag},${fitlerCondtion.tasteTag.join(
         ','
-      )}&page=${currentPage}&size=${pageSize}&sort=${
-        fitlerCondtion.descendingOrder
-      }${fitlerCondtion.sortType}`;
+      )}&page=${page}&size=$16&sort=${fitlerCondtion.descendingOrder}${
+        fitlerCondtion.sortType
+      }`;
 
       try {
         const response = await fetch(url, { method: 'GET' });
@@ -55,15 +53,8 @@ export default function Category() {
     };
 
     fetchCocktails();
-    setCurrentPage(1);
   }, [fitlerCondtion, currentPage]);
-  //가상데이터
-  // const isBookmarked = true;
-  // const item = {
-  //   itemid: '99',
-  //   img: 'images/cocktailSample.jpg',
-  //   title: '타이틀',
-  // };
+  //더미데이터
 
   const dummyData = [
     {
@@ -156,11 +147,11 @@ export default function Category() {
               ))}
             </div>
             <div className="flex justify-start mb-[100px] gap-2">
-              {[1, 2, 3].map((i, idx) => (
-                <ClickButton size="w-[20px] h-[30px]" key={idx}>
-                  {i}
-                </ClickButton>
-              ))}
+              <Pagination
+              // currentPage={currentPage}
+              // setCurrentPage={setCurrentPage}
+              // pageInfo={obj}--> 레시피 갯수에 따라서 페이지 수가 달라짐
+              />
             </div>
           </div>
         </section>
