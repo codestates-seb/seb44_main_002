@@ -59,6 +59,38 @@ export default function Category() {
     title: '타이틀',
   };
 
+  const dummyData = [
+    {
+      cocktailId: 1,
+      name: 'sample cocktail',
+      imageUrl: 'images/슬라이더샘플.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 2,
+      name: 'sample cocktail',
+      imageUrl: 'images/슬라이더샘플.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 3,
+      name: 'sample cocktail',
+      imageUrl: 'images/슬라이더샘플.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 4,
+      name: 'sample cocktail',
+      imageUrl: 'images/슬라이더샘플.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 5,
+      name: 'sample cocktail',
+      imageUrl: 'images/슬라이더샘플.jpg',
+      isBookmarked: true,
+    },
+  ];
   // const apiUrl =
   //   '/cocktails/filter?category=<CATEGORY>&tag=<TAG>&page=<PAGE>&size=<SIZE>&sort=<SORT>';
 
