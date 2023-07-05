@@ -1,5 +1,6 @@
 import Slider from '../components/Slider/Slider';
 import Ranking from '../components/Ranking/Ranking';
+import Advice from '../components/Advice/Advice';
 
 export default function Main() {
   return (
@@ -10,7 +11,9 @@ export default function Main() {
       <section className="flex justify-center">
         <Ranking />
       </section>
-      <section>community</section>
+      <section>
+        <Advice />
+      </section>
     </main>
   );
 }
