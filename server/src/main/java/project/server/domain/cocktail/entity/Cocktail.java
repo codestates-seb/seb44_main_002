@@ -120,7 +120,7 @@ public class Cocktail {
                 .cocktailId(cocktail.cocktailId)
                 .name(cocktail.name)
                 .imageUrl(cocktail.imageUrl)
-                .isBookmarked(false)
+                .isBookmarked(isBookmarked)
                 .build();
     }
 
