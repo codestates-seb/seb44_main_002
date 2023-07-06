@@ -10,6 +10,7 @@ import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
+import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.dto.MultiResponseDto;
 import project.server.exception.BusinessLogicException;

@@ -13,8 +13,9 @@ public class RecipeDto {
     public static class Response{
         private final String process;
 
+
         public Response(String process) {
-            this.process =process;
+            this.process = process;
         }
     }
 }

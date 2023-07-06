@@ -7,11 +7,12 @@ import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.ingredient.Ingredients;
 import project.server.domain.cocktail.embed.liquor.LiquorMapper;
 import project.server.domain.cocktail.embed.rating.Rating;
-import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.embed.tag.Tags;
+import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.coment.Comment;
 import project.server.domain.comment.dto.CommentDto;
 
 import java.time.LocalDateTime;

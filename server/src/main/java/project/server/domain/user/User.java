@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "users")
 @Getter
@@ -25,6 +27,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     private String gender;
 
     private int age;
@@ -32,4 +37,16 @@ public class User {
     private long subscriberCount;
 
     private String profileImageUrl;
+
+    public UserDto.Response entityToResponse() {
+        return UserDto.Response.builder()
+                .userId(userId)
+                .name(name)
+                .profileImageUrl(profileImageUrl)
+                .gender(gender)
+                .age(age)
+                .email(email)
+                .subscriberCount(subscriberCount)
+                .build();
+    }
 }

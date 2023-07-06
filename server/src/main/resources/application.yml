@@ -1,3 +1,7 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
 spring:
   h2:
     console:
@@ -15,3 +19,10 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
+mail:
+  address:
+    admin: pxodid2000@gmail.com
+jwt:
+  key: abcd1234123412341234123412341234
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
