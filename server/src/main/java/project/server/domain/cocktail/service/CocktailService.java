@@ -1,6 +1,7 @@
 package project.server.domain.cocktail.service;
 
 import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
@@ -11,9 +12,9 @@ import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
-import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.user.User;
+import project.server.domain.user.UserService;
 import project.server.dto.MultiResponseDto;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
@@ -31,26 +32,34 @@ public class CocktailService {
     public static final int MIN_RATE_VALUE = 1;
 
     private final CocktailRepository cocktailRepository;
+    private final UserService userService;
 
-    public CocktailService(CocktailRepository cocktailRepository) {
+    public CocktailService(CocktailRepository cocktailRepository, UserService userService) {
         this.cocktailRepository = cocktailRepository;
+        this.userService = userService;
     }
 
     /**
      * 칵테일에 유저 정보 담는 로직 필요
      */
-    public CocktailDto.Response createCocktail(CocktailDto.Post post) {
+    public CocktailDto.Response createCocktail(Authentication authentication, CocktailDto.Post post) {
+        User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = post.postToEntity();
+        cocktail.assignUser(user);
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
         savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
-        return savedCocktail.entityToResponse();
+        return savedCocktail.entityToResponse(false);
     }
 
-    public CocktailDto.Response readCocktail(long cocktailId) {
+    public CocktailDto.Response readCocktail(Authentication authentication, long cocktailId) {
         Cocktail cocktail = findCocktailById(cocktailId);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
-        return cocktail.entityToResponse();
+        if(authentication == null){
+            return cocktail.entityToResponse(false);
+        }
+        User user = userService.findUserByAuthentication(authentication);
+        return cocktail.entityToResponse(user.isBookmarked(cocktailId));
     }
 
     public MultiResponseDto readFilteredCocktails(String category, String tag, int page, String sortValue) {
@@ -77,7 +86,7 @@ public class CocktailService {
         Cocktail cocktail = findCocktailById(cocktailId);
         cocktail.modify(patch);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
-        return cocktail.entityToResponse();
+        return cocktail.entityToResponse(false);
     }
 
     public void removeCocktail(long cocktailId) {
@@ -93,7 +102,7 @@ public class CocktailService {
     /**
      * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
      */
-    public RateDto.Response rateCocktail(long cocktailId, int value) {
+    public RateDto.Response rateCocktail(Authentication authentication, long cocktailId, int value) {
         verifyRateValue(value);
         User user = new User(); // 수정 필요
         Cocktail cocktail = findCocktailById(cocktailId);
@@ -106,8 +115,8 @@ public class CocktailService {
      * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
      * 근데 얘는 user로 가야하는거 아닌가...?
      */
-    public void bookmarkCocktail(long cocktailId) {
-       User user = new User();
+    public void bookmarkCocktail(Authentication authentication, long cocktailId) {
+       User user = userService.findUserByAuthentication(authentication);
        if(user.isBookmarked(cocktailId)){
            user.cancelBookmark(cocktailId);
            return;

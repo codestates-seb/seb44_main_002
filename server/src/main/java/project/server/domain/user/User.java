@@ -36,10 +36,10 @@ public class User {
     private String profileImageUrl;
 
     @Embedded
-    private BookmarkedCocktails bookmarkedCocktails;
+    private BookmarkedCocktails bookmarkedCocktails = new BookmarkedCocktails();
 
     @Embedded
-    private RatedCocktails ratedCocktails;
+    private RatedCocktails ratedCocktails = new RatedCocktails();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();

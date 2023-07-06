@@ -31,7 +31,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-
         ObjectMapper objectMapper = new ObjectMapper();
         SignInDto signInDto = objectMapper.readValue(request.getInputStream(), SignInDto.class);
 
@@ -51,19 +50,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(user);
-        String userId = String.valueOf(user.getUserId());
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
-        response.setHeader("UserId", userId);
+        response.setIntHeader("UserId", (int) user.getUserId());
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
     private String delegateAccessToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", user.getUserId());
-        claims.put("email", user.getEmail());
+        claims.put("username", user.getEmail());
         claims.put("roles", user.getRoles());
 
         String subject = user.getEmail();

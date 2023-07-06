@@ -1,5 +1,6 @@
 package project.server.domain.user;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.server.auth.utils.CustomAuthorityUtils;
@@ -32,8 +33,8 @@ public class UserService {
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
 
-        userRepository.save(user);
-        return user.entityToResponse();
+        User savedUser = userRepository.save(user);
+        return savedUser.entityToResponse();
     }
 
     public void verifyExistsEmail(String email) {
@@ -58,5 +59,10 @@ public class UserService {
     public void deleteUser(long userId) {
         User user = findUser(userId);
         userRepository.delete(user);
+    }
+
+    public User findUserByAuthentication(Authentication authentication) {
+        String email = (String) authentication.getPrincipal();
+        return findUserByEmail(email);
     }
 }
