@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import HoverButton from '../../common/Buttons/HoverButton';
 import tw from 'tailwind-styled-components';
-import useValid from '../Validation/Validation';
+import useLoginValid from '../Validation/LoginValidation';
 import CustomInput from '../Input/Input';
 
 const style = {
@@ -47,7 +47,7 @@ export default function HeaderModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-    useValid(form, setIsValid);
+    useLoginValid(form, setIsValid);
 
     // 전역상태관리 로그인으로 변경
     // dispatch(() => login())
