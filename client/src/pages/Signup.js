@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import HoverButton from '../common/Buttons/HoverButton';
 import CustomInput from '../components/Input/Input';
-import useValid from '../components/Validation/Validation';
+import UseSignupValid from '../components/Validation/SignupValidation';
+
+import tw from 'tailwind-styled-components';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -28,26 +30,24 @@ export default function Signup() {
     age: '',
   });
 
-  console.log(form);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-    useValid(form, setIsValid);
+    UseSignupValid(form, setIsValid);
 
     // 전역상태관리 로그인으로 변경
     // dispatch(() => login())
   };
 
   return (
-    <div className="bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-screen relative flex justify-center items-start max-[520px]:overflow-hidden">
+    <SignupScreen>
       <img
         src="images/background/pencil.png"
         alt="pencil"
         className="absolute bottom-10 right-72 max-[768px]:right-0"
       />
-      <div className="h-[90%] flex flex-col justify-between max-[520px]:w-screen">
-        <div className="flex flex-[1] justify-center items-center">
+      <SignupContainer>
+        <LogoSection>
           <img
             role="presentation"
             src="images/logo.png"
@@ -56,17 +56,15 @@ export default function Signup() {
             onClick={() => navigate('/')}
             onKeyDown={() => navigate('/')}
           />
-        </div>
-        <div className="z-50 w-[520px] h-full flex flex-[6] justify-center items-center rounded-3xl bg-black bg-opacity-50 max-[520px]:w-full max-[520px]:rounded-none">
-          <div className="w-[90%] h-[90%] flex flex-col justify-center items-center">
-            <h1 className="flex mb-8 text-white text-2xl font-bold items-center max-[520px]:mb-0">
-              회원가입
-            </h1>
+        </LogoSection>
+        <SignupBox>
+          <SignupSection>
+            <SignupHeader>회원가입</SignupHeader>
             <form
               onSubmit={handleSubmit}
               className="flex flex-col h-full items-center"
             >
-              <div className="flex h-full flex-col flex-[6] justify-between  max-[520px]:overflow-y-scroll max-[520px]:items-center">
+              <InputSection>
                 <CustomInput
                   labelName="이름"
                   type="text"
@@ -86,6 +84,7 @@ export default function Signup() {
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
                 <CustomInput
+                  placeholder="비밀번호 8자 이상, 최소한 하나의 문자열, 최소한 하나의 숫자"
                   labelName="비밀번호"
                   type="password"
                   text="비밀번호를 확인해주세요"
@@ -124,8 +123,8 @@ export default function Signup() {
                   value={form.age}
                   onChange={(e) => setForm({ ...form, age: e.target.value })}
                 />
-              </div>
-              <div className="flex flex-1 items-center">
+              </InputSection>
+              <ButtonSection>
                 <HoverButton
                   type="submit"
                   size="w-[159px] h-[53px]"
@@ -135,11 +134,87 @@ export default function Signup() {
                 >
                   회원가입 하기
                 </HoverButton>
-              </div>
+              </ButtonSection>
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
+          </SignupSection>
+        </SignupBox>
+      </SignupContainer>
+    </SignupScreen>
   );
 }
+
+const SignupScreen = tw.div`
+  bg-gradient-to-r from-gradi-to to-gradi-from
+  w-screen
+  h-screen
+  relative
+  flex
+  justify-center
+  items-start
+  max-[520px]:overflow-hidden
+`;
+
+const SignupContainer = tw.div`
+  h-[90%]
+  flex
+  flex-col
+  justify-between
+  max-[520px]:w-screen
+`;
+
+const LogoSection = tw.div`
+flex
+flex-[1]
+justify-center
+items-center
+`;
+
+const SignupBox = tw.div`
+  z-50
+  w-[520px]
+  h-full
+  flex
+  flex-[6]
+  justify-center
+  items-center
+  rounded-3xl
+  bg-black
+  bg-opacity-50
+  max-[520px]:w-full
+  max-[520px]:rounded-none
+`;
+
+const SignupSection = tw.div`
+  w-[90%]
+  h-[90%]
+  flex
+  flex-col
+  justify-center
+  items-center
+`;
+
+const SignupHeader = tw.h1`
+  flex
+  mb-8
+  text-white
+  text-2xl
+  font-bold
+  items-center
+  max-[520px]:mb-0
+`;
+
+const InputSection = tw.div`
+  h-full
+  flex
+  flex-col
+  flex-[6]
+  justify-between
+  max-[520px]:overflow-y-scroll
+  max-[520px]:items-center
+`;
+
+const ButtonSection = tw.div`
+  flex
+  flex-1
+  items-center
+`;
