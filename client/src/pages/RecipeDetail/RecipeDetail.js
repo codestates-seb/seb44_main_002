@@ -11,9 +11,10 @@ export default function RecipeDetail() {
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
 
   const DrawBookmark = () => {
-    const bookmark = process.env.PUBLIC_URL + '/images/bookmark.png';
+    const bookmark =
+      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
     const selectedMookmark =
-      process.env.PUBLIC_URL + '/images/bookmark_selected.png';
+      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
     return (
       <BookmarkIcon onClick={() => setIsBookmarked(!isBookmarked)}>
         <img
