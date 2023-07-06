@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import project.server.auth.dto.SignInDto;
 import project.server.auth.jwt.JwtTokenizer;
 import project.server.domain.user.User;
-import project.server.domain.user.UserService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,12 +22,10 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
-    private final UserService userService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, UserService userService) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
-        this.userService = userService;
     }
 
     @SneakyThrows
@@ -65,19 +62,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateAccessToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", user.getUserId());   // 추가
+        claims.put("userId", user.getUserId());
         claims.put("email", user.getEmail());
         claims.put("roles", user.getRoles());
-        claims.put("name", user.getName());
 
         String subject = user.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
-
-        return accessToken;
+        return jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
     }
 
     private String delegateRefreshToken(User user) {
@@ -85,8 +79,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-
-        return refreshToken;
+        return jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
     }
 }

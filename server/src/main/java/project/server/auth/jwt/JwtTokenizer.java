@@ -63,11 +63,10 @@ public class JwtTokenizer {
     public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
-        Jws<Claims> claims = Jwts.parserBuilder()
+        return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jws);
-        return claims;
     }
 
     public void verifySignature(String jws, String base64EncodedSecretKey) {
@@ -82,15 +81,13 @@ public class JwtTokenizer {
     public Date getTokenExpiration(int expirationMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationMinutes);
-        Date expiration = calendar.getTime();
 
-        return expiration;
+        return calendar.getTime();
     }
 
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
-        Key key = Keys.hmacShaKeyFor(keyBytes);
-        return key;
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
 }

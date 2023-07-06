@@ -2,7 +2,6 @@ package project.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,7 +21,6 @@ import project.server.auth.handler.UserAuthenticationFailureHandler;
 import project.server.auth.handler.UserAuthenticationSuccessHandler;
 import project.server.auth.jwt.JwtTokenizer;
 import project.server.auth.utils.CustomAuthorityUtils;
-import project.server.domain.user.UserService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,12 +29,10 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
-    private final UserService userService;
     private final CustomAuthorityUtils authorityUtils;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, @Lazy UserService userService, CustomAuthorityUtils authorityUtils) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
-        this.userService = userService;
         this.authorityUtils = authorityUtils;
     }
 
@@ -89,7 +85,7 @@ public class SecurityConfiguration {
         public void configure(HttpSecurity builder) {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, userService);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/signin");
             // Exception 추가

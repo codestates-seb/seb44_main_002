@@ -1,3 +1,7 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
 spring:
   h2:
     console:
