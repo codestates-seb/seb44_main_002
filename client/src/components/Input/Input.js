@@ -5,14 +5,18 @@
 // value : input value를 state로 설정
 // onChange : input onChange 설정
 // text : 유효성 검사 통과 못했을때 띄울 오류 문구
+// size : 인풋 박스 사이즈 조절
 
 export default function CustomInput({
-  isValid,
-  labelName,
-  type,
-  value,
-  onChange,
-  text,
+  isValid = true,
+  labelName = 'labelName',
+  type = 'text',
+  value = 'value를 설정해주세요',
+  onChange = () => {
+    console.log('onChange를 설정해주세요');
+  },
+  text = '오류문구 출력',
+  size = 'w-[220px] h-[40px]',
 }) {
   return (
     <div>
@@ -26,7 +30,7 @@ export default function CustomInput({
           type={type}
           value={value}
           onChange={onChange}
-          className={`w-[220px] h-[40px] outline-none border border-solid text-gray-200 font-normal text-sm  bg-[#3D4E83] ${
+          className={`${size} outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
             isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
           }`}
         />
