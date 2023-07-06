@@ -86,8 +86,9 @@ public class Cocktail {
     public CocktailDto.Response entityToResponse(boolean isBookmarked) {
         return CocktailDto.Response.builder()
                 .cocktailId(cocktailId)
-                .userId(1)
-                .userName("kim")
+                .isAdminWritten(user.isAdmin())
+                .userId(user.getUserId())
+                .userName(user.getName())
                 .name(name)
                 .imageUrl(imageUrl)
                 .liquor(liquor.getLiquor())

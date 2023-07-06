@@ -55,6 +55,7 @@ public class CocktailDto {
     @Builder
     public static class Response {
         private final long cocktailId;
+        private final boolean isAdminWritten;
         private final long userId;
         private final String userName;
         private final String name;
