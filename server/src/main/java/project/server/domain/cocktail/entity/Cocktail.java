@@ -90,7 +90,7 @@ public class Cocktail {
      * 유저 정보 담는 로직 생성 해야함.
      * 북마크 체크도 해야함. 유저가 하면 될 듯?
      */
-    public CocktailDto.Response entityToResponse() {
+    public CocktailDto.Response entityToResponse(boolean isBookmarked) {
         return CocktailDto.Response.builder()
                 .cocktailId(cocktailId)
                 .userId(1)
@@ -108,7 +108,7 @@ public class Cocktail {
                 .comments(comments.stream()
                         .map(Comment::entityToResponse)
                         .collect(Collectors.toList()))
-                .isBookmarked(false)
+                .isBookmarked(isBookmarked)
                 .recommends(recommends.stream()
                         .map(this::entityToSimpleResponse)
                         .collect(Collectors.toList()))
@@ -155,5 +155,9 @@ public class Cocktail {
 
     public double getRatedScore() {
         return rate.getRate();
+    }
+
+    public void assignUser(User user) {
+        this.user = user;
     }
 }

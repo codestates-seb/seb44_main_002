@@ -20,6 +20,7 @@ import project.server.auth.handler.UserAuthenticationEntryPoint;
 import project.server.auth.handler.UserAuthenticationFailureHandler;
 import project.server.auth.handler.UserAuthenticationSuccessHandler;
 import project.server.auth.jwt.JwtTokenizer;
+import project.server.auth.service.DetailsService;
 import project.server.auth.utils.CustomAuthorityUtils;
 
 import java.util.Arrays;
@@ -30,10 +31,12 @@ import java.util.List;
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final DetailsService detailsService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, DetailsService detailsService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+        this.detailsService = detailsService;
     }
 
 
@@ -42,6 +45,7 @@ public class SecurityConfiguration {
         http
                 .headers().frameOptions().sameOrigin()
                 .and()
+                .userDetailsService(detailsService)
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
@@ -58,6 +62,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()
                 );
+
         return http.build();
     }
 
