@@ -62,6 +62,9 @@ public class UserService {
     }
 
     public User findUserByAuthentication(Authentication authentication) {
+        if(authentication == null){
+            throw new BusinessLogicException(ExceptionCode.NOT_SIGN_IN);
+        }
         String email = (String) authentication.getPrincipal();
         return findUserByEmail(email);
     }

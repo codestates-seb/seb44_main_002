@@ -10,7 +10,8 @@ public enum ExceptionCode {
     COCKTAIL_NOT_FOUND(404, "칵테일이 없어용"),
     COMMENT_NOT_FOUND(404, "해당 댓글 없음"),
     INVALID_RATE_VALUE(500, "유효하지 않은 값이에용"),
-    UNAUTHORIZED_USER(500, "권한이 없어용");
+    UNAUTHORIZED_USER(403, "권한이 없어용"),
+    NOT_SIGN_IN(401, "로그인부터 하세용");
 
     private final int status;
 
