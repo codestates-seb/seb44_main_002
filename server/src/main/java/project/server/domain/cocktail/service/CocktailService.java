@@ -105,10 +105,7 @@ public class CocktailService {
         }
         return calculateCocktailsRate(cocktailId, value, user, cocktail);
     }
-    /**
-     * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
-     * 근데 얘는 user로 가야하는거 아닌가...?
-     */
+
     public void bookmarkCocktail(Authentication authentication, long cocktailId) {
        User user = userService.findUserByAuthentication(authentication);
        if(user.isBookmarked(cocktailId)){
