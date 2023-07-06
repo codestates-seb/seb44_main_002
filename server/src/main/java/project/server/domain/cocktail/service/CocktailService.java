@@ -75,13 +75,12 @@ public class CocktailService {
         return readFilteringByTagsAndCategoryCocktails(authentication, category, tag, pageable);
     }
 
-    /**
-     * cocktailId 로 칵테일 찾아오고
-     * 찾아온 칵테일에서 유저 정보 찾아오고
-     * 추후 적용할 Authentication 으로 유저 찾아서 검증하셈
-     */
-    public CocktailDto.Response updateCocktail(long cocktailId, CocktailDto.Patch patch) {
+    public CocktailDto.Response updateCocktail(Authentication authentication, long cocktailId, CocktailDto.Patch patch) {
+        User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = findCocktailById(cocktailId);
+        if(!user.hasAuthority(cocktail)){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
         cocktail.modify(patch);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
         return cocktail.entityToResponse(false);

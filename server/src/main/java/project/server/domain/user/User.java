@@ -3,10 +3,12 @@ package project.server.domain.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.server.domain.cocktail.entity.Cocktail;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "users")
 @Getter
@@ -34,6 +36,9 @@ public class User {
     private long subscriberCount;
 
     private String profileImageUrl;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Cocktail> cocktails;
 
     @Embedded
     private BookmarkedCocktails bookmarkedCocktails = new BookmarkedCocktails();
@@ -78,5 +83,16 @@ public class User {
 
     public void putRatedCocktail(long cocktailId, int value) {
         ratedCocktails.put(cocktailId, value);
+    }
+
+    public boolean hasAuthority(Cocktail cocktail) {
+        if(isAdmin()){
+            return true;
+        }
+        return cocktails.contains(cocktail);
+    }
+
+    private boolean isAdmin() {
+        return roles.contains("ADMIN");
     }
 }

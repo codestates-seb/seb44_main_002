@@ -9,7 +9,8 @@ public enum ExceptionCode {
     EMAIL_EXISTS(409, "이미 가입된 이메일이에용"),
     COCKTAIL_NOT_FOUND(404, "칵테일이 없어용"),
     COMMENT_NOT_FOUND(404, "해당 댓글 없음"),
-    INVALID_RATE_VALUE(500, "유효하지 않은 값이에용");
+    INVALID_RATE_VALUE(500, "유효하지 않은 값이에용"),
+    UNAUTHORIZED_USER(500, "권한이 없어용");
 
     private final int status;
 

@@ -48,9 +48,10 @@ public class CocktailController {
     }
 
     @PatchMapping("/{cocktail-id}")
-    public ResponseEntity patchCocktail(@PathVariable("cocktail-id") long cocktailId,
+    public ResponseEntity patchCocktail(Authentication authentication,
+                                        @PathVariable("cocktail-id") long cocktailId,
                                         @RequestBody CocktailDto.Patch patch){
-        CocktailDto.Response response = cocktailService.updateCocktail(cocktailId, patch);
+        CocktailDto.Response response = cocktailService.updateCocktail(authentication, cocktailId, patch);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
