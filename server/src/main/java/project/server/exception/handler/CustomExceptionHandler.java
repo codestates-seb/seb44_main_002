@@ -11,7 +11,7 @@ import project.server.exception.response.ErrorResponse;
 public class CustomExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity handleBusinessLogicException(BusinessLogicException e){
+    public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
         final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }

@@ -15,32 +15,28 @@ import javax.validation.constraints.Positive;
 @RequestMapping("/users")
 public class UserController {
     UserService userService;
-    UserMapper userMapper;
 
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
-    @PostMapping("/join")
+    @PostMapping("/signup")
     public ResponseEntity postUser(@Valid @RequestBody UserDto.post requestBody) {
-        User user = userService.createUser(requestBody);
-        UserDto.Response response = userMapper.userToUserResponseDto(user);
+        UserDto.Response response = userService.createUser(requestBody);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{user-id}")
     public ResponseEntity getUser(@PathVariable("user-id") @Positive long userId) {
         User user = userService.findUser(userId);
-        return new ResponseEntity<>(userMapper.userToUserResponseDto(user),HttpStatus.OK);
+        return new ResponseEntity<>(user.entityToResponse(), HttpStatus.OK);
     }
 
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
                                     @Valid @RequestBody UserDto.Patch requestBody) {
-        requestBody.setUserId(userId);
-        User user = userService.updateUser(requestBody);
-        return new ResponseEntity<>(userMapper.userToUserResponseDto(user),HttpStatus.OK);
+        User user = userService.updateUser(requestBody, userId);
+        return new ResponseEntity<>(user.entityToResponse(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{user-id}")

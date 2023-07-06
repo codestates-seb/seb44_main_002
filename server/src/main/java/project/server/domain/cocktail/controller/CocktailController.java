@@ -3,7 +3,6 @@ package project.server.domain.cocktail.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.dto.MultiResponseDto;
@@ -49,19 +48,6 @@ public class CocktailController {
     @DeleteMapping("/{cocktail-id}")
     public ResponseEntity deleteCocktail(@PathVariable("cocktail-id") long cocktailId){
         cocktailService.removeCocktail(cocktailId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PostMapping("/{cocktail-id}/rate")
-    public ResponseEntity postRate(@PathVariable("cocktail-id") long cocktailId,
-                                   @RequestParam int value){
-        RateDto.Response response = cocktailService.rateCocktail(cocktailId, value);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/{cocktail-id}/bookmark")
-    public ResponseEntity postBookmark(@PathVariable("cocktail-id") long cocktailId){
-        cocktailService.bookmarkCocktail(cocktailId);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

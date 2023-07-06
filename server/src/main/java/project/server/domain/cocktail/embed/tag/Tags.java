@@ -36,7 +36,7 @@ public class Tags {
     }
 
     public Tag getRandomTag() {
-        return tags.get((int)(Math.random() * tags.size()));
+        return tags.get((int) (Math.random() * tags.size()));
     }
 
     public boolean containsAll(List<Tag> tags) {
