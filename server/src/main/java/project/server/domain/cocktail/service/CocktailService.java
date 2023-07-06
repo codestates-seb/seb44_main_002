@@ -96,12 +96,9 @@ public class CocktailService {
                 new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
     }
 
-    /**
-     * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
-     */
     public RateDto.Response rateCocktail(Authentication authentication, long cocktailId, int value) {
         verifyRateValue(value);
-        User user = new User(); // 수정 필요
+        User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = findCocktailById(cocktailId);
         if (user.isAlreadyRated(cocktailId)) {
             return reCalculateCocktailsRate(cocktailId, value, user, cocktail);
