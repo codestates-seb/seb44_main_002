@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
+import project.server.domain.cocktail.embed.ingredient.Ingredients;
+import project.server.domain.cocktail.embed.liquor.LiquorMapper;
+import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.rate.RateDto;
+import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
@@ -19,6 +23,7 @@ import project.server.dto.MultiResponseDto;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,7 +47,7 @@ public class CocktailService {
 
     public CocktailDto.Response createCocktail(Authentication authentication, CocktailDto.Post post) {
         User user = userService.findUserByAuthentication(authentication);
-        Cocktail cocktail = post.postToEntity();
+        Cocktail cocktail = cocktailPostDtoToEntity(post);
         cocktail.assignUser(user);
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
         savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
@@ -201,6 +206,19 @@ public class CocktailService {
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
         return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRateRateDesc(tags.getRandomTag(), cocktailId);
+    }
+
+    private Cocktail cocktailPostDtoToEntity(CocktailDto.Post post) {
+        return Cocktail.builder()
+                .name(post.getName())
+                .imageUrl(post.getImageUrl())
+                .recipe(new Recipe(post.getRecipe()))
+                .tags(new Tags(post.getTags()))
+                .category(CategoryMapper.map(post.getLiquor()))
+                .rate(new Rate())
+                .liquor(LiquorMapper.map(post.getLiquor()))
+                .ingredients(new Ingredients(post.getIngredients()))
+                .build();
     }
 
     private void verifyUser(User user, Cocktail cocktail) {
