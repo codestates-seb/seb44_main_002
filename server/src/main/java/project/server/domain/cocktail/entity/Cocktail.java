@@ -110,12 +110,12 @@ public class Cocktail {
                         .collect(Collectors.toList()))
                 .isBookmarked(isBookmarked)
                 .recommends(recommends.stream()
-                        .map(this::entityToSimpleResponse)
+                        .map(cocktail -> cocktail.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
                         .collect(Collectors.toList()))
                 .build();
     }
 
-    public CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
+    public CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
         return CocktailDto.SimpleResponse.builder()
                 .cocktailId(cocktail.cocktailId)
                 .name(cocktail.name)
