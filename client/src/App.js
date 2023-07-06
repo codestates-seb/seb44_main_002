@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -15,11 +16,12 @@ import Signup from './pages/Signup';
 import './App.css';
 
 function App() {
+  const location = useLocation();
   return (
     <div className="App">
-      <Header />
+      {!location.pathname.includes('/signup') && <Header />}
       <Routing />
-      <Footer />
+      {!location.pathname.includes('/signup') && <Footer />}
     </div>
   );
 }
