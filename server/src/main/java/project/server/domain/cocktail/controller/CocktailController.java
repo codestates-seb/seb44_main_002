@@ -56,8 +56,9 @@ public class CocktailController {
     }
 
     @DeleteMapping("/{cocktail-id}")
-    public ResponseEntity deleteCocktail(@PathVariable("cocktail-id") long cocktailId){
-        cocktailService.removeCocktail(cocktailId);
+    public ResponseEntity deleteCocktail(Authentication authentication,
+                                         @PathVariable("cocktail-id") long cocktailId){
+        cocktailService.removeCocktail(authentication, cocktailId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

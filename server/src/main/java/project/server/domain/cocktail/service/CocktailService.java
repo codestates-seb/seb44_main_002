@@ -78,19 +78,19 @@ public class CocktailService {
     public CocktailDto.Response updateCocktail(Authentication authentication, long cocktailId, CocktailDto.Patch patch) {
         User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = findCocktailById(cocktailId);
-        if(!user.hasAuthority(cocktail)){
-            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
-        }
+        verifyUser(user, cocktail);
         cocktail.modify(patch);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
         return cocktail.entityToResponse(false);
     }
 
-    public void removeCocktail(long cocktailId) {
+    public void removeCocktail(Authentication authentication, long cocktailId) {
+        User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = findCocktailById(cocktailId);
+        verifyUser(user, cocktail);
         cocktailRepository.delete(cocktail);
     }
-  
+
     public Cocktail findCocktailById(long cocktailId) {
         return cocktailRepository.findById(cocktailId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
@@ -207,6 +207,12 @@ public class CocktailService {
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
         return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRateRateDesc(tags.getRandomTag(), cocktailId);
+    }
+
+    private void verifyUser(User user, Cocktail cocktail) {
+        if(!user.hasAuthority(cocktail)){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
     }
 
     private boolean isNotSelectTag(String tag) {
