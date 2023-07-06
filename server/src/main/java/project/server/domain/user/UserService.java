@@ -32,6 +32,9 @@ public class UserService {
 
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
+        if(user.isAdmin()){
+            user.setName("편한🍸");
+        }
 
         User savedUser = userRepository.save(user);
         return savedUser.entityToResponse();
@@ -62,6 +65,9 @@ public class UserService {
     }
 
     public User findUserByAuthentication(Authentication authentication) {
+        if(authentication == null){
+            throw new BusinessLogicException(ExceptionCode.NOT_SIGN_IN);
+        }
         String email = (String) authentication.getPrincipal();
         return findUserByEmail(email);
     }

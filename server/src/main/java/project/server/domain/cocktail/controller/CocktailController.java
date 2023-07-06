@@ -38,24 +38,27 @@ public class CocktailController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity getFilteredCocktails(@RequestParam(value = "category", required = false) String category,
+    public ResponseEntity getFilteredCocktails(Authentication authentication,
+                                               @RequestParam(value = "category", required = false) String category,
                                                @RequestParam(value = "tag", required = false) String tag,
                                                @RequestParam(value = "page", defaultValue = "1") int page,
                                                @RequestParam(value = "sort", defaultValue = "most_viewed") String sort) {
-        MultiResponseDto responses = cocktailService.readFilteredCocktails(category, tag, page, sort);
+        MultiResponseDto responses = cocktailService.readFilteredCocktails(authentication, category, tag, page, sort);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
     @PatchMapping("/{cocktail-id}")
-    public ResponseEntity patchCocktail(@PathVariable("cocktail-id") long cocktailId,
+    public ResponseEntity patchCocktail(Authentication authentication,
+                                        @PathVariable("cocktail-id") long cocktailId,
                                         @RequestBody CocktailDto.Patch patch){
-        CocktailDto.Response response = cocktailService.updateCocktail(cocktailId, patch);
+        CocktailDto.Response response = cocktailService.updateCocktail(authentication, cocktailId, patch);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{cocktail-id}")
-    public ResponseEntity deleteCocktail(@PathVariable("cocktail-id") long cocktailId){
-        cocktailService.removeCocktail(cocktailId);
+    public ResponseEntity deleteCocktail(Authentication authentication,
+                                         @PathVariable("cocktail-id") long cocktailId){
+        cocktailService.removeCocktail(authentication, cocktailId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

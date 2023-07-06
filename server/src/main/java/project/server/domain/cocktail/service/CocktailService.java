@@ -30,6 +30,7 @@ public class CocktailService {
     public static final String SEPARATOR = ",";
     public static final int MAX_RATE_VALUE = 5;
     public static final int MIN_RATE_VALUE = 1;
+    public static final boolean UNSIGNED_USER = false;
 
     private final CocktailRepository cocktailRepository;
     private final UserService userService;
@@ -39,9 +40,6 @@ public class CocktailService {
         this.userService = userService;
     }
 
-    /**
-     * 칵테일에 유저 정보 담는 로직 필요
-     */
     public CocktailDto.Response createCocktail(Authentication authentication, CocktailDto.Post post) {
         User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = post.postToEntity();
@@ -56,65 +54,58 @@ public class CocktailService {
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
         if(authentication == null){
-            return cocktail.entityToResponse(false);
+            return cocktail.entityToResponse(UNSIGNED_USER);
         }
         User user = userService.findUserByAuthentication(authentication);
         return cocktail.entityToResponse(user.isBookmarked(cocktailId));
     }
 
-    public MultiResponseDto readFilteredCocktails(String category, String tag, int page, String sortValue) {
+    public MultiResponseDto readFilteredCocktails(Authentication authentication, String category, String tag, int page, String sortValue) {
         Sort sort = setSort(sortValue);
         Pageable pageable = PageRequest.ofSize(DEFAULT_SIZE).withPage(page - 1).withSort(sort);
         if (isNotSelectCategoryAndTag(category, tag)) {
-            return readEveryCocktails(pageable);
+            return readEveryCocktails(authentication, pageable);
         }
         if (isNotSelectCategory(category)) {
-            return readFilteringByTagsCocktails(tag, pageable);
+            return readFilteringByTagsCocktails(authentication, tag, pageable);
         }
         if (isNotSelectTag(tag)) {
-            return readFilteringByCategoryCocktails(category, pageable);
+            return readFilteringByCategoryCocktails(authentication, category, pageable);
         }
-        return readFilteringByTagsAndCategoryCocktails(category, tag, pageable);
+        return readFilteringByTagsAndCategoryCocktails(authentication, category, tag, pageable);
     }
 
-    /**
-     * cocktailId 로 칵테일 찾아오고
-     * 찾아온 칵테일에서 유저 정보 찾아오고
-     * 추후 적용할 Authentication 으로 유저 찾아서 검증하셈
-     */
-    public CocktailDto.Response updateCocktail(long cocktailId, CocktailDto.Patch patch) {
+    public CocktailDto.Response updateCocktail(Authentication authentication, long cocktailId, CocktailDto.Patch patch) {
+        User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = findCocktailById(cocktailId);
+        verifyUser(user, cocktail);
         cocktail.modify(patch);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
         return cocktail.entityToResponse(false);
     }
 
-    public void removeCocktail(long cocktailId) {
+    public void removeCocktail(Authentication authentication, long cocktailId) {
+        User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = findCocktailById(cocktailId);
+        verifyUser(user, cocktail);
         cocktailRepository.delete(cocktail);
     }
-  
+
     public Cocktail findCocktailById(long cocktailId) {
         return cocktailRepository.findById(cocktailId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
     }
 
-    /**
-     * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
-     */
     public RateDto.Response rateCocktail(Authentication authentication, long cocktailId, int value) {
         verifyRateValue(value);
-        User user = new User(); // 수정 필요
+        User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = findCocktailById(cocktailId);
         if (user.isAlreadyRated(cocktailId)) {
             return reCalculateCocktailsRate(cocktailId, value, user, cocktail);
         }
         return calculateCocktailsRate(cocktailId, value, user, cocktail);
     }
-    /**
-     * 로그인 기능 구현 완료 시 Authentication 기반으로 user 정보 얻어오게 수정 필요
-     * 근데 얘는 user로 가야하는거 아닌가...?
-     */
+
     public void bookmarkCocktail(Authentication authentication, long cocktailId) {
        User user = userService.findUserByAuthentication(authentication);
        if(user.isBookmarked(cocktailId)){
@@ -143,37 +134,37 @@ public class CocktailService {
         }
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Authentication authentication, Pageable pageable) {
         Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(cocktailPage.getContent());
+        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(authentication, cocktailPage.getContent());
         return new MultiResponseDto<>(responses, cocktailPage);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByCategoryCocktails(String category, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByCategoryCocktails(Authentication authentication, String category, Pageable pageable) {
         Category selectedCategory = CategoryMapper.map(category);
         Page<Cocktail> cocktailPage = cocktailRepository.findByCategory(selectedCategory, pageable);
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(cocktailPage.getContent());
+        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(authentication, cocktailPage.getContent());
         return new MultiResponseDto<>(responses, cocktailPage);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsCocktails(String tag, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsCocktails(Authentication authentication, String tag, Pageable pageable) {
         List<Tag> tags = createTagList(tag);
         Page<Cocktail> cocktailPage = cocktailRepository.findDistinctByTagsTagsIn(tags, pageable);
-        return createFilteredByTagCockatilsMultiResponseDto(tags, cocktailPage);
+        return createFilteredByTagCockatilsMultiResponseDto(authentication, tags, cocktailPage);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsAndCategoryCocktails(String category, String tag, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsAndCategoryCocktails(Authentication authentication, String category, String tag, Pageable pageable) {
         List<Tag> tags = createTagList(tag);
         Category selectedCategory = CategoryMapper.map(category);
         Page<Cocktail> cocktailPage = cocktailRepository.findDistinctByCategoryAndTagsTagsIn(selectedCategory, tags, pageable);
-        return createFilteredByTagCockatilsMultiResponseDto(tags, cocktailPage);
+        return createFilteredByTagCockatilsMultiResponseDto(authentication, tags, cocktailPage);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> createFilteredByTagCockatilsMultiResponseDto(List<Tag> tags, Page<Cocktail> cocktailPage) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> createFilteredByTagCockatilsMultiResponseDto(Authentication authentication, List<Tag> tags, Page<Cocktail> cocktailPage) {
         List<Cocktail> filteredCocktails = cocktailPage.get()
                 .filter(cocktail -> cocktail.containsAll(tags))
                 .collect(Collectors.toList());
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(filteredCocktails);
+        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(authentication, filteredCocktails);
         return new MultiResponseDto<>(responses, cocktailPage);
     }
 
@@ -196,14 +187,26 @@ public class CocktailService {
         return Sort.by(Sort.Order.asc("rating.rate"));
     }
 
-    private List<CocktailDto.SimpleResponse> createSimpleResponses(List<Cocktail> cocktails) {
+    private List<CocktailDto.SimpleResponse> createSimpleResponses(Authentication authentication, List<Cocktail> cocktails) {
+        if(authentication == null){
+            return cocktails.stream()
+                    .map(cocktail -> cocktail.entityToSimpleResponse(UNSIGNED_USER, cocktail))
+                    .collect(Collectors.toList());
+        }
+        User user = userService.findUserByAuthentication(authentication);
         return cocktails.stream()
-                .map(cocktail -> cocktail.entityToSimpleResponse(cocktail))
+                .map(cocktail -> cocktail.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
                 .collect(Collectors.toList());
     }
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
         return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRateRateDesc(tags.getRandomTag(), cocktailId);
+    }
+
+    private void verifyUser(User user, Cocktail cocktail) {
+        if(!user.hasAuthority(cocktail)){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
     }
 
     private boolean isNotSelectTag(String tag) {

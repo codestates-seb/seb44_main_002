@@ -20,10 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * 유저가 작성한 칵테일과 관리자가 작성한 칵테일을 구분하는 로직 필요
- */
-
 @Entity(name = "cocktails")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -86,10 +82,7 @@ public class Cocktail {
         this.liquor = liquor;
         this.ingredients = ingredients;
     }
-    /**
-     * 유저 정보 담는 로직 생성 해야함.
-     * 북마크 체크도 해야함. 유저가 하면 될 듯?
-     */
+
     public CocktailDto.Response entityToResponse(boolean isBookmarked) {
         return CocktailDto.Response.builder()
                 .cocktailId(cocktailId)
@@ -110,17 +103,17 @@ public class Cocktail {
                         .collect(Collectors.toList()))
                 .isBookmarked(isBookmarked)
                 .recommends(recommends.stream()
-                        .map(this::entityToSimpleResponse)
+                        .map(cocktail -> cocktail.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
                         .collect(Collectors.toList()))
                 .build();
     }
 
-    public CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
+    public CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
         return CocktailDto.SimpleResponse.builder()
                 .cocktailId(cocktail.cocktailId)
                 .name(cocktail.name)
                 .imageUrl(cocktail.imageUrl)
-                .isBookmarked(false)
+                .isBookmarked(isBookmarked)
                 .build();
     }
 
