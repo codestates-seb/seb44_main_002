@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import HoverButton from '../common/Buttons/HoverButton';
 import CustomInput from '../components/Input/Input';
-import useValid from '../components/Validation/Validation';
+import UseSignupValid from '../components/Validation/SignupValidation';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-    useValid(form, setIsValid);
+    UseSignupValid(form, setIsValid);
 
     // 전역상태관리 로그인으로 변경
     // dispatch(() => login())
@@ -86,6 +86,7 @@ export default function Signup() {
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
                 <CustomInput
+                  placeholder="비밀번호 8자 이상, 최소한 하나의 문자열, 최소한 하나의 숫자"
                   labelName="비밀번호"
                   type="password"
                   text="비밀번호를 확인해주세요"
