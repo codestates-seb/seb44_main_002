@@ -6,13 +6,12 @@ import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.ingredient.Ingredients;
 import project.server.domain.cocktail.embed.liquor.LiquorMapper;
-import project.server.domain.cocktail.embed.rating.Rating;
+import project.server.domain.cocktail.embed.rate.Rate;
+import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.embed.tag.Tags;
-import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.coment.Comment;
 import project.server.domain.comment.dto.CommentDto;
 
 import java.time.LocalDateTime;
@@ -36,7 +35,7 @@ public class CocktailDto {
                     .recipe(new Recipe(recipe))
                     .tags(new Tags(tags))
                     .category(CategoryMapper.map(liquor))
-                    .rating(new Rating())
+                    .rate(new Rate())
                     .liquor(LiquorMapper.map(liquor))
                     .ingredients(new Ingredients(ingredients))
                     .build();
@@ -64,6 +63,7 @@ public class CocktailDto {
         private final List<IngredientDto.Response> ingredients;
         private final List<RecipeDto.Response> recipe;
         private final List<TagDto.Response> tags;
+        private final double rating;
         private final int viewCount;
         private final LocalDateTime createdAt;
         private final LocalDateTime modifiedAt;

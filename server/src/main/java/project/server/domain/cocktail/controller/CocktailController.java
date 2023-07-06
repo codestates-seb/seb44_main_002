@@ -3,8 +3,8 @@ package project.server.domain.cocktail.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.service.CocktailService;
+import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.dto.MultiResponseDto;
 
 @RestController

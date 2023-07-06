@@ -27,9 +27,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
-
     private String gender;
 
     private int age;
@@ -38,15 +35,48 @@ public class User {
 
     private String profileImageUrl;
 
+    @Embedded
+    private BookmarkedCocktails bookmarkedCocktails;
+
+    @Embedded
+    private RatedCocktails ratedCocktails;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     public UserDto.Response entityToResponse() {
         return UserDto.Response.builder()
                 .userId(userId)
+                .email(email)
                 .name(name)
-                .profileImageUrl(profileImageUrl)
                 .gender(gender)
                 .age(age)
-                .email(email)
+                .profileImageUrl(profileImageUrl)
                 .subscriberCount(subscriberCount)
                 .build();
+    }
+
+    public boolean isAlreadyRated(long cocktailId) {
+        return ratedCocktails.containCocktail(cocktailId);
+    }
+
+    public boolean isBookmarked(long cocktailId) {
+        return bookmarkedCocktails.containCocktail(cocktailId);
+    }
+
+    public void cancelBookmark(long cocktailId) {
+        bookmarkedCocktails.remove(cocktailId);
+    }
+
+    public void bookmark(long cocktailId) {
+        bookmarkedCocktails.add(cocktailId);
+    }
+
+    public int getOldRate(long cocktailId) {
+        return ratedCocktails.findValue(cocktailId);
+    }
+
+    public void putRatedCocktail(long cocktailId, int value) {
+        ratedCocktails.put(cocktailId, value);
     }
 }

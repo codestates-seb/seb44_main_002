@@ -7,7 +7,7 @@ import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.embed.ingredient.Ingredients;
 import project.server.domain.cocktail.embed.liquor.Liquor;
 import project.server.domain.cocktail.embed.category.Category;
-import project.server.domain.cocktail.embed.rating.Rating;
+import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
@@ -60,7 +60,7 @@ public class Cocktail {
     private Tags tags;
 
     @Embedded
-    private Rating rating;
+    private Rate rate;
 
     @Enumerated(value = EnumType.STRING)
     private Category category;
@@ -76,12 +76,12 @@ public class Cocktail {
 
     @Builder
     public Cocktail(String name, String imageUrl, Recipe recipe, Tags tags,
-                    Rating rating, Category category, Liquor liquor, Ingredients ingredients){
+                    Rate rate, Category category, Liquor liquor, Ingredients ingredients){
         this.name = name;
         this.imageUrl = imageUrl;
         this.recipe = recipe;
         this.tags = tags;
-        this.rating = rating;
+        this.rate = rate;
         this.category = category;
         this.liquor = liquor;
         this.ingredients = ingredients;
@@ -101,6 +101,7 @@ public class Cocktail {
                 .ingredients(ingredients.createResponseDtoList())
                 .recipe(recipe.createResponseDtoList())
                 .tags(tags.createResponseDtoList())
+                .rating(rate.getRate())
                 .viewCount(viewCount)
                 .createdAt(createdAt)
                 .modifiedAt(modifiedAt)
@@ -142,5 +143,17 @@ public class Cocktail {
         this.recipe = new Recipe(patch.getRecipe());
         this.tags = new Tags(patch.getTags());
         this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void rate(int value) {
+        rate.calculate(value);
+    }
+
+    public void reRate(int oldValue, int value) {
+        rate.reCalculate(oldValue, value);
+    }
+
+    public double getRatedScore() {
+        return rate.getRate();
     }
 }
