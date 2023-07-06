@@ -1,19 +1,30 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import tw from 'tailwind-styled-components';
+
 import { BsArrowRightShort } from 'react-icons/bs';
 import { MdIosShare } from 'react-icons/md';
 import { PiUserCircleFill } from 'react-icons/pi';
 
-export default function RecipeInfo({ cocktailDetail, recipeList }) {
+export default function RecipeInfo({ cocktailDetail }) {
+  const navigate = useNavigate();
   const [score, setScore] = useState(0);
   const urlCu = encodeURI(
     `https://pocketcu.co.kr/search/stock/product/main?searchWord=${cocktailDetail.liquor}`
   );
 
-  const CopyToClipBoard = () => {
+  const copyToClipBoard = () => {
     navigator.clipboard.writeText(window.location.href);
     alert('현재 주소가 클립보드에 복사되었습니다.');
+  };
+  const changeScore = (idx) => {
+    // 로그인 여부 확인
+    setScore(idx);
+  };
+  const deletePost = () => {
+    // 삭제
+    navigate('/category');
   };
 
   const DrawStar = () => {
@@ -21,19 +32,19 @@ export default function RecipeInfo({ cocktailDetail, recipeList }) {
     const star = process.env.PUBLIC_URL + '/images/star.png';
     const selectedStar = process.env.PUBLIC_URL + '/images/star_selected.png';
     return (
-      <div className="flex items-end max-lg:flex-col max-lg:items-start max-md:flex-row">
-        <div className="flex">
+      <DrawStarContainer>
+        <FlexContainer>
           {Array.from({ length: repetitions }, (_, index) => (
             <StarIcon
               key={index}
               src={index - 1 < score ? selectedStar : star}
-              onClick={() => setScore(index)}
+              onClick={() => changeScore(index)}
               alt="star"
             />
           ))}
-        </div>
+        </FlexContainer>
         <StarAverage>{`평균 : ${cocktailDetail.rating}`}</StarAverage>
-      </div>
+      </DrawStarContainer>
     );
   };
 
@@ -46,41 +57,45 @@ export default function RecipeInfo({ cocktailDetail, recipeList }) {
       <InfoRightContainer>
         <StarCotiner>
           <DrawStar num={1} />
-          <ModifyContainer>
-            <ModifyP>수정하기</ModifyP>
-            <p className="mx-2">|</p>
-            <ModifyP>삭제하기</ModifyP>
-          </ModifyContainer>
+          {cocktailDetail.userId === 1 && (
+            <ModifyContainer>
+              <Link to={`/modifyPost/${cocktailDetail.cocktailId}`}>
+                <ModifyP>수정하기</ModifyP>
+              </Link>
+              <Separator>|</Separator>
+              <ModifyP onClick={deletePost}>삭제하기</ModifyP>
+            </ModifyContainer>
+          )}
         </StarCotiner>
-        <div className="flex flex-wrap items-end">
+        <TitleContainer>
           <InfoTitle>체리주</InfoTitle>
-          <ShareContainer onClick={CopyToClipBoard}>
+          <ShareContainer onClick={copyToClipBoard}>
             <p>공유하기</p>
             <MdIosShare />
           </ShareContainer>
-        </div>
-        <div className="flex flex-wrap mt-6 justify-between text-sm text-gray-100">
-          <div className="flex flex-wrap">
-            <div className="flex">
+        </TitleContainer>
+        <UserContainer>
+          <FlexWrapContainer>
+            <FlexContainer>
               <PiUserCircleFill size="24px" />
-              <p className="mt-0.5 ml-0.5 mr-2.5 text-sm">
-                {cocktailDetail.name}
-              </p>
-            </div>
-            <p className="mt-1 text-[10px]">{cocktailDetail.date}</p>
-          </div>
+              <NameP>{cocktailDetail.name}</NameP>
+            </FlexContainer>
+            <p className="mt-1 text-[10px]">{cocktailDetail.createdAt}</p>
+          </FlexWrapContainer>
           <LinkToCU href={urlCu} target="_blank">
             <LinkToCUP>편의점 앱으로 이동</LinkToCUP> <BsArrowRightShort />
           </LinkToCU>
-        </div>
+        </UserContainer>
         <RecipeContiner>
           <RecipeHeader>
             <p>재료</p>
             <RecipeHr />
           </RecipeHeader>
           <RecipeList>
-            {recipeList.map((ele) => {
-              return <RecipeEle key={ele}>{ele}</RecipeEle>;
+            {cocktailDetail.Ingredients.map((ele) => {
+              return (
+                <RecipeEle key={ele.ingredient}>{ele.ingredient}</RecipeEle>
+              );
             })}
           </RecipeList>
         </RecipeContiner>
@@ -88,7 +103,13 @@ export default function RecipeInfo({ cocktailDetail, recipeList }) {
     </InfoContainer>
   );
 }
-
+const FlexContainer = tw.div`
+flex
+`;
+const FlexWrapContainer = tw.div`
+flex 
+flex-wrap
+`;
 const InfoContainer = tw.section`
 flex
 max-md:flex-col
@@ -113,6 +134,13 @@ const StarIcon = tw.img`
 mr-1
 cursor-pointer
 `;
+const DrawStarContainer = tw.div`
+flex 
+items-end 
+max-lg:flex-col 
+max-lg:items-start 
+max-md:flex-row
+`;
 const StarAverage = tw.p`
 ml-4 
 text-yellow-400 
@@ -130,6 +158,22 @@ max-lg:mt-2
 const ModifyP = tw.p`
 cursor-pointer
 hover:text-white
+`;
+const Separator = tw.p`
+mx-2
+`;
+const TitleContainer = tw.div`
+flex 
+flex-wrap 
+items-end
+`;
+const UserContainer = tw.div`
+flex 
+flex-wrap 
+mt-6 
+justify-between 
+text-sm 
+text-gray-100
 `;
 const InfoTitle = tw.p`
 mt-5
@@ -154,6 +198,12 @@ hover:text-gray-300
 hover:bg-white
 max-lg:ml-0
 max-lg:mt-2
+`;
+const NameP = tw.p`
+mt-0.5
+ml-0.5 
+mr-2.5 
+text-sm
 `;
 const LinkToCU = tw.a`
 flex
@@ -191,6 +241,7 @@ const RecipeList = tw.div`
 text-[#b3b3b3]
 h-[calc(20rem-185px)]
 overflow-y-scroll
+scrollbar
 `;
 const RecipeEle = tw.p`
 mb-2.5
