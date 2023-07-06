@@ -39,9 +39,6 @@ public class CocktailService {
         this.userService = userService;
     }
 
-    /**
-     * 칵테일에 유저 정보 담는 로직 필요
-     */
     public CocktailDto.Response createCocktail(Authentication authentication, CocktailDto.Post post) {
         User user = userService.findUserByAuthentication(authentication);
         Cocktail cocktail = post.postToEntity();
