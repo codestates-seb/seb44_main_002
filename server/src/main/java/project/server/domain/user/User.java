@@ -92,7 +92,7 @@ public class User {
         return cocktails.contains(cocktail);
     }
 
-    private boolean isAdmin() {
+    public boolean isAdmin() {
         return roles.contains("ADMIN");
     }
 }
