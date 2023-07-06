@@ -30,6 +30,7 @@ public class CocktailService {
     public static final String SEPARATOR = ",";
     public static final int MAX_RATE_VALUE = 5;
     public static final int MIN_RATE_VALUE = 1;
+    public static final boolean UNSIGNED_USER = false;
 
     private final CocktailRepository cocktailRepository;
     private final UserService userService;
@@ -53,7 +54,7 @@ public class CocktailService {
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
         if(authentication == null){
-            return cocktail.entityToResponse(false);
+            return cocktail.entityToResponse(UNSIGNED_USER);
         }
         User user = userService.findUserByAuthentication(authentication);
         return cocktail.entityToResponse(user.isBookmarked(cocktailId));
