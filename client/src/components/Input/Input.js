@@ -8,6 +8,7 @@
 // size : 인풋 박스 사이즈 조절
 
 export default function CustomInput({
+  placeholder = '',
   isValid = true,
   labelName = 'labelName',
   type = 'text',
@@ -19,25 +20,65 @@ export default function CustomInput({
   size = 'w-[220px] h-[40px]',
 }) {
   return (
-    <div>
-      <label
-        className={`flex flex-col font-bold  ${
-          isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
-        }`}
-      >
-        {labelName}
-        <input
-          type={type}
-          value={value}
-          onChange={onChange}
-          className={`${size} outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
-            isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
-          }`}
-        />
-      </label>
-      <div>
-        <p className={`${isValid && 'hidden'} text-[#FF1AE8]`}>{text}</p>
-      </div>
-    </div>
+    <>
+      {type !== 'radio' ? (
+        <div>
+          <label
+            className={`flex flex-col font-bold  ${
+              isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
+            }`}
+          >
+            {labelName}
+            <input
+              placeholder={placeholder}
+              type={type}
+              value={value}
+              onChange={onChange}
+              className={`${size} outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+                isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
+              }`}
+            />
+          </label>
+          <div className="h-7">
+            <p className={`${isValid && 'hidden'} text-[#FF1AE8]`}>{text}</p>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <label
+            className={`flex flex-col font-bold  ${
+              isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
+            }`}
+          >
+            {labelName}
+            <div className="flex flex-row items-center justify-center">
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                onChange={onChange}
+                className={`w-[30px] h-[40px] mr-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+                  isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
+                }`}
+              />
+              <p className="mr-8">남성</p>
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                onChange={onChange}
+                className={`w-[30px] h-[40px] mr-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+                  isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
+                }`}
+              />
+              여성
+            </div>
+          </label>
+          <div className="h-7">
+            <p className={`${isValid && 'hidden'} text-[#FF1AE8]`}>{text}</p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
