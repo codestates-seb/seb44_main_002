@@ -108,7 +108,7 @@ public class Cocktail {
                 .comments(comments.stream()
                         .map(Comment::entityToResponse)
                         .collect(Collectors.toList()))
-                .isBookmarked(user.isBookmarked(cocktailId))
+                .isBookmarked(false)
                 .recommends(recommends.stream()
                         .map(this::entityToSimpleResponse)
                         .collect(Collectors.toList()))
