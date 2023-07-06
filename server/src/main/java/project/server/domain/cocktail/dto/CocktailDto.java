@@ -63,6 +63,7 @@ public class CocktailDto {
         private final List<IngredientDto.Response> ingredients;
         private final List<RecipeDto.Response> recipe;
         private final List<TagDto.Response> tags;
+        private final double rating;
         private final int viewCount;
         private final LocalDateTime createdAt;
         private final LocalDateTime modifiedAt;
