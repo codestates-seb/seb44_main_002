@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,22 +24,26 @@ public class Tags {
     public Tags(List<TagDto.Post> tags) {
         this.tags = tags.stream()
                 .map(TagDto.Post::getTag)
-                .map(Tag::valueOf)
+                .map(TagMapper::map)
                 .collect(Collectors.toList());
     }
 
-    public List<TagDto.Response> createResponseList() {
+    public List<TagDto.Response> createResponseDtoList() {
         return tags.stream()
-                .map(Enum::name)
+                .map(Tag::getTag)
                 .map(this::createResponseDto)
                 .collect(Collectors.toList());
     }
 
-    private TagDto.Response createResponseDto(String tag) {
-        return new TagDto.Response(tag);
-    }
-
     public Tag getRandomTag() {
         return tags.get((int) (Math.random() * tags.size()));
+    }
+
+    public boolean containsAll(List<Tag> tags) {
+        return new HashSet<>(this.tags).containsAll(tags);
+    }
+
+    private TagDto.Response createResponseDto(String tag) {
+        return new TagDto.Response(tag);
     }
 }
