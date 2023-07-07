@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../redux/slice/isLoginSlice';
+import { logout } from '../../redux/slice/isLoginSlice';
 
-import HeaderModal from './Modal/HeaderModal';
-import Hamburger from './Hamburger/Hamburger';
+import HeaderModal from './HeaderModal';
+import Hamburger from './Hamburger';
 
 import tw from 'tailwind-styled-components';
 import PersonIcon from '@mui/icons-material/Person';

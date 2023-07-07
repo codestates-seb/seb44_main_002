@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import Footer from './components/Footer';
 
 import Main from './pages/Main/Main';
 import Category from './pages/Category/Category';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import LostPage from './pages/LostPage';
-import Mypage from './pages/User/Mypage';
+import Mypage from './pages/Mypage/Mypage';
 import CocktailForm from './pages/CocktailForm';
 import Signup from './pages/Signup';
 
