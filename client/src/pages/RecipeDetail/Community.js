@@ -11,10 +11,6 @@ export default function Community({ cocktailDetail }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (comment.length === 0) {
-      alert('한 글자 이상 작성해주세요.');
-      return;
-    }
     CommentValid(comment, setIsValid);
   };
 
