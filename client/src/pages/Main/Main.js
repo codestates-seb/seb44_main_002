@@ -1,6 +1,6 @@
-import Slider from '../components/Slider/Slider';
-import Ranking from '../components/Ranking/Ranking';
-import Advice from '../components/Advice/Advice';
+import Slider from './Slider/Slider';
+import Ranking from './Ranking/Ranking';
+import Advice from './Advice/Advice';
 
 export default function Main() {
   return (

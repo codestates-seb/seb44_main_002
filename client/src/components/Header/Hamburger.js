@@ -2,13 +2,13 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout } from '../../redux/slice/isLoginSlice';
+import { logout } from '../../redux/slice/isLoginSlice';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
-import HeaderModal from '../Modal/HeaderModal';
+import HeaderModal from './HeaderModal';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Hamburger() {
