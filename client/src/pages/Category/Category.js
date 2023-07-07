@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import {
   CategoryFilter,
@@ -16,6 +17,8 @@ export default function Category() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
 
+  //리덕스 임시 저장
+  // const bookmarkList = useSelector((state) => state.userinfo.bookmarked);
   //선택된 카테고리조건 (카테고리&태그&정렬)
   const [fitlerCondtion, setfitlerCondtion] = useState({
     category: CategoryFilter[0].type,
@@ -32,44 +35,8 @@ export default function Category() {
     totalCount: 200,
     totalPages: 5,
   });
+  // // 더미데이터;
 
-  useEffect(() => {
-    //클릭한 페이지
-    const page = currentPage + 1;
-    //console.log(page);
-
-    //조건에 맞춰 필터링된 데이터
-    const fetchCocktails = async () => {
-      const url = `${BASE_URL}/cocktails/filter?category=${
-        fitlerCondtion.category
-      }&tag=${fitlerCondtion.frequencyTag},${fitlerCondtion.tasteTag.join(
-        ','
-      )}&page=${page}&size=$16&sort=${fitlerCondtion.descendingOrder}${
-        fitlerCondtion.sortType
-      }`;
-
-      try {
-        const response = await fetch(url, { method: 'GET' });
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
-        }
-        //const data = await response.json();
-        // 데이터 처리
-      } catch (error) {
-        // 에러 처리
-        // console.error('Error:', error);
-        //navigation('/error');
-      }
-    };
-
-    fetchCocktails();
-    setObj({
-      totalCount: 200,
-      totalPages: 5,
-    });
-  }, [fitlerCondtion, currentPage]);
-
-  //더미데이터
   const dummyData = [
     {
       cocktailId: 1,
@@ -108,6 +75,43 @@ export default function Category() {
       isBookmarked: false,
     },
   ];
+  const [data, setData] = useState(dummyData);
+  console.log(data);
+  useEffect(() => {
+    //클릭한 페이지
+    const page = currentPage + 1;
+    //console.log(page);
+
+    //조건에 맞춰 필터링된 데이터
+    const fetchCocktails = async () => {
+      const url = `${BASE_URL}/cocktails/filter?category=${
+        fitlerCondtion.category
+      }&tag=${fitlerCondtion.frequencyTag},${fitlerCondtion.tasteTag.join(
+        ','
+      )}&page=${page}&size=$16&sort=${fitlerCondtion.descendingOrder}${
+        fitlerCondtion.sortType
+      }`;
+
+      try {
+        const response = await fetch(url, { method: 'GET' });
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        //const data = await response.json();
+        // 데이터 처리
+      } catch (error) {
+        // 에러 처리
+        // console.error('Error:', error);
+        //navigation('/error');
+      }
+    };
+
+    fetchCocktails();
+    setObj({
+      totalCount: 200,
+      totalPages: 5,
+    });
+  }, [fitlerCondtion, currentPage]);
 
   return (
     <div className="overflow-hidden">
@@ -149,9 +153,17 @@ export default function Category() {
               fitlerCondtion={fitlerCondtion}
             />
             {/* 필터에 따라 출력되는 데이터 */}
+            {/* 배열 idx 에 bookmarkList 에 idx 가 같으면  */}
             <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[100px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap ">
-              {dummyData.map((item, index) => (
-                <Card item={item} className="pr-4" key={index} />
+              {data.map((item, index) => (
+                <Card
+                  item={item}
+                  className="pr-4"
+                  key={index}
+                  // 임시
+                  setData={setData}
+                  data={data}
+                />
               ))}
             </div>
             {/* 페이지네이션 */}

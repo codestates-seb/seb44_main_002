@@ -4,7 +4,7 @@ import tw from 'tailwind-styled-components';
 import BookmarkButton from '../BookmarkButton/BookmarkButton';
 
 //item 칵테일에 대한 정보가 객체형태로 담겨있습니다.
-export default function Card({ item }) {
+export default function Card({ item, setData, data }) {
   const navigate = useNavigate();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -23,13 +23,22 @@ export default function Card({ item }) {
       isHovering={hoveredIndex === item.cocktailId}
     >
       {/* 칵테일 이미지 */}
-      <ImgButton onClick={() => navigate(`/detail/${item.cocktailId}`)}>
-        <CocktailImg src={item.imageUrl} alt="칵테일 사진" />
+      <ImgButton>
+        <CocktailImg
+          src={item.imageUrl}
+          alt="칵테일 사진"
+          onClick={() => navigate(`/detail/${item.cocktailId}`)}
+        />
         {/* 투명한 검은 박스 */}
         <Hoverocktail isHovering={hoveredIndex === item.cocktailId} />
         {/* 북마크 */}
-        <div className="absolute  top-0 right-2">
-          <BookmarkButton item={item} />
+        <div className="absolute  top-0 right-2 ">
+          <BookmarkButton
+            item={item}
+            //임시
+            setData={setData}
+            data={data}
+          />
         </div>
       </ImgButton>
 

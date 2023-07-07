@@ -1,52 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// {
-//     “name” : “kim”,
-//     “profileImageUrl” : “sample image url”
-//     “gender” : “example”,
-//     “age” : 20,
-//     “email” : “kim@example.com”,
-//     “subscribedCount” : 0,
-// “bookmarked” : [
-//     {
-//         “cocktailId” : 1,
-//         “name” : “sample cocktail”,
-//         “imageUrl” : “sample image url”,
-//         “isBookmarked” : “true”
-//     },
-//     {
-//         “cocktailId” : 2,
-//         “name” : “sample cocktail”,
-//         “isBookmarked” : “true”
-//     }
-// ],
-//     “boards” : [
-//         {
-//             “boardId” : 1,
-//             “title” : “title1”,
-//             “content” : “content1”
-//         },
-//         {
-//             “boardId” : 2,
-//             “title” : “title2”,
-//             “content” : “content2”
-//         },
-//     ],
-//     “subscribe” : [
-//         {
-//             “userId” : 1,
-//             “name” : “kim”,
-//             “profileImageUrl” : “sample image url”
-//         },
-//         {
-//             “userId” : 2,
-//             “name” : “park”,
-//             “profileImageUrl” : “sample image url”
-//         },
-//     ],
-// }
-
-//유저 아이디가 필요하다.
 const initialState = {
   name: null,
   profileImageUrl: null,
@@ -54,19 +7,40 @@ const initialState = {
   age: null,
   email: null,
   subscribedCount: 0,
-  bookmarked: [],
+  bookmarked: [
+    {
+      cocktailId: 1,
+      name: 'sample',
+      imageUrl: 'images/cocktail/cocktail1.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 2,
+      name: '체리주',
+      imageUrl: 'images/cocktail/cocktail2.jpg',
+      isBookmarked: true,
+    },
+  ],
   boards: null,
 };
 
 const userInfoSlice = createSlice({
-  name: 'changeInfo',
+  name: 'userinfo',
   initialState,
   reducers: {
-    INFOUPDATE: (action) => {
-      return action.payload;
+    updateBookmark: (state, action) => {
+      const { cocktailId, isBookmarked, item } = action.payload;
+
+      state.bookmarked = state.bookmarked.map((bookmark) => {
+        if (bookmark.cocktailId === cocktailId) {
+          return;
+        } else {
+          return bookmark;
+        }
+      });
     },
   },
 });
 
-export const { INFOUPDATE } = userInfoSlice.actions;
+export const { updateBookmark } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

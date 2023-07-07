@@ -1,29 +1,41 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { INFOUPDATE } from '../../redux/slice/userInfoSlice';
-const BookmarkButton = ({ item }) => {
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
+
+const BookmarkButton = ({ item, setData, data }) => {
+  //console.log(data);
   const dispatch = useDispatch();
-
   const isLogin = useSelector((state) => state.isLogin.isLogin);
-  const bookmarkList = useSelector((state) => state.changeInfo.changeInfo);
 
-  const bookmarkHandler = () => {
+  // const bookmarkList = useSelector((state) => state.changeInfo.changeInfo);
+
+  const bookmarkHandler = (isBookmarked) => {
     //북마크 클릭시 디스패치로 아이템값과 북마크달라졌다는 내용을 등록
-    for (let i = 0; i < bookmarkList.length; i++) {
-      if (bookmarkList[i].cocktailId === item.cocktailId) {
-        bookmarkList.splice(i, 1);
-        break; // 일치하는 요소를 찾았으므로 반복문 종료
+    //console.log('ehd');
+    const id = item.cocktailId;
+    dispatch(updateBookmark({ id, isBookmarked, item }));
+    // const filteredData = data.filter((el) => el.cocktailId !== cocktailId);
+    // const isitem = data.find((el) => el.cocktailId === cocktailId);
+    // if (!isitem) {
+    //   setData([...data, item]);
+    // } else {
+    //   setData(filteredData);
+    // }
+    //console.log(data);
+
+    const newDate = data.map((el, idx) => {
+      if (idx + 1 === item.cocktailId) {
+        return { ...el, isBookmarked: !el.isBookmarked };
       }
-      return;
-    }
-    bookmarkList.push(item);
-    dispatch(INFOUPDATE({ ...userinfo, bookmarkList }));
+      return el;
+    });
+    setData(newDate);
   };
   return (
     <button
-      onClick={(e) => {
+      onClick={(e, item) => {
         if (isLogin) {
           e.stopPropagation();
-          bookmarkHandler();
+          bookmarkHandler(item);
         }
       }}
     >
