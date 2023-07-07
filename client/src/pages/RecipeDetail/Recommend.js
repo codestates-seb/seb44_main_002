@@ -7,7 +7,6 @@ import { useState } from 'react';
 
 export default function Recommend({ cocktailDetail }) {
   const [recommends, setRecommends] = useState(cocktailDetail);
-  console.log(recommends);
   return (
     <RecommendContainer>
       <RecommentP>이런 칵테일은 어떠세요?</RecommentP>

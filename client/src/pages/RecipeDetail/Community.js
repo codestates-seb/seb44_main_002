@@ -1,8 +1,22 @@
 import { useState } from 'react';
+
+import CommentValid from '../../components/Validation/CommentValidation';
+
 import tw from 'tailwind-styled-components';
 
 export default function Community({ cocktailDetail }) {
   const [tag, setTag] = useState('');
+  const [comment, setComment] = useState('');
+  const [isValid, setIsValid] = useState(true);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (comment.length === 0) {
+      alert('한 글자 이상 작성해주세요.');
+      return;
+    }
+    CommentValid(comment, setIsValid);
+  };
 
   const deleteAnswer = () => {};
 
@@ -24,9 +38,18 @@ export default function Community({ cocktailDetail }) {
               <span className="ml-3">x</span>
             </TagP>
           )}
-          <InputTextArea placeholder="댓글을 입력하세요." />
+          <div>
+            <InputTextArea
+              placeholder="댓글을 입력하세요."
+              onChange={(e) => setComment(e.target.value)}
+              className={!isValid && 'border-red-500 border-[1px]'}
+            />
+            {!isValid && (
+              <p className="text-red-500">1~200자 범위내로 작성해주세요</p>
+            )}
+          </div>
         </div>
-        <InputButton>전송하기</InputButton>
+        <InputButton onClick={handleSubmit}>전송하기</InputButton>
       </InputContainer>
       <div>
         {cocktailDetail.comments.map((ele) => {
