@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/slice/isLoginSlice';
+// import { useDispatch } from 'react-redux';
+// import { login } from '../../redux/slice/isLoginSlice';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -41,7 +41,7 @@ export default function HeaderModal() {
     password: '',
   });
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
