@@ -17,6 +17,7 @@ import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.comment.entity.Comment;
 import project.server.domain.recommendcocktail.RecommendCocktailService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
@@ -53,7 +54,7 @@ public class CocktailService {
         cocktail.assignUser(user);
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
         savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
-        return savedCocktail.entityToResponse(false);
+        return entityToResponse(savedCocktail, false);
     }
 
     public CocktailDto.Response readCocktail(Authentication authentication, long cocktailId) {
@@ -61,10 +62,10 @@ public class CocktailService {
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
         if(authentication == null){
-            return cocktail.entityToResponse(UNSIGNED_USER);
+            return entityToResponse(cocktail, UNSIGNED_USER);
         }
         User user = userService.findUserByAuthentication(authentication);
-        return cocktail.entityToResponse(user.isBookmarked(cocktailId));
+        return entityToResponse(cocktail, user.isBookmarked(cocktailId));
     }
 
     public MultiResponseDto readFilteredCocktails(Authentication authentication, String category, String tag, int page, String sortValue) {
@@ -88,7 +89,7 @@ public class CocktailService {
         verifyUser(user, cocktail);
         cocktail.modify(patch);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
-        return cocktail.entityToResponse(false);
+        return entityToResponse(cocktail, false);
     }
 
     public void removeCocktail(Authentication authentication, long cocktailId) {
@@ -123,6 +124,12 @@ public class CocktailService {
        }
        recommendCocktailService.subtractBookmarkCount(user, cocktail);
        user.bookmark(cocktailId);
+    }
+
+    public List<CocktailDto.SimpleResponse> readRecommendCocktailsForUnsignedUser() {
+        return cocktailRepository.findDistinctTop5ByOrderByRateRateDesc().stream()
+                .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER, cocktail))
+                .collect(Collectors.toList());
     }
 
     private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
@@ -200,12 +207,12 @@ public class CocktailService {
     private List<CocktailDto.SimpleResponse> createSimpleResponses(Authentication authentication, List<Cocktail> cocktails) {
         if(authentication == null){
             return cocktails.stream()
-                    .map(cocktail -> cocktail.entityToSimpleResponse(UNSIGNED_USER, cocktail))
+                    .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER, cocktail))
                     .collect(Collectors.toList());
         }
         User user = userService.findUserByAuthentication(authentication);
         return cocktails.stream()
-                .map(cocktail -> cocktail.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
+                .map(cocktail ->entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
                 .collect(Collectors.toList());
     }
 
@@ -223,6 +230,43 @@ public class CocktailService {
                 .rate(new Rate())
                 .liquor(LiquorMapper.map(post.getLiquor()))
                 .ingredients(new Ingredients(post.getIngredients()))
+                .build();
+    }
+
+    private CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
+        return CocktailDto.SimpleResponse.builder()
+                .cocktailId(cocktail.getCocktailId())
+                .name(cocktail.getName())
+                .imageUrl(cocktail.getImageUrl())
+                .isBookmarked(isBookmarked)
+                .build();
+    }
+
+    private CocktailDto.Response entityToResponse(Cocktail cocktail, boolean isBookmarked) {
+        User user = cocktail.getUser();
+        return CocktailDto.Response.builder()
+                .cocktailId(cocktail.getCocktailId())
+                .isAdminWritten(user.isAdmin())
+                .userId(user.getUserId())
+                .userName(user.getName())
+                .name(cocktail.getName())
+                .imageUrl(cocktail.getImageUrl())
+                .liquor(cocktail.getLiquor().getLiquor())
+                .ingredients(cocktail.getIngredients().createResponseDtoList())
+                .recipe(cocktail.getRecipe().createResponseDtoList())
+                .tags(cocktail.getTags().createResponseDtoList())
+                .rating(cocktail.getRate().getRate())
+                .viewCount(cocktail.getViewCount())
+                .createdAt(cocktail.getCreatedAt())
+                .modifiedAt(cocktail.getModifiedAt())
+                .comments(cocktail.getComments().stream()
+                        .map(Comment::entityToResponse)
+                        .collect(Collectors.toList()))
+                .isBookmarked(isBookmarked)
+                .recommends(cocktail.getRecommends().stream()
+                        .map(recommendedCocktail
+                                -> entityToSimpleResponse(user.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
+                        .collect(Collectors.toList()))
                 .build();
     }
 

@@ -10,6 +10,8 @@ import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.dto.MultiResponseDto;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cocktails")
 @Validated
@@ -73,5 +75,11 @@ public class CocktailController {
                                            @PathVariable("cocktail-id") long cocktailId){
         cocktailService.bookmarkCocktail(authentication, cocktailId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/unsigned-main")
+    public ResponseEntity getRecommendCocktailsForUnsignedUsers(){
+        List<CocktailDto.SimpleResponse> response = cocktailService.readRecommendCocktailsForUnsignedUser();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
