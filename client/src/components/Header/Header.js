@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout } from '../redux/slice/isLoginSlice';
+import { logout } from '../../redux/slice/isLoginSlice';
 
-import HeaderModal from './Modal/HeaderModal';
-import Hamburger from './Hamburger/Hamburger';
+import HeaderModal from './HeaderModal';
+import Hamburger from './Hamburger';
 
 import tw from 'tailwind-styled-components';
 import PersonIcon from '@mui/icons-material/Person';
@@ -135,17 +135,6 @@ const HeaderContainer = tw.header`
   duration-500 
   z-50
   ${(props) => props.position && 'bg-white text-black shadow-lg'}
-`;
-
-const MenuItem = tw.div`
-  text-xl
-  cursor-pointer
-  mr-[10px]
-  max-[768px]:hidden
-  ${(props) =>
-    props.isActive
-      ? `${props.position ? 'text-black' : 'text-white'} font-bold`
-      : 'text-gray-200 font-normal'}
 `;
 
 const HeaderDiv = tw.div`
