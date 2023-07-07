@@ -20,6 +20,23 @@ export default function RecipeDetail() {
     // 데이터 가져올 구문 추가 예정
   }, []);
 
+  const BackgroundImg = () => {
+    return (
+      <>
+        <img
+          src="/images/background/music-dynamic-gradient.png"
+          alt="음표"
+          className="absolute top-0 right-[-400px] pointer-events-none"
+        />
+        {/* 배경 왕별 */}
+        <img
+          src="/images/background/star-dynamic-gradient.png"
+          alt="별"
+          className="absolute bottom-0 right-[900px] pointer-events-none"
+        />
+      </>
+    );
+  };
   const DrawBookmark = () => {
     const bookmark =
       process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
@@ -38,17 +55,7 @@ export default function RecipeDetail() {
   return (
     <>
       <Background>
-        <img
-          src="/images/background/music-dynamic-gradient.png"
-          alt="음표"
-          className="absolute top-0 right-[-400px] pointer-events-none"
-        />
-        {/* 배경 왕별 */}
-        <img
-          src="/images/background/star-dynamic-gradient.png"
-          alt="별"
-          className="absolute bottom-0 right-[900px] pointer-events-none"
-        />
+        <BackgroundImg />
         <Container>
           <DrawBookmark />
           <RecipeInfo cocktailDetail={cocktailDetail} />
