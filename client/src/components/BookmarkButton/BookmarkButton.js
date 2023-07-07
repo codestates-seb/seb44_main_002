@@ -1,7 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
+import tw from 'tailwind-styled-components';
+// 사용가능한 props : 아무것도 안적으면 기본값 적용됨
+// -> size : 버튼 사이즈 커스텀
 
-const BookmarkButton = ({ item, setData, data }) => {
+const BookmarkButton = ({
+  item,
+  setData,
+  data,
+  size = 'w-[36px] h-[60px]',
+}) => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
@@ -25,16 +33,32 @@ const BookmarkButton = ({ item, setData, data }) => {
         if (isLogin) {
           e.stopPropagation();
           bookmarkHandler(item);
+        } else {
+          alert('로그인해야 가능합니다');
         }
       }}
     >
       {item.isBookmarked ? (
-        <img src="/images/bookmark/bookmarkOn.png" alt="활성화된 북마크" />
+        <Img
+          src="/images/bookmark/bookmarkOn.png"
+          alt="활성화된 북마크"
+          size={size}
+        />
       ) : (
-        <img src="/images/bookmark/bookmarkOff.png" alt="활성화된 북마크" />
+        <Img
+          src="/images/bookmark/bookmarkOff.png"
+          alt="활성화된 북마크"
+          size={size}
+        />
       )}
     </button>
   );
 };
 
 export default BookmarkButton;
+
+const Img = tw.img`
+
+  ${({ size }) => size}
+  drop-shadow-3xl
+`;

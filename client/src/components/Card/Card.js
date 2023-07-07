@@ -38,6 +38,7 @@ export default function Card({ item, setData, data }) {
             //임시
             setData={setData}
             data={data}
+            size="w-[20px] h-[30px]"
           />
         </div>
       </ImgButton>
