@@ -4,10 +4,9 @@ import { useLocation } from 'react-router';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import Main from './pages/Main';
+import Main from './pages/Main/Main';
 import Category from './pages/Category/Category';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
-import Community from './pages/Community/Community';
 import LostPage from './pages/LostPage';
 import Mypage from './pages/User/Mypage';
 import CocktailForm from './pages/CocktailForm';
@@ -32,7 +31,6 @@ const Routing = () => {
       <Route path="/" element={<Main />} />
       <Route path="/category" element={<Category />} />
       <Route path="/detail/:id" element={<RecipeDetail />} />
-      <Route path="/community" element={<Community />} />
       <Route path="/mypage" element={<Mypage />} />
       <Route path="/cocktail" element={<CocktailForm />} />
       <Route path="/signup" element={<Signup />} />

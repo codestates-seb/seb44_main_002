@@ -1,4 +1,4 @@
-import HoverButton from '../../common/Buttons/HoverButton';
+import HoverButton from '../../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
 
