@@ -3,7 +3,6 @@ package project.server.domain.comment.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.cocktail.entity.Cocktail;
@@ -27,7 +26,7 @@ public class Comment {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "cocktatil_id")
+    @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
 
     @ManyToOne
@@ -41,10 +40,6 @@ public class Comment {
     @LastModifiedDate
     @Column(name = "last_modified_at")
     private LocalDateTime modifiedAt;
-
-    @CreatedBy
-    @Column(updatable = false)
-    private String createdBy;
 
     public CommentDto.Response entityToResponse() {
         return CommentDto.Response.builder()

@@ -1,12 +1,13 @@
 package project.server.domain.cocktail.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.ingredient.Ingredients;
 import project.server.domain.cocktail.embed.liquor.LiquorMapper;
-import project.server.domain.cocktail.embed.rating.Rating;
+import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
@@ -27,19 +28,6 @@ public class CocktailDto {
         private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
         private List<TagDto.Post> tags;
-
-        public Cocktail postToEntity() {
-            return Cocktail.builder()
-                    .name(name)
-                    .imageUrl(imageUrl)
-                    .recipe(new Recipe(recipe))
-                    .tags(new Tags(tags))
-                    .category(CategoryMapper.map(liquor))
-                    .rating(new Rating())
-                    .liquor(LiquorMapper.map(liquor))
-                    .ingredients(new Ingredients(ingredients))
-                    .build();
-        }
     }
 
     @Getter
@@ -53,8 +41,10 @@ public class CocktailDto {
 
     @Getter
     @Builder
+    @Data
     public static class Response {
         private final long cocktailId;
+        private final boolean isAdminWritten;
         private final long userId;
         private final String userName;
         private final String name;
@@ -63,6 +53,7 @@ public class CocktailDto {
         private final List<IngredientDto.Response> ingredients;
         private final List<RecipeDto.Response> recipe;
         private final List<TagDto.Response> tags;
+        private final double rating;
         private final int viewCount;
         private final LocalDateTime createdAt;
         private final LocalDateTime modifiedAt;

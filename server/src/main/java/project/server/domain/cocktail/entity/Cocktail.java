@@ -7,7 +7,7 @@ import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.embed.ingredient.Ingredients;
 import project.server.domain.cocktail.embed.liquor.Liquor;
 import project.server.domain.cocktail.embed.category.Category;
-import project.server.domain.cocktail.embed.rating.Rating;
+import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
@@ -19,10 +19,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-/**
- * 유저가 작성한 칵테일과 관리자가 작성한 칵테일을 구분하는 로직 필요
- */
 
 @Entity(name = "cocktails")
 @Getter
@@ -60,7 +56,7 @@ public class Cocktail {
     private Tags tags;
 
     @Embedded
-    private Rating rating;
+    private Rate rate;
 
     @Enumerated(value = EnumType.STRING)
     private Category category;
@@ -76,51 +72,15 @@ public class Cocktail {
 
     @Builder
     public Cocktail(String name, String imageUrl, Recipe recipe, Tags tags,
-                    Rating rating, Category category, Liquor liquor, Ingredients ingredients){
+                    Rate rate, Category category, Liquor liquor, Ingredients ingredients){
         this.name = name;
         this.imageUrl = imageUrl;
         this.recipe = recipe;
         this.tags = tags;
-        this.rating = rating;
+        this.rate = rate;
         this.category = category;
         this.liquor = liquor;
         this.ingredients = ingredients;
-    }
-    /**
-     * 유저 정보 담는 로직 생성 해야함.
-     * 북마크 체크도 해야함. 유저가 하면 될 듯?
-     */
-    public CocktailDto.Response entityToResponse() {
-        return CocktailDto.Response.builder()
-                .cocktailId(cocktailId)
-                .userId(1)
-                .userName("kim")
-                .name(name)
-                .imageUrl(imageUrl)
-                .liquor(liquor.getLiquor())
-                .ingredients(ingredients.createResponseDtoList())
-                .recipe(recipe.createResponseDtoList())
-                .tags(tags.createResponseDtoList())
-                .viewCount(viewCount)
-                .createdAt(createdAt)
-                .modifiedAt(modifiedAt)
-                .comments(comments.stream()
-                        .map(Comment::entityToResponse)
-                        .collect(Collectors.toList()))
-                .isBookmarked(false)
-                .recommends(recommends.stream()
-                        .map(this::entityToSimpleResponse)
-                        .collect(Collectors.toList()))
-                .build();
-    }
-
-    public CocktailDto.SimpleResponse entityToSimpleResponse(Cocktail cocktail) {
-        return CocktailDto.SimpleResponse.builder()
-                .cocktailId(cocktail.cocktailId)
-                .name(cocktail.name)
-                .imageUrl(cocktail.imageUrl)
-                .isBookmarked(false)
-                .build();
     }
 
     public boolean containsAll(List<Tag> tags) {
@@ -142,5 +102,21 @@ public class Cocktail {
         this.recipe = new Recipe(patch.getRecipe());
         this.tags = new Tags(patch.getTags());
         this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void rate(int value) {
+        rate.calculate(value);
+    }
+
+    public void reRate(int oldValue, int value) {
+        rate.reCalculate(oldValue, value);
+    }
+
+    public double getRatedScore() {
+        return rate.getRate();
+    }
+
+    public void assignUser(User user) {
+        this.user = user;
     }
 }
