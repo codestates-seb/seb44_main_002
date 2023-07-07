@@ -2,15 +2,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 const BookmarkButton = ({ item, setData, data }) => {
-  //console.log(data);
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
-  // const bookmarkList = useSelector((state) => state.changeInfo.changeInfo);
-
   const bookmarkHandler = (isBookmarked) => {
     //북마크 클릭시 디스패치로 아이템값과 북마크달라졌다는 내용을 등록
-    //console.log('ehd');
+
     const id = item.cocktailId;
     dispatch(updateBookmark({ id, item }));
 

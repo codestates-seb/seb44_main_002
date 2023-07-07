@@ -30,7 +30,6 @@ export default function Category() {
   //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
 
-  //console.log(currentPage);
   const [obj, setObj] = useState({
     totalCount: 200,
     totalPages: 5,
@@ -76,11 +75,10 @@ export default function Category() {
     },
   ];
   const [data, setData] = useState(dummyData);
-  console.log(data);
+
   useEffect(() => {
     //클릭한 페이지
     const page = currentPage + 1;
-    //console.log(page);
 
     //조건에 맞춰 필터링된 데이터
     const fetchCocktails = async () => {
