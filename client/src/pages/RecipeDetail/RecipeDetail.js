@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import tw from 'tailwind-styled-components';
 
@@ -8,14 +8,25 @@ import Community from './Community';
 import Recommend from './Recommend';
 
 export default function RecipeDetail() {
+  // const [cocktail, setCocktail] = useState({});
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
 
+  const setBookmark = () => {
+    // 로그인 조건 추가 예정
+    setIsBookmarked(!isBookmarked);
+  };
+
+  useEffect(() => {
+    // 데이터 가져올 구문 추가 예정
+  }, []);
+
   const DrawBookmark = () => {
-    const bookmark = process.env.PUBLIC_URL + '/images/bookmark.png';
+    const bookmark =
+      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
     const selectedMookmark =
-      process.env.PUBLIC_URL + '/images/bookmark_selected.png';
+      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
     return (
-      <BookmarkIcon onClick={() => setIsBookmarked(!isBookmarked)}>
+      <BookmarkIcon onClick={setBookmark}>
         <img
           width={50}
           src={isBookmarked ? selectedMookmark : bookmark}
@@ -27,12 +38,23 @@ export default function RecipeDetail() {
   return (
     <>
       <Background>
+        <img
+          src="/images/background/music-dynamic-gradient.png"
+          alt="음표"
+          className="absolute top-0 right-[-400px] pointer-events-none"
+        />
+        {/* 배경 왕별 */}
+        <img
+          src="/images/background/star-dynamic-gradient.png"
+          alt="별"
+          className="absolute bottom-0 right-[900px] pointer-events-none"
+        />
         <Container>
           <DrawBookmark />
-          <RecipeInfo cocktailDetail={cocktailDetail} recipeList={recipeList} />
+          <RecipeInfo cocktailDetail={cocktailDetail} />
           <Process cocktailDetail={cocktailDetail} />
           <Community cocktailDetail={cocktailDetail} />
-          <Recommend cocktailDetail={cocktailDetail} />
+          <Recommend cocktailDetail={cocktailDetail.recommends} />
         </Container>
       </Background>
     </>
@@ -40,12 +62,14 @@ export default function RecipeDetail() {
 }
 
 const Background = tw.div`
+relative
 bg-gradient-to-r 
 from-gradi-to
 to-gradi-from
 px-12
 py-52
 w-full
+overflow-hidden
 `;
 const Container = tw.main`
 relative
@@ -53,6 +77,7 @@ mx-auto
 px-[4.6875rem]
 py-32
 w-[80vw]
+max-w-6xl
 bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
@@ -63,31 +88,41 @@ top-0 right-14
 cursor-pointer
 `;
 
-const recipeList = [
-  'Light rum',
-  'Lime',
-  'Sugar',
-  'Mint',
-  'Soda water',
-  'Tonic water',
-  'Tonic water',
-  'Tonic water',
-];
 const cocktailDetail = {
   cocktailId: 1,
+  userId: 1,
   name: 'Admin',
   imageUrl: 'sample image url',
   liquor: '럼',
-  date: '2023-02-13',
+  viewCount: 1,
+  createdAt: '2000-00-00',
+  modifiedAt: '2000-00-00',
   Ingredients: [
     {
-      ingredient: '설탕',
+      ingredient: 'Light rum',
     },
     {
-      ingredient: '레몬즙',
+      ingredient: 'Lime',
+    },
+    {
+      ingredient: 'Sugar',
+    },
+    {
+      ingredient: 'Mint',
+    },
+    {
+      ingredient: 'Soda water',
+    },
+    {
+      ingredient: 'Tonic water',
+    },
+    {
+      ingredient: 'Lemon water',
+    },
+    {
+      ingredient: 'Lime water',
     },
   ],
-  // Ingredients: ['설탕', '레몬즙'],
   recipe: [
     `Pour the rum and top with soda water.`,
     'Pour the rum and top with soda water.with soda water.',
