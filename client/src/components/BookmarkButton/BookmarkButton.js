@@ -1,5 +1,7 @@
-//item, isBookmarked 를 props 로 받습니다.
-const BookmarkButton = ({ item, isLogin }) => {
+import { useSelector } from 'react-redux';
+
+const BookmarkButton = ({ item }) => {
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
   const bookmarkHandler = () => {
     //북마크 클릭시 디스패치로 아이템값과 북마크달라졌다는 내용을 등록
   };
