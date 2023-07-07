@@ -13,14 +13,6 @@ const BookmarkButton = ({ item, setData, data }) => {
     //console.log('ehd');
     const id = item.cocktailId;
     dispatch(updateBookmark({ id, isBookmarked, item }));
-    // const filteredData = data.filter((el) => el.cocktailId !== cocktailId);
-    // const isitem = data.find((el) => el.cocktailId === cocktailId);
-    // if (!isitem) {
-    //   setData([...data, item]);
-    // } else {
-    //   setData(filteredData);
-    // }
-    //console.log(data);
 
     const newDate = data.map((el, idx) => {
       if (idx + 1 === item.cocktailId) {

@@ -29,15 +29,31 @@ const userInfoSlice = createSlice({
   initialState,
   reducers: {
     updateBookmark: (state, action) => {
-      const { cocktailId, isBookmarked, item } = action.payload;
+      const { id, isBookmarked, item } = action.payload;
 
-      state.bookmarked = state.bookmarked.map((bookmark) => {
-        if (bookmark.cocktailId === cocktailId) {
-          return;
-        } else {
-          return bookmark;
-        }
-      });
+      const filteredData = state.bookmarked.filter(
+        (el) => el.cocktailId !== id
+      );
+      //새로운 북마크 추가
+      const isitem = state.bookmarked.find((el) => el.cocktailId === id);
+      //새로운 북마크 추가
+      if (!isitem) {
+        // setData([...data, item]);
+        state.bookmarked = [...state.bookmarked, item];
+      } else {
+        // 기존 북마크 삭제
+        //   setData(filteredData);
+        state.bookmarked = filteredData;
+      }
+      //console.log(data);
+
+      // state.bookmarked = state.bookmarked.map((bookmark) => {
+      //   if (bookmark.cocktailId === id) {
+      //     return;
+      //   } else {
+      //     return bookmark;
+      //   }
+      // });
     },
   },
 });

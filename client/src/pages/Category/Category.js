@@ -42,7 +42,7 @@ export default function Category() {
       cocktailId: 1,
       name: 'sample',
       imageUrl: 'images/cocktail/cocktail1.jpg',
-      isBookmarked: false,
+      isBookmarked: true,
     },
     {
       cocktailId: 2,
