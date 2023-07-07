@@ -1,4 +1,4 @@
-package project.server.domain.recommendcocktail;
+package project.server.domain.recommendcocktail.embed;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +20,5 @@ public class CocktailInfo {
     private String cocktailName;
 
     @Column(updatable = false)
-    private String cocktailUrl;
+    private String cocktailImageUrl;
 }

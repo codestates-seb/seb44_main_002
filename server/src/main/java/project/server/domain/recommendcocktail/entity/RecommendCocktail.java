@@ -1,14 +1,16 @@
-package project.server.domain.recommendcocktail;
+package project.server.domain.recommendcocktail.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project.server.domain.recommendcocktail.embed.CocktailInfo;
+import project.server.domain.recommendcocktail.embed.UserInfo;
 
 import javax.persistence.*;
 
 @Entity(name = "recommend_cocktails")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class RecommendCocktail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +34,6 @@ public class RecommendCocktail {
     }
 
     public void subtractBookmarkCount() {
+        bookmarkCount--;
     }
 }

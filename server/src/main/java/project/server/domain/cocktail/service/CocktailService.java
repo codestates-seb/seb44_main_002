@@ -18,7 +18,7 @@ import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.entity.Comment;
-import project.server.domain.recommendcocktail.RecommendCocktailService;
+import project.server.domain.recommendcocktail.service.RecommendCocktailService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 import project.server.dto.MultiResponseDto;
@@ -53,6 +53,7 @@ public class CocktailService {
         Cocktail cocktail = cocktailPostDtoToEntity(post);
         cocktail.assignUser(user);
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
+        recommendCocktailService.createRecommendCocktail(cocktail, user);
         savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
         return entityToResponse(savedCocktail, false);
     }
@@ -118,18 +119,12 @@ public class CocktailService {
        User user = userService.findUserByAuthentication(authentication);
        Cocktail cocktail = findCocktailById(cocktailId);
        if(user.isBookmarked(cocktailId)){
-           recommendCocktailService.addBookmarkCount(user, cocktail);
+           recommendCocktailService.subtractBookmarkCount(user, cocktail);
            user.cancelBookmark(cocktailId);
            return;
        }
-       recommendCocktailService.subtractBookmarkCount(user, cocktail);
+       recommendCocktailService.addBookmarkCount(user, cocktail);
        user.bookmark(cocktailId);
-    }
-
-    public List<CocktailDto.SimpleResponse> readRecommendCocktailsForUnsignedUser() {
-        return cocktailRepository.findDistinctTop5ByOrderByRateRateDesc().stream()
-                .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER, cocktail))
-                .collect(Collectors.toList());
     }
 
     private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
