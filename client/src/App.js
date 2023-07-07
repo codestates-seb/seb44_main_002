@@ -8,7 +8,7 @@ import Main from './pages/Main/Main';
 import Category from './pages/Category/Category';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import LostPage from './pages/LostPage';
-import Mypage from './pages/Mypage/Mypage';
+import UserPage from './pages/User/UserPage';
 import CocktailForm from './pages/CocktailForm';
 import Signup from './pages/Signup';
 
@@ -31,7 +31,7 @@ const Routing = () => {
       <Route path="/" element={<Main />} />
       <Route path="/category" element={<Category />} />
       <Route path="/detail/:id" element={<RecipeDetail />} />
-      <Route path="/mypage" element={<Mypage />} />
+      <Route path="/userpage/:id" element={<UserPage />} />
       <Route path="/cocktail" element={<CocktailForm />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="*" element={<LostPage />} />
