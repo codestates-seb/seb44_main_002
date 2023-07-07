@@ -1,7 +1,5 @@
 package project.server.domain.user;
 
-import project.server.domain.cocktail.entity.Cocktail;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

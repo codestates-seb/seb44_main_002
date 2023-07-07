@@ -17,6 +17,7 @@ import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.recommendcocktail.RecommendCocktailService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 import project.server.dto.MultiResponseDto;
@@ -37,10 +38,12 @@ public class CocktailService {
     public static final boolean UNSIGNED_USER = false;
 
     private final CocktailRepository cocktailRepository;
+    private final RecommendCocktailService recommendCocktailService;
     private final UserService userService;
 
-    public CocktailService(CocktailRepository cocktailRepository, UserService userService) {
+    public CocktailService(CocktailRepository cocktailRepository, RecommendCocktailService recommendCocktailService, UserService userService) {
         this.cocktailRepository = cocktailRepository;
+        this.recommendCocktailService = recommendCocktailService;
         this.userService = userService;
     }
 
@@ -112,10 +115,13 @@ public class CocktailService {
 
     public void bookmarkCocktail(Authentication authentication, long cocktailId) {
        User user = userService.findUserByAuthentication(authentication);
+       Cocktail cocktail = findCocktailById(cocktailId);
        if(user.isBookmarked(cocktailId)){
+           recommendCocktailService.addBookmarkCount(user, cocktail);
            user.cancelBookmark(cocktailId);
            return;
        }
+       recommendCocktailService.subtractBookmarkCount(user, cocktail);
        user.bookmark(cocktailId);
     }
 
