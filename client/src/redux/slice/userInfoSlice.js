@@ -1,52 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
+//TODO: redux 사용법
+// import { useSelector, useDispatch } from 'react-redux'
+// import { updateBookmark } from '../redux/slice/userInfoSlice';
 
-// {
-//     “name” : “kim”,
-//     “profileImageUrl” : “sample image url”
-//     “gender” : “example”,
-//     “age” : 20,
-//     “email” : “kim@example.com”,
-//     “subscribedCount” : 0,
-//     “bookmarked” : [
-//         {
-//             “cocktailId” : 1,
-//             “name” : “sample cocktail”,
-//             “imageUrl” : “sample image url”,
-//             “isBookmarked” : “true”
-//         },
-//         {
-//             “cocktailId” : 2,
-//             “name” : “sample cocktail”,
-//             “isBookmarked” : “true”
-//         }
-//     ],
-//     “boards” : [
-//         {
-//             “boardId” : 1,
-//             “title” : “title1”,
-//             “content” : “content1”
-//         },
-//         {
-//             “boardId” : 2,
-//             “title” : “title2”,
-//             “content” : “content2”
-//         },
-//     ],
-//     “subscribe” : [
-//         {
-//             “userId” : 1,
-//             “name” : “kim”,
-//             “profileImageUrl” : “sample image url”
-//         },
-//         {
-//             “userId” : 2,
-//             “name” : “park”,
-//             “profileImageUrl” : “sample image url”
-//         },
-//     ],
+// 현재 state값 불러오기
+// const bookmarkList = useSelector((state) => state.userinfo.bookmarked);
+// dispatch 요청 보내기
+// const dispatch = useDispatch()
+// id 는 클릭한 북마크칵테일의 아이디
+//item 은 클릭한 칵테일의 정보
+// item={
+//   cocktailId: 1,
+//   name: 'sample',
+//   imageUrl: 'images/cocktail/cocktail1.jpg',
+//   isBookmarked: true,
 // }
+// const id = item.cocktailId;
+// dispatch(updateBookmark({ id, item }));
 
-//유저 아이디가 필요하다.
 const initialState = {
   name: null,
   profileImageUrl: null,
@@ -54,19 +25,45 @@ const initialState = {
   age: null,
   email: null,
   subscribedCount: 0,
-  bookmarked: null,
+  bookmarked: [
+    {
+      cocktailId: 1,
+      name: 'sample',
+      imageUrl: 'images/cocktail/cocktail1.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 2,
+      name: '체리주',
+      imageUrl: 'images/cocktail/cocktail2.jpg',
+      isBookmarked: true,
+    },
+  ],
   boards: null,
 };
 
 const userInfoSlice = createSlice({
-  name: 'changeInfo',
+  name: 'userinfo',
   initialState,
   reducers: {
-    UPDATE: (action) => {
-      return action.payload;
+    updateBookmark: (state, action) => {
+      const { id, item } = action.payload;
+
+      const filteredData = state.bookmarked.filter(
+        (el) => el.cocktailId !== id
+      );
+      //새로운 북마크 추가
+      const isitem = state.bookmarked.find((el) => el.cocktailId === id);
+      //새로운 북마크 추가
+      if (!isitem) {
+        state.bookmarked = [...state.bookmarked, item];
+      } else {
+        // 기존 북마크 삭제
+        state.bookmarked = filteredData;
+      }
     },
   },
 });
 
-export const { UPDATE } = userInfoSlice.actions;
+export const { updateBookmark } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
