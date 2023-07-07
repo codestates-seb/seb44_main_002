@@ -73,13 +73,13 @@ export default function Category() {
   const dummyData = [
     {
       cocktailId: 1,
-      name: 'sample cocktail',
+      name: 'sample',
       imageUrl: 'images/cocktail/cocktail1.jpg',
       isBookmarked: false,
     },
     {
       cocktailId: 2,
-      name: 'sample cocktail',
+      name: '체리주',
       imageUrl: 'images/cocktail/cocktail2.jpg',
       isBookmarked: true,
     },
