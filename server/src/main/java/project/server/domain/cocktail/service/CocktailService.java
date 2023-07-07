@@ -23,7 +23,6 @@ import project.server.dto.MultiResponseDto;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -187,9 +186,9 @@ public class CocktailService {
             return Sort.by(Sort.Order.asc("viewCount"));
         }
         if (sortValue.equals("highest_rate")) {
-            return Sort.by(Sort.Order.desc("rating.rate"));
+            return Sort.by(Sort.Order.desc("rate.rate"));
         }
-        return Sort.by(Sort.Order.asc("rating.rate"));
+        return Sort.by(Sort.Order.asc("rate.rate"));
     }
 
     private List<CocktailDto.SimpleResponse> createSimpleResponses(Authentication authentication, List<Cocktail> cocktails) {
