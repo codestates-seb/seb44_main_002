@@ -3,22 +3,20 @@ import { Link } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 
 import tw from 'tailwind-styled-components';
+import { useState } from 'react';
 
 export default function Recommend({ cocktailDetail }) {
+  const [recommends, setRecommends] = useState(cocktailDetail);
+  console.log(recommends);
   return (
     <RecommendContainer>
       <RecommentP>이런 칵테일은 어떠세요?</RecommentP>
       <CardContainer>
-        {cocktailDetail.recommends.map((ele) => {
-          const item = {
-            itemid: ele.cocktailId,
-            img: ele.imageUrl,
-            title: ele.name,
-          };
+        {recommends.map((ele) => {
           return (
             <Link to={`/detail/${ele.cocktailId}`} key={ele.cocktailId}>
               <div className="mb-12 mr-4">
-                <Card item={item} isBookmarked={ele.isBookmarked} />
+                <Card item={ele} />
               </div>
             </Link>
           );

@@ -1,11 +1,31 @@
+import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 export default function Community({ cocktailDetail }) {
+  const [tag, setTag] = useState('');
+
+  const deleteAnswer = () => {};
+
+  const changeTag = (userId, username) => {
+    // 본인 태그 방지
+    if (userId !== 1) {
+      setTag(username);
+    }
+  };
+
   return (
     <CommunityContainer>
       <CommunityHeader>댓글을 작성해보세요!</CommunityHeader>
       <InputContainer>
-        <InputTextArea placeholder="댓글을 입력하세요." />
+        <div className="w-[calc(100%-100px)] max-md:w-full">
+          {tag !== '' && (
+            <TagP onClick={() => setTag('')}>
+              {`@${tag}`}
+              <span className="ml-3">x</span>
+            </TagP>
+          )}
+          <InputTextArea placeholder="댓글을 입력하세요." />
+        </div>
         <InputButton>전송하기</InputButton>
       </InputContainer>
       <div>
@@ -18,15 +38,17 @@ export default function Community({ cocktailDetail }) {
                 <CommentAndButton>
                   <CommentDate>{ele.date}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === 3 ? (
+                    {ele.userId === 3 && (
                       <>
                         <CommentButton>삭제하기</CommentButton>
                         <CommentButton>수정하기</CommentButton>
-                        <CommentButton>답변하기</CommentButton>
                       </>
-                    ) : (
-                      <CommentButton>답변하기</CommentButton>
                     )}
+                    <CommentButton
+                      onClick={() => changeTag(ele.userId, ele.name)}
+                    >
+                      답변하기
+                    </CommentButton>
                   </ButtonContainer>
                 </CommentAndButton>
               </CommentContainer>
@@ -40,15 +62,17 @@ export default function Community({ cocktailDetail }) {
                     <CommentAndButton>
                       <CommentDate>{rp.date}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === 3 ? (
+                        {rp.userId === 3 && (
                           <>
                             <CommentButton>삭제하기</CommentButton>
                             <CommentButton>수정하기</CommentButton>
-                            <CommentButton>답변하기</CommentButton>
                           </>
-                        ) : (
-                          <CommentButton>답변하기</CommentButton>
                         )}
+                        <CommentButton
+                          onClick={() => changeTag(rp.userId, rp.name)}
+                        >
+                          답변하기
+                        </CommentButton>
                       </ButtonContainer>
                     </CommentAndButton>
                   </ReplyContainer>
@@ -82,11 +106,22 @@ text-gray-200
 items-end
 max-md:flex-col
 `;
+const TagP = tw.p`
+inline-block
+px-2 
+py-1.5 
+mb-4 
+border-[1px] 
+border-gray-400 
+rounded-md 
+cursor-pointer
+hover:text-white 
+hover:border-white
+`;
 const InputTextArea = tw.textarea`
 h-24 
-w-[calc(100%-100px)]
+w-full
 bg-transparent 
-max-md:w-full
 `;
 const InputButton = tw.button`
 h-8 
