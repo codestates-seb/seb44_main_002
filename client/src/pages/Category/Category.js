@@ -154,6 +154,7 @@ export default function Category() {
                 <Card item={item} className="pr-4" key={index} />
               ))}
             </div>
+            {/* 페이지네이션 */}
             <div className="flex justify-start mb-[100px] gap-2">
               {obj && (
                 <>
