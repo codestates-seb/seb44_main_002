@@ -24,7 +24,7 @@ public class ReplyController {
         ReplyDto.Response response = replyService.createReply(commentId, post);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
-
+//
     @PatchMapping("/{comment-id}")
     public ResponseEntity patchReply(@PathVariable("comment-id") @Positive Long replyId,
                                      @Valid @RequestBody ReplyDto.Patch patch) {

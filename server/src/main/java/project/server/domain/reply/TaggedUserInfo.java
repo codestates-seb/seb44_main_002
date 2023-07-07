@@ -14,5 +14,5 @@ public class TaggedUserInfo {
         this.taggedUserId = taggedUserId;
         this.taggedUserName = taggedUserName;
     }
-
+//
 }
