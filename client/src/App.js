@@ -8,7 +8,7 @@ import Main from './pages/Main/Main';
 import Category from './pages/Category/Category';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import LostPage from './pages/LostPage';
-import UserPage from './pages/User/UserPage';
+import UserPage from './pages/UserPage/UserPage';
 import CocktailForm from './pages/CocktailForm';
 import Signup from './pages/Signup';
 
