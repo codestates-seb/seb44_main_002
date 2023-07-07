@@ -11,12 +11,12 @@ import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 // import Pagination from '../../components/Pagination/Pagination';
-// import HoverButton from '../../common/Buttons/HoverButton';
 export default function Category() {
+  //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
-  //선택된 카테고리조건 (카테고리&태그&정렬)
 
+  //선택된 카테고리조건 (카테고리&태그&정렬)
   const [fitlerCondtion, setfitlerCondtion] = useState({
     category: CategoryFilter[0].type,
     frequencyTag: tagFrequencyData[0].type,
@@ -24,8 +24,9 @@ export default function Category() {
     descendingOrder: true,
     sortType: sortTypeData[0].type,
   });
-
+  //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
+
   //console.log(currentPage);
   const [obj, setObj] = useState({
     totalCount: 200,
@@ -33,8 +34,11 @@ export default function Category() {
   });
 
   useEffect(() => {
+    //클릭한 페이지
     const page = currentPage + 1;
     //console.log(page);
+
+    //조건에 맞춰 필터링된 데이터
     const fetchCocktails = async () => {
       const url = `${BASE_URL}/cocktails/filter?category=${
         fitlerCondtion.category
@@ -64,8 +68,8 @@ export default function Category() {
       totalPages: 5,
     });
   }, [fitlerCondtion, currentPage]);
-  //더미데이터
 
+  //더미데이터
   const dummyData = [
     {
       cocktailId: 1,
