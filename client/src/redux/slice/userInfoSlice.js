@@ -7,19 +7,19 @@ import { createSlice } from '@reduxjs/toolkit';
 //     “age” : 20,
 //     “email” : “kim@example.com”,
 //     “subscribedCount” : 0,
-//     “bookmarked” : [
-//         {
-//             “cocktailId” : 1,
-//             “name” : “sample cocktail”,
-//             “imageUrl” : “sample image url”,
-//             “isBookmarked” : “true”
-//         },
-//         {
-//             “cocktailId” : 2,
-//             “name” : “sample cocktail”,
-//             “isBookmarked” : “true”
-//         }
-//     ],
+// “bookmarked” : [
+//     {
+//         “cocktailId” : 1,
+//         “name” : “sample cocktail”,
+//         “imageUrl” : “sample image url”,
+//         “isBookmarked” : “true”
+//     },
+//     {
+//         “cocktailId” : 2,
+//         “name” : “sample cocktail”,
+//         “isBookmarked” : “true”
+//     }
+// ],
 //     “boards” : [
 //         {
 //             “boardId” : 1,
@@ -54,7 +54,7 @@ const initialState = {
   age: null,
   email: null,
   subscribedCount: 0,
-  bookmarked: null,
+  bookmarked: [],
   boards: null,
 };
 
@@ -62,11 +62,11 @@ const userInfoSlice = createSlice({
   name: 'changeInfo',
   initialState,
   reducers: {
-    UPDATE: (action) => {
+    INFOUPDATE: (action) => {
       return action.payload;
     },
   },
 });
 
-export const { UPDATE } = userInfoSlice.actions;
+export const { INFOUPDATE } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
