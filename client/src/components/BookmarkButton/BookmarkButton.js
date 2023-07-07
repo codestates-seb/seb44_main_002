@@ -12,7 +12,7 @@ const BookmarkButton = ({ item, setData, data }) => {
     //북마크 클릭시 디스패치로 아이템값과 북마크달라졌다는 내용을 등록
     //console.log('ehd');
     const id = item.cocktailId;
-    dispatch(updateBookmark({ id, isBookmarked, item }));
+    dispatch(updateBookmark({ id, item }));
 
     const newDate = data.map((el, idx) => {
       if (idx + 1 === item.cocktailId) {
