@@ -26,6 +26,21 @@ const BookmarkButton = ({
       return el;
     });
     setData(newDate);
+    // /cocktails/{cocktail-id}/bookmark
+    // const handleBookmark = () => {
+    //   fetch(`/cocktails/${item.cocktailId}/bookmark`, {
+    //     method: 'POST',
+    //     // 필요한 경우 헤더 등을 설정하세요.
+    //   })
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
+    //       }
+    //       // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
+    //     })
+    //     .catch((error) => {
+    //       console.error(error); // 에러 처리
+    //     });
   };
   return (
     <button
@@ -58,7 +73,6 @@ const BookmarkButton = ({
 export default BookmarkButton;
 
 const Img = tw.img`
-
   ${({ size }) => size}
   drop-shadow-3xl
 `;
