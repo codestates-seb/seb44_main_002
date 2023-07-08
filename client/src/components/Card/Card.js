@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import tw from 'tailwind-styled-components';
-import BookmarkButton from '../BookmarkButton/BookmarkButton';
 
+import BookmarkButton from '../BookmarkButton/BookmarkButton';
+import tw from 'tailwind-styled-components';
 //item 칵테일에 대한 정보가 객체형태로 담겨있습니다.
 export default function Card({ item, setData, data }) {
   const navigate = useNavigate();
