@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import HoverButton from '../common/Buttons/HoverButton';
-import CustomInput from '../components/Input/Input';
+import CustomInput from '../components/Input/CustomInput';
 import UseSignupValid from '../components/Validation/SignupValidation';
 
 import tw from 'tailwind-styled-components';
+import GenderRadioInput from '../components/Input/GenderRadioInput';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -106,12 +107,8 @@ export default function Signup() {
                     setForm({ ...form, confirmPassword: e.target.value })
                   }
                 />
-                <CustomInput
-                  labelName="성별"
-                  type="radio"
-                  text="성별을 체크해주세요"
+                <GenderRadioInput
                   isValid={isValid.gender}
-                  value={form.gender}
                   onChange={(e) => setForm({ ...form, gender: e.target.value })}
                 />
                 <CustomInput

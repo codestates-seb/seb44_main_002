@@ -1,6 +1,6 @@
 export default function UseSignupValid(form, setIsValid) {
   // 이름 2자 이상 10자 미만 공백포함X
-  const nameRegex = /^[^\s]{2,9}$/;
+  const nameRegex = /^(?!.*편한$)[^\s]{2,9}$/;
   const emailRegex =
     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
   // 비밀번호 8자 이상, 최소한 하나의 문자열, 최소한 하나의 숫자

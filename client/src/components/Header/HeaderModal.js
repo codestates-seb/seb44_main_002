@@ -10,7 +10,7 @@ import Modal from '@mui/material/Modal';
 import HoverButton from '../../common/Buttons/HoverButton';
 import tw from 'tailwind-styled-components';
 import useLoginValid from '../Validation/LoginValidation';
-import CustomInput from '../Input/Input';
+import CustomInput from '../Input/CustomInput';
 
 const style = {
   position: 'absolute',
