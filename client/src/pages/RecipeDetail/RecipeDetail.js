@@ -6,7 +6,7 @@ import RecipeInfo from './RecipeInfo';
 import Process from './Process';
 import Community from './Community';
 import Recommend from './Recommend';
-
+import BookmarkBtn from '../../components/BookmarkButton/BookmarkBtn';
 export default function RecipeDetail() {
   // const [cocktail, setCocktail] = useState({});
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
@@ -42,14 +42,35 @@ export default function RecipeDetail() {
       process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
     const selectedMookmark =
       process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
+    const item = {
+      cocktailId: cocktailDetail.cocktailId,
+      name: cocktailDetail.name,
+      imageUrl: cocktailDetail.imageUrl,
+      isBookmarked: cocktailDetail.isBookmarked,
+    };
+
     return (
-      <BookmarkIcon onClick={setBookmark}>
-        <img
-          width={50}
-          src={isBookmarked ? selectedMookmark : bookmark}
-          alt="bookmark"
-        />
-      </BookmarkIcon>
+      // <BookmarkIcon onClick={setBookmark}>
+      //   <img
+      //     width={50}
+      //     src={isBookmarked ? selectedMookmark : bookmark}
+      //     alt="bookmark"
+      //   />
+      // </BookmarkIcon>
+      // <div
+      //   className="absolute
+      // top-0 right-14
+      // cursor-pointer"
+      // >
+      //   <BookmarkButton item={item} />
+      // </div>
+      <BookmarkBtn
+        onClick={setBookmark}
+        isBookmarked={isBookmarked}
+        absolute
+        top="top-0"
+        right="right-14"
+      />
     );
   };
   return (

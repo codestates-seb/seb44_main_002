@@ -15,7 +15,7 @@ export default function Recommend({ cocktailDetail }) {
           return (
             <Link to={`/detail/${ele.cocktailId}`} key={ele.cocktailId}>
               <div className="mb-12 mr-4">
-                <Card item={ele} />
+                <Card item={ele} setData={setRecommends} data={recommends} />
               </div>
             </Link>
           );
