@@ -20,6 +20,7 @@ import project.server.auth.handler.UserAuthenticationEntryPoint;
 import project.server.auth.handler.UserAuthenticationFailureHandler;
 import project.server.auth.handler.UserAuthenticationSuccessHandler;
 import project.server.auth.jwt.JwtTokenizer;
+import project.server.auth.redis.RedisService;
 import project.server.auth.service.DetailsService;
 import project.server.auth.utils.CustomAuthorityUtils;
 
@@ -32,13 +33,14 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final DetailsService detailsService;
+    private final RedisService redisService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, DetailsService detailsService) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, DetailsService detailsService, RedisService redisService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.detailsService = detailsService;
+        this.redisService = redisService;
     }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -93,12 +95,12 @@ public class SecurityConfiguration {
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/signin");
-            // Exception 추가
+
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
 
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisService);
 
             builder
                     .addFilter(jwtAuthenticationFilter)
