@@ -3,9 +3,16 @@ import { updateBookmark } from '../../redux/slice/userInfoSlice';
 import tw from 'tailwind-styled-components';
 // 사용가능한 props : 아무것도 안적으면 기본값 적용됨
 // -> size : 버튼 사이즈 커스텀
-
+//item  형태
+// {
+//     cocktailId: 2,
+//     name: '체리주',
+//     imageUrl: 'images/cocktail/cocktail2.jpg',
+//     isBookmarked: true
+//   }
 const BookmarkButton = ({
   item,
+  onClick,
   setData,
   data,
   size = 'w-[36px] h-[60px]',
@@ -44,6 +51,8 @@ const BookmarkButton = ({
   };
   return (
     <button
+      // onClick={onClick}
+
       onClick={(e, item) => {
         if (isLogin) {
           e.stopPropagation();
@@ -75,4 +84,5 @@ export default BookmarkButton;
 const Img = tw.img`
   ${({ size }) => size}
   drop-shadow-3xl
+ 
 `;

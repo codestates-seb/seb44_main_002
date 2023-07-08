@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import {
   CategoryFilter,
@@ -16,7 +17,7 @@ export default function Category() {
   //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   //리덕스 임시 저장
   // const bookmarkList = useSelector((state) => state.userinfo.bookmarked);
   //선택된 카테고리조건 (카테고리&태그&정렬)
@@ -157,10 +158,9 @@ export default function Category() {
                 <Card
                   item={item}
                   className="pr-4"
-                  key={index}
-                  // 임시
-                  setData={setData}
+                  key={index + 1}
                   data={data}
+                  setData={setData}
                 />
               ))}
             </div>

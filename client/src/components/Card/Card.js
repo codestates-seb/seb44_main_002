@@ -1,11 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
+import BookmarkBtn from '../BookmarkButton/BookmarkBtn';
 import tw from 'tailwind-styled-components';
-import BookmarkButton from '../BookmarkButton/BookmarkButton';
-
+{
+  /* 사용법
+  <Card
+  item={item}
+  onClick={() => handleBookmarkClick(item.cocktailId, item)}
+/>; */
+}
 //item 칵테일에 대한 정보가 객체형태로 담겨있습니다.
-export default function Card({ item, setData, data }) {
+export default function Card({ item, data, setData }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const handleMouseOver = (index) => {
@@ -15,12 +24,41 @@ export default function Card({ item, setData, data }) {
   const handleMouseOut = () => {
     setHoveredIndex(null);
   };
+  const handleBookmarkClick = (cocktailId, item) => {
+    console.log('동작');
+    const id = cocktailId;
+    dispatch(updateBookmark({ id, item }));
 
+    const newDate = data.map((el, idx) => {
+      const isBookmarked = el.isBookmarked;
+      //console.log(isBookmarked);
+      if (el.cocktailId === item.cocktailId) {
+        return { ...el, isBookmarked: !isBookmarked };
+      }
+      return el;
+    });
+    setData(newDate);
+    // /cocktails/{cocktail-id}/bookmark
+    // const handleBookmark = () => {
+    //   fetch(`/cocktails/${item.cocktailId}/bookmark`, {
+    //     method: 'POST',
+    //     // 필요한 경우 헤더 등을 설정하세요.
+    //   })
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
+    //       }
+    //       // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
+    //     })
+    //     .catch((error) => {
+    //       console.error(error); // 에러 처리
+    //     });
+  };
   return (
     <Container
       onMouseOver={() => handleMouseOver(item.cocktailId)}
       onMouseOut={handleMouseOut}
-      isHovering={hoveredIndex === item.cocktailId}
+      ishovering={hoveredIndex === item.cocktailId}
     >
       {/* 칵테일 이미지 */}
       <ImgButton>
@@ -30,19 +68,17 @@ export default function Card({ item, setData, data }) {
           onClick={() => navigate(`/detail/${item.cocktailId}`)}
         />
         {/* 투명한 검은 박스 */}
-        <Hoverocktail isHovering={hoveredIndex === item.cocktailId} />
+        <Hoverocktail ishovering={hoveredIndex === item.cocktailId} />
         {/* 북마크 */}
-        <div className="absolute  top-0 right-2 ">
-          <BookmarkButton
-            item={item}
-            //임시
-            setData={setData}
-            data={data}
-            size="w-[20px] h-[30px]"
-          />
-        </div>
+        <BookmarkBtn
+          onClick={() => handleBookmarkClick(item.cocktailId, item)}
+          isBookmarked={item.isBookmarked}
+          size="w-[20px] h-[30px]"
+          absolute="true"
+          top="top-0"
+          right="right-2"
+        />
       </ImgButton>
-
       {/* 하단 칵테일이름 */}
       <Title>{item.name}</Title>
     </Container>
@@ -52,7 +88,7 @@ const Container = tw.div`
 relative 
 w-[11.25rem]
 h-[15rem] 
-${(props) => (props.isHovering ? `text-gray-100` : `text-gray-200 `)}
+${(props) => (props.ishovering ? `text-gray-100` : `text-gray-200 `)}
 drop-shadow-3xl
 
 `;
@@ -82,7 +118,7 @@ w-[11.25rem]
   bg-black 
 bg-opacity-50
   box-border
-  ${(props) => (props.isHovering ? `hidden` : ``)}
+  ${(props) => (props.ishovering ? `hidden` : ``)}
 `;
 const Title = tw.h3`
 text-xl
