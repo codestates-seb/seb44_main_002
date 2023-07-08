@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.server.auth.jwt.JwtTokenizer;
 import project.server.auth.redis.RedisService;
+import project.server.exception.BusinessLogicException;
+import project.server.exception.ExceptionCode;
 
 @RestController
 @Slf4j
@@ -24,8 +26,8 @@ public class AuthController {
     @PostMapping("/signout")
     public ResponseEntity signout(@RequestHeader("Authorization") String tokenHeader) {
         String token = jwtTokenizer.getTokenFromHeader(tokenHeader);
+        if (redisService.isSignedOut(token)) throw new BusinessLogicException(ExceptionCode.USER_INPUT_ERROR);
         redisService.signOut(token);
         return ResponseEntity.ok("Signed out successfully.");
     }
-
 }

@@ -11,7 +11,8 @@ public enum ExceptionCode {
     COMMENT_NOT_FOUND(404, "해당 댓글 없음"),
     INVALID_RATE_VALUE(500, "유효하지 않은 값이에용"),
     UNAUTHORIZED_USER(403, "권한이 없어용"),
-    NOT_SIGN_IN(401, "로그인부터 하세용");
+    NOT_SIGN_IN(401, "로그인부터 하세용"),
+    USER_INPUT_ERROR(401, "잘못된 요청입니다");
 
     private final int status;
 
