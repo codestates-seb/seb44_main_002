@@ -1,6 +1,13 @@
+import { useState } from 'react';
+
+import UserInfo from './UserInfo';
+import Subscribe from './Subscribe';
+
 import tw from 'tailwind-styled-components';
 
 export default function UserPage() {
+  const [userInfo, setUserInfo] = useState(dummyData);
+
   const BackgroundImg = () => {
     return (
       <>
@@ -20,7 +27,12 @@ export default function UserPage() {
   return (
     <Background>
       <BackgroundImg />
-      <OuterContainer></OuterContainer>
+      <OuterContainer>
+        <Container>
+          <UserInfo userInfo={dummyData} />
+          <Subscribe userInfo={dummyData} />
+        </Container>
+      </OuterContainer>
     </Background>
   );
 }
@@ -30,16 +42,116 @@ relative
 bg-gradient-to-r 
 from-gradi-to
 to-gradi-from
-py-32
+pt-32
 w-full
 overflow-hidden
 `;
-const OuterContainer = tw.main`
-mx-auto
-px-[4.6875rem]
-py-32
+const OuterContainer = tw.div`
 w-full
 bg-[#000000]/40
-rounded-ss-[3.125rem]
-rounded-ee-[3.125rem]
+px-[4.6875rem]
+py-32
+max-md:px-4
 `;
+const Container = tw.main`
+w-full
+max-w-6xl
+mx-auto
+`;
+
+const dummyData = {
+  name: '숨니',
+  profileImageUrl: 'sample image url',
+  gender: '여',
+  age: 20,
+  email: 'kim@example.com',
+  subscribedCount: 1200,
+  bookmarked: [
+    {
+      cocktailId: 1,
+      name: '라떼 밀크주',
+      imageUrl: 'https://2bob.co.kr/data/recipe/20210707094952-WOE78.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 2,
+      name: '논알콜 청포도 모히토',
+      imageUrl: 'https://2bob.co.kr/data/recipe/20210706172910-2B1WD.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 3,
+      name: '시트러스 주스',
+      imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
+      isBookmarked: true,
+    },
+  ],
+  boards: [
+    {
+      boardId: 1,
+      title: 'title1',
+      content: 'content1',
+    },
+    {
+      boardId: 2,
+      title: 'title2',
+      content: 'content2',
+    },
+  ],
+  subscribe: [
+    {
+      userId: 1,
+      name: 'park1',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 2,
+      name: 'park2',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 3,
+      name: 'park3',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 4,
+      name: 'park4',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 5,
+      name: 'park5',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 6,
+      name: 'park6',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 7,
+      name: 'park7',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 8,
+      name: 'park8',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+    {
+      userId: 9,
+      name: 'park9',
+      profileImageUrl:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    },
+  ],
+};
