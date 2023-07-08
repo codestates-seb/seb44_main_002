@@ -67,6 +67,7 @@ export default function Signup() {
             >
               <InputSection>
                 <CustomInput
+                  placeholder="2자 이상 10자 미만의 글자 "
                   labelName="이름"
                   type="text"
                   text="2자 이상 10자 미만으로 적어주세요"
@@ -85,7 +86,7 @@ export default function Signup() {
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
                 <CustomInput
-                  placeholder="비밀번호 8자 이상, 최소한 하나의 문자열, 최소한 하나의 숫자"
+                  placeholder="최소 8자, 문자와 숫자는 1개이상 입력해주세요. "
                   labelName="비밀번호"
                   type="password"
                   text="비밀번호를 확인해주세요"
