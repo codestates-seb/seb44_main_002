@@ -1,4 +1,4 @@
-package project.server.domain.reply;
+package project.server.domain.reply.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import project.server.domain.reply.TaggedUserInfo;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.user.User;
 import project.server.domain.comment.entity.Comment;
@@ -54,4 +55,5 @@ public class Reply {
                 .createdAt(createdAt)
                 .build();
     }
+//
 }
