@@ -64,6 +64,7 @@ export default function RecipeDetail() {
       // >
       //   <BookmarkButton item={item} />
       // </div>
+      //북마크 적용--이은희
       <BookmarkBtn
         onClick={setBookmark}
         isBookmarked={isBookmarked}
@@ -211,23 +212,24 @@ const cocktailDetail = {
     },
   ],
   recommends: [
+    //category idx 와 userinfo 리덕스 데이터와 겹쳐서 cocktailId와 isBookmarked  달리 수정했습니다.
     {
-      cocktailId: 1,
+      cocktailId: 7,
       name: '라떼 밀크주',
       imageUrl: 'https://2bob.co.kr/data/recipe/20210707094952-WOE78.jpg',
-      isBookmarked: true,
+      isBookmarked: false,
     },
     {
-      cocktailId: 2,
+      cocktailId: 8,
       name: '논알콜 청포도 모히토',
       imageUrl: 'https://2bob.co.kr/data/recipe/20210706172910-2B1WD.jpg',
       isBookmarked: false,
     },
     {
-      cocktailId: 3,
+      cocktailId: 9,
       name: '시트러스 주스',
       imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
-      isBookmarked: true,
+      isBookmarked: false,
     },
   ],
   isBookmarked: true,

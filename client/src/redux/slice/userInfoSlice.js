@@ -56,7 +56,10 @@ const userInfoSlice = createSlice({
       const isitem = state.bookmarked.find((el) => el.cocktailId === id);
       //새로운 북마크 추가
       if (!isitem) {
-        state.bookmarked = [...state.bookmarked, item];
+        state.bookmarked = [
+          ...state.bookmarked,
+          { ...item, isBookmarked: !item.isBookmarked },
+        ];
       } else {
         // 기존 북마크 삭제
         state.bookmarked = filteredData;
