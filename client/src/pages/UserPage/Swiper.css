@@ -1,0 +1,19 @@
+#userpage .swiper { margin-top:20px; padding: 0 50px; }
+#userpage .swiper-slide { height: 170px; } 
+#userpage .swiper-slide>div { padding: 12px 30px; }
+#userpage .swiper-slide img{ width: 70px; margin: 0 auto; }
+#userpage .swiper-slide p{ margin-top: 16px; }
+#userpage .swiper-pagination { bottom:-5px; }
+
+@media (max-width:1200px) {
+    #userpage .swiper-slide { height: 150px; }
+    #userpage .swiper-slide>div { height: 120px; }
+    #userpage .swiper-slide img{ width: 50px; }
+    #userpage .swiper-pagination { bottom:-5px; }
+}
+
+@media (max-width:630px) {
+    #userpage .swiper-slide>div { height: 90px; padding: 12px 20px; }
+    #userpage .swiper-slide img{ width: 30px; }
+    #userpage .swiper-slide p{ font-size: 13px; }
+}
