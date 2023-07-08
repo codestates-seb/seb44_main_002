@@ -83,12 +83,14 @@ export default function Signup() {
 
   return (
     <SignupScreen>
+      {/* 펜슬 이미지 */}
       <img
         src="images/background/pencil.png"
         alt="pencil"
         className="absolute bottom-10 right-72 max-[768px]:right-0"
       />
       <SignupContainer>
+        {/* 로고 */}
         <LogoSection>
           <img
             role="presentation"
@@ -99,6 +101,7 @@ export default function Signup() {
             onKeyDown={() => navigate('/')}
           />
         </LogoSection>
+        {/* 회원가입 폼 */}
         <SignupBox>
           <SignupSection>
             <SignupHeader>회원가입</SignupHeader>
@@ -112,7 +115,7 @@ export default function Signup() {
                   labelName="이름"
                   type="text"
                   text="2자 이상 10자 미만으로 적어주세요"
-                  size="w-[355px] h-[40px] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
                   isValid={isValid.name}
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -121,7 +124,7 @@ export default function Signup() {
                   labelName="이메일"
                   type="email"
                   text="이메일을 확인해주세요"
-                  size="w-[355px] h-[40px] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
                   isValid={isValid.email}
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -131,7 +134,7 @@ export default function Signup() {
                   labelName="비밀번호"
                   type="password"
                   text="비밀번호를 확인해주세요"
-                  size="w-[355px] h-[40px] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
                   isValid={isValid.password}
                   value={form.password}
                   onChange={(e) =>
@@ -142,7 +145,7 @@ export default function Signup() {
                   labelName="비밀번호 확인"
                   type="password"
                   text="비밀번호가 일치하지않습니다"
-                  size="w-[355px] h-[40px] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
                   isValid={isValid.confirmPassword}
                   value={form.confirmPassword}
                   onChange={(e) =>
@@ -157,7 +160,7 @@ export default function Signup() {
                   labelName="나이"
                   type="number"
                   text="나이를 확인해주세요"
-                  size="w-[355px] h-[40px] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
                   isValid={isValid.age}
                   value={form.age}
                   onChange={(e) => setForm({ ...form, age: e.target.value })}
@@ -166,9 +169,9 @@ export default function Signup() {
               <ButtonSection>
                 <HoverButton
                   type="submit"
-                  size="w-[159px] h-[53px]"
+                  size="w-[159px] h-[40px]"
                   radius="rounded-full"
-                  fontSize="text-xl"
+                  fontSize="text-sm"
                   onClick={() => setTest(!test)}
                 >
                   회원가입 하기
@@ -185,7 +188,7 @@ export default function Signup() {
 const SignupScreen = tw.div`
   bg-gradient-to-r from-gradi-to to-gradi-from
   w-screen
-  h-screen
+ 
   relative
   flex
   justify-center
@@ -206,11 +209,12 @@ flex
 flex-[1]
 justify-center
 items-center
+mt-[3rem]
 `;
 
 const SignupBox = tw.div`
   z-50
-  w-[520px]
+  w-[32.5rem]
   h-full
   flex
   flex-[6]
@@ -219,29 +223,33 @@ const SignupBox = tw.div`
   rounded-3xl
   bg-black
   bg-opacity-50
+  mt-[2rem]
+  pt-[2.5rem]
+
   max-[520px]:w-full
   max-[520px]:rounded-none
+  
 `;
 
 const SignupSection = tw.div`
   w-[90%]
-  h-[90%]
+  h-[99%]
   flex
   flex-col
   justify-center
   items-center
 `;
-
+// text-2xl
 const SignupHeader = tw.h1`
   flex
-  mb-8
-  text-white
-  text-2xl
+  mb-4
+  text-gray-100
+  text-[1.25rem]
   font-bold
   items-center
   max-[520px]:mb-0
 `;
-
+//  flex-[6]는 뭔가용?
 const InputSection = tw.div`
   h-full
   flex
@@ -250,10 +258,13 @@ const InputSection = tw.div`
   justify-between
   max-[520px]:overflow-y-scroll
   max-[520px]:items-center
+
+ 
 `;
 
 const ButtonSection = tw.div`
   flex
   flex-1
   items-center
+  mb-8
 `;
