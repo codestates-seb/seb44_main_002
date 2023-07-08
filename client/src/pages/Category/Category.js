@@ -112,8 +112,6 @@ export default function Category() {
     });
   }, [fitlerCondtion, currentPage]);
   const handleBookmarkClick = (cocktailId, item) => {
-    console.log('동작');
-    console.log(cocktailId);
     const id = cocktailId;
     dispatch(updateBookmark({ id, item }));
 
