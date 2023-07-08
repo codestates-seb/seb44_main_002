@@ -8,6 +8,7 @@ import UseSignupValid from '../components/Validation/SignupValidation';
 import tw from 'tailwind-styled-components';
 import GenderRadioInput from '../components/Input/GenderRadioInput';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function Signup() {
   const navigate = useNavigate();
   const [test, setTest] = useState(false);
@@ -30,13 +31,53 @@ export default function Signup() {
     gender: '',
     age: '',
   });
-
+  //   {
+  //     "email": "hgd@gmail.com",
+  //     "password": "Abcd123123",
+  //     "name": "홍길동",
+  //     “gender” : “example”,
+  //     “age” : 30
+  // }
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
     UseSignupValid(form, setIsValid);
+    const userinfo = {
+      email: form.email,
+      password: form.password,
+      name: form.name,
+      gender: form.gender,
+      age: form.age,
+    };
+
+    fetch(`${BASE_URL}/users/signup`, {
+      method: 'POST',
+      headers: {
+        'ngrok-skip-browser-warning': 'true',
+        'Content-Type': 'application/json', // json fetch시
+      },
+      body: JSON.stringify(userinfo),
+    })
+      .then((data) => {
+        if (data.status === 201) {
+          // 응답이 성공적인 경우
+          console.log('요청이 성공했습니다.');
+          console.log(data);
+          navigation('/');
+          // 여기에서 추가적인 처리를 수행할 수 있습니다.
+        } else {
+          // 응답이 실패한 경우
+          console.log('요청이 실패했습니다.');
+          // 실패에 대한 처리를 수행할 수 있습니다.
+        }
+      })
+      .catch((error) => {
+        console.log('에러', error);
+        navigation('/error');
+      });
 
     // 전역상태관리 로그인으로 변경
+
     // dispatch(() => login())
   };
 
