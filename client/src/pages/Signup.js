@@ -87,7 +87,7 @@ export default function Signup() {
       <img
         src="images/background/pencil.png"
         alt="pencil"
-        className="absolute bottom-10 right-72 max-[768px]:right-0"
+        className="absolute bottom-0 right-60 max-[768px]:right-0"
       />
       <SignupContainer>
         {/* 로고 */}
@@ -96,7 +96,7 @@ export default function Signup() {
             role="presentation"
             src="images/logo.png"
             alt="logo"
-            className="w-[32.4px] h-[48px] max-[520px]:my-4"
+            className="w-[32.4px] h-[48px] max-[520px]:my-4 "
             onClick={() => navigate('/')}
             onKeyDown={() => navigate('/')}
           />
@@ -188,7 +188,7 @@ export default function Signup() {
 const SignupScreen = tw.div`
   bg-gradient-to-r from-gradi-to to-gradi-from
   w-screen
- 
+ h-screen
   relative
   flex
   justify-center
