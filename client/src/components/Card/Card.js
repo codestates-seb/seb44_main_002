@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import BookmarkButton from '../BookmarkButton/BookmarkButton';
+import BookmarkBtn from '../BookmarkButton/BookmarkBtn';
 import tw from 'tailwind-styled-components';
 //item 칵테일에 대한 정보가 객체형태로 담겨있습니다.
-export default function Card({ item, setData, data }) {
+export default function Card({ item, onClick }) {
   const navigate = useNavigate();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -20,7 +19,7 @@ export default function Card({ item, setData, data }) {
     <Container
       onMouseOver={() => handleMouseOver(item.cocktailId)}
       onMouseOut={handleMouseOut}
-      isHovering={hoveredIndex === item.cocktailId}
+      ishovering={hoveredIndex === item.cocktailId}
     >
       {/* 칵테일 이미지 */}
       <ImgButton>
@@ -30,19 +29,17 @@ export default function Card({ item, setData, data }) {
           onClick={() => navigate(`/detail/${item.cocktailId}`)}
         />
         {/* 투명한 검은 박스 */}
-        <Hoverocktail isHovering={hoveredIndex === item.cocktailId} />
+        <Hoverocktail ishovering={hoveredIndex === item.cocktailId} />
         {/* 북마크 */}
-        <div className="absolute  top-0 right-2 ">
-          <BookmarkButton
-            item={item}
-            //임시
-            setData={setData}
-            data={data}
-            size="w-[20px] h-[30px]"
-          />
-        </div>
+        <BookmarkBtn
+          onClick={onClick}
+          isBookmarked={item.isBookmarked}
+          size="w-[20px] h-[30px]"
+          absolute="true"
+          top="top-0"
+          right="right-2"
+        />
       </ImgButton>
-
       {/* 하단 칵테일이름 */}
       <Title>{item.name}</Title>
     </Container>
@@ -52,7 +49,7 @@ const Container = tw.div`
 relative 
 w-[11.25rem]
 h-[15rem] 
-${(props) => (props.isHovering ? `text-gray-100` : `text-gray-200 `)}
+${(props) => (props.ishovering ? `text-gray-100` : `text-gray-200 `)}
 drop-shadow-3xl
 
 `;
@@ -82,7 +79,7 @@ w-[11.25rem]
   bg-black 
 bg-opacity-50
   box-border
-  ${(props) => (props.isHovering ? `hidden` : ``)}
+  ${(props) => (props.ishovering ? `hidden` : ``)}
 `;
 const Title = tw.h3`
 text-xl

@@ -67,7 +67,7 @@ export default function RecipeDetail() {
       <BookmarkBtn
         onClick={setBookmark}
         isBookmarked={isBookmarked}
-        absolute
+        absolute="true"
         top="top-0"
         right="right-14"
       />

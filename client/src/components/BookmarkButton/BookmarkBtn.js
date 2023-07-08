@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
 // 사용법
 {
@@ -6,7 +7,7 @@ import tw from 'tailwind-styled-components';
   onClick={handleBookmarkClick}
   isBookmarked={isBookmarked}
   size="w-[36px] h-[60px]"
-  absolute
+  absolute="true"
   top="top-0"
   right="right-14"
 /> */
@@ -19,8 +20,21 @@ export default function BookmarkBtn({
   top,
   right,
 }) {
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
   return (
-    <Button onClick={onClick} absolute={absolute} top={top} right={right}>
+    <Button
+      onClick={(e) => {
+        if (isLogin) {
+          e.stopPropagation();
+          onClick();
+        } else {
+          alert('로그인해야 가능합니다');
+        }
+      }}
+      absolute={absolute}
+      top={top}
+      right={right}
+    >
       {isBookmarked ? (
         <Img
           src="/images/bookmark/bookmarkOn.png"
