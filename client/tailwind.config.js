@@ -12,6 +12,7 @@ module.exports = {
         'gray-400': '#8F8F8F',
         'pointPurple-100': '#BB40F1',
         'pointPurple-200': '#BC4096',
+        'yellow-100': '#FFD600',
       },
     },
   },
