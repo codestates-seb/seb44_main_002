@@ -6,13 +6,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
+import project.server.domain.cocktail.embed.ingredient.Ingredients;
+import project.server.domain.cocktail.embed.liquor.LiquorMapper;
+import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.rate.RateDto;
+import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.comment.entity.Comment;
+import project.server.domain.recommendcocktail.service.RecommendCocktailService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 import project.server.dto.MultiResponseDto;
@@ -33,20 +39,23 @@ public class CocktailService {
     public static final boolean UNSIGNED_USER = false;
 
     private final CocktailRepository cocktailRepository;
+    private final RecommendCocktailService recommendCocktailService;
     private final UserService userService;
 
-    public CocktailService(CocktailRepository cocktailRepository, UserService userService) {
+    public CocktailService(CocktailRepository cocktailRepository, RecommendCocktailService recommendCocktailService, UserService userService) {
         this.cocktailRepository = cocktailRepository;
+        this.recommendCocktailService = recommendCocktailService;
         this.userService = userService;
     }
 
     public CocktailDto.Response createCocktail(Authentication authentication, CocktailDto.Post post) {
         User user = userService.findUserByAuthentication(authentication);
-        Cocktail cocktail = post.postToEntity();
+        Cocktail cocktail = cocktailPostDtoToEntity(post);
         cocktail.assignUser(user);
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
+        recommendCocktailService.createRecommendCocktail(cocktail, user);
         savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
-        return savedCocktail.entityToResponse(false);
+        return entityToResponse(savedCocktail, false);
     }
 
     public CocktailDto.Response readCocktail(Authentication authentication, long cocktailId) {
@@ -54,10 +63,10 @@ public class CocktailService {
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
         if(authentication == null){
-            return cocktail.entityToResponse(UNSIGNED_USER);
+            return entityToResponse(cocktail, UNSIGNED_USER);
         }
         User user = userService.findUserByAuthentication(authentication);
-        return cocktail.entityToResponse(user.isBookmarked(cocktailId));
+        return entityToResponse(cocktail, user.isBookmarked(cocktailId));
     }
 
     public MultiResponseDto readFilteredCocktails(Authentication authentication, String category, String tag, int page, String sortValue) {
@@ -81,7 +90,7 @@ public class CocktailService {
         verifyUser(user, cocktail);
         cocktail.modify(patch);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
-        return cocktail.entityToResponse(false);
+        return entityToResponse(cocktail, false);
     }
 
     public void removeCocktail(Authentication authentication, long cocktailId) {
@@ -108,10 +117,13 @@ public class CocktailService {
 
     public void bookmarkCocktail(Authentication authentication, long cocktailId) {
        User user = userService.findUserByAuthentication(authentication);
+       Cocktail cocktail = findCocktailById(cocktailId);
        if(user.isBookmarked(cocktailId)){
+           recommendCocktailService.subtractBookmarkCount(user, cocktail);
            user.cancelBookmark(cocktailId);
            return;
        }
+       recommendCocktailService.addBookmarkCount(user, cocktail);
        user.bookmark(cocktailId);
     }
 
@@ -182,25 +194,75 @@ public class CocktailService {
             return Sort.by(Sort.Order.asc("viewCount"));
         }
         if (sortValue.equals("highest_rate")) {
-            return Sort.by(Sort.Order.desc("rating.rate"));
+            return Sort.by(Sort.Order.desc("rate.rate"));
         }
-        return Sort.by(Sort.Order.asc("rating.rate"));
+        return Sort.by(Sort.Order.asc("rate.rate"));
     }
 
     private List<CocktailDto.SimpleResponse> createSimpleResponses(Authentication authentication, List<Cocktail> cocktails) {
         if(authentication == null){
             return cocktails.stream()
-                    .map(cocktail -> cocktail.entityToSimpleResponse(UNSIGNED_USER, cocktail))
+                    .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER, cocktail))
                     .collect(Collectors.toList());
         }
         User user = userService.findUserByAuthentication(authentication);
         return cocktails.stream()
-                .map(cocktail -> cocktail.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
+                .map(cocktail ->entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
                 .collect(Collectors.toList());
     }
 
     private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
         return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRateRateDesc(tags.getRandomTag(), cocktailId);
+    }
+
+    private Cocktail cocktailPostDtoToEntity(CocktailDto.Post post) {
+        return Cocktail.builder()
+                .name(post.getName())
+                .imageUrl(post.getImageUrl())
+                .recipe(new Recipe(post.getRecipe()))
+                .tags(new Tags(post.getTags()))
+                .category(CategoryMapper.map(post.getLiquor()))
+                .rate(new Rate())
+                .liquor(LiquorMapper.map(post.getLiquor()))
+                .ingredients(new Ingredients(post.getIngredients()))
+                .build();
+    }
+
+    private CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
+        return CocktailDto.SimpleResponse.builder()
+                .cocktailId(cocktail.getCocktailId())
+                .name(cocktail.getName())
+                .imageUrl(cocktail.getImageUrl())
+                .isBookmarked(isBookmarked)
+                .build();
+    }
+
+    private CocktailDto.Response entityToResponse(Cocktail cocktail, boolean isBookmarked) {
+        User user = cocktail.getUser();
+        return CocktailDto.Response.builder()
+                .cocktailId(cocktail.getCocktailId())
+                .isAdminWritten(user.isAdmin())
+                .userId(user.getUserId())
+                .userName(user.getName())
+                .name(cocktail.getName())
+                .imageUrl(cocktail.getImageUrl())
+                .liquor(cocktail.getLiquor().getLiquor())
+                .ingredients(cocktail.getIngredients().createResponseDtoList())
+                .recipe(cocktail.getRecipe().createResponseDtoList())
+                .tags(cocktail.getTags().createResponseDtoList())
+                .rating(cocktail.getRate().getRate())
+                .viewCount(cocktail.getViewCount())
+                .createdAt(cocktail.getCreatedAt())
+                .modifiedAt(cocktail.getModifiedAt())
+                .comments(cocktail.getComments().stream()
+                        .map(Comment::entityToResponse)
+                        .collect(Collectors.toList()))
+                .isBookmarked(isBookmarked)
+                .recommends(cocktail.getRecommends().stream()
+                        .map(recommendedCocktail
+                                -> entityToSimpleResponse(user.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     private void verifyUser(User user, Cocktail cocktail) {

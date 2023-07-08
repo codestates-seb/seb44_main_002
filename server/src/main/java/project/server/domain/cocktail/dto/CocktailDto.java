@@ -1,6 +1,7 @@
 package project.server.domain.cocktail.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
@@ -27,19 +28,6 @@ public class CocktailDto {
         private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
         private List<TagDto.Post> tags;
-
-        public Cocktail postToEntity() {
-            return Cocktail.builder()
-                    .name(name)
-                    .imageUrl(imageUrl)
-                    .recipe(new Recipe(recipe))
-                    .tags(new Tags(tags))
-                    .category(CategoryMapper.map(liquor))
-                    .rate(new Rate())
-                    .liquor(LiquorMapper.map(liquor))
-                    .ingredients(new Ingredients(ingredients))
-                    .build();
-        }
     }
 
     @Getter
@@ -53,6 +41,7 @@ public class CocktailDto {
 
     @Getter
     @Builder
+    @Data
     public static class Response {
         private final long cocktailId;
         private final boolean isAdminWritten;

@@ -1,6 +1,7 @@
 package project.server.domain.comment.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.comment.dto.CommentDto;
@@ -20,6 +21,7 @@ public class CommentService {
         this.cocktailService = cocktailService;
     }
 
+    @Transactional
     public CommentDto.Response createComment(Long cocktailId, CommentDto.Post post) {
         Cocktail cocktail = cocktailService.findCocktailById(cocktailId);
         Comment comment = post.postToEntity();
@@ -27,6 +29,7 @@ public class CommentService {
         return savedComment.entityToResponse();
     }
 
+    @Transactional(readOnly = true)
     public CommentDto.Response readComment(long commentId) {
         Comment comment = findCommentById(commentId);
         return comment.entityToResponse();

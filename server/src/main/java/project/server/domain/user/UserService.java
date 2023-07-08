@@ -32,9 +32,6 @@ public class UserService {
 
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
-        if(user.isAdmin()){
-            user.setName("편한🍸");
-        }
 
         User savedUser = userRepository.save(user);
         return savedUser.entityToResponse();
