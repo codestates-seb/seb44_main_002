@@ -25,11 +25,12 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long replyId;
 
-    @OneToOne
-    @JoinTable(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "comment_id")
     private Comment comment;
 
     @Column(columnDefinition = "TEXT", nullable = false)
@@ -42,7 +43,7 @@ public class Reply {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @LastModifiedDate
-    @Column
+    @Column(name = "modified_at")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
     public ReplyDto.Response entityToResponse() {
