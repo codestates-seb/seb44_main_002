@@ -183,12 +183,13 @@ export default function Signup() {
 const SignupScreen = tw.div`
   bg-gradient-to-r from-gradi-to to-gradi-from
   w-screen
- h-screen
+ h-auto
   relative
   flex
   justify-center
   items-start
   max-[520px]:overflow-hidden
+  
 `;
 
 const SignupContainer = tw.div`
@@ -197,6 +198,7 @@ const SignupContainer = tw.div`
   flex-col
   justify-between
   max-[520px]:w-screen
+  mb-[10%]
 `;
 
 const LogoSection = tw.div`
