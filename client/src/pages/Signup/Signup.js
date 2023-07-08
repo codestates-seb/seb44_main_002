@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import HoverButton from '../common/Buttons/HoverButton';
-import CustomInput from '../components/Input/CustomInput';
-import UseSignupValid from '../components/Validation/SignupValidation';
-
+import HoverButton from '../../common/Buttons/HoverButton';
+import CustomInput from '../../components/Input/CustomInput';
+import UseSignupValid from '../../components/Validation/SignupValidation';
+import GenderRadioInput from '../../components/Input/GenderRadioInput';
 import tw from 'tailwind-styled-components';
-import GenderRadioInput from '../components/Input/GenderRadioInput';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function Signup() {
@@ -75,10 +74,6 @@ export default function Signup() {
         console.log('에러', error);
         navigation('/error');
       });
-
-    // 전역상태관리 로그인으로 변경
-
-    // dispatch(() => login())
   };
 
   return (
