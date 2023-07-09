@@ -23,7 +23,9 @@ export default function Subscribe({ userInfo }) {
     };
   }, []);
 
-  if (windowWidth <= 850) {
+  if (windowWidth <= 500) {
+    slidesPerView = 2;
+  } else if (windowWidth <= 850) {
     slidesPerView = 3;
   } else if (windowWidth <= 1200) {
     slidesPerView = 4;
@@ -42,16 +44,10 @@ export default function Subscribe({ userInfo }) {
           {userInfo.subscribe.map((user) => {
             return (
               <SwiperSlide key={user.userId}>
-                <div
-                  key={user.userId}
-                  className="border-dotted border-[1px] rounded"
-                >
-                  <img
-                    className="object-cover"
-                    src={user.profileImageUrl}
-                    alt="user profile"
-                  />
-                  <p>{user.name}</p>
+                <div key={user.userId}>
+                  <img src={user.profileImageUrl} alt="user profile" />
+                  <p id="name">{user.name}</p>
+                  <p id="close">x</p>
                 </div>
               </SwiperSlide>
             );
