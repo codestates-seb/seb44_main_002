@@ -56,62 +56,66 @@ export default function HeaderModal() {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
-        // {
-        //     “name” : “kim”,
-        //     “profileImageUrl” : “sample image url”
-        //     “gender” : “example”,
-        //     “age” : 20,
-        //     “email” : “kim@example.com”,
-        //     “subscribedCount” : 0,
-        //     “bookmarked” : [
-        //         {
-        //             “cocktailId” : 1,
-        //             “name” : “sample cocktail”,
-        //             “imageUrl” : “sample image url”,
-        //             “isBookmarked” : “true”
-        //         },
-        //         {
-        //             “cocktailId” : 2,
-        //             “name” : “sample cocktail”,
-        //             “isBookmarked” : “true”
-        //         }
-        //     ],
-        //     “boards” : [
-        //         {
-        //             “boardId” : 1,
-        //             “title” : “title1”,
-        //             “content” : “content1”
-        //         },
-        //         {
-        //             “boardId” : 2,
-        //             “title” : “title2”,
-        //             “content” : “content2”
-        //         },
-        //     ],
-        //     “subscribe” : [
-        //         {
-        //             “userId” : 1,
-        //             “name” : “kim”,
-        //             “profileImageUrl” : “sample image url”
-        //         },
-        //         {
-        //             “userId” : 2,
-        //             “name” : “park”,
-        //             “profileImageUrl” : “sample image url”
-        //         },
-        //     ],
-        // }
+        if (data.status === 200) {
+          console.log(data);
+          // {
+          //     “name” : “kim”,
+          //     “profileImageUrl” : “sample image url”
+          //     “gender” : “example”,
+          //     “age” : 20,
+          //     “email” : “kim@example.com”,
+          //     “subscribedCount” : 0,
+          //     “bookmarked” : [
+          //         {
+          //             “cocktailId” : 1,
+          //             “name” : “sample cocktail”,
+          //             “imageUrl” : “sample image url”,
+          //             “isBookmarked” : “true”
+          //         },
+          //         {
+          //             “cocktailId” : 2,
+          //             “name” : “sample cocktail”,
+          //             “isBookmarked” : “true”
+          //         }
+          //     ],
+          //     “boards” : [
+          //         {
+          //             “boardId” : 1,
+          //             “title” : “title1”,
+          //             “content” : “content1”
+          //         },
+          //         {
+          //             “boardId” : 2,
+          //             “title” : “title2”,
+          //             “content” : “content2”
+          //         },
+          //     ],
+          //     “subscribe” : [
+          //         {
+          //             “userId” : 1,
+          //             “name” : “kim”,
+          //             “profileImageUrl” : “sample image url”
+          //         },
+          //         {
+          //             “userId” : 2,
+          //             “name” : “park”,
+          //             “profileImageUrl” : “sample image url”
+          //         },
+          //     ],
+          // }
 
-        // dispatch(
-        //   userinfoGet({
-        //     displayName: data.displayName,
-        //     location: data.location,
-        //     profileContent: data.profileContent,
-        //     profileImage: data.profileImage,
-        //     profileTitle: data.profileTitle,
-        //   })
-        // );
+          // dispatch(
+          //   userinfoGet({
+          //     displayName: data.displayName,
+          //     location: data.location,
+          //     profileContent: data.profileContent,
+          //     profileImage: data.profileImage,
+          //     profileTitle: data.profileTitle,
+          //   })
+          // );
+        } else {
+          console.log('요청이 실패했습니다.');
+        }
       })
       .catch((err) => {
         console.log(err);
