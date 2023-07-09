@@ -49,6 +49,40 @@ export default function HeaderModal() {
     // 유효성 검사 로직
     useLoginValid(form, setIsValid);
 
+    fetch(`${BASE_URL}/auth/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
+      body: JSON.stringify(form),
+    })
+      .then((data) => {
+        if (data.status === 200) {
+          localStorage.setItem(
+            'accessToken',
+            data.headers.get('Authorization')
+          );
+          localStorage.setItem('memberId', data.headers.get('memberId'));
+
+          dispatch(
+            userinfoLogin({
+              memberId: data.headers.get('memberId'),
+              accessToken: data.headers.get('Authorization'),
+            })
+          );
+
+          handleUserInfo(data.headers.get('memberId'));
+
+          navigation('/');
+        } else {
+          console.log('요청이 실패했습니다.');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        navigation('/error');
+      });
     // 전역상태관리 로그인으로 변경
     // dispatch(() => login())
   };
