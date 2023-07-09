@@ -52,7 +52,9 @@ public class UserService {
 
     public User updateUser(UserDto.Patch dto, long userId) {
         User user = findUser(userId);
-        user.setPassword(dto.getPassword());
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        user.setPassword(encodedPassword);
+
         return userRepository.save(user);
     }
 
