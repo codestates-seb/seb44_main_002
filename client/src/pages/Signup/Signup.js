@@ -225,7 +225,9 @@ const SignupBox = tw.div`
 
   max-[520px]:w-full
   max-[520px]:rounded-none
-  
+  border 
+border-solid
+border-red
 `;
 
 const SignupSection = tw.div`
