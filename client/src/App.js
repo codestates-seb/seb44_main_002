@@ -10,7 +10,7 @@ import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import LostPage from './pages/LostPage';
 import UserPage from './pages/UserPage/UserPage';
 import CocktailForm from './pages/CocktailForm';
-import Signup from './pages/Signup';
+import Signup from './pages/Signup/Signup';
 
 import './App.css';
 

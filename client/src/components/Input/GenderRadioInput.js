@@ -12,13 +12,13 @@ export default function GenderRadioInput({
         }`}
       >
         성별
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center justify-start">
           <input
             type="radio"
             name="gender"
             value="male"
             onChange={onChange}
-            className={`w-[30px] h-[40px] mr-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+            className={`w-[15px] h-[15px] mr-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
               isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
             }`}
           />
@@ -28,15 +28,15 @@ export default function GenderRadioInput({
             name="gender"
             value="female"
             onChange={onChange}
-            className={`w-[30px] h-[40px] mr-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+            className={`w-[15px] h-[15px] mr-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
               isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
             }`}
           />
           여성
         </div>
       </label>
-      <div className="h-7">
-        <p className={`${isValid && 'hidden'} text-[#FF1AE8]`}>
+      <div className="h-4">
+        <p className={`${isValid && 'hidden'} text-[#FF1AE8] text-[10px]`}>
           성별을 체크해주세요
         </p>
       </div>
