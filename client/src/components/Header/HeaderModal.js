@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { login } from '../../redux/slice/isLoginSlice';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/slice/isLoginSlice';
 import { useNavigate } from 'react-router-dom';
 import { userinfoLogin } from '../../redux/slice/userInfoSlice';
 import Box from '@mui/material/Box';
@@ -24,6 +24,7 @@ const style = {
   p: 4,
   borderRadius: 5,
 };
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function HeaderModal() {
   const [open, setOpen] = React.useState(false);
@@ -41,9 +42,83 @@ export default function HeaderModal() {
     password: '',
   });
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 사용자 이름및 사용자 정보 조회 함수
+  const handleUserInfo = async (memberId) => {
+    fetch(`${BASE_URL}/users/${memberId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        // {
+        //     “name” : “kim”,
+        //     “profileImageUrl” : “sample image url”
+        //     “gender” : “example”,
+        //     “age” : 20,
+        //     “email” : “kim@example.com”,
+        //     “subscribedCount” : 0,
+        //     “bookmarked” : [
+        //         {
+        //             “cocktailId” : 1,
+        //             “name” : “sample cocktail”,
+        //             “imageUrl” : “sample image url”,
+        //             “isBookmarked” : “true”
+        //         },
+        //         {
+        //             “cocktailId” : 2,
+        //             “name” : “sample cocktail”,
+        //             “isBookmarked” : “true”
+        //         }
+        //     ],
+        //     “boards” : [
+        //         {
+        //             “boardId” : 1,
+        //             “title” : “title1”,
+        //             “content” : “content1”
+        //         },
+        //         {
+        //             “boardId” : 2,
+        //             “title” : “title2”,
+        //             “content” : “content2”
+        //         },
+        //     ],
+        //     “subscribe” : [
+        //         {
+        //             “userId” : 1,
+        //             “name” : “kim”,
+        //             “profileImageUrl” : “sample image url”
+        //         },
+        //         {
+        //             “userId” : 2,
+        //             “name” : “park”,
+        //             “profileImageUrl” : “sample image url”
+        //         },
+        //     ],
+        // }
+
+        // dispatch(
+        //   userinfoGet({
+        //     displayName: data.displayName,
+        //     location: data.location,
+        //     profileContent: data.profileContent,
+        //     profileImage: data.profileImage,
+        //     profileTitle: data.profileTitle,
+        //   })
+        // );
+      })
+      .catch((err) => {
+        console.log(err);
+        navigation('/error');
+      });
+  };
+  // 로그인 버튼 클릭시 실행되는 함수
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
@@ -77,9 +152,10 @@ export default function HeaderModal() {
             })
           );
 
-          // handleUserInfo(data.headers.get('memberId'));
+          //사용자 정보 조회
+          handleUserInfo(data.headers.get('UserId'));
           // 전역상태관리 로그인으로 변경
-          // dispatch(() => login())
+          dispatch(login(() => login()));
           navigation('/');
         } else {
           console.log('요청이 실패했습니다.');
