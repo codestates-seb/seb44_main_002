@@ -45,7 +45,7 @@ export default function Header() {
     </div>
   );
   const handleLogOut = () => {
-    console.log('동작');
+    // console.log('동작');
     localStorage.clear();
     dispatch(userinfoLoginOut());
     dispatch(logout());
