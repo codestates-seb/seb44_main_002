@@ -19,6 +19,8 @@ import { createSlice } from '@reduxjs/toolkit';
 // dispatch(updateBookmark({ id, item }));
 
 const initialState = {
+  UserId: null,
+  accessToken: null,
   name: null,
   profileImageUrl: null,
   gender: null,
@@ -75,8 +77,8 @@ const userInfoSlice = createSlice({
     userinfoLoginOut: (state, action) => {
       return {
         ...state,
-        UserId: action.payload.UserId,
-        accessToken: action.payload.accessToken,
+        UserId: null,
+        accessToken: null,
       };
     },
   },
