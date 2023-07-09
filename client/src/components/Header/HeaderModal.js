@@ -46,9 +46,11 @@ export default function HeaderModal() {
   const navigate = useNavigate();
 
   // 사용자 이름및 사용자 정보 조회 함수
+  // 유저 정보 조회할때 토근으로 조회 권한 여부
   const handleUserInfo = async (memberId) => {
     fetch(`${BASE_URL}/users/${memberId}`, {
       method: 'GET',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true',
