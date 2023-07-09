@@ -65,8 +65,23 @@ const userInfoSlice = createSlice({
         state.bookmarked = filteredData;
       }
     },
+    userinfoLogin: (state, action) => {
+      return {
+        ...state,
+        UserId: action.payload.UserId,
+        accessToken: action.payload.accessToken,
+      };
+    },
+    userinfoDelete: (state, action) => {
+      return {
+        ...state,
+        UserId: action.payload.UserId,
+        accessToken: action.payload.accessToken,
+      };
+    },
   },
 });
 
 export const { updateBookmark } = userInfoSlice.actions;
+export const { userinfoLogin } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

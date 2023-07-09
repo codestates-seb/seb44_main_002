@@ -3,7 +3,7 @@ import { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 // import { login } from '../../redux/slice/isLoginSlice';
 import { useNavigate } from 'react-router-dom';
-
+import { userinfoLogin } from '../../redux/slice/userInfoSlice';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -51,29 +51,35 @@ export default function HeaderModal() {
 
     fetch(`${BASE_URL}/auth/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true',
+        // 'ngrok-skip-browser-warning': 'true',
       },
       body: JSON.stringify(form),
     })
       .then((data) => {
         if (data.status === 200) {
-          localStorage.setItem(
-            'accessToken',
-            data.headers.get('Authorization')
-          );
-          localStorage.setItem('memberId', data.headers.get('memberId'));
+          // localStorage.setItem(
+          //   'accessToken',
+          //   data.headers.get('Authorization')
+          // );
+          // localStorage.setItem('UserId', data.headers.get('UserId'));
+
+          // Refresh
+          //UserId
+          //Name
 
           dispatch(
             userinfoLogin({
-              memberId: data.headers.get('memberId'),
+              UserId: data.headers.get('UserId'),
               accessToken: data.headers.get('Authorization'),
             })
           );
 
-          handleUserInfo(data.headers.get('memberId'));
-
+          // handleUserInfo(data.headers.get('memberId'));
+          // 전역상태관리 로그인으로 변경
+          // dispatch(() => login())
           navigation('/');
         } else {
           console.log('요청이 실패했습니다.');
@@ -83,8 +89,6 @@ export default function HeaderModal() {
         console.log(err);
         navigation('/error');
       });
-    // 전역상태관리 로그인으로 변경
-    // dispatch(() => login())
   };
 
   return (
