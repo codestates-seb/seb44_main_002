@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/slice/isLoginSlice';
+import { userinfoLoginOut } from '../../redux/slice/userInfoSlice';
 
 import HeaderModal from './HeaderModal';
 import Hamburger from './Hamburger';
@@ -43,7 +44,13 @@ export default function Header() {
       {label}
     </div>
   );
-
+  const handleLogOut = () => {
+    localStorage.clear();
+    dispatch(userinfoLoginOut());
+    dispatch(logout());
+    navigate('/');
+    window.location.reload();
+  };
   return (
     <HeaderContainer position={position}>
       <HeaderDiv>
@@ -98,7 +105,7 @@ export default function Header() {
             <div className="mx-2">
               {/* 로그아웃 dispatch를 보내고있습니다 alert창이 한번 더뜨면 좋을거같네요 */}
               <LogoutIcon
-                onClick={() => dispatch(logout())}
+                onClick={() => handleLogOut}
                 fontSize="large"
                 style={{ cursor: 'pointer' }}
               />

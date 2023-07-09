@@ -72,7 +72,7 @@ const userInfoSlice = createSlice({
         accessToken: action.payload.accessToken,
       };
     },
-    userinfoDelete: (state, action) => {
+    userinfoLoginOut: (state, action) => {
       return {
         ...state,
         UserId: action.payload.UserId,
@@ -84,4 +84,5 @@ const userInfoSlice = createSlice({
 
 export const { updateBookmark } = userInfoSlice.actions;
 export const { userinfoLogin } = userInfoSlice.actions;
+export const { userinfoLoginOut } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
