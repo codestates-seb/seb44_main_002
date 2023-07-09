@@ -7,8 +7,7 @@ export default function UserInfo({ userInfo }) {
   return (
     <Container>
       <InfoContainer>
-        <img
-          className="w-[140px] h-[140px]"
+        <UserImg
           src={`/images/user/${
             userInfo.gender === '남' ? 'user_boy.png' : 'user_girl.png'
           }`}
@@ -56,6 +55,10 @@ w-full
 const InfoContainer = tw.div`
 flex
 text-white
+`;
+const UserImg = tw.img`
+w-[140px] 
+h-[140px]
 `;
 const UserContainer = tw.div`
 pt-8

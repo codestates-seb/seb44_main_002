@@ -54,28 +54,11 @@ export default function Subscribe({ userInfo }) {
           })}
         </Swiper>
       </div>
-      // <div className="flex">
-      //   {userInfo.subscribe.map((user) => {
-      //     return (
-      //       <div
-      //         key={user.userId}
-      //         className="mr-4 py-3 px-8 border-dotted border-[1px] rounded"
-      //       >
-      //         <img
-      //           className="w-20 object-cover"
-      //           src={user.profileImageUrl}
-      //           alt="user profile"
-      //         />
-      //         <p className="mt-4">{user.name}</p>
-      //       </div>
-      //     );
-      //   })}
-      // </div>
     );
   };
   return (
     <Container>
-      <p className="text-2xl">{userInfo.name + '님이  구독한 사람.'}</p>
+      <Title>{userInfo.name + '님이  구독한 사람.'}</Title>
       <UserList />
     </Container>
   );
@@ -84,4 +67,7 @@ const Container = tw.div`
 text-white
 mt-32
 mx-12
+`;
+const Title = tw.p`
+text-2xl
 `;

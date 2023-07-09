@@ -4,6 +4,8 @@ import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
 
 import tw from 'tailwind-styled-components';
+import UserBookmarked from './UserBookmarked';
+import UserRecipe from './UserRecipe';
 
 export default function UserPage() {
   const [userInfo, setUserInfo] = useState(dummyData);
@@ -11,16 +13,11 @@ export default function UserPage() {
   const BackgroundImg = () => {
     return (
       <>
-        <img
+        <NoteImg
           src="/images/background/music-dynamic-gradient.png"
           alt="음표"
-          className="absolute top-0 right-[-400px] pointer-events-none"
         />
-        <img
-          src="/images/background/star-dynamic-gradient.png"
-          alt="별"
-          className="absolute bottom-0 right-[900px] pointer-events-none"
-        />
+        <StarImg src="/images/background/star-dynamic-gradient.png" alt="별" />
       </>
     );
   };
@@ -29,8 +26,10 @@ export default function UserPage() {
       <BackgroundImg />
       <OuterContainer>
         <Container>
-          <UserInfo userInfo={dummyData} />
-          <Subscribe userInfo={dummyData} />
+          <UserInfo userInfo={userInfo} />
+          <Subscribe userInfo={userInfo} />
+          <UserBookmarked userInfo={userInfo} />
+          <UserRecipe userInfo={userInfo} />
         </Container>
       </OuterContainer>
     </Background>
@@ -58,6 +57,18 @@ w-full
 max-w-6xl
 mx-auto
 `;
+const NoteImg = tw.img`
+absolute 
+top-0 
+right-[-400px] 
+pointer-events-none
+`;
+const StarImg = tw.img`
+absolute 
+bottom-0 
+right-[900px] 
+pointer-events-none
+`;
 
 const dummyData = {
   name: '숨니',
@@ -81,6 +92,24 @@ const dummyData = {
     },
     {
       cocktailId: 3,
+      name: '시트러스 주스',
+      imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 4,
+      name: '라떼 밀크주',
+      imageUrl: 'https://2bob.co.kr/data/recipe/20210707094952-WOE78.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 5,
+      name: '논알콜 청포도 모히토',
+      imageUrl: 'https://2bob.co.kr/data/recipe/20210706172910-2B1WD.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 6,
       name: '시트러스 주스',
       imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
       isBookmarked: true,
