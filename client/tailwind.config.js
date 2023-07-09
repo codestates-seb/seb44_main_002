@@ -14,6 +14,12 @@ module.exports = {
         'pointPurple-200': '#BC4096',
         'yellow-100': '#FFD600',
       },
+      dropShadow: {
+        '3xl': [
+          '0px 10px 8px rgba(0, 0, 0, 0.2)',
+          '0px 4px 3px rgba(0, 0, 0, 0.2)',
+        ],
+      },
     },
   },
   plugins: [],

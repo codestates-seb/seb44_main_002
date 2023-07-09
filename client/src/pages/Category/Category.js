@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import {
   CategoryFilter,
@@ -11,12 +13,14 @@ import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 // import Pagination from '../../components/Pagination/Pagination';
-// import HoverButton from '../../common/Buttons/HoverButton';
 export default function Category() {
+  //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  //리덕스 임시 저장
+  // const bookmarkList = useSelector((state) => state.userinfo.bookmarked);
   //선택된 카테고리조건 (카테고리&태그&정렬)
-
   const [fitlerCondtion, setfitlerCondtion] = useState({
     category: CategoryFilter[0].type,
     frequencyTag: tagFrequencyData[0].type,
@@ -24,17 +28,60 @@ export default function Category() {
     descendingOrder: true,
     sortType: sortTypeData[0].type,
   });
-
+  //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
-  //console.log(currentPage);
+
   const [obj, setObj] = useState({
     totalCount: 200,
     totalPages: 5,
   });
+  // // 더미데이터;
+
+  const dummyData = [
+    {
+      cocktailId: 1,
+      name: 'sample',
+      imageUrl: 'images/cocktail/cocktail1.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 2,
+      name: '체리주',
+      imageUrl: 'images/cocktail/cocktail2.jpg',
+      isBookmarked: true,
+    },
+    {
+      cocktailId: 3,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail3.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 4,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail4.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 5,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail3.jpg',
+      isBookmarked: false,
+    },
+    {
+      cocktailId: 6,
+      name: 'sample cocktail',
+      imageUrl: 'images/cocktail/cocktail4.jpg',
+      isBookmarked: false,
+    },
+  ];
+  const [data, setData] = useState(dummyData);
 
   useEffect(() => {
+    //클릭한 페이지
     const page = currentPage + 1;
-    //console.log(page);
+
+    //조건에 맞춰 필터링된 데이터
     const fetchCocktails = async () => {
       const url = `${BASE_URL}/cocktails/filter?category=${
         fitlerCondtion.category
@@ -64,46 +111,6 @@ export default function Category() {
       totalPages: 5,
     });
   }, [fitlerCondtion, currentPage]);
-  //더미데이터
-
-  const dummyData = [
-    {
-      cocktailId: 1,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail1.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 2,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail2.jpg',
-      isBookmarked: true,
-    },
-    {
-      cocktailId: 3,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail3.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 4,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail4.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 5,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail3.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 6,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail4.jpg',
-      isBookmarked: false,
-    },
-  ];
 
   return (
     <div className="overflow-hidden">
@@ -145,11 +152,19 @@ export default function Category() {
               fitlerCondtion={fitlerCondtion}
             />
             {/* 필터에 따라 출력되는 데이터 */}
+            {/* 배열 idx 에 bookmarkList 에 idx 가 같으면  */}
             <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[100px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap ">
-              {dummyData.map((item, index) => (
-                <Card item={item} className="pr-4" key={index} />
+              {data.map((item, index) => (
+                <Card
+                  item={item}
+                  className="pr-4"
+                  key={index + 1}
+                  data={data}
+                  setData={setData}
+                />
               ))}
             </div>
+            {/* 페이지네이션 */}
             <div className="flex justify-start mb-[100px] gap-2">
               {obj && (
                 <>
