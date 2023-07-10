@@ -190,7 +190,7 @@ const SignupScreen = tw.div`
   justify-center
   items-start
   max-[520px]:overflow-hidden
-  max-[520px]:pb-52
+  pb-52
 `;
 
 const SignupContainer = tw.div`
@@ -251,8 +251,9 @@ const InputSection = tw.div`
   flex
   flex-col
   justify-between
-  max-[520px]:overflow-y-scroll
   max-[520px]:items-center
+
+  overflow-y-scroll
 `;
 
 const ButtonSection = tw.div`
