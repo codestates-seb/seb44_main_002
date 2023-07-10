@@ -115,8 +115,11 @@ export default function Hamburger() {
             },
           }}
         >
-          <MenuItem onClick={() => openPage('/mypage')}>
+          <MenuItem onClick={() => openPage('/userpage/:id')}>
             <HoverButton>Mypage</HoverButton>
+          </MenuItem>
+          <MenuItem onClick={() => openPage('/category')}>
+            <HoverButton>Category</HoverButton>
           </MenuItem>
           {/* 로그아웃 dispatch를 바로 보내고있습니다 alert가 한번 더 뜨게 해야됩니다 */}
           <MenuItem onClick={() => dispatch(logout())}>
