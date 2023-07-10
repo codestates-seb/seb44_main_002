@@ -215,7 +215,6 @@ const SignupBox = tw.div`
   w-[32.5rem]
   h-full
   flex
-  flex-[6]
   justify-center
   items-center
   rounded-3xl
@@ -226,9 +225,6 @@ const SignupBox = tw.div`
 
   max-[520px]:w-full
   max-[520px]:rounded-none
-  border 
-border-solid
-border-red
 `;
 
 const SignupSection = tw.div`
@@ -257,8 +253,6 @@ const InputSection = tw.div`
   justify-between
   max-[520px]:overflow-y-scroll
   max-[520px]:items-center
-
- 
 `;
 
 const ButtonSection = tw.div`
