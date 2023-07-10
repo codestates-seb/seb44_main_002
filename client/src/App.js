@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
@@ -16,6 +17,18 @@ import './App.css';
 
 function App() {
   const location = useLocation();
+  // refresh token이 있을 경우 access token 주기적으로 재발급
+
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     if (document.hasFocus()) getAccessToken();
+  //   }, 1800000);
+
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
+
   return (
     <div className="App">
       {!location.pathname.includes('/signup') && <Header />}

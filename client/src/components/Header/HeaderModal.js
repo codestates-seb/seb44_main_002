@@ -141,13 +141,13 @@ export default function HeaderModal() {
     })
       .then((data) => {
         if (data.status === 200) {
-          // localStorage.setItem(
-          //   'accessToken',
-          //   data.headers.get('Authorization')
-          // );
-          // localStorage.setItem('UserId', data.headers.get('UserId'));
-
-          // Refresh
+          localStorage.setItem(
+            'accessToken',
+            data.headers.get('Authorization')
+          );
+          localStorage.setItem('UserId', data.headers.get('UserId'));
+          localStorage.setItem('refreshToken', res.data.Refesh);
+          // Refresh accessToken 만료
           //UserId
           //Name
 
@@ -159,7 +159,7 @@ export default function HeaderModal() {
           );
 
           //사용자 정보 조회
-          handleUserInfo(data.headers.get('UserId'));
+          // handleUserInfo(data.headers.get('UserId'));
           // 전역상태관리 로그인으로 변경
           dispatch(login(() => login()));
           navigation('/');

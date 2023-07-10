@@ -50,10 +50,11 @@ export default function Signup() {
       gender: form.gender,
       age: form.age,
     };
-
+    console.log(userinfo);
+    // credentials: 'include',
     fetch(`${BASE_URL}users/signup`, {
       method: 'POST',
-      credentials: 'include',
+
       headers: {
         //'ngrok-skip-browser-warning': 'true',
         'Content-Type': 'application/json', // json fetch시
