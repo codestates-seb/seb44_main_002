@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
+import UserRecipe from './UserRecipe';
 
 import tw from 'tailwind-styled-components';
 import UserBookmarked from './UserBookmarked';
-import UserRecipe from './UserRecipe';
 
 export default function UserPage() {
   const [userInfo, setUserInfo] = useState(dummyData);
+  const location = useLocation().pathname.split('/')[2];
+
+  useEffect(() => {
+    // 칵테일 정보 fetch 추가예정
+  }, []);
 
   const BackgroundImg = () => {
     return (

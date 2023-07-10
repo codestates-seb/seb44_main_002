@@ -1,9 +1,20 @@
+import { useNavigate, Link } from 'react-router-dom';
+
 import tw from 'tailwind-styled-components';
 
 export default function UserInfo({ userInfo }) {
+  const navigate = useNavigate();
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
+
+  const deleteUser = () => {
+    if (window.confirm('정말로 탈퇴하시겠습니까?')) {
+      alert('삭제되었습니다.');
+      navigate('/');
+    }
+  };
+
   return (
     <Container>
       <InfoContainer>
@@ -45,8 +56,10 @@ export default function UserInfo({ userInfo }) {
       </InfoContainer>
       {userInfo.userId === 1 && (
         <ButtonContainer>
-          <Button>수정하기</Button>
-          <Button>탈퇴하기</Button>
+          <Link to={`/`}>
+            <Button>수정하기</Button>
+          </Link>
+          <Button onClick={deleteUser}>탈퇴하기</Button>
         </ButtonContainer>
       )}
     </Container>
