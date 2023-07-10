@@ -111,7 +111,7 @@ export default function Signup() {
                   labelName="이름"
                   type="text"
                   text="2자 이상 10자 미만으로 적어주세요"
-                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[280px]"
                   isValid={isValid.name}
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -120,17 +120,17 @@ export default function Signup() {
                   labelName="이메일"
                   type="email"
                   text="이메일을 확인해주세요"
-                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[280px]"
                   isValid={isValid.email}
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
                 <CustomInput
-                  placeholder="최소 8자, 문자와 숫자는 1개이상 입력해주세요. "
+                  placeholder="최소 8자, 문자, 숫자는 1개이상 "
                   labelName="비밀번호"
                   type="password"
                   text="비밀번호를 확인해주세요"
-                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[280px]"
                   isValid={isValid.password}
                   value={form.password}
                   onChange={(e) =>
@@ -141,7 +141,7 @@ export default function Signup() {
                   labelName="비밀번호 확인"
                   type="password"
                   text="비밀번호가 일치하지않습니다"
-                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[280px]"
                   isValid={isValid.confirmPassword}
                   value={form.confirmPassword}
                   onChange={(e) =>
@@ -156,7 +156,7 @@ export default function Signup() {
                   labelName="나이"
                   type="number"
                   text="나이를 확인해주세요"
-                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[300px]"
+                  size="w-[22rem] h-[2.5rem] max-[520px]:w-[280px]"
                   isValid={isValid.age}
                   value={form.age}
                   onChange={(e) => setForm({ ...form, age: e.target.value })}
