@@ -48,7 +48,7 @@ export default function HeaderModal() {
   // 사용자 이름및 사용자 정보 조회 함수
   // 유저 정보 조회할때 토근으로 조회 권한 여부
   const handleUserInfo = async (memberId) => {
-    fetch(`${BASE_URL}/users/${memberId}`, {
+    fetch(`${BASE_URL}users/${memberId}`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -121,7 +121,7 @@ export default function HeaderModal() {
       })
       .catch((err) => {
         console.log(err);
-        navigation('/error');
+        navigate('/error');
       });
   };
   // 로그인 버튼 클릭시 실행되는 함수
@@ -130,7 +130,7 @@ export default function HeaderModal() {
     // 유효성 검사 로직
     useLoginValid(form, setIsValid);
 
-    fetch(`${BASE_URL}/auth/signin`, {
+    fetch(`${BASE_URL}auth/signin`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -146,7 +146,7 @@ export default function HeaderModal() {
             data.headers.get('Authorization')
           );
           localStorage.setItem('UserId', data.headers.get('UserId'));
-          localStorage.setItem('refreshToken', res.data.Refesh);
+          //localStorage.setItem('refreshToken', data.headers.get.Refesh);
           // Refresh accessToken 만료
           //UserId
           //Name
@@ -162,14 +162,14 @@ export default function HeaderModal() {
           // handleUserInfo(data.headers.get('UserId'));
           // 전역상태관리 로그인으로 변경
           dispatch(login(() => login()));
-          navigation('/');
+          navigate('/');
         } else {
           console.log('요청이 실패했습니다.');
         }
       })
       .catch((err) => {
         console.log(err);
-        navigation('/error');
+        navigate('/error');
       });
   };
 
