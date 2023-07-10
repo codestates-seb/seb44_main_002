@@ -3,16 +3,9 @@ package project.server.domain.cocktail.dto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
-import project.server.domain.cocktail.embed.ingredient.Ingredients;
-import project.server.domain.cocktail.embed.liquor.LiquorMapper;
-import project.server.domain.cocktail.embed.rate.Rate;
-import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
-import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.comment.dto.CommentDto;
 
 import java.time.LocalDateTime;
