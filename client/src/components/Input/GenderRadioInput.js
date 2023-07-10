@@ -5,14 +5,14 @@ export default function GenderRadioInput({
   },
 }) {
   return (
-    <div>
+    <div className="w-[350px] max-[520px]:w-[300px]">
       <label
         className={`flex flex-col font-bold  ${
           isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
         }`}
       >
         성별
-        <div className="flex flex-row items-center justify-start">
+        <div className="flex flex-row items-center justify-center">
           <input
             type="radio"
             name="gender"

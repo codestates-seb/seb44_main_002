@@ -5,6 +5,7 @@ import HoverButton from '../../common/Buttons/HoverButton';
 import CustomInput from '../../components/Input/CustomInput';
 import UseSignupValid from '../../components/Validation/SignupValidation';
 import GenderRadioInput from '../../components/Input/GenderRadioInput';
+
 import tw from 'tailwind-styled-components';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -62,7 +63,7 @@ export default function Signup() {
           // 응답이 성공적인 경우
           console.log('요청이 성공했습니다.');
           console.log(data);
-          navigation('/');
+          navigate('/');
           // 여기에서 추가적인 처리를 수행할 수 있습니다.
         } else {
           // 응답이 실패한 경우
@@ -72,7 +73,7 @@ export default function Signup() {
       })
       .catch((error) => {
         console.log('에러', error);
-        navigation('/error');
+        navigate('/error');
       });
   };
 
@@ -183,13 +184,13 @@ export default function Signup() {
 const SignupScreen = tw.div`
   bg-gradient-to-r from-gradi-to to-gradi-from
   w-screen
- h-auto
+  h-screen
   relative
   flex
   justify-center
   items-start
   max-[520px]:overflow-hidden
-  
+  max-[520px]:pb-52
 `;
 
 const SignupContainer = tw.div`
@@ -214,7 +215,6 @@ const SignupBox = tw.div`
   w-[32.5rem]
   h-full
   flex
-  flex-[6]
   justify-center
   items-center
   rounded-3xl
@@ -225,7 +225,6 @@ const SignupBox = tw.div`
 
   max-[520px]:w-full
   max-[520px]:rounded-none
-  
 `;
 
 const SignupSection = tw.div`
@@ -246,17 +245,14 @@ const SignupHeader = tw.h1`
   items-center
   max-[520px]:mb-0
 `;
-//  flex-[6]는 뭔가용?
+
 const InputSection = tw.div`
   h-full
   flex
   flex-col
-  flex-[6]
   justify-between
   max-[520px]:overflow-y-scroll
   max-[520px]:items-center
-
- 
 `;
 
 const ButtonSection = tw.div`

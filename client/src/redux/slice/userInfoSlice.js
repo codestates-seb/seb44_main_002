@@ -19,6 +19,8 @@ import { createSlice } from '@reduxjs/toolkit';
 // dispatch(updateBookmark({ id, item }));
 
 const initialState = {
+  UserId: null,
+  accessToken: null,
   name: null,
   profileImageUrl: null,
   gender: null,
@@ -65,8 +67,24 @@ const userInfoSlice = createSlice({
         state.bookmarked = filteredData;
       }
     },
+    userinfoLogin: (state, action) => {
+      return {
+        ...state,
+        UserId: action.payload.UserId,
+        accessToken: action.payload.accessToken,
+      };
+    },
+    userinfoLoginOut: (state, action) => {
+      return {
+        ...state,
+        UserId: null,
+        accessToken: null,
+      };
+    },
   },
 });
 
 export const { updateBookmark } = userInfoSlice.actions;
+export const { userinfoLogin } = userInfoSlice.actions;
+export const { userinfoLoginOut } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
