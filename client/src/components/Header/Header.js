@@ -98,7 +98,7 @@ export default function Header() {
             <div className="flex mx-2 font-bold items-center">일이삼사</div>
             <div className="mx-2">
               <MenuItem
-                path="/mypage"
+                path="/userpage/:id"
                 label={<PersonIcon fontSize="large" />}
               />
             </div>
