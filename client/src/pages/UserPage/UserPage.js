@@ -71,6 +71,7 @@ pointer-events-none
 `;
 
 const dummyData = {
+  userId: 1,
   name: '숨니',
   profileImageUrl: 'sample image url',
   gender: '여',
