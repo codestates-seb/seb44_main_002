@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-const ImageUpload = ({ form, setForm, isValid }) => {
+const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const inputRef = useRef();
 
@@ -33,8 +33,8 @@ const ImageUpload = ({ form, setForm, isValid }) => {
     const formData = new FormData();
     formData.append('image', file);
     try {
-      console.log(formData.get('image'));
-      const response = await fetch('YOUR_UPLOAD_URL', {
+      // console.log(formData.get('image'));
+      const response = await fetch('url', {
         method: 'POST',
         body: formData,
       });
@@ -42,14 +42,15 @@ const ImageUpload = ({ form, setForm, isValid }) => {
       if (response.ok) {
         // 유효성 검사 true로 변경
         console.log('이미지 업로드 성공');
-        setForm({ ...form, img: true });
         const imageUrl = await response.json();
+        setForm({ ...form, img: imageUrl });
+        setIsValid({ ...isValid, img: true });
         await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
       } else {
         // 유효성 검사 false로 변경
-        // img 업로드 취소 시키는거 가능?
         alert('이미지 업로드 실패');
-        setForm({ ...form, img: false });
+        setForm({ ...form, img: '' });
+        setIsValid({ ...isValid, img: false });
         setImageSrc(null);
         inputRef.current.value = '';
         // document.getElementById('file-input').value = null;
@@ -60,38 +61,6 @@ const ImageUpload = ({ form, setForm, isValid }) => {
       console.error('이미지 업로드 오류:', error);
     }
   };
-
-  // const submitData = async (imageUrl) => {
-  //   const data = {
-  //     name: 'sample',
-  //     imageUrl: imageUrl,
-  //     liquor: 'rum',
-  //     ingredients: [{ ingredient: 'salt' }, { ingredient: 'sugar' }],
-  //     recipe: [{ process: 'step1' }, { process: 'step2' }],
-  //     tags: [{ tag: 'example1' }, { tag: 'example2' }],
-  //     category: 'category_one',
-  //   };
-
-  //   try {
-  //     const response = await fetch('YOUR_API_URL', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log('데이터 제출 성공');
-  //       // 성공한 후에 추가적인 작업 수행
-  //     } else {
-  //       console.log('데이터 제출 실패');
-  //       // 실패 시 에러 처리
-  //     }
-  //   } catch (error) {
-  //     console.error('데이터 제출 오류:', error);
-  //   }
-  // };
 
   return (
     <>
