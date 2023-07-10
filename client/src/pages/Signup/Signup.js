@@ -39,6 +39,7 @@ export default function Signup() {
   //     “age” : 30
   // }
   const handleSubmit = (e) => {
+    console.log('동작');
     e.preventDefault();
     // 유효성 검사 로직
     UseSignupValid(form, setIsValid);
@@ -49,11 +50,13 @@ export default function Signup() {
       gender: form.gender,
       age: form.age,
     };
-
-    fetch(`${BASE_URL}/users/signup`, {
+    console.log(userinfo);
+    // credentials: 'include',
+    fetch(`${BASE_URL}users/signup`, {
       method: 'POST',
+
       headers: {
-        'ngrok-skip-browser-warning': 'true',
+        //'ngrok-skip-browser-warning': 'true',
         'Content-Type': 'application/json', // json fetch시
       },
       body: JSON.stringify(userinfo),
