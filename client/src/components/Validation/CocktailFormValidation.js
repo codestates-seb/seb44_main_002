@@ -7,16 +7,21 @@ export default function useCocktailFormValid(form, setIsValid) {
   // const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
   const nameRegex = /^.{1,19}$/;
+  const recipeRegex = form.recipe.filter((v) => {
+    return v.process === '';
+  });
 
-  const nameIsValid = form.name && nameRegex.test(form.name);
-  const imgIsValid = form.img === true;
+  const nameIsValid = Boolean(form.name) && nameRegex.test(form.name);
+  const imgIsValid = form.img !== '';
   const liquorIsValid = form.liquor !== '';
   const ingredientsIsValid = form.ingredients.length !== 0;
+  const recipeIsValid = recipeRegex.length === 0;
 
   setIsValid({
     name: nameIsValid,
-    email: imgIsValid,
+    img: imgIsValid,
     liquor: liquorIsValid,
     ingredients: ingredientsIsValid,
+    recipe: recipeIsValid,
   });
 }
