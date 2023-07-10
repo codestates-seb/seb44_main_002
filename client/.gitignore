@@ -11,6 +11,7 @@
 # production
 /build
 
+# dotenv environment variable files
 .env
 # misc
 .DS_Store
