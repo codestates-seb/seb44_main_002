@@ -32,7 +32,7 @@ export default function CustomInput({
           type={type}
           value={value}
           onChange={onChange}
-          className={`${size} mt-1 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+          className={`${size} mt-1 px-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
             isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
           }`}
         />
