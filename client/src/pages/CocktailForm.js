@@ -14,7 +14,7 @@ import tw from 'tailwind-styled-components';
 export default function CocktailForm() {
   const [form, setForm] = useState({
     name: '',
-    img: true,
+    img: '',
     liquor: '',
     ingredients: [],
     recipe: [{ id: 0, process: '' }],
@@ -25,10 +25,10 @@ export default function CocktailForm() {
     img: true,
     liquor: true,
     ingredients: true,
-    recipe: false,
+    recipe: true,
   });
 
-  console.log('value: ', form, '유효성: ', isValid);
+  // console.log('value: ', form, '유효성: ', isValid);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -56,7 +56,12 @@ export default function CocktailForm() {
                 isValid={isValid.name}
                 size="w-[355px] h-[40px] max-[520px]:w-[320px]"
               />
-              <ImageUpload form={form} setForm={setForm} isValid={isValid} />
+              <ImageUpload
+                form={form}
+                setForm={setForm}
+                isValid={isValid}
+                setIsValid={setIsValid}
+              />
               <SelectBaseInput
                 isValid={isValid.liquor}
                 value={form.liquor}
@@ -67,7 +72,12 @@ export default function CocktailForm() {
                 isValid={isValid.ingredients}
                 setForm={setForm}
               />
-              <CocktailRecipeInput form={form} setForm={setForm} />
+              <CocktailRecipeInput
+                form={form}
+                setForm={setForm}
+                isValid={isValid}
+                setIsValid={setIsValid}
+              />
             </InputSection>
             <div className="mt-1">
               <HoverButton type="submit" size="w-32 h-12">
