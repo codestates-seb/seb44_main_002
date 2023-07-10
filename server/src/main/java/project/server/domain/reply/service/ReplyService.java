@@ -38,10 +38,6 @@ public class ReplyService {
         return savedReply.entityToResponse();
     }
 
-//    public ReplyDto.Response readReply(Long replyId) {
-//        Reply reply = findReplyById(replyId);
-//        return reply.entityToResponse();
-//    }
 
     public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
         Reply reply = findReplyById(replyId);
