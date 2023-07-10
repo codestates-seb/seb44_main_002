@@ -8,38 +8,28 @@ import tw from 'tailwind-styled-components';
 import './Swiper.css';
 
 export default function Subscribe({ userInfo }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  let slidesPerView = 5; // 창 너비에 따라 slidesPerView 값 설정
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  if (windowWidth <= 500) {
-    slidesPerView = 2;
-  } else if (windowWidth <= 850) {
-    slidesPerView = 3;
-  } else if (windowWidth <= 1200) {
-    slidesPerView = 4;
-  }
+  const deleteSubscriber = (id) => {
+    // id
+  };
 
   const UserList = () => {
     return (
       <div id="userpage">
         <Swiper
           spaceBetween={10}
-          slidesPerView={slidesPerView}
+          slidesPerView={2}
+          slidesPerGroup={2}
           navigation
           pagination={{ clickable: true }}
           className="mySwiper"
+          breakpoints={{
+            500: { slidesPerView: 3, slidesPerGroup: 3 },
+            850: { slidesPerView: 4, slidesPerGroup: 4 },
+            1200: {
+              slidesPerView: 5,
+              slidesPerGroup: 5,
+            },
+          }}
         >
           {userInfo.subscribe.map((user) => {
             return (
@@ -47,7 +37,14 @@ export default function Subscribe({ userInfo }) {
                 <div key={user.userId}>
                   <img src={user.profileImageUrl} alt="user profile" />
                   <p id="name">{user.name}</p>
-                  <p id="close">x</p>
+                  <CloseP
+                    id="close"
+                    role="presentation"
+                    onClick={() => deleteSubscriber(user.userId)}
+                    onKeyDown={() => {}}
+                  >
+                    x
+                  </CloseP>
                 </div>
               </SwiperSlide>
             );
@@ -70,4 +67,8 @@ mx-12
 `;
 const Title = tw.p`
 text-2xl
+`;
+const CloseP = tw.p`
+cursor-pointer
+hover:text-pointPurple-100
 `;
