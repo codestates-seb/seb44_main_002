@@ -30,6 +30,7 @@ const Bookmark = tw.div`
 flex
 flex-wrap
 mt-12
+max-md:justify-around
 `;
 const CardContainer = tw.div`
 mb-12
