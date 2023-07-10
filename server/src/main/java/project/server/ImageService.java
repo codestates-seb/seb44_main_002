@@ -25,17 +25,15 @@ public class ImageService {
     public String S3_BUCKET_NAME;
 
     private final UserService userService;
-    private final CocktailService cocktailService;
     private final S3Client s3Client;
 
-    public ImageService(UserService userService, CocktailService cocktailService, S3Client s3Client) {
+    public ImageService(UserService userService, S3Client s3Client) {
         this.userService = userService;
-        this.cocktailService = cocktailService;
         this.s3Client = s3Client;
     }
 
     @Transactional
-    public ImageDto.Response uploadUserProfileImage(MultipartFile file, long userId) throws IOException {
+    public ImageDto.Response uploadUserProfileImage(MultipartFile file, long userId) {
         if (file.isEmpty()) {
             // 파일이 없는 경우 처리
             throw new BusinessLogicException(ExceptionCode.IMAGE_UPLOAD_EXCEPTION);

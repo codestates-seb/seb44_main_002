@@ -22,13 +22,13 @@ public class ImageController {
 
     @PostMapping("/upload/users/{user-id}")
     public ResponseEntity userProfileImageUpload(@RequestParam("file") MultipartFile file,
-                                   @PathVariable("user-id") @Positive long userId) throws IOException {
+                                   @PathVariable("user-id") @Positive long userId) {
         ImageDto.Response response = imageService.uploadUserProfileImage(file, userId);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/upload/cocktails")
-    public ResponseEntity cocktailProfileImageUpload(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity cocktailProfileImageUpload(@RequestParam("file") MultipartFile file) {
         ImageDto.Response response = imageService.uploadCocktailImage(file);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
