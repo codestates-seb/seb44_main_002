@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
 import CustomInput from '../components/Input/CustomInput';
-import HoverButton from '../common/Buttons/HoverButton';
-import ImageUpload from '../components/ImageUpload';
 import SelectBaseInput from '../components/Input/SelectBaseInput';
 import CheckboxIngrInput from '../components/Input/CheckboxIngrInput';
+import CocktailRecipeInput from '../components/Input/CocktailRecipeInput';
+
+import HoverButton from '../common/Buttons/HoverButton';
+import ImageUpload from '../components/ImageUpload';
 import useCocktailFormValid from '../components/Validation/CocktailFormValidation';
 
 import tw from 'tailwind-styled-components';
@@ -15,7 +17,7 @@ export default function CocktailForm() {
     img: true,
     liquor: '',
     ingredients: [],
-    recipe: [],
+    recipe: [{ id: 0, process: '' }],
   });
 
   const [isValid, setIsValid] = useState({
@@ -26,7 +28,7 @@ export default function CocktailForm() {
     recipe: false,
   });
 
-  console.log(form, isValid);
+  console.log('value: ', form, '유효성: ', isValid);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -65,24 +67,7 @@ export default function CocktailForm() {
                 isValid={isValid.ingredients}
                 setForm={setForm}
               />
-              <CustomInput
-                type="text"
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                value={form.name}
-                labelName="칵테일 이름"
-                text="칵테일 이름을 적어주세요"
-                isValid={false}
-                size="w-[355px] h-[40px] max-[520px]:w-[320px]"
-              />
-              <CustomInput
-                type="text"
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                value={form.name}
-                labelName="칵테일 이름"
-                text="칵테일 이름을 적어주세요"
-                isValid={false}
-                size="w-[355px] h-[40px] max-[520px]:w-[320px]"
-              />
+              <CocktailRecipeInput form={form} setForm={setForm} />
             </InputSection>
             <div className="mt-1">
               <HoverButton type="submit" size="w-32 h-12">
