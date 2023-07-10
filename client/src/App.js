@@ -17,6 +17,11 @@ import './App.css';
 
 function App() {
   const location = useLocation();
+  const RightPaths = ['category', 'detail', 'userpage', 'cocktail', 'signup'];
+  const isRightPath =
+    location.pathname === '/' ||
+    RightPaths.some((path) => location.pathname.split('/')[1] === path);
+
   // refresh token이 있을 경우 access token 주기적으로 재발급
 
   // useEffect(() => {
@@ -31,9 +36,9 @@ function App() {
 
   return (
     <div className="App">
-      {!location.pathname.includes('/signup') && <Header />}
+      {!location.pathname.includes('/signup') && isRightPath && <Header />}
       <Routing />
-      {!location.pathname.includes('/signup') && <Footer />}
+      {!location.pathname.includes('/signup') && isRightPath && <Footer />}
     </div>
   );
 }
