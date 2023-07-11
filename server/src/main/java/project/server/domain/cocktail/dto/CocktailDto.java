@@ -20,6 +20,7 @@ public class CocktailDto {
         private String liquor;
         private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
+        private String degree;
         private List<TagDto.Post> tags;
     }
 
