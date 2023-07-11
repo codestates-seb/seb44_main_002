@@ -19,7 +19,8 @@ export default function CocktailForm() {
     liquor: '',
     ingredients: [],
     recipe: [{ id: 0, process: '' }],
-    tags: [],
+    degree: [],
+    flavor: [],
   });
 
   const [isValid, setIsValid] = useState({
@@ -82,7 +83,7 @@ export default function CocktailForm() {
               />
               <CocktailTag form={form} setForm={setForm} />
             </InputSection>
-            <div className="mt-1">
+            <div className="mt-4">
               <HoverButton type="submit" size="w-32 h-12">
                 업로드
               </HoverButton>
