@@ -1,4 +1,4 @@
-package project.server;
+package project.server.image;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Positive;
-import java.io.IOException;
 
 @RestController
 public class ImageController {

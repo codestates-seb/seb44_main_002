@@ -32,11 +32,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class CocktailService {
 
-    public static final int DEFAULT_SIZE = 16;
-    public static final String SEPARATOR = ",";
-    public static final int MAX_RATE_VALUE = 5;
-    public static final int MIN_RATE_VALUE = 1;
-    public static final boolean UNSIGNED_USER = false;
+    private static final int DEFAULT_SIZE = 16;
+    private static final String SEPARATOR = ",";
+    private static final int MAX_RATE_VALUE = 5;
+    private static final int MIN_RATE_VALUE = 1;
+    private static final boolean UNSIGNED_USER_BOOKMARK = false;
+    private static final int UNSIGNED_USER_RATE = 0;
 
     private final CocktailRepository cocktailRepository;
     private final RecommendCocktailService recommendCocktailService;
@@ -55,7 +56,7 @@ public class CocktailService {
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
         recommendCocktailService.createRecommendCocktail(cocktail, user);
         savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
-        return entityToResponse(savedCocktail, false);
+        return entityToResponse(savedCocktail, false, UNSIGNED_USER_RATE);
     }
 
     public CocktailDto.Response readCocktail(Authentication authentication, long cocktailId) {
@@ -63,10 +64,10 @@ public class CocktailService {
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
         if (unsigned(authentication)) {
-            return entityToResponse(cocktail, UNSIGNED_USER);
+            return entityToResponse(cocktail, UNSIGNED_USER_BOOKMARK, UNSIGNED_USER_RATE);
         }
         User user = userService.findUserByAuthentication(authentication);
-        return entityToResponse(cocktail, user.isBookmarked(cocktailId));
+        return entityToResponse(cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
     public MultiResponseDto readFilteredCocktails(Authentication authentication, String category, String tag, int page, String sortValue) {
@@ -90,7 +91,7 @@ public class CocktailService {
         verifyUser(user, cocktail);
         cocktail.modify(patch);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
-        return entityToResponse(cocktail, false);
+        return entityToResponse(cocktail, false, UNSIGNED_USER_RATE);
     }
 
     public void removeCocktail(Authentication authentication, long cocktailId) {
@@ -129,12 +130,8 @@ public class CocktailService {
 
     public CocktailDto.Response readRandomCocktail(Authentication authentication) {
         long count = cocktailRepository.count();
-        Cocktail cocktail = cocktailRepository.findAll().get((int) (Math.random()*count));
-        if(unsigned(authentication)){
-            return entityToResponse(cocktail, UNSIGNED_USER);
-        }
-        User user = userService.findUserByAuthentication(authentication);
-        return entityToResponse(cocktail, user.isBookmarked(cocktail.getCocktailId()));
+        long id = (long) (Math.random()*count);
+        return readCocktail(authentication, id);
     }
 
     private boolean unsigned(Authentication authentication) {
@@ -148,7 +145,7 @@ public class CocktailService {
     }
 
     private RateDto.Response reCalculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
-        int oldValue = user.getOldRate(cocktailId);
+        int oldValue = user.getRate(cocktailId);
         cocktail.reRate(oldValue, value);
         user.putRatedCocktail(cocktailId, value);
         return new RateDto.Response(cocktail.getRatedScore());
@@ -216,7 +213,7 @@ public class CocktailService {
     private List<CocktailDto.SimpleResponse> createSimpleResponses(Authentication authentication, List<Cocktail> cocktails) {
         if (unsigned(authentication)) {
             return cocktails.stream()
-                    .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER, cocktail))
+                    .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER_BOOKMARK, cocktail))
                     .collect(Collectors.toList());
         }
         User user = userService.findUserByAuthentication(authentication);
@@ -258,7 +255,7 @@ public class CocktailService {
                 .build();
     }
 
-    private CocktailDto.Response entityToResponse(Cocktail cocktail, boolean isBookmarked) {
+    private CocktailDto.Response entityToResponse(Cocktail cocktail, boolean isBookmarked, int rate) {
         User user = cocktail.getUser();
         return CocktailDto.Response.builder()
                 .cocktailId(cocktail.getCocktailId())
@@ -283,6 +280,7 @@ public class CocktailService {
                         .map(recommendedCocktail
                                 -> entityToSimpleResponse(user.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
                         .collect(Collectors.toList()))
+                .userRate(rate)
                 .build();
     }
 
