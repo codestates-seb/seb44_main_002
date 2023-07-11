@@ -74,4 +74,10 @@ public class CocktailController {
         cocktailService.bookmarkCocktail(authentication, cocktailId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/random")
+    public ResponseEntity readRandomCocktail(Authentication authentication){
+        CocktailDto.Response response = cocktailService.readRandomCocktail(authentication);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

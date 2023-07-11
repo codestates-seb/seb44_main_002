@@ -62,7 +62,7 @@ public class CocktailService {
         Cocktail cocktail = findCocktailById(cocktailId);
         cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
-        if (authentication == null) {
+        if (unsigned(authentication)) {
             return entityToResponse(cocktail, UNSIGNED_USER);
         }
         User user = userService.findUserByAuthentication(authentication);
@@ -125,6 +125,20 @@ public class CocktailService {
         }
         recommendCocktailService.addBookmarkCount(user, cocktail);
         user.bookmark(cocktailId);
+    }
+
+    public CocktailDto.Response readRandomCocktail(Authentication authentication) {
+        long count = cocktailRepository.count();
+        Cocktail cocktail = cocktailRepository.findAll().get((int) (Math.random()*count));
+        if(unsigned(authentication)){
+            return entityToResponse(cocktail, UNSIGNED_USER);
+        }
+        User user = userService.findUserByAuthentication(authentication);
+        return entityToResponse(cocktail, user.isBookmarked(cocktail.getCocktailId()));
+    }
+
+    private boolean unsigned(Authentication authentication) {
+        return authentication == null;
     }
 
     private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
@@ -200,7 +214,7 @@ public class CocktailService {
     }
 
     private List<CocktailDto.SimpleResponse> createSimpleResponses(Authentication authentication, List<Cocktail> cocktails) {
-        if (authentication == null) {
+        if (unsigned(authentication)) {
             return cocktails.stream()
                     .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER, cocktail))
                     .collect(Collectors.toList());
