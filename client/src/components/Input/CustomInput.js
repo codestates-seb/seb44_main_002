@@ -23,7 +23,7 @@ export default function CustomInput({
     <div>
       <label
         className={`flex flex-col font-bold  ${
-          isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
+          isValid ? 'text-gray-200' : 'text-error'
         }`}
       >
         {labelName}
@@ -33,12 +33,12 @@ export default function CustomInput({
           value={value}
           onChange={onChange}
           className={`${size} mt-1 px-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
-            isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
+            isValid ? 'border-gray-200' : 'border-error'
           }`}
         />
       </label>
       <div className="h-4">
-        <p className={`${isValid && 'hidden'} text-[#FF1AE8] text-[10px]`}>
+        <p className={`${isValid && 'hidden'} text-error text-[10px]`}>
           {text}
         </p>
       </div>

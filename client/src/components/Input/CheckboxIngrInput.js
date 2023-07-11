@@ -19,7 +19,7 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
     <div className="mb-2">
       <div
         className={`flex flex-col font-bold w-[320px]  ${
-          isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
+          isValid ? 'text-gray-200' : 'text-error'
         }`}
       >
         속재료
@@ -127,7 +127,7 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
         </div>
       </div>
       <div className="h-7">
-        <p className={`${isValid && 'hidden'} text-[#FF1AE8]`}>
+        <p className={`${isValid && 'hidden'} text-error`}>
           속재료를 한개 이상 골라주세요
         </p>
       </div>
