@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TagButton from '../../common/Buttons/TagButton';
 import ClickButton from '../../common/Buttons/ClickButton';
 
-export default function CocktailTag({ form, setForm }) {
+export default function CocktailTag({ form, setForm, isValid }) {
   const handleAlcoholClick = (selectedAlcohol) => {
     setForm((prevform) => ({
       ...prevform,
@@ -40,23 +40,29 @@ export default function CocktailTag({ form, setForm }) {
 
   return (
     <div className="flex flex-col">
-      <p className="font-bold text-gray-200 mb-4">태그를 골라주세요</p>
+      <p
+        className={`font-bold mb-4 ${
+          isValid.degree && isValid.flavor ? 'text-gray-200' : 'text-error'
+        }`}
+      >
+        태그를 골라주세요
+      </p>
       <div className="flex w-full h-[45px] mb-4 justify-around">
         <TagButton
-          onClick={() => handleAlcoholClick('high')}
-          selected={isAlcoholSelected('high')}
+          onClick={() => handleAlcoholClick('frequency_high')}
+          selected={isAlcoholSelected('frequency_high')}
         >
           # 도수 높음
         </TagButton>
         <TagButton
-          onClick={() => handleAlcoholClick('medium')}
-          selected={isAlcoholSelected('medium')}
+          onClick={() => handleAlcoholClick('frequency_medium')}
+          selected={isAlcoholSelected('frequency_medium')}
         >
           # 도수 보통
         </TagButton>
         <TagButton
-          onClick={() => handleAlcoholClick('low')}
-          selected={isAlcoholSelected('low')}
+          onClick={() => handleAlcoholClick('frequency_low')}
+          selected={isAlcoholSelected('frequency_low')}
         >
           # 도수 낮음
         </TagButton>
@@ -80,6 +86,15 @@ export default function CocktailTag({ form, setForm }) {
         >
           # 쓴맛
         </ClickButton>
+      </div>
+      <div className="h-8">
+        <p
+          className={` text-error
+            ${isValid.degree && isValid.flavor ? 'hidden' : ''}
+          `}
+        >
+          맛, 도수 태그를 1개씩 골라주세요
+        </p>
       </div>
     </div>
   );
