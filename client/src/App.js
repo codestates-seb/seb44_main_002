@@ -17,6 +17,7 @@ import './App.css';
 
 function App() {
   const location = useLocation();
+  const isSignUp = location.pathname.includes('/signup');
   const RightPaths = ['category', 'detail', 'userpage', 'cocktail', 'signup'];
   const isRightPath =
     location.pathname === '/' ||
@@ -36,9 +37,9 @@ function App() {
 
   return (
     <div className="App">
-      {!location.pathname.includes('/signup') && isRightPath && <Header />}
+      {!isSignUp && isRightPath && <Header />}
       <Routing />
-      {!location.pathname.includes('/signup') && isRightPath && <Footer />}
+      {!isSignUp && isRightPath && <Footer />}
     </div>
   );
 }
