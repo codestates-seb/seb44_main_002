@@ -32,17 +32,22 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append('image', file);
+
     try {
       // console.log(formData.get('image'));
-      const response = await fetch('url', {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}upload/cocktails`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         // 유효성 검사 true로 변경
         console.log('이미지 업로드 성공');
         const imageUrl = await response.json();
+        console.log(imageUrl);
         setForm({ ...form, imgUrl: imageUrl });
         setIsValid({ ...isValid, imgUrl: true });
         await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
