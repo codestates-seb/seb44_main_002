@@ -118,4 +118,8 @@ public class Cocktail {
     public void assignUser(User user) {
         this.user = user;
     }
+
+    public void addDegree(Tag degree) {
+        tags.add(degree);
+    }
 }

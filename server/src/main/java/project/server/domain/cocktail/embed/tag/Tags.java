@@ -46,4 +46,8 @@ public class Tags {
     private TagDto.Response createResponseDto(String tag) {
         return new TagDto.Response(tag);
     }
+
+    public void add(Tag degree) {
+        tags.add(degree);
+    }
 }
