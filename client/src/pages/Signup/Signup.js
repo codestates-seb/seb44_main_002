@@ -84,7 +84,7 @@ export default function Signup() {
     <SignupScreen>
       {/* 펜슬 이미지 */}
       <img
-        src="images/background/pencil.png"
+        src="/images/background/pencil.png"
         alt="pencil"
         className="absolute bottom-0 right-60 max-[768px]:right-0"
       />

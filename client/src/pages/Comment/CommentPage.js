@@ -13,8 +13,12 @@ export default function CommentPage() {
 
   return (
     <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[5rem] flex flex-col  items-center ">
-      <button onClick={() => navigate('/cocktail')}>
-        <img src="/images/logo.png" alt="로고" className="" />
+      <button onClick={() => navigate('/')}>
+        <img
+          src="/images/logo.png"
+          alt="로고"
+          className="w-[30px] mb-[2rem] "
+        />
       </button>
 
       <section className="w-[520px] h-[520px] rounded-2xl bg-[#000000]/40 mb-[10rem] flex flex-col items-center">
