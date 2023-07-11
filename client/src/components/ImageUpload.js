@@ -32,25 +32,30 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append('image', file);
+
     try {
       // console.log(formData.get('image'));
-      const response = await fetch('url', {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}upload/cocktails`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         // 유효성 검사 true로 변경
         console.log('이미지 업로드 성공');
         const imageUrl = await response.json();
-        setForm({ ...form, img: imageUrl });
-        setIsValid({ ...isValid, img: true });
+        console.log(imageUrl);
+        setForm({ ...form, imgUrl: imageUrl });
+        setIsValid({ ...isValid, imgUrl: true });
         await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
       } else {
         // 유효성 검사 false로 변경
         alert('이미지 업로드 실패');
-        setForm({ ...form, img: '' });
-        setIsValid({ ...isValid, img: false });
+        setForm({ ...form, imgUrl: '' });
+        setIsValid({ ...isValid, imgUrl: false });
         setImageSrc(null);
         inputRef.current.value = '';
         // document.getElementById('file-input').value = null;
@@ -66,7 +71,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
     <>
       <p
         className={`font-bold text-[#FF1AE8] mb-1 ${
-          isValid.img && 'text-gray-200'
+          isValid.imgUrl && 'text-gray-200'
         }`}
       >
         칵테일 사진 등록
@@ -76,13 +81,13 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         ref={inputRef}
         className={`text-gray-200 mb-1 ${
           !imageSrc && 'h-[300px] border border-[#FF1AE8] border-solid'
-        } ${isValid.img && 'border-gray-200'}`}
+        } ${isValid.imgUrl && 'border-gray-200'}`}
         accept="image/*"
         type="file"
         onChange={onUpload}
       />
       <div className="h-8">
-        <p className={`h-8 text-[#FF1AE8] ${isValid.img && 'hidden'}`}>
+        <p className={`h-8 text-[#FF1AE8] ${isValid.imgUrl && 'hidden'}`}>
           칵테일 사진을 등록해주세요
         </p>
       </div>
