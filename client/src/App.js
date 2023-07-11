@@ -10,13 +10,27 @@ import Category from './pages/Category/Category';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import LostPage from './pages/LostPage';
 import UserPage from './pages/UserPage/UserPage';
-import CocktailForm from './pages/CocktailForm';
+import CocktailForm from './pages/CocktailForm/CocktailForm';
 import Signup from './pages/Signup/Signup';
 import CommentPage from './pages/Comment/CommentPage';
 import './App.css';
 
 function App() {
   const location = useLocation();
+  const isSignUp = location.pathname.includes('/signup');
+  const isCommented = location.pathname.includes('/comment');
+  const RightPaths = [
+    'category',
+    'detail',
+    'userpage',
+    'cocktail',
+    'signup',
+    'comment',
+  ];
+  const isRightPath =
+    location.pathname === '/' ||
+    RightPaths.some((path) => location.pathname.split('/')[1] === path);
+
   // refresh token이 있을 경우 access token 주기적으로 재발급
 
   // useEffect(() => {
@@ -31,11 +45,9 @@ function App() {
 
   return (
     <div className="App">
-      {!location.pathname.includes('/signup') &&
-        !location.pathname.includes('/comment') && <Header />}
+      {!isSignUp && isRightPath && !isCommented && <Header />}
       <Routing />
-      {!location.pathname.includes('/signup') &&
-        !location.pathname.includes('/comment') && <Footer />}
+      {!isSignUp && isRightPath && !isCommented && <Footer />}
     </div>
   );
 }

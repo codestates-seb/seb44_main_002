@@ -10,7 +10,7 @@ export default function SelectBaseInput({
     <div>
       <label
         className={`flex flex-col font-bold  ${
-          isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
+          isValid ? 'text-gray-200' : 'text-error'
         }`}
       >
         베이스 술
@@ -18,7 +18,7 @@ export default function SelectBaseInput({
           value={value}
           onChange={onChange}
           className={`${size} outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
-            isValid ? 'border-gray-200' : 'border-[#FF1AE8]'
+            isValid ? 'border-gray-200' : 'border-error'
           }`}
         >
           <option value="">베이스 술을 골라주세요</option>
@@ -31,7 +31,7 @@ export default function SelectBaseInput({
         </select>
       </label>
       <div className="h-7">
-        <p className={`${isValid && 'hidden'} text-[#FF1AE8]`}>
+        <p className={`${isValid && 'hidden'} text-error`}>
           베이스 술을 골라주세요
         </p>
       </div>

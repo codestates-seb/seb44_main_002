@@ -1,38 +1,64 @@
 import { useState } from 'react';
 
-import CustomInput from '../components/Input/CustomInput';
-import SelectBaseInput from '../components/Input/SelectBaseInput';
-import CheckboxIngrInput from '../components/Input/CheckboxIngrInput';
-import CocktailRecipeInput from '../components/Input/CocktailRecipeInput';
+import CustomInput from '../../components/Input/CustomInput';
+import SelectBaseInput from '../../components/Input/SelectBaseInput';
+import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
+import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 
-import HoverButton from '../common/Buttons/HoverButton';
-import ImageUpload from '../components/ImageUpload';
-import useCocktailFormValid from '../components/Validation/CocktailFormValidation';
+import HoverButton from '../../common/Buttons/HoverButton';
+
+import ImageUpload from '../../components/ImageUpload';
+import CocktailTag from './CocktailTag';
+import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
 
 import tw from 'tailwind-styled-components';
 
 export default function CocktailForm() {
   const [form, setForm] = useState({
     name: '',
-    img: '',
+    imgUrl: '',
     liquor: '',
     ingredients: [],
     recipe: [{ id: 0, process: '' }],
+    degree: '',
+    flavor: [],
   });
 
   const [isValid, setIsValid] = useState({
     name: true,
-    img: true,
+    imgUrl: true,
     liquor: true,
     ingredients: true,
     recipe: true,
+    degree: true,
+    flavor: true,
   });
 
-  // console.log('value: ', form, '유효성: ', isValid);
+  console.log('value: ', form, '유효성: ', isValid);
 
   const submitHandler = (e) => {
     e.preventDefault();
     useCocktailFormValid(form, setIsValid);
+
+    const allValid = Object.values(isValid).every((value) => value === true);
+    if (allValid) {
+      fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+        // 성공
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+        })
+        // 실패
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -78,8 +104,9 @@ export default function CocktailForm() {
                 isValid={isValid}
                 setIsValid={setIsValid}
               />
+              <CocktailTag form={form} setForm={setForm} isValid={isValid} />
             </InputSection>
-            <div className="mt-1">
+            <div className="mt-4">
               <HoverButton type="submit" size="w-32 h-12">
                 업로드
               </HoverButton>
