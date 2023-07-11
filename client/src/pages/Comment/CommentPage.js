@@ -17,8 +17,13 @@ export default function CommentPage() {
         onClick={() => navigate('/cocktail')}
         src="images/logo.png"
         alt="로고"
-        className="w-[30px] h-[auto] mb-[2rem]"
+        className=""
       /> */}
+      <input
+        type="button"
+        className="img-button w-[30px] h-[auto] mb-[2rem] "
+        onClick={() => navigate('/cocktail')}
+      ></input>
       <section className="w-[520px] h-[520px] rounded-2xl bg-[#000000]/40 mb-[10rem]">
         <h1>댓글 수정</h1>
         <div>
