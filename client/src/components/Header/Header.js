@@ -56,7 +56,7 @@ export default function Header() {
       <HeaderDiv>
         <img
           role="presentation"
-          src="images/logo.png"
+          src="../images/logo.png"
           alt="logo"
           className="h-[40px] cursor-pointer"
           onClick={() => navigate('/')}
@@ -88,8 +88,15 @@ export default function Header() {
         >
           CATEGORY
         </div>
-        <div className="font-bold text-xl max-[768px]:hidden text-gray-200">
-          ???
+        <div
+          className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden ${
+            location.pathname.includes('/detail')
+              ? `${position ? 'text-black' : 'text-white'} font-bold`
+              : 'text-gray-200 font-normal'
+          }`}
+          role="presentation"
+        >
+          추천
         </div>
       </HeaderDiv>
       {isLogin ? (
