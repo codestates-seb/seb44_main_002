@@ -6,11 +6,12 @@ import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 
 import HoverButton from '../../common/Buttons/HoverButton';
+
 import ImageUpload from '../../components/ImageUpload';
+import CocktailTag from './CocktailTag';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
 
 import tw from 'tailwind-styled-components';
-import CocktailTag from './CocktailTag';
 
 export default function CocktailForm() {
   const [form, setForm] = useState({
@@ -19,7 +20,7 @@ export default function CocktailForm() {
     liquor: '',
     ingredients: [],
     recipe: [{ id: 0, process: '' }],
-    degree: [],
+    degree: '',
     flavor: [],
   });
 
@@ -29,6 +30,8 @@ export default function CocktailForm() {
     liquor: true,
     ingredients: true,
     recipe: true,
+    degree: true,
+    flavor: true,
   });
 
   console.log('value: ', form, '유효성: ', isValid);
@@ -36,6 +39,26 @@ export default function CocktailForm() {
   const submitHandler = (e) => {
     e.preventDefault();
     useCocktailFormValid(form, setIsValid);
+
+    const allValid = Object.values(isValid).every((value) => value === true);
+    if (allValid) {
+      fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+        // 성공
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+        })
+        // 실패
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -81,7 +104,7 @@ export default function CocktailForm() {
                 isValid={isValid}
                 setIsValid={setIsValid}
               />
-              <CocktailTag form={form} setForm={setForm} />
+              <CocktailTag form={form} setForm={setForm} isValid={isValid} />
             </InputSection>
             <div className="mt-4">
               <HoverButton type="submit" size="w-32 h-12">
