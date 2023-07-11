@@ -1,34 +1,36 @@
 import { useState } from 'react';
 
-import CustomInput from '../components/Input/CustomInput';
-import SelectBaseInput from '../components/Input/SelectBaseInput';
-import CheckboxIngrInput from '../components/Input/CheckboxIngrInput';
-import CocktailRecipeInput from '../components/Input/CocktailRecipeInput';
+import CustomInput from '../../components/Input/CustomInput';
+import SelectBaseInput from '../../components/Input/SelectBaseInput';
+import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
+import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 
-import HoverButton from '../common/Buttons/HoverButton';
-import ImageUpload from '../components/ImageUpload';
-import useCocktailFormValid from '../components/Validation/CocktailFormValidation';
+import HoverButton from '../../common/Buttons/HoverButton';
+import ImageUpload from '../../components/ImageUpload';
+import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
 
 import tw from 'tailwind-styled-components';
+import CocktailTag from './CocktailTag';
 
 export default function CocktailForm() {
   const [form, setForm] = useState({
     name: '',
-    img: '',
+    imgUrl: '',
     liquor: '',
     ingredients: [],
     recipe: [{ id: 0, process: '' }],
+    tags: [],
   });
 
   const [isValid, setIsValid] = useState({
     name: true,
-    img: true,
+    imgUrl: true,
     liquor: true,
     ingredients: true,
     recipe: true,
   });
 
-  // console.log('value: ', form, '유효성: ', isValid);
+  console.log('value: ', form, '유효성: ', isValid);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -78,6 +80,7 @@ export default function CocktailForm() {
                 isValid={isValid}
                 setIsValid={setIsValid}
               />
+              <CocktailTag form={form} setForm={setForm} />
             </InputSection>
             <div className="mt-1">
               <HoverButton type="submit" size="w-32 h-12">

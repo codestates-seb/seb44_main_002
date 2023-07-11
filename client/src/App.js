@@ -10,7 +10,7 @@ import Category from './pages/Category/Category';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import LostPage from './pages/LostPage';
 import UserPage from './pages/UserPage/UserPage';
-import CocktailForm from './pages/CocktailForm';
+import CocktailForm from './pages/CocktailForm/CocktailForm';
 import Signup from './pages/Signup/Signup';
 
 import './App.css';
