@@ -53,7 +53,7 @@ public class ImageService {
             User user = userService.findUser(userId);
 
             // 파일 저장 경로 설정
-            String filePath = "s3://" + S3_BUCKET_NAME + "/" + objectKey;
+            String filePath = "https://" + S3_BUCKET_NAME + ".s3.ap-northeast-2.amazonaws.com/" + objectKey;
 
             // Member에 파일 경로 저장
             user.setProfileImageUrl(filePath);
@@ -86,7 +86,7 @@ public class ImageService {
                     .build(), RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
             // 파일 저장 경로 설정
-            String filePath = "s3://" + S3_BUCKET_NAME + "/" + objectKey;
+            String filePath = "https://" + S3_BUCKET_NAME + ".s3.ap-northeast-2.amazonaws.com/" + objectKey;
 
             // 업로드 완료 후 추가 처리
             log.info("# Image upload Success");
