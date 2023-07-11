@@ -1,4 +1,4 @@
-package project.server;
+package project.server.image;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
