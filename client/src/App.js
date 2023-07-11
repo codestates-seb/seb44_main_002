@@ -12,7 +12,7 @@ import LostPage from './pages/LostPage';
 import UserPage from './pages/UserPage/UserPage';
 import CocktailForm from './pages/CocktailForm';
 import Signup from './pages/Signup/Signup';
-
+import CommentPage from './pages/Comment/CommentPage';
 import './App.css';
 
 function App() {
@@ -31,9 +31,11 @@ function App() {
 
   return (
     <div className="App">
-      {!location.pathname.includes('/signup') && <Header />}
+      {!location.pathname.includes('/signup') &&
+        !location.pathname.includes('/comment') && <Header />}
       <Routing />
-      {!location.pathname.includes('/signup') && <Footer />}
+      {!location.pathname.includes('/signup') &&
+        !location.pathname.includes('/comment') && <Footer />}
     </div>
   );
 }
@@ -48,6 +50,7 @@ const Routing = () => {
       <Route path="/cocktail" element={<CocktailForm />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="*" element={<LostPage />} />
+      <Route path="/comment" element={<CommentPage />} />
     </Routes>
   );
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import CommentValid from '../../components/Validation/CommentValidation';
 
 import tw from 'tailwind-styled-components';
@@ -8,7 +8,7 @@ export default function Community({ cocktailDetail }) {
   const [tag, setTag] = useState('');
   const [comment, setComment] = useState('');
   const [isValid, setIsValid] = useState(true);
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     CommentValid(comment, setIsValid);
@@ -60,7 +60,9 @@ export default function Community({ cocktailDetail }) {
                     {ele.userId === 3 && (
                       <>
                         <CommentButton>삭제하기</CommentButton>
-                        <CommentButton>수정하기</CommentButton>
+                        <CommentButton onClick={() => navigate('/comment')}>
+                          수정하기
+                        </CommentButton>
                       </>
                     )}
                     <CommentButton
@@ -84,7 +86,9 @@ export default function Community({ cocktailDetail }) {
                         {rp.userId === 3 && (
                           <>
                             <CommentButton>삭제하기</CommentButton>
-                            <CommentButton>수정하기</CommentButton>
+                            <CommentButton onClick={() => navigate('/comment')}>
+                              수정하기
+                            </CommentButton>
                           </>
                         )}
                         <CommentButton
