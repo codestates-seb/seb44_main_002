@@ -31,7 +31,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
 
   const uploadImage = async (file) => {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
 
     try {
       // console.log(formData.get('image'));
@@ -48,7 +48,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         console.log('이미지 업로드 성공');
         const imageUrl = await response.json();
         console.log(imageUrl);
-        setForm({ ...form, imgUrl: imageUrl });
+        setForm({ ...form, imgUrl: imageUrl.url });
         setIsValid({ ...isValid, imgUrl: true });
         await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
       } else {
