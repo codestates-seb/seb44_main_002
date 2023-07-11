@@ -16,7 +16,7 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
     }
   };
   return (
-    <div>
+    <div className="mb-2">
       <div
         className={`flex flex-col font-bold w-[320px]  ${
           isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
@@ -101,6 +101,28 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               onChange={checkboxHandler}
             />
             <label htmlFor="milk">우유</label>
+          </div>
+          <div className="mr-4">
+            <input
+              className="mr-1"
+              type="checkbox"
+              id="ice"
+              name="ice"
+              value="ice"
+              onChange={checkboxHandler}
+            />
+            <label htmlFor="ice">얼음</label>
+          </div>
+          <div className="mr-4">
+            <input
+              className="mr-1"
+              type="checkbox"
+              id="mint"
+              name="mint"
+              value="mint"
+              onChange={checkboxHandler}
+            />
+            <label htmlFor="mint">민트</label>
           </div>
         </div>
       </div>
