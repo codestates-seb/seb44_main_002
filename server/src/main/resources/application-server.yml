@@ -27,8 +27,6 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-config:
-  domain: https://release--comfortablecocktail.netlify.app/
 mail:
   address:
     admin: ${admin_mail}
