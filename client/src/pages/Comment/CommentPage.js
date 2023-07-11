@@ -13,24 +13,23 @@ export default function CommentPage() {
 
   return (
     <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[5rem] flex flex-col  items-center ">
-      {/* <img
-        onClick={() => navigate('/cocktail')}
-        src="images/logo.png"
-        alt="로고"
-        className=""
-      /> */}
-      <input
-        type="button"
-        className="img-button w-[30px] h-[auto] mb-[2rem] "
-        onClick={() => navigate('/cocktail')}
-      ></input>
-      <section className="w-[520px] h-[520px] rounded-2xl bg-[#000000]/40 mb-[10rem]">
-        <h1>댓글 수정</h1>
+      <button onClick={() => navigate('/cocktail')}>
+        <img src="/images/logo.png" alt="로고" className="" />
+      </button>
+
+      <section className="w-[520px] h-[520px] rounded-2xl bg-[#000000]/40 mb-[10rem] flex flex-col items-center">
+        <h1 className="mt-[30px] text-gray-200 font-bold text-[20px] mb-[2rem]">
+          댓글 수정
+        </h1>
         <div>
           <InputTextArea
             placeholder="댓글을 입력하세요."
             onChange={(e) => setComment(e.target.value)}
-            className={!isValid && 'border-red-500 border-[1px]'}
+            className={
+              !isValid
+                ? 'border-red-500 border-[1px]'
+                : 'border border-solid border-gray-200 w-[400px] h-[200px] mb-[2rem]'
+            }
           />
           {!isValid && (
             <p className="text-red-500">1~200자 범위내로 작성해주세요</p>
