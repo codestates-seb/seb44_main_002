@@ -64,7 +64,7 @@ export default function CocktailRecipeInput({
       <div className="flex flex-col w-[350px] max-[520px]:w-[320px]">
         <p
           className={`flex flex-col font-bold mb-2 ${
-            isValid.recipe ? 'text-gray-200' : 'text-[#FF1AE8]'
+            isValid.recipe ? 'text-gray-200' : 'text-error'
           }`}
         >
           나만의 레시피 순서
@@ -75,7 +75,7 @@ export default function CocktailRecipeInput({
             <div className="flex flex-row items-center">
               <Input
                 className={`${
-                  isValid.recipe ? `border-gray-200` : 'border-[#FF1AE8]'
+                  isValid.recipe ? `border-gray-200` : 'border-error'
                 }`}
                 type="text"
                 onChange={(e) => handleChange(e, item.id)}
@@ -94,7 +94,7 @@ export default function CocktailRecipeInput({
               </div>
             </div>
             <div className="h-6">
-              <p className={`${isValid.recipe && 'hidden'} text-[#FF1AE8]`}>
+              <p className={`${isValid.recipe && 'hidden'} text-error`}>
                 레시피를 채워 넣어주세요
               </p>
             </div>

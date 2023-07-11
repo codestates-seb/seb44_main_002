@@ -70,7 +70,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   return (
     <>
       <p
-        className={`font-bold text-[#FF1AE8] mb-1 ${
+        className={`font-bold text-error mb-1 ${
           isValid.imgUrl && 'text-gray-200'
         }`}
       >
@@ -80,14 +80,14 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         id="file-input"
         ref={inputRef}
         className={`text-gray-200 mb-1 ${
-          !imageSrc && 'h-[300px] border border-[#FF1AE8] border-solid'
+          !imageSrc && 'h-[300px] border border-error border-solid'
         } ${isValid.imgUrl && 'border-gray-200'}`}
         accept="image/*"
         type="file"
         onChange={onUpload}
       />
       <div className="h-8">
-        <p className={`h-8 text-[#FF1AE8] ${isValid.imgUrl && 'hidden'}`}>
+        <p className={`h-8 text-error ${isValid.imgUrl && 'hidden'}`}>
           칵테일 사진을 등록해주세요
         </p>
       </div>
