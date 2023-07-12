@@ -60,7 +60,8 @@ export default function HeaderModal() {
       .then((data) => {
         if (data.status === 200) {
           console.log(data);
-          // {
+          //   {
+          //     “userId” : “1”,
           //     “name” : “kim”,
           //     “profileImageUrl” : “sample image url”
           //     “gender” : “example”,
@@ -106,15 +107,14 @@ export default function HeaderModal() {
           //     ],
           // }
 
-          // dispatch(
-          //   userinfoGet({
-          //     displayName: data.displayName,
-          //     location: data.location,
-          //     profileContent: data.profileContent,
-          //     profileImage: data.profileImage,
-          //     profileTitle: data.profileTitle,
-          //   })
-          // );
+          dispatch(userinfoGet(data));
+          //     “userId” : “1”,
+          //     “name” : “kim”,
+          //     “profileImageUrl” : “sample image url”
+          //     “gender” : “example”,
+          //     “age” : 20,
+          //     “email” : “kim@example.com”,
+          //     “subscribedCount” : 0,
         } else {
           console.log('요청이 실패했습니다.');
         }
@@ -128,49 +128,53 @@ export default function HeaderModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-    useLoginValid(form, setIsValid);
-
-    fetch(`${BASE_URL}auth/signin`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        // 'ngrok-skip-browser-warning': 'true',
-      },
-      body: JSON.stringify(form),
-    })
-      .then((data) => {
-        if (data.status === 200) {
-          localStorage.setItem(
-            'accessToken',
-            data.headers.get('Authorization')
-          );
-          localStorage.setItem('UserId', data.headers.get('UserId'));
-          //localStorage.setItem('refreshToken', data.headers.get.Refesh);
-          // Refresh accessToken 만료
-          //UserId
-          //Name
-
-          dispatch(
-            userinfoLogin({
-              UserId: data.headers.get('UserId'),
-              accessToken: data.headers.get('Authorization'),
-            })
-          );
-
-          //사용자 정보 조회
-          // handleUserInfo(data.headers.get('UserId'));
-          // 전역상태관리 로그인으로 변경
-          dispatch(login(() => login()));
-          navigate('/');
-        } else {
-          console.log('요청이 실패했습니다.');
-        }
+    useLoginValid(form, setIsValid); //useSate 변화감지는 미래에 이루어진다.
+    if (isValid.email && isValid.password) {
+      //뭘하건 현재 값이 들어가니까
+      fetch(`${BASE_URL}auth/signin`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'ngrok-skip-browser-warning': 'true',
+        },
+        body: JSON.stringify(form),
       })
-      .catch((err) => {
-        console.log(err);
-        navigate('/error');
-      });
+        .then((data) => {
+          if (data.status === 200) {
+            console.log(data.headers.get('Authorization'));
+
+            localStorage.setItem(
+              'accessToken',
+              data.headers.get('Authorization')
+            );
+            localStorage.setItem('UserId', data.headers.get('UserId'));
+            //localStorage.setItem('refreshToken', data.headers.get.Refesh);
+            // Refresh accessToken 만료
+            //UserId
+            //Name
+
+            dispatch(
+              userinfoLogin({
+                UserId: data.headers.get('UserId'),
+                accessToken: data.headers.get('Authorization'),
+              })
+            );
+
+            //사용자 정보 조회
+            handleUserInfo(data.headers.get('UserId'));
+            // 전역상태관리 로그인으로 변경
+            dispatch(login(() => login()));
+            navigate('/');
+          } else {
+            console.log('요청이 실패했습니다.');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate('/error');
+        });
+    }
   };
 
   return (

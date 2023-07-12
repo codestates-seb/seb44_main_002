@@ -74,11 +74,16 @@ const userInfoSlice = createSlice({
         accessToken: action.payload.accessToken,
       };
     },
-    userinfoLoginOut: (state, action) => {
+    userinfoLoginOut: (state) => {
       return {
         ...state,
         UserId: null,
         accessToken: null,
+      };
+    },
+    userinfoGet: (state, action) => {
+      return {
+        //  return action.payload;
       };
     },
   },

@@ -12,7 +12,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function Signup() {
   const navigate = useNavigate();
   const [test, setTest] = useState(false);
-
+  const [loginMSG, setloginMSG] = useState(null);
   // 유효성검사 state
   const [isValid, setIsValid] = useState({
     name: true,
@@ -43,6 +43,18 @@ export default function Signup() {
     e.preventDefault();
     // 유효성 검사 로직
     UseSignupValid(form, setIsValid);
+    if (
+      !isValid.name ||
+      !isValid.email ||
+      !isValid.password ||
+      !isValid.gender ||
+      !isValid.age
+    ) {
+      setloginMSG(' 유효하지 않는 작성입니다.');
+      console.log(loginMSG);
+      return;
+    }
+
     const userinfo = {
       email: form.email,
       password: form.password,
@@ -50,7 +62,7 @@ export default function Signup() {
       gender: form.gender,
       age: form.age,
     };
-    console.log(userinfo);
+
     // credentials: 'include',
     fetch(`${BASE_URL}users/signup`, {
       method: 'POST',
