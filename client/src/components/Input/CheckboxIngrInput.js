@@ -24,7 +24,6 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
       >
         속재료
         <div className="flex flex-row items-center justify-center flex-wrap w-[355px] h-[100px]">
-          {/* 설탕 소금 과일음료 탄산음료 레몬즙 라임즙 우유 */}
           <div className="mr-4">
             <input
               className="mr-1"
@@ -51,45 +50,45 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="fruitdrink"
-              name="fruitdrink"
-              value="fruitdrink"
+              id="beverage"
+              name="beverage"
+              value="beverage"
               onChange={checkboxHandler}
             />
-            <label htmlFor="fruitdrink">과일음료</label>
+            <label htmlFor="beverage">과일음료</label>
           </div>
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="sparklingdrink"
-              name="sparklingdrink"
-              value="sparklingdrink"
+              id="soda"
+              name="soda"
+              value="soda"
               onChange={checkboxHandler}
             />
-            <label htmlFor="sparklingdrink">탄산음료</label>
+            <label htmlFor="soda">탄산음료</label>
           </div>
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="lemon"
-              name="lemon"
-              value="lemon"
+              id="lemonSqueeze"
+              name="lemonSqueeze"
+              value="lemonSqueeze"
               onChange={checkboxHandler}
             />
-            <label htmlFor="lemon">레몬즙</label>
+            <label htmlFor="lemonSqueeze">레몬즙</label>
           </div>
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="lime"
-              name="lime"
-              value="lime"
+              id="limeSqueeze"
+              name="limeSqueeze"
+              value="limeSqueeze"
               onChange={checkboxHandler}
             />
-            <label htmlFor="lime">라임즙</label>
+            <label htmlFor="limeSqueeze">라임즙</label>
           </div>
           <div className="mr-4">
             <input
