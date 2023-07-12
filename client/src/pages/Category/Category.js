@@ -69,32 +69,6 @@ export default function Category() {
 
       const url = `${BASE_URL}cocktails/filter?${categoryQuery}tag=${filterCondtion.frequencyTag}${tasteTagQuery}&page=${page}&size=16&sort=${sort}`;
 
-      //조건에 맞춰 필터링된 데이터
-      // const fetchCocktails = async () => {
-      //   // const url = `http://ec2-54-180-109-174.ap-northeast-2.compute.amazonaws.com:8080/cocktails/filter`;
-      //   const url = `${BASE_URL}cocktails/filter?${
-      //     fitlerCondtion.category === 'all'
-      //       ? ''
-      //       : `category=${fitlerCondtion.category}&`
-      //   }tag=${fitlerCondtion.frequencyTag}${
-      //     fitlerCondtion.tasteTag.length === 0
-      //       ? ''
-      //       : `,${fitlerCondtion.tasteTag.join(',')}`
-      //   }&page=${page}&size=$16${
-      //     fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'viewed'
-      //       ? 'most_viewed'
-      //       : fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'rate'
-      //       ? 'highest_rate'
-      //       : !fitlerCondtion.descendingOrder &&
-      //         fitlerCondtion.sortType === 'viewed'
-      //       ? 'least_viewed'
-      //       : 'lowest_rate'
-      //   }`;
-      // 조회수 높은 순 : most_viewed
-      // 조회수 낮은 순 : least_viewed
-      // 별점 높은 순 : highest_rate
-      // 별잠 낮은 순 : lowest_rate
-
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -210,43 +184,3 @@ export default function Category() {
     </div>
   );
 }
-
-// const dummyData = [
-//   {
-//     cocktailId: 1,
-//     name: 'sample',
-//     imageUrl: 'images/cocktail/cocktail1.jpg',
-//     isBookmarked: true,
-//   },
-//   {
-//     cocktailId: 2,
-//     name: '체리주',
-//     imageUrl: 'images/cocktail/cocktail2.jpg',
-//     isBookmarked: true,
-//   },
-//   {
-//     cocktailId: 3,
-//     name: 'sample cocktail',
-//     imageUrl: 'images/cocktail/cocktail3.jpg',
-//     isBookmarked: false,
-//   },
-//   {
-//     cocktailId: 4,
-//     name: 'sample cocktail',
-//     imageUrl: 'images/cocktail/cocktail4.jpg',
-//     isBookmarked: false,
-//   },
-//   {
-//     cocktailId: 5,
-//     name: 'sample cocktail',
-//     imageUrl: 'images/cocktail/cocktail3.jpg',
-//     isBookmarked: false,
-//   },
-//   {
-//     cocktailId: 6,
-//     name: 'sample cocktail',
-//     imageUrl: 'images/cocktail/cocktail4.jpg',
-//     isBookmarked: false,
-//   },
-// ];
-// const [data, setData] = useState(dummyData);
