@@ -46,7 +46,7 @@ public class AppConfiguration implements InitializingBean {
         User test1 = new User();
         test1.setName("test1");
         test1.setEmail("test1@test.com");
-        test1.setPassword(passwordEncoder.encode("1234"));
+        test1.setPassword(passwordEncoder.encode("test1234"));
         test1.setGender("male");
         test1.setAge(29);
         userRepository.save(test1);
@@ -54,9 +54,9 @@ public class AppConfiguration implements InitializingBean {
         User test2 = new User();
         test2.setName("test2");
         test2.setEmail("test2@test.com");
-        test2.setPassword(passwordEncoder.encode("1234"));
-        test2.setGender("male");
-        test2.setAge(29);
+        test2.setPassword(passwordEncoder.encode("test1234"));
+        test2.setGender("female");
+        test2.setAge(21);
         userRepository.save(test2);
     }
 
