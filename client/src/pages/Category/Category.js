@@ -14,6 +14,8 @@ import HoverButton from '../../common/Buttons/HoverButton';
 // import Pagination from '../../components/Pagination/Pagination';
 import useFilterurl from '../../components/FIlterUrl/Filterurl';
 
+import tw from 'tailwind-styled-components';
+
 export default function Category() {
   //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -71,7 +73,7 @@ export default function Category() {
 
   return (
     <div className="overflow-hidden">
-      <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[10rem] flex justify-center  ">
+      <Container>
         {/* 배경 음표 */}
         <img
           src="/images/background/music-dynamic-gradient.png"
@@ -84,7 +86,8 @@ export default function Category() {
           alt="별"
           className="absolute bottom-[-400px] right-[900px] pointer-events-none"
         />
-        <section className="w-[55rem] max-[990px]:w-[40rem] max-[700px]:w-[30rem] max-[500px]:w-[20rem]">
+        {/* 가운데정렬을 위한 block */}
+        <Section>
           {/* 레시피 등록 버튼 */}
           <div className="flex justify-end pb-5 ">
             <HoverButton
@@ -110,7 +113,7 @@ export default function Category() {
             />
             {/* 필터에 따라 출력되는 데이터 */}
             {/* 배열 idx 에 bookmarkList 에 idx 가 같으면  */}
-            <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[100px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap ">
+            <CardContainer>
               {cocktailData.map((item, index) => (
                 <Card
                   item={item}
@@ -120,7 +123,8 @@ export default function Category() {
                   setData={setData}
                 />
               ))}
-            </div>
+            </CardContainer>
+            {/* 에러메시지 */}
             {errormsg && <p className="text-error mb-4">{errormsg}</p>}
             {/* 페이지네이션 */}
             <div className="flex justify-start mb-[100px] gap-2">
@@ -160,8 +164,21 @@ export default function Category() {
               )}
             </div>
           </div>
-        </section>
-      </div>
+        </Section>
+      </Container>
     </div>
   );
 }
+const Container = tw.div`
+relative
+ bg-gradient-to-r 
+ from-gradi-to 
+ to-gradi-from
+  w-screen
+   h-100% 
+   pt-[10rem]
+    flex 
+    justify-center 
+     `;
+const Section = tw.section`w-[55rem] max-[990px]:w-[40rem] max-[700px]:w-[30rem] max-[500px]:w-[20rem]`;
+const CardContainer = tw.div`w-[100%]   grid grid-cols-4 gap-10 mb-[100px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap `;
