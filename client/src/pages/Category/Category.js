@@ -53,18 +53,18 @@ export default function Category() {
         filterCondtion.tasteTag.length === 0
           ? ''
           : `,${filterCondtion.tasteTag.join(',')}`;
-      //정렬 조건 내림차순 + 조회수= 조회수 높은 순
-      const sortType =
-        filterCondtion.descendingOrder && filterCondtion.sortType === 'viewed'
-          ? 'most_viewed'
-          : filterCondtion.descendingOrder && filterCondtion.sortType === 'rate'
-          ? 'highest_rate'
-          : !filterCondtion.descendingOrder &&
-            filterCondtion.sortType === 'viewed'
-          ? 'least_viewed'
-          : 'lowest_rate';
 
-      const url = `${BASE_URL}cocktails/filter?${categoryQuery}tag=${filterCondtion.frequencyTag}${tasteTagQuery}&page=${page}&size=16&sort=${sortType}`;
+      // 정렬 조건 내림차순 + 조회수= 조회수 높은 순
+      const getSortType = (descending, type) => {
+        if (descending) {
+          return type === 'viewed' ? 'most_viewed' : 'highest_rate';
+        }
+        return type === 'viewed' ? 'least_viewed' : 'lowest_rate';
+      };
+
+      const sort = getSortType(descendingOrder, sortType);
+
+      const url = `${BASE_URL}cocktails/filter?${categoryQuery}tag=${filterCondtion.frequencyTag}${tasteTagQuery}&page=${page}&size=16&sort=${sort}`;
 
       //조건에 맞춰 필터링된 데이터
       // const fetchCocktails = async () => {
