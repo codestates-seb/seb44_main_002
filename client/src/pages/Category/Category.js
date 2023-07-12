@@ -38,6 +38,9 @@ export default function Category() {
     totalPages: 5,
   });
 
+  //에러처리
+  const [errormsg, setErrormsg] = useState(null);
+
   useEffect(() => {
     const fetchCocktails = async () => {
       const url = useFilterurl(BASE_URL, currentPage, filterCondtion);
@@ -49,9 +52,13 @@ export default function Category() {
         }
         const data = await response.json();
         setCocktailData(data.data);
+        setErrormsg(null);
       } catch (error) {
         console.error('Error:', error);
         // navigate('/error');
+        setErrormsg(
+          '! 데이터요청에 실패했습니다. api가 열려있는지 확인해보세요'
+        );
       }
     };
 
@@ -114,6 +121,7 @@ export default function Category() {
                 />
               ))}
             </div>
+            {errormsg && <p className="text-error mb-4">{errormsg}</p>}
             {/* 페이지네이션 */}
             <div className="flex justify-start mb-[100px] gap-2">
               {obj && (
