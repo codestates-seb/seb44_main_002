@@ -62,7 +62,10 @@ export default function Category() {
         return type === 'viewed' ? 'least_viewed' : 'lowest_rate';
       };
 
-      const sort = getSortType(descendingOrder, sortType);
+      const sort = getSortType(
+        filterCondtion.descendingOrder,
+        filterCondtion.sortType
+      );
 
       const url = `${BASE_URL}cocktails/filter?${categoryQuery}tag=${filterCondtion.frequencyTag}${tasteTagQuery}&page=${page}&size=16&sort=${sort}`;
 
