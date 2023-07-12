@@ -50,6 +50,13 @@ export default function Signup() {
       gender,
       age,
     });
+    const userinfo = {
+      email: form.email,
+      password: form.password,
+      name: form.name,
+      gender: form.gender,
+      age: form.age,
+    };
     console.log(userinfo);
     // credentials: 'include',
     const allValid = Object.values(isValid).every((value) => value === true);
