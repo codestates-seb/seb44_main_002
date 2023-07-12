@@ -128,9 +128,14 @@ export default function HeaderModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-    useLoginValid(form, setIsValid); //useSate 변화감지는 미래에 이루어진다.
-    if (isValid.email && isValid.password) {
-      //뭘하건 현재 값이 들어가니까
+
+    const { email, password } = useLoginValid(form);
+    setIsValid({
+      email,
+      password,
+    });
+
+    if (email && password) {
       fetch(`${BASE_URL}auth/signin`, {
         method: 'POST',
         credentials: 'include',
@@ -142,8 +147,6 @@ export default function HeaderModal() {
       })
         .then((data) => {
           if (data.status === 200) {
-            console.log(data.headers.get('Authorization'));
-
             localStorage.setItem(
               'accessToken',
               data.headers.get('Authorization')
@@ -162,7 +165,9 @@ export default function HeaderModal() {
             );
 
             //사용자 정보 조회
+
             handleUserInfo(data.headers.get('UserId'));
+
             // 전역상태관리 로그인으로 변경
             dispatch(login(() => login()));
             navigate('/');
