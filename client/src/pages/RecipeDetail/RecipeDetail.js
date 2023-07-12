@@ -1,23 +1,47 @@
-import { useState, useEffect } from 'react';
-
-import tw from 'tailwind-styled-components';
+import { useState, useEffect, useId } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
 import Community from './Community';
 import Recommend from './Recommend';
 import BookmarkBtn from '../../components/BookmarkButton/BookmarkBtn';
+import RecipeApi from './RecipeApi';
+
+import tw from 'tailwind-styled-components';
+
 export default function RecipeDetail() {
-  // const [cocktail, setCocktail] = useState({});
+  const navigate = useNavigate();
+
+  const [cocktail, setCocktail] = useState(resetDetail);
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
+  const [userId, setUserId] = useState(null);
+
+  const location_id = useLocation().pathname.split('/')[2];
 
   const setBookmark = () => {
-    // 로그인 조건 추가 예정
-    setIsBookmarked(!isBookmarked);
+    // 비로그인시 설정 불가
+    if (userId) {
+      setIsBookmarked(!isBookmarked);
+    }
+  };
+
+  const getCocktail = async () => {
+    try {
+      const response = await RecipeApi.getCocktailData(location_id);
+      const json = await response.json();
+      setCocktail(json);
+    } catch (error) {
+      console.log(error);
+      // navigate('/error');
+    }
   };
 
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
+    const localId = localStorage.getItem('UserId');
+    setUserId(parseInt(localId));
+    // getCocktail();
   }, []);
 
   const BackgroundImg = () => {
@@ -80,10 +104,13 @@ export default function RecipeDetail() {
         <BackgroundImg />
         <Container>
           <DrawBookmark />
-          <RecipeInfo cocktailDetail={cocktailDetail} />
+          <RecipeInfo cocktailDetail={cocktailDetail} userId={userId} />
           <Process cocktailDetail={cocktailDetail} />
-          <Community cocktailDetail={cocktailDetail} />
-          <Recommend cocktailDetail={cocktailDetail.recommends} />
+          <Community cocktailDetail={cocktailDetail} userId={userId} />
+          <Recommend
+            cocktailDetail={cocktailDetail.recommend}
+            userId={userId}
+          />
         </Container>
       </Background>
     </>
@@ -120,6 +147,7 @@ cursor-pointer
 const cocktailDetail = {
   cocktailId: 1,
   userId: 1,
+  userName: 'chan',
   name: 'Admin',
   imageUrl: 'sample image url',
   liquor: '럼',
@@ -211,7 +239,7 @@ const cocktailDetail = {
       ],
     },
   ],
-  recommends: [
+  recommend: [
     //category idx 와 userinfo 리덕스 데이터와 겹쳐서 cocktailId와 isBookmarked  달리 수정했습니다.
     {
       cocktailId: 7,
@@ -232,5 +260,27 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  isBookmarked: true,
+  bookmarked: true,
+  adminWritten: true,
+};
+
+const resetDetail = {
+  cocktailId: 1,
+  userId: 1,
+  userName: '',
+  name: '',
+  imageUrl: '',
+  liquor: '',
+  ingredients: [],
+  recipe: [],
+  tags: [],
+  rating: 0.0,
+  viewCount: 1,
+  createdAt: '',
+  modifiedAt: '',
+  comments: [],
+  recommends: [],
+  userRate: 0,
+  bookmarked: true,
+  adminWritten: true,
 };

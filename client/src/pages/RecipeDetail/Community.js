@@ -4,7 +4,7 @@ import CommentValid from '../../components/Validation/CommentValidation';
 
 import tw from 'tailwind-styled-components';
 
-export default function Community({ cocktailDetail }) {
+export default function Community({ cocktailDetail, userId }) {
   const [tag, setTag] = useState('');
   const [comment, setComment] = useState('');
   const [isValid, setIsValid] = useState(true);
