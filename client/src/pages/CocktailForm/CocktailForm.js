@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
@@ -34,6 +35,8 @@ export default function CocktailForm() {
     flavor: true,
   });
 
+  const navigate = useNavigate();
+
   console.log('value: ', form, '유효성: ', isValid);
   const accessToken = localStorage.getItem('accessToken');
   console.log(accessToken);
@@ -68,6 +71,7 @@ export default function CocktailForm() {
         .then((res) => res.json())
         .then((json) => {
           console.log(json);
+          navigate('/category');
         })
         .catch((error) => {
           console.log(error);
