@@ -22,9 +22,9 @@ export default function SelectBaseInput({
           }`}
         >
           <option value="">베이스 술을 골라주세요</option>
-          <option value="liquer">리큐르</option>
+          <option value="liqueur">리큐르</option>
           <option value="rum">럼</option>
-          <option value="whisky">위스키</option>
+          <option value="whiskey">위스키</option>
           <option value="jin">진</option>
           <option value="vodka">보드카</option>
           <option value="tequila">데낄라</option>
