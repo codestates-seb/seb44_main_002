@@ -113,7 +113,7 @@ export default function Signup() {
         <LogoSection>
           <img
             role="presentation"
-            src="images/logo.png"
+            src="images/logo.webp"
             alt="logo"
             className="w-[32.4px] h-[48px] max-[520px]:my-4 "
             onClick={() => navigate('/')}

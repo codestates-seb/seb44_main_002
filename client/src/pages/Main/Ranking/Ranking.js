@@ -7,31 +7,31 @@ const dummyData = [
   {
     cocktailId: 1,
     name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.jpg',
+    imageUrl: 'images/슬라이더샘플.webp',
     isBookmarked: true,
   },
   {
     cocktailId: 2,
     name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.jpg',
+    imageUrl: 'images/슬라이더샘플.webp',
     isBookmarked: true,
   },
   {
     cocktailId: 3,
     name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.jpg',
+    imageUrl: 'images/슬라이더샘플.webp',
     isBookmarked: true,
   },
   {
     cocktailId: 4,
     name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.jpg',
+    imageUrl: 'images/슬라이더샘플.webp',
     isBookmarked: true,
   },
   {
     cocktailId: 5,
     name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.jpg',
+    imageUrl: 'images/슬라이더샘플.webp',
     isBookmarked: true,
   },
 ];

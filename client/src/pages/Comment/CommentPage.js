@@ -15,7 +15,7 @@ export default function CommentPage() {
     <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[5rem] flex flex-col  items-center ">
       <button onClick={() => navigate('/')}>
         <img
-          src="/images/logo.png"
+          src="/images/logo.webp"
           alt="로고"
           className="w-[30px] mb-[2rem] "
         />
