@@ -83,25 +83,42 @@ export default function Category() {
 
     //조건에 맞춰 필터링된 데이터
     const fetchCocktails = async () => {
-      const url = `${BASE_URL}/cocktails/filter?category=${
-        fitlerCondtion.category
-      }&tag=${fitlerCondtion.frequencyTag},${fitlerCondtion.tasteTag.join(
-        ','
-      )}&page=${page}&size=$16&sort=${fitlerCondtion.descendingOrder}${
-        fitlerCondtion.sortType
+      // const url = `http://ec2-54-180-109-174.ap-northeast-2.compute.amazonaws.com:8080/cocktails/filter`;
+      const url = `${BASE_URL}cocktails/filter?${
+        fitlerCondtion.category === 'all'
+          ? ''
+          : `category=${fitlerCondtion.category}&`
+      }tag=${fitlerCondtion.frequencyTag}${
+        fitlerCondtion.tasteTag.length === 0
+          ? ''
+          : `,${fitlerCondtion.tasteTag.join(',')}`
+      }&page=${page}&size=$16&sort=${
+        fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'viewed'
+          ? 'most_viewed'
+          : fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'rate'
+          ? 'highest_rate'
+          : !fitlerCondtion.descendingOrder &&
+            fitlerCondtion.sortType === 'viewed'
+          ? 'least_viewed'
+          : 'lowest_rate'
       }`;
-
+      // 조회수 높은 순 : most_viewed
+      // 조회수 낮은 순 : least_viewed
+      // 별점 높은 순 : highest_rate
+      // 별잠 낮은 순 : lowest_rate
       try {
         const response = await fetch(url, { method: 'GET' });
         if (!response.ok) {
           throw new Error('Network response was not ok.');
         }
-        //const data = await response.json();
+        const cockdata = await response.json();
+        setData(cockdata.data);
+        return cockdata;
         // 데이터 처리
       } catch (error) {
         // 에러 처리
-        // console.error('Error:', error);
-        //navigation('/error');
+        console.error('Error:', error);
+        // navigate('/error');
       }
     };
 
