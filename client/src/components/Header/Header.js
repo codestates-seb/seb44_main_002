@@ -51,6 +51,27 @@ export default function Header() {
     dispatch(logout());
     navigate('/');
   };
+
+  const randomHandler = () => {
+    fetch(`${process.env.REACT_APP_BASE_URL}cocktails/random`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      // 성공
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        navigate(`/detail/${json.cocktailId}`);
+      })
+      // 실패
+      .catch((error) => {
+        console.log(error);
+        navigate('/error');
+      });
+  };
+
   return (
     <HeaderContainer position={position}>
       <HeaderDiv>
@@ -95,6 +116,7 @@ export default function Header() {
               : 'text-gray-200 font-normal'
           }`}
           role="presentation"
+          onClick={randomHandler}
         >
           추천
         </div>
