@@ -1,4 +1,4 @@
-import { useState, useEffect, useId } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import RecipeInfo from './RecipeInfo';
@@ -19,6 +19,25 @@ export default function RecipeDetail() {
 
   const location_id = useLocation().pathname.split('/')[2];
 
+  const getTime = (createdTime = '') => {
+    const currentTime = Date.now();
+    const targetTime = new Date(createdTime).getTime();
+    const minutesDifference = Math.floor(
+      (currentTime - targetTime) / (1000 * 60)
+    );
+    if (isNaN(minutesDifference)) {
+      return 0;
+    }
+    if (minutesDifference < 1) {
+      return 'now';
+    } else if (minutesDifference < 60) {
+      return `${minutesDifference} min ago`;
+    } else if (minutesDifference < 1440) {
+      return `${Math.floor(minutesDifference / 60)} min ago`;
+    }
+    return `${Math.floor(minutesDifference / 1440)} days ago`;
+  };
+
   const setBookmark = () => {
     // 비로그인시 설정 불가
     if (userId) {
@@ -33,7 +52,7 @@ export default function RecipeDetail() {
       setCocktail(json);
     } catch (error) {
       console.log(error);
-      // navigate('/error');
+      navigate('/error');
     }
   };
 
@@ -41,7 +60,7 @@ export default function RecipeDetail() {
     // 데이터 가져올 구문 추가 예정
     const localId = localStorage.getItem('UserId');
     setUserId(parseInt(localId));
-    // getCocktail();
+    getCocktail();
   }, []);
 
   const BackgroundImg = () => {
@@ -104,7 +123,11 @@ export default function RecipeDetail() {
         <BackgroundImg />
         <Container>
           <DrawBookmark />
-          <RecipeInfo cocktailDetail={cocktailDetail} userId={userId} />
+          <RecipeInfo
+            cocktailDetail={cocktail}
+            userId={userId}
+            getTime={getTime}
+          />
           <Process cocktailDetail={cocktailDetail} />
           <Community cocktailDetail={cocktailDetail} userId={userId} />
           <Recommend
