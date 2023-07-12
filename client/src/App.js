@@ -12,13 +12,21 @@ import LostPage from './pages/LostPage';
 import UserPage from './pages/UserPage/UserPage';
 import CocktailForm from './pages/CocktailForm/CocktailForm';
 import Signup from './pages/Signup/Signup';
-
+import CommentPage from './pages/Comment/CommentPage';
 import './App.css';
 
 function App() {
   const location = useLocation();
   const isSignUp = location.pathname.includes('/signup');
-  const RightPaths = ['category', 'detail', 'userpage', 'cocktail', 'signup'];
+  const isCommented = location.pathname.includes('/comment');
+  const RightPaths = [
+    'category',
+    'detail',
+    'userpage',
+    'cocktail',
+    'signup',
+    'comment',
+  ];
   const isRightPath =
     location.pathname === '/' ||
     RightPaths.some((path) => location.pathname.split('/')[1] === path);
@@ -37,9 +45,9 @@ function App() {
 
   return (
     <div className="App">
-      {!isSignUp && isRightPath && <Header />}
+      {!isSignUp && isRightPath && !isCommented && <Header />}
       <Routing />
-      {!isSignUp && isRightPath && <Footer />}
+      {!isSignUp && isRightPath && !isCommented && <Footer />}
     </div>
   );
 }
@@ -54,6 +62,7 @@ const Routing = () => {
       <Route path="/cocktail" element={<CocktailForm />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="*" element={<LostPage />} />
+      <Route path="/comment" element={<CommentPage />} />
     </Routes>
   );
 };

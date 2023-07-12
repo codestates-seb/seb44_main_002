@@ -196,6 +196,7 @@ const cocktailDetail = {
   rating: 4.5,
   comments: [
     {
+      commentId: 1,
       userId: 2,
       name: 'kim',
       content:
@@ -203,16 +204,22 @@ const cocktailDetail = {
       date: '2023-02-16',
       replies: [
         {
+          replyId: 1,
           userId: 3,
           name: 'chan',
           content: '저도 그렇게 생각합니다!',
-          taggedUserId: 2,
-          taggedUserName: 'kim',
+          taggedUserInfo: [
+            {
+              taggedUserId: 2,
+              taggedUserName: 'kimchi',
+            },
+          ],
           date: '2023-02-16',
         },
       ],
     },
     {
+      commentId: 2,
       userId: 3,
       name: 'chan',
       content:
@@ -220,6 +227,7 @@ const cocktailDetail = {
       date: '2023-02-16',
       replies: [
         {
+          replyId: 2,
           userId: 4,
           name: 'jae',
           content: '백엔드는 멋있다.',
@@ -284,3 +292,68 @@ const resetDetail = {
   bookmarked: true,
   adminWritten: true,
 };
+
+// {
+//   “cocktailId” : 1,
+//   “isAdminWritten” : “false”,
+//   “userId” : 1,
+//   “userName” : “kim”,
+//   “name” : “sample”,
+//   “imageUrl” : “sample image url”,
+//   “recipe” : [
+//       {
+//           “process” : “step1”
+//       },
+//       {
+//           “process” : “step2”
+//       },
+//   ],
+//   “tags” : [
+//       {
+//           “tag” : “example1”
+//       },
+//       {
+//           “tag” : “example2”
+//       }
+//   ],
+//   “viewCount” : 1,
+//   “createdAt” : 2000-00-00,
+//   “modifiedAt” : 2000-00-00,
+//   “comments” : [
+//       {
+//           “commentId” : 1,
+//           “userId” : 1,
+//           “userName” : “kim”,
+//           “content” : “blah”,
+//           “replies” : [
+//               {
+//                       “replyId” : 1,
+//                       “userId” : 1,
+//                       “userName” : “jjigae”,
+//                       “taggedUserInfo” : [
+//                                {
+//                                              “taggedUserId” : 2,
+//                                              “taggedUserName” : “kimchi”,
+//                                 }
+//                        ],
+//                       “content” : “shut up”,
+//                       “createdAt” : 2000-00-00T00:00:00
+//                       “modifiedAt” : 2000-00-00T00:00:00
+//           ],
+//           “createdAt” : 2000-00-00T00:00:00
+//       }
+//   ],
+//   “recommends” : [
+//       {
+//           “cocktailId” : 1,
+//           “name” : “sample1”,
+//           “imageUrl” : “sample image url”
+//       },
+//       {
+//           “cocktailId” : 1,
+//           “name” : “sample1”,
+//           “imageUrl” : “sample image url”
+//       }
+//   ],
+//   “isBookmarked” : “false”
+// }

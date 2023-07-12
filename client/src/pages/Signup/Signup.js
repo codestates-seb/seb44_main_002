@@ -40,8 +40,12 @@ export default function Signup() {
   // }
   const handleSubmit = (e) => {
     e.preventDefault();
+    // 불리언값으로나옴
     const { name, email, password, confirmPassword, gender, age } =
       UseSignupValid(form);
+
+    // 불리언값으로나옴
+
     const updatedIsValid = {
       name,
       email,
