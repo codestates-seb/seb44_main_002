@@ -128,49 +128,55 @@ export default function HeaderModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-    useLoginValid(form, setIsValid);
+    const { email, password } = useLoginValid(form);
+    setIsValid({
+      email,
+      password,
+    });
 
-    fetch(`${BASE_URL}auth/signin`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        // 'ngrok-skip-browser-warning': 'true',
-      },
-      body: JSON.stringify(form),
-    })
-      .then((data) => {
-        if (data.status === 200) {
-          localStorage.setItem(
-            'accessToken',
-            data.headers.get('Authorization')
-          );
-          localStorage.setItem('UserId', data.headers.get('UserId'));
-          //localStorage.setItem('refreshToken', data.headers.get.Refesh);
-          // Refresh accessToken 만료
-          //UserId
-          //Name
-
-          dispatch(
-            userinfoLogin({
-              UserId: data.headers.get('UserId'),
-              accessToken: data.headers.get('Authorization'),
-            })
-          );
-
-          //사용자 정보 조회
-          // handleUserInfo(data.headers.get('UserId'));
-          // 전역상태관리 로그인으로 변경
-          dispatch(login(() => login()));
-          navigate('/');
-        } else {
-          console.log('요청이 실패했습니다.');
-        }
+    if (email && password) {
+      fetch(`${BASE_URL}auth/signin`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'ngrok-skip-browser-warning': 'true',
+        },
+        body: JSON.stringify(form),
       })
-      .catch((err) => {
-        console.log(err);
-        navigate('/error');
-      });
+        .then((data) => {
+          if (data.status === 200) {
+            localStorage.setItem(
+              'accessToken',
+              data.headers.get('Authorization')
+            );
+            localStorage.setItem('UserId', data.headers.get('UserId'));
+            //localStorage.setItem('refreshToken', data.headers.get.Refesh);
+            // Refresh accessToken 만료
+            //UserId
+            //Name
+
+            dispatch(
+              userinfoLogin({
+                UserId: data.headers.get('UserId'),
+                accessToken: data.headers.get('Authorization'),
+              })
+            );
+
+            //사용자 정보 조회
+            // handleUserInfo(data.headers.get('UserId'));
+            // 전역상태관리 로그인으로 변경
+            dispatch(login(() => login()));
+            navigate('/');
+          } else {
+            console.log('요청이 실패했습니다.');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate('/error');
+        });
+    }
   };
 
   return (
