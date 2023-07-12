@@ -74,11 +74,17 @@ const userInfoSlice = createSlice({
         accessToken: action.payload.accessToken,
       };
     },
-    userinfoLoginOut: (state, action) => {
+    userinfoLoginOut: (state) => {
       return {
         ...state,
         UserId: null,
         accessToken: null,
+      };
+    },
+    userinfoGet: (state, action) => {
+      return {
+        ...state,
+        ...action.payload,
       };
     },
   },
@@ -87,4 +93,5 @@ const userInfoSlice = createSlice({
 export const { updateBookmark } = userInfoSlice.actions;
 export const { userinfoLogin } = userInfoSlice.actions;
 export const { userinfoLoginOut } = userInfoSlice.actions;
+export const { userinfoGet } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
