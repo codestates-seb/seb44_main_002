@@ -60,8 +60,7 @@ export default function HeaderModal() {
       .then((data) => {
         if (data.status === 200) {
           console.log(data);
-          //   {
-          //     “userId” : “1”,
+          // {
           //     “name” : “kim”,
           //     “profileImageUrl” : “sample image url”
           //     “gender” : “example”,
@@ -107,14 +106,15 @@ export default function HeaderModal() {
           //     ],
           // }
 
-          dispatch(userinfoGet(data));
-          //     “userId” : “1”,
-          //     “name” : “kim”,
-          //     “profileImageUrl” : “sample image url”
-          //     “gender” : “example”,
-          //     “age” : 20,
-          //     “email” : “kim@example.com”,
-          //     “subscribedCount” : 0,
+          // dispatch(
+          //   userinfoGet({
+          //     displayName: data.displayName,
+          //     location: data.location,
+          //     profileContent: data.profileContent,
+          //     profileImage: data.profileImage,
+          //     profileTitle: data.profileTitle,
+          //   })
+          // );
         } else {
           console.log('요청이 실패했습니다.');
         }
@@ -128,7 +128,6 @@ export default function HeaderModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-
     const { email, password } = useLoginValid(form);
     setIsValid({
       email,
@@ -165,9 +164,7 @@ export default function HeaderModal() {
             );
 
             //사용자 정보 조회
-
-            handleUserInfo(data.headers.get('UserId'));
-
+            // handleUserInfo(data.headers.get('UserId'));
             // 전역상태관리 로그인으로 변경
             dispatch(login(() => login()));
             navigate('/');
@@ -179,6 +176,8 @@ export default function HeaderModal() {
           console.log(err);
           navigate('/error');
         });
+    } else {
+      console.log('유효성 검사 작동');
     }
   };
 

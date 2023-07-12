@@ -12,7 +12,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function Signup() {
   const navigate = useNavigate();
   const [test, setTest] = useState(false);
-  const [loginMSG, setloginMSG] = useState(null);
+
   // 유효성검사 state
   const [isValid, setIsValid] = useState({
     name: true,
@@ -40,17 +40,19 @@ export default function Signup() {
   // }
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    // 불리언값으로나옴
     const { name, email, password, confirmPassword, gender, age } =
       UseSignupValid(form);
-    setIsValid({
+    // 불리언값으로나옴
+    const updatedIsValid = {
       name,
       email,
       password,
       confirmPassword,
       gender,
       age,
-    });
+    };
+    setIsValid(updatedIsValid);
     const userinfo = {
       email: form.email,
       password: form.password,
@@ -59,9 +61,11 @@ export default function Signup() {
       age: form.age,
     };
     console.log(userinfo);
-
     // credentials: 'include',
-    const allValid = Object.values(isValid).every((value) => value === true);
+    const allValid = Object.values(updatedIsValid).every(
+      (value) => value === true
+    );
+
     if (allValid) {
       fetch(`${BASE_URL}users/signup`, {
         method: 'POST',
@@ -89,6 +93,8 @@ export default function Signup() {
           console.log('에러', error);
           navigate('/error');
         });
+    } else {
+      console.log('유효성 검사 작동');
     }
   };
 
@@ -96,7 +102,7 @@ export default function Signup() {
     <SignupScreen>
       {/* 펜슬 이미지 */}
       <img
-        src="/images/background/pencil.png"
+        src="images/background/pencil.png"
         alt="pencil"
         className="absolute bottom-0 right-60 max-[768px]:right-0"
       />
