@@ -234,7 +234,7 @@ public class CocktailService {
                 .name(post.getName())
                 .imageUrl(post.getImageUrl())
                 .recipe(new Recipe(post.getRecipe()))
-                .tags(new Tags(post.getTags()))
+                .tags(new Tags(post.getFlavor()))
                 .category(CategoryMapper.map(post.getLiquor()))
                 .rate(new Rate())
                 .liquor(LiquorMapper.map(post.getLiquor()))
