@@ -8,7 +8,7 @@ export default function Advice() {
       <ImgContainer>
         <img
           className="w-[90%] h-[full] object-contain"
-          src="images/mainPromotion.png"
+          src="images/mainPromotion.webp"
           alt="advice"
         />
       </ImgContainer>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router';
 
@@ -13,6 +13,7 @@ import UserPage from './pages/UserPage/UserPage';
 import CocktailForm from './pages/CocktailForm/CocktailForm';
 import Signup from './pages/Signup/Signup';
 import CommentPage from './pages/Comment/CommentPage';
+
 import './App.css';
 
 function App() {
