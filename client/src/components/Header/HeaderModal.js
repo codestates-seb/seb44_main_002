@@ -176,6 +176,8 @@ export default function HeaderModal() {
           console.log(err);
           navigate('/error');
         });
+    } else {
+      console.log('유효성 검사 작동');
     }
   };
 

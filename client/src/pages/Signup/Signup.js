@@ -42,14 +42,15 @@ export default function Signup() {
     e.preventDefault();
     const { name, email, password, confirmPassword, gender, age } =
       UseSignupValid(form);
-    setIsValid({
+    const updatedIsValid = {
       name,
       email,
       password,
       confirmPassword,
       gender,
       age,
-    });
+    };
+    setIsValid(updatedIsValid);
     const userinfo = {
       email: form.email,
       password: form.password,
@@ -59,7 +60,10 @@ export default function Signup() {
     };
     console.log(userinfo);
     // credentials: 'include',
-    const allValid = Object.values(isValid).every((value) => value === true);
+    const allValid = Object.values(updatedIsValid).every(
+      (value) => value === true
+    );
+
     if (allValid) {
       fetch(`${BASE_URL}users/signup`, {
         method: 'POST',
@@ -87,6 +91,8 @@ export default function Signup() {
           console.log('에러', error);
           navigate('/error');
         });
+    } else {
+      console.log('유효성 검사 작동');
     }
   };
 
