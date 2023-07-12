@@ -11,12 +11,14 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
 
     if (!file) {
       setImageSrc(null);
+      inputRef.current.value = '';
       return; // 파일 선택이 취소된 경우 처리 중단
     }
 
     if (file.size > 1 * 1024 * 1024) {
       alert('파일 크기는 1MB 이하여야 합니다.');
       setImageSrc(null);
+      inputRef.current.value = '';
       return; // 파일 크기가 제한을 초과한 경우 처리 중단
     }
 
