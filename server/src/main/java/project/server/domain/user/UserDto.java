@@ -2,6 +2,9 @@ package project.server.domain.user;
 
 import lombok.Builder;
 import lombok.Getter;
+import project.server.domain.cocktail.dto.CocktailDto;
+
+import java.util.List;
 
 public class UserDto {
 
@@ -35,6 +38,7 @@ public class UserDto {
         private int age;
         private String email;
         private long subscriberCount;
+        private List<CocktailDto.SimpleResponse> bookmarkedCocktails;
     }
 
     @Getter
