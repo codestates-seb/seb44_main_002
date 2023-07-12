@@ -12,7 +12,7 @@ export default function Footer() {
             role="presentation"
             onClick={() => navigate('/')}
             onKeyDown={() => navigate('/')}
-            src="../images/logo.png"
+            src="../images/logo.webp"
             alt="footerLogo"
             className="cursor-pointer"
           />

@@ -51,13 +51,13 @@ export default function Slider() {
             </button>
           </SliderCustomText>
           <></>
-          <SliderCustomImg src="images/slideimg.png" alt="sample" />
+          <SliderCustomImg src="images/slideimg.webp" alt="sample" />
         </SwiperSlide>
         {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
         <SwiperSlide className="swiper-slide">
           <img
             className="w-full h-full object-cover"
-            src="images/슬라이더샘플2.jpg"
+            src="images/슬라이더샘플2.webp"
             alt="sample"
           />
         </SwiperSlide>
