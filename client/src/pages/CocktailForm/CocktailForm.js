@@ -71,7 +71,7 @@ export default function CocktailForm() {
         .then((res) => res.json())
         .then((json) => {
           console.log(json);
-          navigate('/category');
+          navigate(`/detail/${json.cocktailId}`);
         })
         .catch((error) => {
           console.log(error);
