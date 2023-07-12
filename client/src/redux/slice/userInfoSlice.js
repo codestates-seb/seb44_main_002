@@ -83,7 +83,8 @@ const userInfoSlice = createSlice({
     },
     userinfoGet: (state, action) => {
       return {
-        //  return action.payload;
+        ...state,
+        ...action.payload,
       };
     },
   },
@@ -92,4 +93,5 @@ const userInfoSlice = createSlice({
 export const { updateBookmark } = userInfoSlice.actions;
 export const { userinfoLogin } = userInfoSlice.actions;
 export const { userinfoLoginOut } = userInfoSlice.actions;
+export const { userinfoGet } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

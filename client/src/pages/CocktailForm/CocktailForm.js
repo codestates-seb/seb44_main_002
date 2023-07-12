@@ -40,7 +40,7 @@ export default function CocktailForm() {
     e.preventDefault();
     const { name, img, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
-    setIsValid({
+    const updatedIsValid = {
       name,
       img,
       liquor,
@@ -48,9 +48,11 @@ export default function CocktailForm() {
       recipe,
       degree,
       flavor,
-    });
-
-    const allValid = Object.values(isValid).every((value) => value === true);
+    };
+    setIsValid(updatedIsValid);
+    const allValid = Object.values(updatedIsValid).every(
+      (value) => value === true
+    );
     if (allValid) {
       fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
         method: 'POST',
@@ -68,6 +70,8 @@ export default function CocktailForm() {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      console.log('유효성 검사 작동');
     }
   };
 

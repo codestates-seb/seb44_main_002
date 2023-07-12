@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/slice/isLoginSlice';
 import { useNavigate } from 'react-router-dom';
-import { userinfoLogin } from '../../redux/slice/userInfoSlice';
+import { userinfoLogin, userinfoGet } from '../../redux/slice/userInfoSlice';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -46,78 +46,75 @@ export default function HeaderModal() {
   const navigate = useNavigate();
 
   // 사용자 이름및 사용자 정보 조회 함수
-  // 유저 정보 조회할때 토근으로 조회 권한 여부
+  // 유저 정보 조회할때 토근으로 조회 권한 여부  credentials: 'include',
   const handleUserInfo = async (memberId) => {
     fetch(`${BASE_URL}users/${memberId}`, {
       method: 'GET',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true',
+        //'ngrok-skip-browser-warning': 'true',
       },
     })
       .then((data) => data.json())
       .then((data) => {
-        if (data.status === 200) {
-          console.log(data);
-          // {
-          //     “name” : “kim”,
-          //     “profileImageUrl” : “sample image url”
-          //     “gender” : “example”,
-          //     “age” : 20,
-          //     “email” : “kim@example.com”,
-          //     “subscribedCount” : 0,
-          //     “bookmarked” : [
-          //         {
-          //             “cocktailId” : 1,
-          //             “name” : “sample cocktail”,
-          //             “imageUrl” : “sample image url”,
-          //             “isBookmarked” : “true”
-          //         },
-          //         {
-          //             “cocktailId” : 2,
-          //             “name” : “sample cocktail”,
-          //             “isBookmarked” : “true”
-          //         }
-          //     ],
-          //     “boards” : [
-          //         {
-          //             “boardId” : 1,
-          //             “title” : “title1”,
-          //             “content” : “content1”
-          //         },
-          //         {
-          //             “boardId” : 2,
-          //             “title” : “title2”,
-          //             “content” : “content2”
-          //         },
-          //     ],
-          //     “subscribe” : [
-          //         {
-          //             “userId” : 1,
-          //             “name” : “kim”,
-          //             “profileImageUrl” : “sample image url”
-          //         },
-          //         {
-          //             “userId” : 2,
-          //             “name” : “park”,
-          //             “profileImageUrl” : “sample image url”
-          //         },
-          //     ],
-          // }
+        console.log('동작');
+        console.log(data);
+        // {
+        //     “name” : “kim”,
+        //     “profileImageUrl” : “sample image url”
+        //     “gender” : “example”,
+        //     “age” : 20,
+        //     “email” : “kim@example.com”,
+        //     “subscribedCount” : 0,
+        //     “bookmarked” : [
+        //         {
+        //             “cocktailId” : 1,
+        //             “name” : “sample cocktail”,
+        //             “imageUrl” : “sample image url”,
+        //             “isBookmarked” : “true”
+        //         },
+        //         {
+        //             “cocktailId” : 2,
+        //             “name” : “sample cocktail”,
+        //             “isBookmarked” : “true”
+        //         }
+        //     ],
+        //     “boards” : [
+        //         {
+        //             “boardId” : 1,
+        //             “title” : “title1”,
+        //             “content” : “content1”
+        //         },
+        //         {
+        //             “boardId” : 2,
+        //             “title” : “title2”,
+        //             “content” : “content2”
+        //         },
+        //     ],
+        //     “subscribe” : [
+        //         {
+        //             “userId” : 1,
+        //             “name” : “kim”,
+        //             “profileImageUrl” : “sample image url”
+        //         },
+        //         {
+        //             “userId” : 2,
+        //             “name” : “park”,
+        //             “profileImageUrl” : “sample image url”
+        //         },
+        //     ],
+        // }
 
-          // dispatch(
-          //   userinfoGet({
-          //     displayName: data.displayName,
-          //     location: data.location,
-          //     profileContent: data.profileContent,
-          //     profileImage: data.profileImage,
-          //     profileTitle: data.profileTitle,
-          //   })
-          // );
-        } else {
-          console.log('요청이 실패했습니다.');
-        }
+        // dispatch(
+        //   userinfoGet({
+        //     displayName: data.displayName,
+        //     location: data.location,
+        //     profileContent: data.profileContent,
+        //     profileImage: data.profileImage,
+        //     profileTitle: data.profileTitle,
+        //   })
+        // );
+        dispatch(userinfoGet(data));
       })
       .catch((err) => {
         console.log(err);
@@ -164,7 +161,7 @@ export default function HeaderModal() {
             );
 
             //사용자 정보 조회
-            // handleUserInfo(data.headers.get('UserId'));
+            handleUserInfo(data.headers.get('UserId'));
             // 전역상태관리 로그인으로 변경
             dispatch(login(() => login()));
             navigate('/');

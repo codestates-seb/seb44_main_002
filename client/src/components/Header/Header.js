@@ -19,6 +19,7 @@ export default function Header() {
 
   // 리덕스 툴킷
   const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const userinfo = useSelector((state) => state.userinfo);
   const dispatch = useDispatch();
 
   // 스크롤 이벤트
@@ -51,6 +52,27 @@ export default function Header() {
     dispatch(logout());
     navigate('/');
   };
+
+  const randomHandler = () => {
+    fetch(`${process.env.REACT_APP_BASE_URL}cocktails/random`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      // 성공
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        navigate(`/detail/${json.cocktailId}`);
+      })
+      // 실패
+      .catch((error) => {
+        console.log(error);
+        navigate('/error');
+      });
+  };
+
   return (
     <HeaderContainer position={position}>
       <HeaderDiv>
@@ -95,6 +117,7 @@ export default function Header() {
               : 'text-gray-200 font-normal'
           }`}
           role="presentation"
+          onClick={randomHandler}
         >
           추천
         </div>
@@ -102,7 +125,9 @@ export default function Header() {
       {isLogin ? (
         <>
           <HeaderDiv className="justify-end max-[768px]:hidden">
-            <div className="flex mx-2 font-bold items-center">일이삼사</div>
+            <div className="flex mx-2 font-bold items-center">
+              {userinfo.name}
+            </div>
             <div className="mx-2">
               <MenuItem
                 path="/userpage/:id"
