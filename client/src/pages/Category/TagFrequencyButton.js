@@ -6,7 +6,7 @@ export default function TagFrequencyButton({
   idx,
   selectMenuHandler,
   onClick,
-  fitlerCondtion,
+  filterCondtion,
 }) {
   const [isClicked, setIsClicked] = useState(false);
   //console.log(fitlerCondtion.frequencyTag === data.type);
@@ -23,12 +23,12 @@ export default function TagFrequencyButton({
       fontSize="text-[1rem]"
       radius="rounded-[30px]"
       color={`${
-        fitlerCondtion.frequencyTag === data.type
+        filterCondtion.frequencyTag === data.type
           ? 'text-[#BB40F1] bg-transparent'
           : 'text-[#7B7B7B] bg-transparent'
       }`}
       borderColor={`${
-        fitlerCondtion.frequencyTag === data.type
+        filterCondtion.frequencyTag === data.type
           ? 'border-[#BB40F1]'
           : 'border-[#7B7B7B]'
       }`}

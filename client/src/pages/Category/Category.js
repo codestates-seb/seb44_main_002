@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateBookmark } from '../../redux/slice/userInfoSlice';
-
+import { useDispatch } from 'react-redux';
+//북마크 기능 추가 페이지네이션 추가
 import {
   CategoryFilter,
   tagFrequencyData,
@@ -13,6 +12,7 @@ import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 // import Pagination from '../../components/Pagination/Pagination';
+
 export default function Category() {
   //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -21,102 +21,85 @@ export default function Category() {
   //리덕스 임시 저장
   // const bookmarkList = useSelector((state) => state.userinfo.bookmarked);
   //선택된 카테고리조건 (카테고리&태그&정렬)
-  const [fitlerCondtion, setfitlerCondtion] = useState({
+  const [filterCondtion, setFilterCondtion] = useState({
     category: CategoryFilter[0].type,
     frequencyTag: tagFrequencyData[0].type,
     tasteTag: [],
     descendingOrder: true,
     sortType: sortTypeData[0].type,
   });
+  //console.log(filterCondtion);
   //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [cocktailData, setCocktailData] = useState([]);
   const [obj, setObj] = useState({
     totalCount: 200,
     totalPages: 5,
   });
-  // // 더미데이터;
-
-  const dummyData = [
-    {
-      cocktailId: 1,
-      name: 'sample',
-      imageUrl: 'images/cocktail/cocktail1.jpg',
-      isBookmarked: true,
-    },
-    {
-      cocktailId: 2,
-      name: '체리주',
-      imageUrl: 'images/cocktail/cocktail2.jpg',
-      isBookmarked: true,
-    },
-    {
-      cocktailId: 3,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail3.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 4,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail4.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 5,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail3.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 6,
-      name: 'sample cocktail',
-      imageUrl: 'images/cocktail/cocktail4.jpg',
-      isBookmarked: false,
-    },
-  ];
-  const [data, setData] = useState(dummyData);
 
   useEffect(() => {
-    //클릭한 페이지
-    const page = currentPage + 1;
-
-    //조건에 맞춰 필터링된 데이터
     const fetchCocktails = async () => {
-      // const url = `http://ec2-54-180-109-174.ap-northeast-2.compute.amazonaws.com:8080/cocktails/filter`;
-      const url = `${BASE_URL}cocktails/filter?${
-        fitlerCondtion.category === 'all'
+      console.log('동작');
+      console.log(filterCondtion);
+      //클릭한 페이지
+      const page = currentPage + 1;
+      //카테고리 전체보기일때는 빈문자열
+      const categoryQuery =
+        filterCondtion.category === 'all'
           ? ''
-          : `category=${fitlerCondtion.category}&`
-      }tag=${fitlerCondtion.frequencyTag}${
-        fitlerCondtion.tasteTag.length === 0
+          : `category=${filterCondtion.category}&`;
+      //맛 태그
+      const tasteTagQuery =
+        filterCondtion.tasteTag.length === 0
           ? ''
-          : `,${fitlerCondtion.tasteTag.join(',')}`
-      }&page=${page}&size=$16&sort=${
-        fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'viewed'
+          : `,${filterCondtion.tasteTag.join(',')}`;
+      //정렬 조건 내림차순 + 조회수= 조회수 높은 순
+      const sortType =
+        filterCondtion.descendingOrder && filterCondtion.sortType === 'viewed'
           ? 'most_viewed'
-          : fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'rate'
+          : filterCondtion.descendingOrder && filterCondtion.sortType === 'rate'
           ? 'highest_rate'
-          : !fitlerCondtion.descendingOrder &&
-            fitlerCondtion.sortType === 'viewed'
+          : !filterCondtion.descendingOrder &&
+            filterCondtion.sortType === 'viewed'
           ? 'least_viewed'
-          : 'lowest_rate'
-      }`;
+          : 'lowest_rate';
+
+      const url = `${BASE_URL}cocktails/filter?${categoryQuery}tag=${filterCondtion.frequencyTag}${tasteTagQuery}&page=${page}&size=16&sort=${sortType}`;
+
+      //조건에 맞춰 필터링된 데이터
+      // const fetchCocktails = async () => {
+      //   // const url = `http://ec2-54-180-109-174.ap-northeast-2.compute.amazonaws.com:8080/cocktails/filter`;
+      //   const url = `${BASE_URL}cocktails/filter?${
+      //     fitlerCondtion.category === 'all'
+      //       ? ''
+      //       : `category=${fitlerCondtion.category}&`
+      //   }tag=${fitlerCondtion.frequencyTag}${
+      //     fitlerCondtion.tasteTag.length === 0
+      //       ? ''
+      //       : `,${fitlerCondtion.tasteTag.join(',')}`
+      //   }&page=${page}&size=$16${
+      //     fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'viewed'
+      //       ? 'most_viewed'
+      //       : fitlerCondtion.descendingOrder && fitlerCondtion.sortType === 'rate'
+      //       ? 'highest_rate'
+      //       : !fitlerCondtion.descendingOrder &&
+      //         fitlerCondtion.sortType === 'viewed'
+      //       ? 'least_viewed'
+      //       : 'lowest_rate'
+      //   }`;
       // 조회수 높은 순 : most_viewed
       // 조회수 낮은 순 : least_viewed
       // 별점 높은 순 : highest_rate
       // 별잠 낮은 순 : lowest_rate
+
       try {
-        const response = await fetch(url, { method: 'GET' });
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error('Network response was not ok.');
         }
-        const cockdata = await response.json();
-        setData(cockdata.data);
-        return cockdata;
-        // 데이터 처리
+        const data = await response.json();
+        setCocktailData(data.data);
       } catch (error) {
-        // 에러 처리
         console.error('Error:', error);
         // navigate('/error');
       }
@@ -127,7 +110,7 @@ export default function Category() {
       totalCount: 200,
       totalPages: 5,
     });
-  }, [fitlerCondtion, currentPage]);
+  }, [filterCondtion, currentPage]);
 
   return (
     <div className="overflow-hidden">
@@ -165,13 +148,13 @@ export default function Category() {
           <div className="border-1 border-solid border-red">
             {/* 필터 */}
             <Filter
-              setfitlerCondtion={setfitlerCondtion}
-              fitlerCondtion={fitlerCondtion}
+              setFilterCondtion={setFilterCondtion}
+              filterCondtion={filterCondtion}
             />
             {/* 필터에 따라 출력되는 데이터 */}
             {/* 배열 idx 에 bookmarkList 에 idx 가 같으면  */}
             <div className="w-[100%]   grid grid-cols-4 gap-10 mb-[100px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap ">
-              {data.map((item, index) => (
+              {cocktailData.map((item, index) => (
                 <Card
                   item={item}
                   className="pr-4"
@@ -224,3 +207,43 @@ export default function Category() {
     </div>
   );
 }
+
+// const dummyData = [
+//   {
+//     cocktailId: 1,
+//     name: 'sample',
+//     imageUrl: 'images/cocktail/cocktail1.jpg',
+//     isBookmarked: true,
+//   },
+//   {
+//     cocktailId: 2,
+//     name: '체리주',
+//     imageUrl: 'images/cocktail/cocktail2.jpg',
+//     isBookmarked: true,
+//   },
+//   {
+//     cocktailId: 3,
+//     name: 'sample cocktail',
+//     imageUrl: 'images/cocktail/cocktail3.jpg',
+//     isBookmarked: false,
+//   },
+//   {
+//     cocktailId: 4,
+//     name: 'sample cocktail',
+//     imageUrl: 'images/cocktail/cocktail4.jpg',
+//     isBookmarked: false,
+//   },
+//   {
+//     cocktailId: 5,
+//     name: 'sample cocktail',
+//     imageUrl: 'images/cocktail/cocktail3.jpg',
+//     isBookmarked: false,
+//   },
+//   {
+//     cocktailId: 6,
+//     name: 'sample cocktail',
+//     imageUrl: 'images/cocktail/cocktail4.jpg',
+//     isBookmarked: false,
+//   },
+// ];
+// const [data, setData] = useState(dummyData);

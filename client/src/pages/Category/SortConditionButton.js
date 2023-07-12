@@ -2,7 +2,7 @@ import { useState } from 'react';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function SortConditionButton({
-  fitlerCondtion,
+  filterCondtion,
   data,
   idx,
   selectMenuHandler,
@@ -23,12 +23,12 @@ export default function SortConditionButton({
       fontSize="text-[13px]"
       radius="rounded-[5px]"
       color={`${
-        fitlerCondtion.sortType === data.type
+        filterCondtion.sortType === data.type
           ? 'text-[#BB40F1] bg-transparent'
           : 'text-[#7B7B7B] bg-transparent'
       }`}
       borderColor={`${
-        fitlerCondtion.sortType === data.type
+        filterCondtion.sortType === data.type
           ? 'border-[#BB40F1]'
           : 'border-[#7B7B7B]'
       }`}

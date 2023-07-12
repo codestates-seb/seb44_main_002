@@ -9,49 +9,50 @@ import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
 import Sort from './Sort';
 import SortConditionButton from './SortConditionButton';
-export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
+export default function Filter({ setFilterCondtion, filterCondtion }) {
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 필터상태 저장
+
   const selectMenuHandler = (idx, type) => {
     switch (type) {
       case 'category':
-        setfitlerCondtion({
-          ...fitlerCondtion,
+        setFilterCondtion({
+          ...filterCondtion,
           category: CategoryFilter[idx].type,
         });
         break;
       case 'frequencyTag':
-        setfitlerCondtion({
-          ...fitlerCondtion,
+        setFilterCondtion({
+          ...filterCondtion,
           frequencyTag: tagFrequencyData[idx].type,
         });
         break;
       case 'tasteTag': {
         //그전에 눌렀던걸 또 눌렀다면 취소
-        if (fitlerCondtion.tasteTag.length === 0) {
-          const ClickedTag = fitlerCondtion.tasteTag;
+        if (filterCondtion.tasteTag.length === 0) {
+          const ClickedTag = filterCondtion.tasteTag;
           const tag = tagTasteData[idx].type;
           ClickedTag.push(tag);
 
-          setfitlerCondtion({ ...fitlerCondtion, tasteTag: ClickedTag });
+          setFilterCondtion({ ...filterCondtion, tasteTag: ClickedTag });
           break;
         }
 
-        const alreadyClickedTag = [...fitlerCondtion.tasteTag];
+        const alreadyClickedTag = [...filterCondtion.tasteTag];
         const Tag = tagTasteData[idx].type;
 
-        if (fitlerCondtion.tasteTag.indexOf(Tag) >= 0) {
+        if (filterCondtion.tasteTag.indexOf(Tag) >= 0) {
           //이미클릭된태그를 지울때
           //  console.log('제거해야할때');
-          const newclickedList = fitlerCondtion.tasteTag.filter((number) => {
+          const newclickedList = filterCondtion.tasteTag.filter((number) => {
             return number !== tagTasteData[idx].type;
           });
-          setfitlerCondtion({ ...fitlerCondtion, tasteTag: newclickedList });
+          setFilterCondtion({ ...filterCondtion, tasteTag: newclickedList });
         } else {
           //태그를 추가할때
           alreadyClickedTag.push(tagTasteData[idx].type);
 
-          setfitlerCondtion({
-            ...fitlerCondtion,
+          setFilterCondtion({
+            ...filterCondtion,
             tasteTag: [...alreadyClickedTag],
           });
         }
@@ -59,14 +60,14 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
         break;
       }
       case 'descendingOrder':
-        setfitlerCondtion({
-          ...fitlerCondtion,
-          descendingOrder: !fitlerCondtion.descendingOrder,
+        setFilterCondtion({
+          ...filterCondtion,
+          descendingOrder: !filterCondtion.descendingOrder,
         });
         break;
       case 'sortType':
-        setfitlerCondtion({
-          ...fitlerCondtion,
+        setFilterCondtion({
+          ...filterCondtion,
           sortType: sortTypeData[idx].type,
         });
         break;
@@ -84,7 +85,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            fitlerCondtion={fitlerCondtion}
+            filterCondtion={filterCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -99,7 +100,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            fitlerCondtion={fitlerCondtion}
+            filterCondtion={filterCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -122,7 +123,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
       {/* sortFilter */}
       <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3">
         <Sort
-          fitlerCondtion={fitlerCondtion}
+          filterCondtion={filterCondtion}
           selectMenuHandler={selectMenuHandler}
         />
 
@@ -131,7 +132,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            fitlerCondtion={fitlerCondtion}
+            filterCondtion={filterCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
