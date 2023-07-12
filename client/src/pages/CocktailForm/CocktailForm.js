@@ -38,7 +38,17 @@ export default function CocktailForm() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    useCocktailFormValid(form, setIsValid);
+    const { name, img, liquor, ingredients, recipe, degree, flavor } =
+      useCocktailFormValid(form);
+    setIsValid({
+      name,
+      img,
+      liquor,
+      ingredients,
+      recipe,
+      degree,
+      flavor,
+    });
 
     const allValid = Object.values(isValid).every((value) => value === true);
     if (allValid) {
