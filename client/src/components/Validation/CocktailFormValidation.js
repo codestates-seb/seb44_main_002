@@ -5,7 +5,7 @@ export default function useCocktailFormValid(form) {
   });
 
   const nameIsValid = Boolean(form.name) && nameRegex.test(form.name);
-  const imgIsValid = form.img !== '';
+  const imageIsValid = form.imageUrl !== '';
   const liquorIsValid = form.liquor !== '';
   const ingredientsIsValid = form.ingredients.length !== 0;
   const recipeIsValid = recipeRegex.length === 0;
@@ -14,7 +14,7 @@ export default function useCocktailFormValid(form) {
 
   return {
     name: nameIsValid,
-    img: imgIsValid,
+    imageUrl: imageIsValid,
     liquor: liquorIsValid,
     ingredients: ingredientsIsValid,
     recipe: recipeIsValid,

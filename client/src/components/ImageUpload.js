@@ -50,14 +50,14 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         console.log('이미지 업로드 성공');
         const imageUrl = await response.json();
         console.log(imageUrl);
-        setForm({ ...form, imgUrl: imageUrl.url });
-        setIsValid({ ...isValid, imgUrl: true });
+        setForm({ ...form, imageUrl: imageUrl.url });
+        setIsValid({ ...isValid, imageUrl: true });
         await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
       } else {
         // 유효성 검사 false로 변경
         alert('이미지 업로드 실패');
-        setForm({ ...form, imgUrl: '' });
-        setIsValid({ ...isValid, imgUrl: false });
+        setForm({ ...form, imageUrl: '' });
+        setIsValid({ ...isValid, imageUrl: false });
         setImageSrc(null);
         inputRef.current.value = '';
         // document.getElementById('file-input').value = null;
@@ -73,7 +73,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
     <>
       <p
         className={`font-bold text-error mb-1 ${
-          isValid.imgUrl && 'text-gray-200'
+          isValid.imageUrl && 'text-gray-200'
         }`}
       >
         칵테일 사진 등록
@@ -83,13 +83,13 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         ref={inputRef}
         className={`text-gray-200 mb-1 ${
           !imageSrc && 'h-[300px] border border-error border-solid'
-        } ${isValid.imgUrl && 'border-gray-200'}`}
+        } ${isValid.imageUrl && 'border-gray-200'}`}
         accept="image/*"
         type="file"
         onChange={onUpload}
       />
       <div className="h-8">
-        <p className={`h-8 text-error ${isValid.imgUrl && 'hidden'}`}>
+        <p className={`h-8 text-error ${isValid.imageUrl && 'hidden'}`}>
           칵테일 사진을 등록해주세요
         </p>
       </div>

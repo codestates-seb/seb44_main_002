@@ -16,7 +16,7 @@ import tw from 'tailwind-styled-components';
 export default function CocktailForm() {
   const [form, setForm] = useState({
     name: '',
-    imgUrl: '',
+    imageUrl: '',
     liquor: '',
     ingredients: [],
     recipe: [{ id: 0, process: '' }],
@@ -26,7 +26,7 @@ export default function CocktailForm() {
 
   const [isValid, setIsValid] = useState({
     name: true,
-    imgUrl: true,
+    imageUrl: true,
     liquor: true,
     ingredients: true,
     recipe: true,
@@ -35,14 +35,16 @@ export default function CocktailForm() {
   });
 
   console.log('value: ', form, '유효성: ', isValid);
+  const accessToken = localStorage.getItem('accessToken');
+  console.log(accessToken);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const { name, img, liquor, ingredients, recipe, degree, flavor } =
+    const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
     const updatedIsValid = {
       name,
-      img,
+      imageUrl,
       liquor,
       ingredients,
       recipe,
@@ -53,20 +55,20 @@ export default function CocktailForm() {
     const allValid = Object.values(updatedIsValid).every(
       (value) => value === true
     );
+
     if (allValid) {
       fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: accessToken,
         },
         body: JSON.stringify(form),
       })
-        // 성공
         .then((res) => res.json())
         .then((json) => {
           console.log(json);
         })
-        // 실패
         .catch((error) => {
           console.log(error);
         });
