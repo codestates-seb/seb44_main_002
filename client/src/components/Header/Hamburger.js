@@ -121,8 +121,12 @@ export default function Hamburger({ handleLogOut }) {
           <MenuItem onClick={() => openPage('/category')}>
             <HoverButton>Category</HoverButton>
           </MenuItem>
-          {/* 로그아웃 dispatch를 바로 보내고있습니다 alert가 한번 더 뜨게 해야됩니다 */}
-          <MenuItem onClick={() => handleLogOut()}>
+
+          <MenuItem
+            onClick={() =>
+              window.confirm('로그아웃하시겠습니까?') ? handleLogOut() : ''
+            }
+          >
             <HoverButton>Logout</HoverButton>
           </MenuItem>
         </Menu>
