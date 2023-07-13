@@ -49,8 +49,8 @@ export default function RecipeInfo({ cocktailDetail, userId, getTime }) {
 
   const DrawStar = () => {
     const repetitions = 5;
-    const star = process.env.PUBLIC_URL + '/images/star.png';
-    const selectedStar = process.env.PUBLIC_URL + '/images/star_selected.png';
+    const star = process.env.PUBLIC_URL + '/images/star.webp';
+    const selectedStar = process.env.PUBLIC_URL + '/images/star_selected.webp';
     return (
       <DrawStarContainer>
         <FlexContainer>
