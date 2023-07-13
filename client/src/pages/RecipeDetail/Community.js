@@ -60,7 +60,9 @@ export default function Community({ cocktailDetail }) {
                     {ele.userId === 3 && (
                       <>
                         <CommentButton>삭제하기</CommentButton>
-                        <CommentButton onClick={() => navigate('/comment')}>
+                        <CommentButton
+                          onClick={() => navigate('/comment', { state: ele })}
+                        >
                           수정하기
                         </CommentButton>
                       </>

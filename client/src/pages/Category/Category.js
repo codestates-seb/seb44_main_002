@@ -60,14 +60,14 @@ export default function Category() {
 
         if (data.data.length === 0) {
           setErrormsg(
-            '! 데이터요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해보세요'
+            '! 데이터 요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요'
           );
         }
       } catch (error) {
         console.error('Error:', error);
         // navigate('/error');
         setErrormsg(
-          '! 데이터요청에 실패했습니다. api가 열려있는지 확인해보세요'
+          '! 데이터 요청에 실패했습니다. API가 열려있는 지 확인해보세요.'
         );
       }
     };
@@ -108,7 +108,9 @@ export default function Category() {
               borderColor="border-[#BB40F1]"
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
               onClick={() =>
-                isLogin ? navigate('/cocktail') : alert('로그인후진행해주세요')
+                isLogin
+                  ? navigate('/cocktail')
+                  : alert('로그인 후 진행해 주세요.')
               }
             >
               나만의 레시피 등록하기
