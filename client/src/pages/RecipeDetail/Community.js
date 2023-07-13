@@ -7,6 +7,7 @@ import RecipeApi from './RecipeApi';
 import tw from 'tailwind-styled-components';
 
 export default function Community({ cocktailDetail, userInfo }) {
+  //console.log(cocktailDetail);
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
   const [isValid, setIsValid] = useState(true);

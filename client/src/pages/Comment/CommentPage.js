@@ -51,7 +51,9 @@ export default function CommentPage(props) {
         <h1 className="mt-[30px] text-gray-200 font-bold text-[20px] mb-[2rem]">
           댓글 수정
         </h1>
-        {!isCommented && <p></p>}
+        {!isCommented && (
+          <p>@{commentdata[0].taggedUserInfo[0].taggedUserName}</p>
+        )}
         <div>
           <InputTextArea
             placeholder="댓글을 입력하세요."
