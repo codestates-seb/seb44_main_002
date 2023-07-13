@@ -129,7 +129,11 @@ export default function RecipeDetail() {
             getTime={getTime}
           />
           <Process cocktailDetail={cocktail} />
-          <Community cocktailDetail={cocktail} userInfo={userInfo} />
+          <Community
+            cocktailDetail={cocktail}
+            userInfo={userInfo}
+            getTime={getTime}
+          />
           <Recommend cocktailDetail={cocktail.recommend} userInfo={userInfo} />
         </Container>
       </Background>
@@ -172,8 +176,8 @@ const cocktailDetail = {
   imageUrl: 'sample image url',
   liquor: '럼',
   viewCount: 1,
-  createdAt: '2000-00-00',
-  modifiedAt: '2000-00-00',
+  createdAt: '2023-07-02T01:01:01',
+  modifiedAt: '2023-07-02T01:01:01',
   ingredients: [
     {
       ingredient: 'Light rum',
@@ -229,7 +233,8 @@ const cocktailDetail = {
       userName: 'kim',
       content:
         '깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!',
-      date: '2023-02-16',
+      createdAt: '2023-07-02T01:01:01',
+      modifiedAt: '2023-07-02T01:01:01',
       replies: [
         {
           replyId: 1,
@@ -242,7 +247,8 @@ const cocktailDetail = {
               taggedUserName: 'kimchi',
             },
           ],
-          date: '2023-02-16',
+          createdAt: '2023-07-02T01:01:01',
+          modifiedAt: '2023-07-02T01:01:01',
         },
       ],
     },
@@ -252,25 +258,36 @@ const cocktailDetail = {
       userName: 'chan',
       content:
         '그놈은 멋있었다...백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.',
-      date: '2023-02-16',
+      createdAt: '2023-07-02T01:01:01',
+      modifiedAt: '2023-07-02T01:01:01',
       replies: [
         {
           replyId: 2,
           userId: 4,
           userName: 'jae',
           content: '백엔드는 멋있다.',
-          taggedUserId: 3,
-          taggedUserName: 'chan',
-          date: '2023-02-16',
+          taggedUserInfo: [
+            {
+              taggedUserId: 3,
+              taggedUserName: 'chan',
+            },
+          ],
+          createdAt: '2023-07-02T01:01:01',
+          modifiedAt: '2023-07-02T01:01:01',
         },
         {
           userId: 3,
           userName: 'euni',
           content:
             '이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면',
-          taggedUserId: 4,
-          taggedUserName: 'jae',
-          date: '2023-02-16',
+          taggedUserInfo: [
+            {
+              taggedUserId: 4,
+              taggedUserName: 'jae',
+            },
+          ],
+          createdAt: '2023-07-02T01:01:01',
+          modifiedAt: '2023-07-02T01:01:01',
         },
       ],
     },
@@ -296,6 +313,6 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  bookmarked: false,
+  isBookmarked: false,
   adminWritten: false,
 };

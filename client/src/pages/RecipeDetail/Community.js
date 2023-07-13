@@ -6,13 +6,11 @@ import RecipeApi from './RecipeApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function Community({ cocktailDetail, userInfo }) {
-  //console.log(cocktailDetail);
+export default function Community({ cocktailDetail, userInfo, getTime }) {
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
   const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
-  console.log(userInfo);
 
   // 댓글 등록
   const postComment = async () => {
@@ -132,7 +130,7 @@ export default function Community({ cocktailDetail, userInfo }) {
                 <CommentWriter>{ele.userName}</CommentWriter>
                 <CommentContent>{ele.content}</CommentContent>
                 <CommentAndButton>
-                  <CommentDate>{ele.date}</CommentDate>
+                  <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
                     {ele.userId === userInfo.UserId && (
                       <>
@@ -153,7 +151,7 @@ export default function Community({ cocktailDetail, userInfo }) {
                       </>
                     )}
                     <CommentButton
-                      onClick={() => changeTag(ele.userId, ele.name)}
+                      onClick={() => changeTag(ele.userId, ele.userName)}
                     >
                       답변하기
                     </CommentButton>
@@ -161,6 +159,7 @@ export default function Community({ cocktailDetail, userInfo }) {
                 </CommentAndButton>
               </CommentContainer>
               {ele.replies.map((rp) => {
+                console.log(rp);
                 return (
                   <ReplyContainer key={rp.userId}>
                     <CommentWriter>{rp.userName}</CommentWriter>
@@ -171,7 +170,7 @@ export default function Community({ cocktailDetail, userInfo }) {
                         rp.content}
                     </CommentContent>
                     <CommentAndButton>
-                      <CommentDate>{rp.date}</CommentDate>
+                      <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
                         {rp.userId === userInfo.UserId && (
                           <>
@@ -192,7 +191,7 @@ export default function Community({ cocktailDetail, userInfo }) {
                           </>
                         )}
                         <CommentButton
-                          onClick={() => changeTag(rp.userId, rp.name)}
+                          onClick={() => changeTag(rp.userId, rp.userName)}
                         >
                           답변하기
                         </CommentButton>
