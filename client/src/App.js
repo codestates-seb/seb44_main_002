@@ -5,14 +5,14 @@ import { useLocation } from 'react-router';
 import Header from './components/Header/Header';
 import Footer from './components/Footer';
 
-import Main from './pages/Main/Main';
-import Category from './pages/Category/Category';
-import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
-import LostPage from './pages/LostPage';
-import UserPage from './pages/UserPage/UserPage';
-import CocktailForm from './pages/CocktailForm/CocktailForm';
-import Signup from './pages/Signup/Signup';
-import CommentPage from './pages/Comment/CommentPage';
+const Main = lazy(() => import('./pages/Main/Main'));
+const Category = lazy(() => import('./pages/Category/Category'));
+const RecipeDetail = lazy(() => import('./pages/RecipeDetail/RecipeDetail'));
+const LostPage = lazy(() => import('./pages/LostPage'));
+const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
+const CocktailForm = lazy(() => import('./pages/CocktailForm/CocktailForm'));
+const Signup = lazy(() => import('./pages/Signup/Signup'));
+const CommentPage = lazy(() => import('./pages/Comment/CommentPage'));
 
 import './App.css';
 
@@ -55,16 +55,18 @@ function App() {
 
 const Routing = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/category" element={<Category />} />
-      <Route path="/detail/:id" element={<RecipeDetail />} />
-      <Route path="/userpage/:id" element={<UserPage />} />
-      <Route path="/cocktail" element={<CocktailForm />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={<LostPage />} />
-      <Route path="/comment" element={<CommentPage />} />
-    </Routes>
+    <Suspense>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/detail/:id" element={<RecipeDetail />} />
+        <Route path="/userpage/:id" element={<UserPage />} />
+        <Route path="/cocktail" element={<CocktailForm />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<LostPage />} />
+        <Route path="/comment" element={<CommentPage />} />
+      </Routes>
+    </Suspense>
   );
 };
 
