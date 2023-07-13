@@ -5,10 +5,13 @@ export default function LostPage() {
   return (
     <Container>
       <ContentContainer>
-        <LogoImg src={process.env.PUBLIC_URL + 'images/logo.webp'} alt="logo" />
+        <LogoImg
+          src={process.env.PUBLIC_URL + '/images/logo.webp'}
+          alt="logo"
+        />
         <ErrorTitle>
           <ItimP>ERR</ItimP>
-          <FireImg src={process.env.PUBLIC_URL + 'images/fire.webp'} alt="O" />
+          <FireImg src={process.env.PUBLIC_URL + '/images/fire.webp'} alt="O" />
           <ItimP>R</ItimP>
         </ErrorTitle>
         <ErrorContent>
