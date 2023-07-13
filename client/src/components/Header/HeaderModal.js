@@ -148,6 +148,7 @@ export default function HeaderModal() {
               data.headers.get('Authorization')
             );
             localStorage.setItem('UserId', data.headers.get('UserId'));
+            localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
             //localStorage.setItem('refreshToken', data.headers.get.Refesh);
             // Refresh accessToken 만료
             //UserId
@@ -157,6 +158,7 @@ export default function HeaderModal() {
               userinfoLogin({
                 UserId: data.headers.get('UserId'),
                 accessToken: data.headers.get('Authorization'),
+                IsAdmin: data.headers.get('IsAdmin'),
               })
             );
 
