@@ -72,6 +72,7 @@ const userInfoSlice = createSlice({
         ...state,
         UserId: action.payload.UserId,
         accessToken: action.payload.accessToken,
+        IsAdmin: action.payload.IsAdmin,
       };
     },
     userinfoLoginOut: (state) => {

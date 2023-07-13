@@ -147,10 +147,10 @@ export default function HeaderModal() {
               'accessToken',
               data.headers.get('Authorization')
             );
-            //console.log(data.headers.get('Isadmin'));
+
             localStorage.setItem('UserId', data.headers.get('UserId'));
-            localStorage.setItem('Isadmin', data.headers.get('Isadmin'));
-            //localStorage.setItem('refreshToken', data.headers.get.Refesh);
+            localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
+            localStorage.setItem('refreshToken', data.headers.get('Refesh'));
             // Refresh accessToken 만료
             //UserId
             //Name
@@ -159,7 +159,7 @@ export default function HeaderModal() {
               userinfoLogin({
                 UserId: data.headers.get('UserId'),
                 accessToken: data.headers.get('Authorization'),
-                Isadmin: data.headers.get('Isadmin'),
+                IsAdmin: data.headers.get('IsAdmin'),
               })
             );
             //Isadmin:
