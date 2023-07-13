@@ -180,5 +180,20 @@ relative
     flex 
     justify-center 
      `;
-const Section = tw.section`w-[55rem] max-[990px]:w-[40rem] max-[700px]:w-[30rem] max-[500px]:w-[20rem]`;
-const CardContainer = tw.div`w-[100%]   grid grid-cols-4 gap-10 mb-[100px] max-[990px]:grid-cols-3 max-[700px]:flex max-[700px]:justify-between max-[700px]:flex-wrap max-[500px]:flex max-[500px]:justify-center max-[500px]:flex-wrap `;
+const Section = tw.section`
+w-[55rem] 
+max-[990px]:w-[40rem] 
+max-[700px]:w-[30rem] 
+max-[500px]:w-[20rem]`;
+const CardContainer = tw.div`
+w-[100%]   
+grid grid-cols-4 
+gap-10 
+mb-[100px] 
+max-[990px]:grid-cols-3 
+max-[700px]:flex 
+max-[700px]:justify-between 
+max-[700px]:flex-wrap 
+max-[500px]:flex 
+max-[500px]:justify-center 
+max-[500px]:flex-wrap `;
