@@ -52,7 +52,7 @@ export default function Community({ cocktailDetail }) {
           return (
             <>
               <CommentContainer key={ele.userId}>
-                <CommentWriter>{ele.name}</CommentWriter>
+                <CommentWriter>{ele.userName}</CommentWriter>
                 <CommentContent>{ele.content}</CommentContent>
                 <CommentAndButton>
                   <CommentDate>{ele.date}</CommentDate>
@@ -61,7 +61,11 @@ export default function Community({ cocktailDetail }) {
                       <>
                         <CommentButton>삭제하기</CommentButton>
                         <CommentButton
-                          onClick={() => navigate('/comment', { state: ele })}
+                          onClick={() =>
+                            navigate('/comment', {
+                              state: [true, ele],
+                            })
+                          }
                         >
                           수정하기
                         </CommentButton>
@@ -78,9 +82,12 @@ export default function Community({ cocktailDetail }) {
               {ele.replies.map((rp) => {
                 return (
                   <ReplyContainer key={rp.userId}>
-                    <CommentWriter>{rp.name}</CommentWriter>
+                    <CommentWriter>{rp.userName}</CommentWriter>
                     <CommentContent>
-                      {'@' + rp.taggedUserName + ' ' + rp.content}
+                      {'@' +
+                        rp.taggedUserInfo[0].taggedUserName +
+                        ' ' +
+                        rp.content}
                     </CommentContent>
                     <CommentAndButton>
                       <CommentDate>{rp.date}</CommentDate>
@@ -88,7 +95,13 @@ export default function Community({ cocktailDetail }) {
                         {rp.userId === 3 && (
                           <>
                             <CommentButton>삭제하기</CommentButton>
-                            <CommentButton onClick={() => navigate('/comment')}>
+                            <CommentButton
+                              onClick={() =>
+                                navigate('/comment', {
+                                  state: [false, rp],
+                                })
+                              }
+                            >
                               수정하기
                             </CommentButton>
                           </>

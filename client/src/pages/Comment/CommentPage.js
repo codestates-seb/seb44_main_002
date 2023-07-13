@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
-
-export default function CommentPage() {
-  const [isCommented, setIsCommented] = useState(false);
+// [
+//   {
+//       “commentId” : 1,
+//       “userId” : 1,
+//       “userName” : “kim”,
+//       “content” : “blah”,
+//       “replies” : [
+//           {
+//                   “replyId” : 1,
+//                   “userId” : 1,
+//                   “userName” : “jjigae”,
+//                   “taggedUserInfo” : [
+//                            {
+//                                          “taggedUserId” : 2,
+//                                          “taggedUserName” : “kimchi”,
+//                             }
+//                    ],
+//                   “content” : “shut up”,
+//                   “createdAt” : 2000-00-00T00:00:00
+//                   “modifiedAt” : 2000-00-00T00:00:00
+//       ],
+//       “createdAt” : 2000-00-00T00:00:00
+//   }
+// ],
+export default function CommentPage(props) {
+  const { state } = useLocation();
+  const [isCommented, setIsCommented] = useState(state[0]);
+  const commentdata = state[1];
   const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
+  console.log(state);
   const handleSubmit = (e) => {
     e.preventDefault();
     CommentValid(comment, setIsValid);
@@ -25,6 +51,7 @@ export default function CommentPage() {
         <h1 className="mt-[30px] text-gray-200 font-bold text-[20px] mb-[2rem]">
           댓글 수정
         </h1>
+        {!isCommented && <p></p>}
         <div>
           <InputTextArea
             placeholder="댓글을 입력하세요."
