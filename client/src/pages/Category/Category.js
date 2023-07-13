@@ -26,7 +26,7 @@ export default function Category() {
   //선택된 카테고리조건 (카테고리&태그&정렬)
   const [filterCondtion, setFilterCondtion] = useState({
     category: CategoryFilter[0].type,
-    frequencyTag: tagFrequencyData[0].type,
+    frequencyTag: null,
     tasteTag: [],
     descendingOrder: true,
     sortType: sortTypeData[0].type,

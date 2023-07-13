@@ -6,11 +6,23 @@ export default function useFilterurl(BASE_URL, currentPage, filterCondtion) {
     filterCondtion.category === 'all'
       ? ''
       : `category=${filterCondtion.category}&`;
-  //맛 태그
-  const tasteTagQuery =
-    filterCondtion.tasteTag.length === 0
-      ? ''
-      : `,${filterCondtion.tasteTag.join(',')}`;
+  //태그
+  const getTagQuery = (frequencyTag, tasteTag) => {
+    if (frequencyTag) {
+      return tasteTag.length === 0
+        ? `&tag=${frequencyTag}`
+        : `&tag=${frequencyTag},${tasteTag.join(',')}`;
+    }
+    return tasteTag.length === 0 ? `` : `&tag=${tasteTag.join(',')}`;
+  };
+  const tagQuery = getTagQuery(
+    filterCondtion.frequencyTag,
+    filterCondtion.tasteTag
+  );
+
+  // filterCondtion.tasteTag.length === 0
+  //   ? ''
+  //   : `,${filterCondtion.tasteTag.join(',')}`;
 
   // 정렬 조건 내림차순 + 조회수= 조회수 높은 순
   const getSortType = (descending, type) => {
@@ -25,7 +37,7 @@ export default function useFilterurl(BASE_URL, currentPage, filterCondtion) {
     filterCondtion.sortType
   );
 
-  const url = `${BASE_URL}cocktails/filter?${categoryQuery}tag=${filterCondtion.frequencyTag}${tasteTagQuery}&page=${page}&size=16&sort=${sort}`;
+  const url = `${BASE_URL}cocktails/filter?${categoryQuery}${tagQuery}&page=${page}&size=16&sort=${sort}`;
 
   return url;
 }
