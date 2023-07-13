@@ -26,7 +26,7 @@ export default function Category() {
   //선택된 카테고리조건 (카테고리&태그&정렬)
   const [filterCondtion, setFilterCondtion] = useState({
     category: CategoryFilter[0].type,
-    frequencyTag: tagFrequencyData[0].type,
+    frequencyTag: null,
     tasteTag: [],
     descendingOrder: true,
     sortType: sortTypeData[0].type,
@@ -55,6 +55,13 @@ export default function Category() {
         const data = await response.json();
         setCocktailData(data.data);
         setErrormsg(null);
+        //성공했지만 데이터가 없는 경우
+
+        if (data.data.length === 0) {
+          setErrormsg(
+            '! 데이터요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해보세요'
+          );
+        }
       } catch (error) {
         console.error('Error:', error);
         // navigate('/error');
