@@ -135,16 +135,17 @@ export default function Header() {
               />
             </div>
             <div className="mx-2">
-              {/* 로그아웃 dispatch를 보내고있습니다 alert창이 한번 더뜨면 좋을거같네요 */}
               <LogoutIcon
-                onClick={() => handleLogOut()}
+                onClick={() =>
+                  window.confirm('로그아웃하시겠습니까?') ? handleLogOut() : ''
+                }
                 fontSize="large"
                 style={{ cursor: 'pointer' }}
               />
             </div>
           </HeaderDiv>
           <HeaderDiv className="justify-end min-[769px]:hidden">
-            <Hamburger />
+            <Hamburger handleLogOut={handleLogOut} />
           </HeaderDiv>
         </>
       ) : (
