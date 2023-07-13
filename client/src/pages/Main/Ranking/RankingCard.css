@@ -1,0 +1,6 @@
+/* webkit은 테일윈드에서 지원하지 않기때문에 별도의 css파일을 만들어줘서 적용했습니다. */
+
+#text-outline {
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: gray
+}
