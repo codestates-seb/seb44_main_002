@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
@@ -13,9 +14,9 @@ import tw from 'tailwind-styled-components';
 export default function RecipeDetail() {
   const navigate = useNavigate();
 
-  const [cocktail, setCocktail] = useState(resetDetail);
+  const [cocktail, setCocktail] = useState(cocktailDetail);
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
-  const [userId, setUserId] = useState(null);
+  const userInfo = useSelector((state) => state.userinfo);
 
   const location_id = useLocation().pathname.split('/')[2];
 
@@ -52,14 +53,12 @@ export default function RecipeDetail() {
       setCocktail(json);
     } catch (error) {
       console.log(error);
-      navigate('/error');
+      // navigate('/error');
     }
   };
 
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
-    const localId = localStorage.getItem('UserId');
-    setUserId(parseInt(localId));
     getCocktail();
   }, []);
 
@@ -125,15 +124,12 @@ export default function RecipeDetail() {
           <DrawBookmark />
           <RecipeInfo
             cocktailDetail={cocktail}
-            userId={userId}
+            userInfo={userInfo}
             getTime={getTime}
           />
-          <Process cocktailDetail={cocktailDetail} />
-          <Community cocktailDetail={cocktailDetail} userId={userId} />
-          <Recommend
-            cocktailDetail={cocktailDetail.recommend}
-            userId={userId}
-          />
+          <Process cocktailDetail={cocktail} />
+          <Community cocktailDetail={cocktail} userInfo={userInfo} />
+          <Recommend cocktailDetail={cocktail.recommend} userInfo={userInfo} />
         </Container>
       </Background>
     </>
@@ -171,13 +167,13 @@ const cocktailDetail = {
   cocktailId: 1,
   userId: 1,
   userName: 'chan',
-  name: 'Admin',
+  name: '체리주',
   imageUrl: 'sample image url',
   liquor: '럼',
   viewCount: 1,
   createdAt: '2000-00-00',
   modifiedAt: '2000-00-00',
-  Ingredients: [
+  ingredients: [
     {
       ingredient: 'Light rum',
     },
@@ -204,12 +200,20 @@ const cocktailDetail = {
     },
   ],
   recipe: [
-    `Pour the rum and top with soda water.`,
-    'Pour the rum and top with soda water.with soda water.',
-    'Pour the rum and top with soda water.Pour the rum and top with soda water.',
-    'Pour the rum and top with soda water.',
-    'Pour he rum and top with soda water. with soda water with soda water',
-    'Pour the rum and top with soda water.',
+    { process: `Pour the rum and top with soda water.` },
+    { process: 'Pour the rum and top with soda water.with soda water.' },
+    {
+      process:
+        'Pour the rum and top with soda water.Pour the rum and top with soda water.',
+    },
+    { process: 'Pour the rum and top with soda water.' },
+    {
+      process:
+        'Pour he rum and top with soda water. with soda water with soda water',
+    },
+    {
+      process: 'Pour the rum and top with soda water.',
+    },
   ],
   tags: [
     {
@@ -291,92 +295,6 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  bookmarked: true,
-  adminWritten: true,
+  bookmarked: false,
+  adminWritten: false,
 };
-
-const resetDetail = {
-  cocktailId: 1,
-  userId: 1,
-  userName: '',
-  name: '',
-  imageUrl: '',
-  liquor: '',
-  ingredients: [],
-  recipe: [],
-  tags: [],
-  rating: 0.0,
-  viewCount: 1,
-  createdAt: '',
-  modifiedAt: '',
-  comments: [],
-  recommends: [],
-  userRate: 0,
-  bookmarked: true,
-  adminWritten: true,
-};
-
-// {
-//   “cocktailId” : 1,
-//   “isAdminWritten” : “false”,
-//   “userId” : 1,
-//   “userName” : “kim”,
-//   “name” : “sample”,
-//   “imageUrl” : “sample image url”,
-//   “recipe” : [
-//       {
-//           “process” : “step1”
-//       },
-//       {
-//           “process” : “step2”
-//       },
-//   ],
-//   “tags” : [
-//       {
-//           “tag” : “example1”
-//       },
-//       {
-//           “tag” : “example2”
-//       }
-//   ],
-//   “viewCount” : 1,
-//   “createdAt” : 2000-00-00,
-//   “modifiedAt” : 2000-00-00,
-//   “comments” : [
-//       {
-//           “commentId” : 1,
-//           “userId” : 1,
-//           “userName” : “kim”,
-//           “content” : “blah”,
-//           “replies” : [
-//               {
-//                       “replyId” : 1,
-//                       “userId” : 1,
-//                       “userName” : “jjigae”,
-//                       “taggedUserInfo” : [
-//                                {
-//                                              “taggedUserId” : 2,
-//                                              “taggedUserName” : “kimchi”,
-//                                 }
-//                        ],
-//                       “content” : “shut up”,
-//                       “createdAt” : 2000-00-00T00:00:00
-//                       “modifiedAt” : 2000-00-00T00:00:00
-//           ],
-//           “createdAt” : 2000-00-00T00:00:00
-//       }
-//   ],
-//   “recommends” : [
-//       {
-//           “cocktailId” : 1,
-//           “name” : “sample1”,
-//           “imageUrl” : “sample image url”
-//       },
-//       {
-//           “cocktailId” : 1,
-//           “name” : “sample1”,
-//           “imageUrl” : “sample image url”
-//       }
-//   ],
-//   “isBookmarked” : “false”
-// }
