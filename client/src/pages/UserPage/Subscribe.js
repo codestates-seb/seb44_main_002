@@ -16,9 +16,9 @@ export default function Subscribe({ userInfo }) {
     return (
       <div id="userpage">
         <Swiper
-          spaceBetween={10}
-          slidesPerView={2}
-          slidesPerGroup={2}
+          spaceBetween={10} //좌우측
+          slidesPerView={2} //
+          slidesPerGroup={2} // 한 화면에 나오는 슬라이드 넘어가는 수
           navigation
           pagination={{ clickable: true }}
           className="mySwiper"
