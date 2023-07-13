@@ -1,17 +1,14 @@
 package project.server.domain.comment.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.entity.Comment;
 
 import java.time.LocalDateTime;
 
 public class CommentDto {
     @Getter
-    @Setter
     public static class Post {
         private String content;
 
@@ -34,10 +31,7 @@ public class CommentDto {
     }
 
     @Getter
-    @Setter
-    @AllArgsConstructor
     public static class Patch {
-        private long commentId;
         private String content;
     }
 }
