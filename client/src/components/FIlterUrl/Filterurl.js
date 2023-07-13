@@ -10,10 +10,10 @@ export default function useFilterurl(BASE_URL, currentPage, filterCondtion) {
   const getTagQuery = (frequencyTag, tasteTag) => {
     if (frequencyTag) {
       return tasteTag.length === 0
-        ? `&tag=${frequencyTag}`
-        : `&tag=${frequencyTag},${tasteTag.join(',')}`;
+        ? `tag=${frequencyTag}&`
+        : `tag=${frequencyTag},${tasteTag.join(',')}&`;
     }
-    return tasteTag.length === 0 ? `` : `&tag=${tasteTag.join(',')}`;
+    return tasteTag.length === 0 ? `` : `tag=${tasteTag.join(',')}&`;
   };
   const tagQuery = getTagQuery(
     filterCondtion.frequencyTag,
@@ -37,7 +37,7 @@ export default function useFilterurl(BASE_URL, currentPage, filterCondtion) {
     filterCondtion.sortType
   );
 
-  const url = `${BASE_URL}cocktails/filter?${categoryQuery}${tagQuery}&page=${page}&size=16&sort=${sort}`;
+  const url = `${BASE_URL}cocktails/filter?${categoryQuery}${tagQuery}page=${page}&size=16&sort=${sort}`;
 
   return url;
 }
