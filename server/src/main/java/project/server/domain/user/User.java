@@ -77,7 +77,7 @@ public class User {
         bookmarkedCocktails.add(cocktailId);
     }
 
-    public int getOldRate(long cocktailId) {
+    public int getRate(long cocktailId) {
         return ratedCocktails.findValue(cocktailId);
     }
 
@@ -95,4 +95,5 @@ public class User {
     public boolean isAdmin() {
         return roles.contains("ADMIN");
     }
+
 }

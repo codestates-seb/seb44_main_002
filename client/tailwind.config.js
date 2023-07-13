@@ -1,8 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    content: ['./src/**/*.{js,jsx,ts,tsx}'],
+    extend: {
+      colors: {
+        'gradi-to': '#1A344A',
+        'gradi-from': '#4A4676',
+        'gray-100': '#E6E6E6',
+        'gray-200': '#B3B3B3',
+        'gray-300': '#7B7B7B',
+        'gray-400': '#8F8F8F',
+        'pointPurple-100': '#BB40F1',
+        'pointPurple-200': '#BC4096',
+        'yellow-100': '#FFD600',
+      },
+      dropShadow: {
+        '3xl': [
+          '0px 10px 8px rgba(0, 0, 0, 0.2)',
+          '0px 4px 3px rgba(0, 0, 0, 0.2)',
+        ],
+      },
+    },
   },
   plugins: [],
 };

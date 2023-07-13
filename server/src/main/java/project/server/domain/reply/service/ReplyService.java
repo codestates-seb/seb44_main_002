@@ -38,16 +38,11 @@ public class ReplyService {
         return savedReply.entityToResponse();
     }
 
-    public ReplyDto.Response readReply(Long replyId) {
-        Reply reply = findReplyById(replyId);
-        return reply.entityToResponse();
-    }
 
     public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
         Reply reply = findReplyById(replyId);
         reply.setContent(patch.getContent());
-        Reply savedReply = replyRepository.save(reply);
-        return savedReply.entityToResponse();
+        return reply.entityToResponse();
     }
 
     public Reply findReplyById(long replyId) {
@@ -60,3 +55,4 @@ public class ReplyService {
         replyRepository.delete(reply);
     }
 }
+//

@@ -1,6 +1,7 @@
 package project.server.domain.comment.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.comment.dto.CommentDto;
@@ -20,27 +21,31 @@ public class CommentService {
         this.cocktailService = cocktailService;
     }
 
+    @Transactional
     public CommentDto.Response createComment(Long cocktailId, CommentDto.Post post) {
         Cocktail cocktail = cocktailService.findCocktailById(cocktailId);
         Comment comment = post.postToEntity();
+        comment.setCocktail(cocktail);
         Comment savedComment = commentRepository.save(comment);
         return savedComment.entityToResponse();
     }
 
+    @Transactional(readOnly = true)
     public CommentDto.Response readComment(long commentId) {
         Comment comment = findCommentById(commentId);
         return comment.entityToResponse();
     }
 
+    public CommentDto.Response updateComment(Long commentId, CommentDto.Patch patch) {
+        Comment comment = findCommentById(commentId);
+        comment.setContent(patch.getContent());
+        Comment savedComment = commentRepository.save(comment);
+        return savedComment.entityToResponse();
+    }
+
     public Comment findCommentById(long commentId) {
         return commentRepository.findById(commentId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
-    }
-
-    public Comment updateComment(CommentDto.Patch patch) {
-        Comment comment = findCommentById(patch.getCommentId());
-        comment.setContent(patch.getContent());
-        return commentRepository.save(comment);
     }
 
     public void deleteComment(long commentId) {

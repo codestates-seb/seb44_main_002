@@ -6,7 +6,7 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
+   // "eslint:recommended",
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:jsx-a11y/recommended",
@@ -21,6 +21,8 @@
   },
   "rules": {
     "react/react-in-jsx-scope": 0,
-    "react/jsx-uses-react": 0
+    "react/jsx-uses-react": 0,
+    // props 타입 검사 off : PropTypes는 React v15.5.0 이후로 사용중단됨. TS로 정적 검사를 권장
+    "react/prop-types": "off"
   }
 }
