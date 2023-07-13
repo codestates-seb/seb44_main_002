@@ -25,11 +25,12 @@ import tw from 'tailwind-styled-components';
 //       “createdAt” : 2000-00-00T00:00:00
 //   }
 // ],
-export default function CommentPage(props) {
+export default function CommentPage() {
   const { state } = useLocation();
   const [isCommented, setIsCommented] = useState(state[0]);
   const commentdata = state[1];
   const [isValid, setIsValid] = useState(true);
+  const [comment, setComment] = useState(commentdata.content);
   const navigate = useNavigate();
   console.log(state);
   const handleSubmit = (e) => {
@@ -63,6 +64,7 @@ export default function CommentPage(props) {
                 ? 'border-red-500 border-[1px]'
                 : 'border border-solid border-gray-200 w-[400px] h-[200px] mb-[2rem]'
             }
+            value={comment}
           />
           {!isValid && (
             <p className="text-red-500">1~200자 범위내로 작성해주세요</p>
