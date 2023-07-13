@@ -16,13 +16,12 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Query("select b from Bookmarks b where b.userInfo.userId = :userId")
     Optional<Bookmark> findByUserId(@Param(value = "userId") long userId);
 
-    @Query("select b from Bookmarks b group by b.userInfo order by count(Bookmarks.bookmarkId)")
+    @Query("select b from Bookmarks b group by b.userInfo")
     List<Bookmark> findBestCocktails();
 
     @Query("select b from Bookmarks b " +
             "where b.userInfo.age = :age and b.userInfo.gender = :gender " +
-            "group by b.userInfo " +
-            "order by count(Bookmarks.bookmarkId)")
+            "group by b.userInfo ")
     List<Bookmark> findRecommendCocktails(@Param(value = "age") int age,
                                           @Param(value = "gender") String gender,
                                           Pageable pageable);
