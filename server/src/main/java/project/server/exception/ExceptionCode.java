@@ -14,7 +14,10 @@ public enum ExceptionCode {
     UNAUTHORIZED_USER(403, "권한이 없어용"),
     NOT_SIGN_IN(401, "로그인부터 하세용"),
     USER_INPUT_ERROR(401, "잘못된 요청입니다"),
-    IMAGE_UPLOAD_EXCEPTION(500, "이미지 업로드에 실패했어용.");
+    IMAGE_UPLOAD_EXCEPTION(500, "이미지 업로드에 실패했어용."),
+    NOT_BOOKMARKED_COCKTAILS(404, "북마크가 되어있지 않아용"),
+    ALREADY_BOOKMARKED(500, "이미 북마크 한 칵테일이에용."),
+    BOOKMARK_NOT_FOUND(404, "북마크하지 않은 칵테일이에용.");
 
     private final int status;
 
