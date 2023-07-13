@@ -126,8 +126,8 @@ export default function Category() {
                   item={item}
                   className="pr-4"
                   key={index + 1}
-                  data={data}
-                  setData={setData}
+                  data={cocktailData}
+                  setData={setCocktailData}
                 />
               ))}
             </CardContainer>
