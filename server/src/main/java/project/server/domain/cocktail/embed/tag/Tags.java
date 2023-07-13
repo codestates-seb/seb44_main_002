@@ -21,16 +21,8 @@ public class Tags {
     @Column(name = "tag")
     private List<Tag> tags;
 
-    // 삭제하셈
-    public Tags(List<Tag>tags, int count){
+    public Tags(List<Tag>tags){
         this.tags = tags;
-    }
-
-    public Tags(List<TagDto.Post> tags) {
-        this.tags = tags.stream()
-                .map(TagDto.Post::getTag)
-                .map(TagMapper::map)
-                .collect(Collectors.toList());
     }
 
     public List<TagDto.Response> createResponseDtoList() {
