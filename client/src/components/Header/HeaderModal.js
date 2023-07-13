@@ -147,8 +147,9 @@ export default function HeaderModal() {
               'accessToken',
               data.headers.get('Authorization')
             );
+            //console.log(data.headers.get('Isadmin'));
             localStorage.setItem('UserId', data.headers.get('UserId'));
-            localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
+            localStorage.setItem('Isadmin', data.headers.get('Isadmin'));
             //localStorage.setItem('refreshToken', data.headers.get.Refesh);
             // Refresh accessToken 만료
             //UserId
@@ -158,10 +159,10 @@ export default function HeaderModal() {
               userinfoLogin({
                 UserId: data.headers.get('UserId'),
                 accessToken: data.headers.get('Authorization'),
-                IsAdmin: data.headers.get('IsAdmin'),
+                Isadmin: data.headers.get('Isadmin'),
               })
             );
-
+            //Isadmin:
             //사용자 정보 조회
             handleUserInfo(data.headers.get('UserId'));
             // 전역상태관리 로그인으로 변경
