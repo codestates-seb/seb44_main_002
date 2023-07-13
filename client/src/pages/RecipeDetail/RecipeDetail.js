@@ -1,23 +1,65 @@
 import { useState, useEffect } from 'react';
-
-import tw from 'tailwind-styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
 import Community from './Community';
 import Recommend from './Recommend';
 import BookmarkBtn from '../../components/BookmarkButton/BookmarkBtn';
+import RecipeApi from './RecipeApi';
+
+import tw from 'tailwind-styled-components';
+
 export default function RecipeDetail() {
-  // const [cocktail, setCocktail] = useState({});
+  const navigate = useNavigate();
+
+  const [cocktail, setCocktail] = useState(cocktailDetail);
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
+  const userInfo = useSelector((state) => state.userinfo);
+
+  const location_id = useLocation().pathname.split('/')[2];
+
+  const getTime = (createdTime = '') => {
+    const currentTime = Date.now();
+    const targetTime = new Date(createdTime).getTime();
+    const minutesDifference = Math.floor(
+      (currentTime - targetTime) / (1000 * 60)
+    );
+    if (isNaN(minutesDifference)) {
+      return 0;
+    }
+    if (minutesDifference < 1) {
+      return 'now';
+    } else if (minutesDifference < 60) {
+      return `${minutesDifference} min ago`;
+    } else if (minutesDifference < 1440) {
+      return `${Math.floor(minutesDifference / 60)} min ago`;
+    }
+    return `${Math.floor(minutesDifference / 1440)} days ago`;
+  };
 
   const setBookmark = () => {
-    // 로그인 조건 추가 예정
-    setIsBookmarked(!isBookmarked);
+    // 비로그인시 설정 불가
+    if (userId) {
+      setIsBookmarked(!isBookmarked);
+    }
+  };
+
+  const getCocktail = async () => {
+    try {
+      const response = await RecipeApi.getCocktailData(location_id);
+      const json = await response.json();
+      setCocktail(json);
+    } catch (error) {
+      console.log(error);
+      // navigate('/error');
+    }
   };
 
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
+    getCocktail();
   }, []);
 
   const BackgroundImg = () => {
@@ -80,10 +122,14 @@ export default function RecipeDetail() {
         <BackgroundImg />
         <Container>
           <DrawBookmark />
-          <RecipeInfo cocktailDetail={cocktailDetail} />
-          <Process cocktailDetail={cocktailDetail} />
-          <Community cocktailDetail={cocktailDetail} />
-          <Recommend cocktailDetail={cocktailDetail.recommends} />
+          <RecipeInfo
+            cocktailDetail={cocktail}
+            userInfo={userInfo}
+            getTime={getTime}
+          />
+          <Process cocktailDetail={cocktail} />
+          <Community cocktailDetail={cocktail} userInfo={userInfo} />
+          <Recommend cocktailDetail={cocktail.recommend} userInfo={userInfo} />
         </Container>
       </Background>
     </>
@@ -120,13 +166,14 @@ cursor-pointer
 const cocktailDetail = {
   cocktailId: 1,
   userId: 1,
-  name: 'Admin',
+  userName: 'chan',
+  name: '체리주',
   imageUrl: 'sample image url',
   liquor: '럼',
   viewCount: 1,
   createdAt: '2000-00-00',
   modifiedAt: '2000-00-00',
-  Ingredients: [
+  ingredients: [
     {
       ingredient: 'Light rum',
     },
@@ -153,12 +200,20 @@ const cocktailDetail = {
     },
   ],
   recipe: [
-    `Pour the rum and top with soda water.`,
-    'Pour the rum and top with soda water.with soda water.',
-    'Pour the rum and top with soda water.Pour the rum and top with soda water.',
-    'Pour the rum and top with soda water.',
-    'Pour he rum and top with soda water. with soda water with soda water',
-    'Pour the rum and top with soda water.',
+    { process: `Pour the rum and top with soda water.` },
+    { process: 'Pour the rum and top with soda water.with soda water.' },
+    {
+      process:
+        'Pour the rum and top with soda water.Pour the rum and top with soda water.',
+    },
+    { process: 'Pour the rum and top with soda water.' },
+    {
+      process:
+        'Pour he rum and top with soda water. with soda water with soda water',
+    },
+    {
+      process: 'Pour the rum and top with soda water.',
+    },
   ],
   tags: [
     {
@@ -219,7 +274,7 @@ const cocktailDetail = {
       ],
     },
   ],
-  recommends: [
+  recommend: [
     //category idx 와 userinfo 리덕스 데이터와 겹쳐서 cocktailId와 isBookmarked  달리 수정했습니다.
     {
       cocktailId: 7,
@@ -240,70 +295,6 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  isBookmarked: true,
+  bookmarked: false,
+  adminWritten: false,
 };
-
-// {
-//   “cocktailId” : 1,
-//   “isAdminWritten” : “false”,
-//   “userId” : 1,
-//   “userName” : “kim”,
-//   “name” : “sample”,
-//   “imageUrl” : “sample image url”,
-//   “recipe” : [
-//       {
-//           “process” : “step1”
-//       },
-//       {
-//           “process” : “step2”
-//       },
-//   ],
-//   “tags” : [
-//       {
-//           “tag” : “example1”
-//       },
-//       {
-//           “tag” : “example2”
-//       }
-//   ],
-//   “viewCount” : 1,
-//   “createdAt” : 2000-00-00,
-//   “modifiedAt” : 2000-00-00,
-//   “comments” : [
-//       {
-//           “commentId” : 1,
-//           “userId” : 1,
-//           “userName” : “kim”,
-//           “content” : “blah”,
-//           “replies” : [
-//               {
-//                       “replyId” : 1,
-//                       “userId” : 1,
-//                       “userName” : “jjigae”,
-//                       “taggedUserInfo” : [
-//                                {
-//                                              “taggedUserId” : 2,
-//                                              “taggedUserName” : “kimchi”,
-//                                 }
-//                        ],
-//                       “content” : “shut up”,
-//                       “createdAt” : 2000-00-00T00:00:00
-//                       “modifiedAt” : 2000-00-00T00:00:00
-//           ],
-//           “createdAt” : 2000-00-00T00:00:00
-//       }
-//   ],
-//   “recommends” : [
-//       {
-//           “cocktailId” : 1,
-//           “name” : “sample1”,
-//           “imageUrl” : “sample image url”
-//       },
-//       {
-//           “cocktailId” : 1,
-//           “name” : “sample1”,
-//           “imageUrl” : “sample image url”
-//       }
-//   ],
-//   “isBookmarked” : “false”
-// }
