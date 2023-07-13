@@ -27,11 +27,11 @@ export default function RankingCard({ item, idx }) {
             className={`ease-in duration-300 ${
               isHover ? 'scale-110 ' : 'scale-100'
             }`}
-            src={item.imageUrl}
+            src={item.cocktailImageUrl}
             alt="sample"
           />
         </ImageContainer>
-        <ItemText className="z-10">{item.name}</ItemText>
+        <ItemText className="z-10">{item.cocktailName}</ItemText>
       </Item>
       <RankingNumber id="text-outline" isHover={isHover}>
         {idx + 1}
