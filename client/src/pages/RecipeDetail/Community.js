@@ -133,7 +133,7 @@ export default function Community({ cocktailDetail, userInfo }) {
                 <CommentAndButton>
                   <CommentDate>{ele.date}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === 3 && (
+                    {ele.userId === userInfo.UserId && (
                       <>
                         <CommentButton
                           onClick={() => deleteComment(ele.commentId)}
@@ -163,7 +163,7 @@ export default function Community({ cocktailDetail, userInfo }) {
                     <CommentAndButton>
                       <CommentDate>{rp.date}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === 3 && (
+                        {rp.userId === userInfo.UserId && (
                           <>
                             <CommentButton
                               onClick={() => deleteReply(rp.replyId)}
