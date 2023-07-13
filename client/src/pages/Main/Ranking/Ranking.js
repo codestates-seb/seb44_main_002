@@ -1,48 +1,67 @@
+import { useState, useEffect } from 'react';
 import RankingCard from './RankingCard';
+import { useSelector } from 'react-redux';
 
 import tw from 'tailwind-styled-components';
 
-const dummyData = [
-  {
-    cocktailId: 1,
-    name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.webp',
-    isBookmarked: true,
-  },
-  {
-    cocktailId: 2,
-    name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.webp',
-    isBookmarked: true,
-  },
-  {
-    cocktailId: 3,
-    name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.webp',
-    isBookmarked: true,
-  },
-  {
-    cocktailId: 4,
-    name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.webp',
-    isBookmarked: true,
-  },
-  {
-    cocktailId: 5,
-    name: 'sample cocktail',
-    imageUrl: 'images/슬라이더샘플.webp',
-    isBookmarked: true,
-  },
-];
-
 export default function Ranking() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false); // true면 error 메세지 보이게 하기
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+
+  useEffect(() => {
+    let endpoint = `${BASE_URL}recommend/unsigned`;
+    let headers = {
+      'Content-Type': 'application/json',
+    };
+
+    if (isLogin) {
+      endpoint = `${BASE_URL}recommend/signed`;
+      headers = {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('accessToken'),
+      };
+    }
+
+    fetch(endpoint, {
+      method: 'GET',
+      headers: headers,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('네트워크 응답이 정상이 아닙니다');
+        }
+        return res.json();
+      })
+      .then((json) => {
+        console.log('서버 응답:', json);
+        if (json.bestCocktails.length === 0) {
+          setError(true);
+        } else {
+          setError(false);
+          setData(json);
+        }
+      })
+      .catch((error) => {
+        console.log('에러:', error);
+        setError(true);
+      });
+  }, [isLogin]);
+
   return (
     <Container>
       <Title>가장 핫한 레시피글만 모아봤어요!</Title>
       <ItemContainer>
-        {dummyData.map((item, index) => (
-          <RankingCard key={index} item={item} idx={index} />
-        ))}
+        {data &&
+          data.bestCocktails.map((item, index) => (
+            <RankingCard key={index} item={item} idx={index} />
+          ))}
+        {error && (
+          <div className="text-error text-4xl max-[768px]:text-xl">
+            이런! 서버에 문제가 생긴 것 같아요
+          </div>
+        )}
       </ItemContainer>
     </Container>
   );

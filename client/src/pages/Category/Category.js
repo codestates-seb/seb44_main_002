@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 //북마크 기능 추가 페이지네이션 추가
 import {
   CategoryFilter,
@@ -22,6 +22,7 @@ export default function Category() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //리덕스 임시 저장
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
   // const bookmarkList = useSelector((state) => state.userinfo.bookmarked);
   //선택된 카테고리조건 (카테고리&태그&정렬)
   const [filterCondtion, setFilterCondtion] = useState({
@@ -106,7 +107,9 @@ export default function Category() {
               // border-gradient border border-solid from-red-500 to-yellow-500
               borderColor="border-[#BB40F1]"
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
-              onClick={() => navigate('/cocktail')}
+              onClick={() =>
+                isLogin ? navigate('/cocktail') : alert('로그인후진행해주세요')
+              }
             >
               나만의 레시피 등록하기
             </HoverButton>

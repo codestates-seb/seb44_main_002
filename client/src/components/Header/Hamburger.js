@@ -11,7 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HeaderModal from './HeaderModal';
 import HoverButton from '../../common/Buttons/HoverButton';
 
-export default function Hamburger() {
+export default function Hamburger({ handleLogOut }) {
   const [position, setPosition] = useState(0);
 
   // 스크롤 이벤트
@@ -121,8 +121,12 @@ export default function Hamburger() {
           <MenuItem onClick={() => openPage('/category')}>
             <HoverButton>Category</HoverButton>
           </MenuItem>
-          {/* 로그아웃 dispatch를 바로 보내고있습니다 alert가 한번 더 뜨게 해야됩니다 */}
-          <MenuItem onClick={() => dispatch(logout())}>
+
+          <MenuItem
+            onClick={() =>
+              window.confirm('로그아웃하시겠습니까?') ? handleLogOut() : ''
+            }
+          >
             <HoverButton>Logout</HoverButton>
           </MenuItem>
         </Menu>
