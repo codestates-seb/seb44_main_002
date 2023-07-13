@@ -78,7 +78,7 @@ export default function Header() {
       <HeaderDiv>
         <img
           role="presentation"
-          src="../images/logo.webp"
+          src={process.env.PUBLIC_URL + `/images/logo.webp`}
           alt="logo"
           className="h-[40px] cursor-pointer"
           onClick={() => navigate('/')}
