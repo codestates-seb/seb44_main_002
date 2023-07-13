@@ -41,7 +41,7 @@ export default function HeaderModal() {
     email: '',
     password: '',
   });
-
+  const [errorMSG, setErrorMSG] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,8 +57,8 @@ export default function HeaderModal() {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log('동작');
-        console.log(data);
+        // console.log('동작');
+        // console.log(data);
         // {
         //     “name” : “kim”,
         //     “profileImageUrl” : “sample image url”
@@ -166,6 +166,9 @@ export default function HeaderModal() {
             dispatch(login(() => login()));
             navigate('/');
           } else {
+            if (data.status === 401) {
+              setErrorMSG('없는 계정입니다.회원가입진행해주세요');
+            }
             console.log('요청이 실패했습니다.');
           }
         })
@@ -214,6 +217,7 @@ export default function HeaderModal() {
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 text={'비밀번호를 확인해주세요'}
               />
+              {errorMSG && <p className="text-error text-[13px]">{errorMSG}</p>}
               <div className="flex justify-center">
                 <HoverButton type="submit">로그인</HoverButton>
               </div>
