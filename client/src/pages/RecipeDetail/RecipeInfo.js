@@ -15,7 +15,7 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   const urlCu = encodeURI(
     `https://pocketcu.co.kr/search/stock/product/main?searchWord=${cocktailDetail.liquor}`
   );
-
+  console.log(cocktailDetail);
   const deleteRecipe = async () => {
     try {
       const response = await RecipeApi.deleteCocktails(
