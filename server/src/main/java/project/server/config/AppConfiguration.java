@@ -2,9 +2,6 @@ package project.server.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import project.server.domain.cocktail.embed.category.Category;
@@ -13,9 +10,7 @@ import project.server.domain.cocktail.embed.ingredient.Ingredients;
 import project.server.domain.cocktail.embed.liquor.Liquor;
 import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.recipe.Recipe;
-import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.Tag;
-import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.repository.CocktailRepository;
@@ -58,6 +53,15 @@ public class AppConfiguration implements InitializingBean {
         test2.setGender("female");
         test2.setAge(21);
         userRepository.save(test2);
+
+        User admin = new User();
+        admin.setName("admin");
+        admin.setEmail("shworud29@gmail.com");
+        admin.setPassword(passwordEncoder.encode("test1234"));
+        admin.setGender("male");
+        admin.setAge(29);
+        admin.setRoles(List.of("USER", "ADMIN"));
+        userRepository.save(admin);
     }
 
     public void createCocktails(){
@@ -67,7 +71,7 @@ public class AppConfiguration implements InitializingBean {
                 .category(Category.CATEGORY1)
                 .liquor(Liquor.RUM)
                 .ingredients(new Ingredients(List.of(Ingredient.BEVERAGE, Ingredient.ICE), 0))
-                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_MEDIUM), 0))
+                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
                 .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/2023-07-12T05%3A58%3A15.197658%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
                 .rate(new Rate())
                 .build();
@@ -83,9 +87,9 @@ public class AppConfiguration implements InitializingBean {
                 .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/2023-07-12T05%3A58%3A15.197658%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
                 .ingredients(new Ingredients(List.of(Ingredient.SUGAR, Ingredient.SALT), 0))
                 .rate(new Rate())
-                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM), 0))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
                 .build();
-        User user2 = userRepository.findById(2L).get();
+        User user2 = userRepository.findById(3L).get();
         cocktail2.assignUser(user2);
         cocktailRepository.save(cocktail2);
     }
