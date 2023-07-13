@@ -1,17 +1,11 @@
 package project.server.domain.cocktail.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
-import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
-import project.server.domain.cocktail.embed.ingredient.Ingredients;
-import project.server.domain.cocktail.embed.liquor.LiquorMapper;
-import project.server.domain.cocktail.embed.rate.Rate;
-import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
-import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.comment.dto.CommentDto;
 
 import java.time.LocalDateTime;
@@ -26,20 +20,8 @@ public class CocktailDto {
         private String liquor;
         private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
+        private String degree;
         private List<TagDto.Post> tags;
-
-        public Cocktail postToEntity() {
-            return Cocktail.builder()
-                    .name(name)
-                    .imageUrl(imageUrl)
-                    .recipe(new Recipe(recipe))
-                    .tags(new Tags(tags))
-                    .category(CategoryMapper.map(liquor))
-                    .rate(new Rate())
-                    .liquor(LiquorMapper.map(liquor))
-                    .ingredients(new Ingredients(ingredients))
-                    .build();
-        }
     }
 
     @Getter
@@ -53,6 +35,7 @@ public class CocktailDto {
 
     @Getter
     @Builder
+    @Data
     public static class Response {
         private final long cocktailId;
         private final boolean isAdminWritten;
@@ -71,6 +54,7 @@ public class CocktailDto {
         private final List<CommentDto.Response> comments;
         private final List<CocktailDto.SimpleResponse> recommends;
         private final boolean isBookmarked;
+        private final int userRate;
     }
 
     @Getter

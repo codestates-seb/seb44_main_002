@@ -32,9 +32,6 @@ public class UserService {
 
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
-        if(user.isAdmin()){
-            user.setName("편한🍸");
-        }
 
         User savedUser = userRepository.save(user);
         return savedUser.entityToResponse();
@@ -55,7 +52,9 @@ public class UserService {
 
     public User updateUser(UserDto.Patch dto, long userId) {
         User user = findUser(userId);
-        user.setPassword(dto.getPassword());
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        user.setPassword(encodedPassword);
+
         return userRepository.save(user);
     }
 

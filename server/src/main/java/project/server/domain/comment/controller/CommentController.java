@@ -8,6 +8,7 @@ import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.service.CommentService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/comments")
@@ -19,15 +20,16 @@ public class CommentController {
     }
 
     @PostMapping("/{cocktail-id}")
-    public ResponseEntity postComment(@PathVariable Long cocktailId, @Valid @RequestBody CommentDto.Post post) {
+    public ResponseEntity postComment(@PathVariable ("cocktail-id") @Positive Long cocktailId,
+                                          @Valid @RequestBody CommentDto.Post post) {
         CommentDto.Response response = commentService.createComment(cocktailId, post);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
-    public ResponseEntity patchComment(@PathVariable("comment-id")
+    public ResponseEntity patchComment(@PathVariable("comment-id") @Positive Long commentId,
                                        @Valid @RequestBody CommentDto.Patch patch) {
-        Comment response = commentService.updateComment(patch);
+        CommentDto.Response response = commentService.updateComment(commentId, patch);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

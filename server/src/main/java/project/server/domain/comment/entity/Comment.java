@@ -35,11 +35,11 @@ public class Comment {
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt = LocalDateTime.now();
 
     @LastModifiedDate
     @Column(name = "last_modified_at")
-    private LocalDateTime modifiedAt;
+    LocalDateTime modifiedAt = LocalDateTime.now();
 
     public CommentDto.Response entityToResponse() {
         return CommentDto.Response.builder()

@@ -8,6 +8,7 @@ import project.server.domain.reply.entity.Reply;
 
 import java.time.LocalDateTime;
 
+
 @NoArgsConstructor
 public class ReplyDto {
 
@@ -45,5 +46,5 @@ public class ReplyDto {
         private TaggedUserInfo taggedUserInfo;
         private String content;
     }
-
+//
 }

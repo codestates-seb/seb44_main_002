@@ -2,9 +2,7 @@ package project.server.domain.cocktail.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.server.domain.cocktail.embed.rate.RateDto;
@@ -75,5 +73,11 @@ public class CocktailController {
                                            @PathVariable("cocktail-id") long cocktailId){
         cocktailService.bookmarkCocktail(authentication, cocktailId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity readRandomCocktail(Authentication authentication){
+        CocktailDto.Response response = cocktailService.readRandomCocktail(authentication);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
