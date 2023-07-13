@@ -31,9 +31,18 @@ export default function Slider() {
           clickable: true,
         }}
         navigation={true}
+        loop={true}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
+        {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
+        <SwiperSlide className="swiper-slide">
+          <img
+            className="w-full h-full object-cover"
+            src="images/슬라이더샘플2.webp"
+            alt="sample"
+          />
+        </SwiperSlide>
         {/* TODO: 커스텀이미지 넣을거면 밑에 코드 사용할것 */}
         <SwiperSlide className="swiper-slide flex justify-around max-[768px]:flex-col max-[768px]:justify-center">
           <SliderCustomText>
@@ -52,14 +61,6 @@ export default function Slider() {
           </SliderCustomText>
           <></>
           <SliderCustomImg src="images/slideimg.webp" alt="sample" />
-        </SwiperSlide>
-        {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
-        <SwiperSlide className="swiper-slide">
-          <img
-            className="w-full h-full object-cover"
-            src="images/슬라이더샘플2.webp"
-            alt="sample"
-          />
         </SwiperSlide>
 
         <div className="autoplay-progress" slot="container-end">
