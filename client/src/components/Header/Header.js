@@ -144,7 +144,7 @@ export default function Header() {
             </div>
           </HeaderDiv>
           <HeaderDiv className="justify-end min-[769px]:hidden">
-            <Hamburger />
+            <Hamburger handleLogOut={handleLogOut} />
           </HeaderDiv>
         </>
       ) : (
