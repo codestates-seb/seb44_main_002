@@ -8,16 +8,24 @@ import { BsArrowRightShort } from 'react-icons/bs';
 import { MdIosShare } from 'react-icons/md';
 import { PiUserCircleFill } from 'react-icons/pi';
 
-export default function RecipeInfo({ cocktailDetail, userId, getTime }) {
+export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
+  const [total, setTotal] = useState(0);
   const urlCu = encodeURI(
     `https://pocketcu.co.kr/search/stock/product/main?searchWord=${cocktailDetail.liquor}`
   );
 
-  useEffect(() => {
-    console.log(cocktailDetail);
-  }, []);
+  const deleteRecipe = async () => {
+    try {
+      const response = await RecipeApi.deleteCocktails(
+        cocktailDetail.cocktailId,
+        userInfo.accessToken
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const copyToClipBoard = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -27,24 +35,30 @@ export default function RecipeInfo({ cocktailDetail, userId, getTime }) {
     try {
       const response = await RecipeApi.modifyRate(
         cocktailDetail.cocktailId,
-        score2
+        score2,
+        userInfo.accessToken
       );
       const json = await response.json();
       console.log(json);
+      setTotal(json.rating);
     } catch (error) {
       console.log(error);
     }
   };
   const changeScore = (idx) => {
     // 로그인 여부 확인
-    if (userId !== '') {
+    if (userInfo.UserId !== '') {
       setScore(idx + 1);
       modifyScore(idx + 1);
     }
   };
   const deletePost = () => {
     // 삭제
-    navigate('/category');
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      alert('삭제되었습니다.');
+      deleteRecipe();
+      navigate('/category');
+    }
   };
 
   const DrawStar = () => {
@@ -63,7 +77,9 @@ export default function RecipeInfo({ cocktailDetail, userId, getTime }) {
             />
           ))}
         </FlexContainer>
-        <StarAverage>{`평균 : ${cocktailDetail.rating}`}</StarAverage>
+        <StarAverage>{`평균 : ${
+          total === 0 ? cocktailDetail.rating : total
+        }`}</StarAverage>
       </DrawStarContainer>
     );
   };
