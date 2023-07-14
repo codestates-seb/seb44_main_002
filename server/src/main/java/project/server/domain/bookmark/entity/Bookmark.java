@@ -9,7 +9,7 @@ import project.server.domain.bookmark.embed.UserInfo;
 
 import javax.persistence.*;
 
-@Entity(name = "Bookmarks")
+@Entity(name = "bookmarks")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bookmark {

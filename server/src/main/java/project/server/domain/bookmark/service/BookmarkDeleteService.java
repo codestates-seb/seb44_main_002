@@ -19,7 +19,7 @@ public class BookmarkDeleteService {
 
     @Transactional
     public void delete(User user, Bookmark bookmark){
-        if(!user.isBookmarked(bookmark)){
+        if(!user.isBookmarked(bookmark.getCocktailId())){
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
         bookmarkRepository.delete(bookmark);

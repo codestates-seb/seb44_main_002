@@ -66,10 +66,6 @@ public class User {
         return ratedCocktails.containCocktail(cocktailId);
     }
 
-    public boolean isBookmarked(Bookmark bookmark) {
-        return bookmarks.contains(bookmark);
-    }
-
     public boolean isBookmarked(long cocktailId){
         for(Bookmark bookmark : bookmarks){
             if(bookmark.getCocktailId() == cocktailId){

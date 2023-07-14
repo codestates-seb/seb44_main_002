@@ -1,51 +1,48 @@
-package project.server.domain.bookmark;
+package project.server.domain.recommend;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import project.server.domain.bookmark.embed.CocktailInfo;
 import project.server.domain.bookmark.entity.Bookmark;
+import project.server.domain.cocktail.entity.Cocktail;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BookmarkDto {
+public class RecommendDto {
     @Getter
     public static class UnsignedResponse {
-        private final List<BookmarkDto.Response> bestCocktails;
+        private final List<RecommendDto.Response> bestCocktails;
 
-        public UnsignedResponse(List<Bookmark> bestCocktails) {
+        public UnsignedResponse(List<Cocktail> bestCocktails) {
             this.bestCocktails = bestCocktails.stream()
-                    .map(bookmark -> new BookmarkDto.Response(bookmark.getCocktailInfo()))
+                    .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
         }
     }
 
     @Getter
     public static class SignedResponse {
-        private final List<BookmarkDto.Response> bestCocktails;
-        private final List<BookmarkDto.Response> recommendedCocktails;
+        private final List<RecommendDto.Response> bestCocktails;
+        private final List<RecommendDto.Response> recommendedCocktails;
 
-        public SignedResponse(List<Bookmark> bestCocktails, List<Bookmark> recommendedCocktails){
+        public SignedResponse(List<Cocktail> bestCocktails, List<Cocktail> recommendedCocktails){
             this.bestCocktails = bestCocktails.stream()
-                    .map(bookmark -> new BookmarkDto.Response(bookmark.getCocktailInfo()))
+                    .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
 
             this.recommendedCocktails = recommendedCocktails.stream()
-                    .map(bookmark -> new BookmarkDto.Response(bookmark.getCocktailInfo()))
+                    .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
         }
     }
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+    @AllArgsConstructor
     private static class Response{
         private final long cocktailId;
         private final String cocktailName;
         private final String cocktailImageUrl;
-
-        public Response(CocktailInfo cocktailInfo){
-            this.cocktailId = cocktailInfo.getCocktailId();
-            this.cocktailName = cocktailInfo.getCocktailName();
-            this.cocktailImageUrl = cocktailInfo.getCocktailImageUrl();
-        }
     }
 }

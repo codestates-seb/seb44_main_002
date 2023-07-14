@@ -2,14 +2,11 @@ package project.server.domain.bookmark.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.server.domain.bookmark.BookmarkDto;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.service.CocktailReadService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -41,16 +38,5 @@ public class BookmarkService {
         Bookmark bookmark = bookmarkReadService.findBookmarkByCocktailId(cocktailId);
 
         bookmarkDeleteService.delete(user, bookmark);
-    }
-
-    public BookmarkDto.UnsignedResponse readRecommendCocktailsForUnsignedUser() {
-        List<Bookmark> bestCocktails = bookmarkReadService.readBestCocktails();
-        return new BookmarkDto.UnsignedResponse(bestCocktails);
-    }
-
-    public BookmarkDto.SignedResponse readRecommendCocktailsForSignedUser(String email) {
-        List<Bookmark> bestCocktails = bookmarkReadService.readBestCocktails();
-        List<Bookmark> recommends = bookmarkReadService.readRecommendCocktails(email);
-        return new BookmarkDto.SignedResponse(bestCocktails, recommends);
     }
 }

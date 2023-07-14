@@ -22,22 +22,19 @@ public class BookmarkCreateService {
 
     @Transactional
     public void create(User user, Cocktail cocktail) {
+        if(user.isBookmarked(cocktail.getCocktailId())){
+            throw new BusinessLogicException(ExceptionCode.ALREADY_BOOKMARKED);
+        }
+
         Bookmark bookmark = Bookmark.builder()
                 .cocktailInfo(new CocktailInfo(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                 .userInfo(new UserInfo(user.getUserId(), getUserAgeGroup(user), user.getGender()))
                 .build();
 
-        if(isAlreadyBookmarked(bookmark)){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_BOOKMARKED);
-        }
         bookmarkRepository.save(bookmark);
     }
 
     private int getUserAgeGroup(User user) {
         return user.getAge() / 10 * 10;
-    }
-
-    private boolean isAlreadyBookmarked(Bookmark bookmark) {
-        return bookmarkRepository.findByUserId(bookmark.getUserId()).isPresent();
     }
 }
