@@ -153,7 +153,6 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                 </CommentAndButton>
               </CommentContainer>
               {ele.replies.map((rp) => {
-                console.log(rp);
                 return (
                   <ReplyContainer key={rp.userId}>
                     <CommentWriter>{rp.userName}</CommentWriter>
