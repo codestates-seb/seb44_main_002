@@ -30,6 +30,7 @@ public class BookmarkCreateService {
                 .cocktailInfo(new CocktailInfo(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                 .userInfo(new UserInfo(user.getUserId(), getUserAgeGroup(user), user.getGender()))
                 .build();
+        user.bookmark(bookmark);
 
         bookmarkRepository.save(bookmark);
     }

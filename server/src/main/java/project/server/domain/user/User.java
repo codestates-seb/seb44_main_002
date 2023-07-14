@@ -61,6 +61,9 @@ public class User {
                 .age(age)
                 .profileImageUrl(profileImageUrl)
                 .subscriberCount(subscriberCount)
+                .cocktails(cocktails.stream()
+                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(this.isBookmarked(cocktail.getCocktailId()), cocktail))
+                        .collect(Collectors.toList()))
                 .bookmarkedCocktails(bookmarks.stream()
                         .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
                         .collect(Collectors.toList()))
@@ -99,4 +102,11 @@ public class User {
         return roles.contains("ADMIN");
     }
 
+    public void bookmark(Bookmark bookmark) {
+        bookmarks.add(bookmark);
+    }
+
+    public void cancelBookmark(Bookmark bookmark) {
+        bookmarks.remove(bookmark);
+    }
 }

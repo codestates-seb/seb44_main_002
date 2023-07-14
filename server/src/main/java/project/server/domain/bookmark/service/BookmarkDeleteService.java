@@ -22,6 +22,7 @@ public class BookmarkDeleteService {
         if(!user.isBookmarked(bookmark.getCocktailId())){
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
+        user.cancelBookmark(bookmark);
         bookmarkRepository.delete(bookmark);
     }
 }

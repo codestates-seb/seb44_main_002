@@ -31,6 +31,8 @@ public class CocktailDto {
         private final String name;
         private final String imageUrl;
         private final boolean isBookmarked;
+        private final double userRate;
+        private final int viewCount;
     }
 
     @Getter

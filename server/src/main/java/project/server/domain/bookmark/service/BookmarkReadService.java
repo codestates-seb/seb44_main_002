@@ -17,8 +17,8 @@ public class BookmarkReadService {
     }
 
     @Transactional(readOnly = true)
-    public Bookmark findBookmarkByCocktailId(long cocktailId) {
-        return bookmarkRepository.findByCocktailId(cocktailId).orElseThrow(() ->
+    public Bookmark findBookmarkByUserIdAndCocktailId(long userId, long cocktailId) {
+        return bookmarkRepository.findByUserIdAndCocktailId(userId, cocktailId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.BOOKMARK_NOT_FOUND));
     }
 }

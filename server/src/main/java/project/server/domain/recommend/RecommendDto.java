@@ -3,7 +3,6 @@ package project.server.domain.recommend;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import project.server.domain.cocktail.entity.Cocktail;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +12,7 @@ public class RecommendDto {
     public static class UnsignedResponse {
         private final List<RecommendDto.Response> bestCocktails;
 
-        public UnsignedResponse(List<Cocktail> bestCocktails) {
+        public UnsignedResponse(List<Recommend> bestCocktails) {
             this.bestCocktails = bestCocktails.stream()
                     .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
@@ -25,7 +24,7 @@ public class RecommendDto {
         private final List<RecommendDto.Response> bestCocktails;
         private final List<RecommendDto.Response> recommendedCocktails;
 
-        public SignedResponse(List<Cocktail> bestCocktails, List<Cocktail> recommendedCocktails){
+        public SignedResponse(List<Recommend> bestCocktails, List<Recommend> recommendedCocktails){
             this.bestCocktails = bestCocktails.stream()
                     .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
