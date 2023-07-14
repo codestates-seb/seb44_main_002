@@ -15,6 +15,7 @@ export default function RecipeDetail() {
   const navigate = useNavigate();
 
   const [cocktail, setCocktail] = useState(cocktailDetail);
+  console.log(cocktail);
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
   const userInfo = useSelector((state) => state.userinfo);
 

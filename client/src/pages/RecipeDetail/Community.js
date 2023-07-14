@@ -139,7 +139,13 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                         >
                           삭제하기
                         </CommentButton>
-                        <CommentButton onClick={() => navigate('/comment')}>
+                        <CommentButton
+                          onClick={() =>
+                            navigate('/comment', {
+                              state: [true, ele],
+                            })
+                          }
+                        >
                           수정하기
                         </CommentButton>
                       </>
@@ -173,7 +179,13 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                             >
                               삭제하기
                             </CommentButton>
-                            <CommentButton onClick={() => navigate('/comment')}>
+                            <CommentButton
+                              onClick={() =>
+                                navigate('/comment', {
+                                  state: [false, rp],
+                                })
+                              }
+                            >
                               수정하기
                             </CommentButton>
                           </>
