@@ -95,6 +95,9 @@ export default function Signup() {
             if (data.status === 409) {
               setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
             }
+            if (data.status === 500) {
+              setErrorMsg('이런! 서버에 문제가 생겼어요!');
+            }
           }
         })
         .catch((error) => {
