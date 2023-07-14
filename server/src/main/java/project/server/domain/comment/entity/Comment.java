@@ -7,10 +7,14 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.dto.CommentDto;
+import project.server.domain.reply.entity.Reply;
 import project.server.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity(name = "comments")
 @Getter
@@ -29,9 +33,9 @@ public class Comment {
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    public User user;
+    private long userId;
+
+    private String userName;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -41,13 +45,23 @@ public class Comment {
     @Column(name = "last_modified_at")
     LocalDateTime modifiedAt = LocalDateTime.now();
 
+    @OneToMany
+    List<Reply> replies = new ArrayList<>();
+
     public CommentDto.Response entityToResponse() {
         return CommentDto.Response.builder()
                 .commentId(commentId)
-                .userId(1)
-                .userName("kim")
+                .userId(userId)
+                .userName(userName)
                 .content(content)
                 .createdAt(createdAt)
+                .replies(replies.stream()
+                        .map(Reply::entityToResponse)
+                        .collect(Collectors.toList()))
                 .build();
+    }
+
+    public void addReply(Reply reply) {
+        replies.add(reply);
     }
 }

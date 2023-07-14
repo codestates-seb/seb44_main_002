@@ -29,12 +29,14 @@ public class ReplyService {
     }
 
     public ReplyDto.Response createReply(String email, long commentId, ReplyDto.Post post) {
-        Comment comment = commentService.findCommentById(commentId);
         User user = userService.findUserByEmail(email);
+        Comment comment = commentService.findCommentById(commentId);
         Reply reply = post.postToEntity();
-        reply.setComment(comment);
-        reply.setUser(user);
+        reply.setCommentId(commentId);
+        reply.setUserName(user.getName());
+        reply.setUserId(user.getUserId());
         Reply savedReply = replyRepository.save(reply);
+        comment.addReply(savedReply);
         return savedReply.entityToResponse();
     }
 
@@ -55,4 +57,3 @@ public class ReplyService {
         replyRepository.delete(reply);
     }
 }
-//

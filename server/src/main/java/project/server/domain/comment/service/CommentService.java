@@ -30,7 +30,8 @@ public class CommentService {
         User user = userService.findUserByEmail(email);
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         Comment comment = post.postToEntity();
-        comment.setUser(user);
+        comment.setUserName(user.getName());
+        comment.setUserId(user.getUserId());
         comment.setCocktail(cocktail);
         Comment savedComment = commentRepository.save(comment);
         return savedComment.entityToResponse();
