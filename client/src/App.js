@@ -13,7 +13,7 @@ const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
 const CocktailForm = lazy(() => import('./pages/CocktailForm/CocktailForm'));
 const Signup = lazy(() => import('./pages/Signup/Signup'));
 const CommentPage = lazy(() => import('./pages/Comment/CommentPage'));
-const SuccessPage = lazy(() => import('./pages/SuccessPage'));
+const SuccessPage = lazy(() => import('./pages/Success/SuccessPage'));
 
 import './App.css';
 
@@ -65,7 +65,7 @@ const Routing = () => {
         <Route path="/cocktail" element={<CocktailForm />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/comment" element={<CommentPage />} />
-        <Route path="/success" element={<SuccessPage />} />
+        <Route path="/success/:id" element={<SuccessPage />} />
         <Route path="*" element={<LostPage />} />
       </Routes>
     </Suspense>
