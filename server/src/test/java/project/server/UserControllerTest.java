@@ -8,16 +8,20 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import project.server.domain.user.UserController;
 import project.server.domain.user.UserDto;
+import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles(profiles = "server")
 public class UserControllerTest {
 
-    @Mock
+    @MockBean
     private UserService userService;
 
     @InjectMocks
@@ -51,6 +55,7 @@ public class UserControllerTest {
 
         String content = gson.toJson(requestBody);
 
+
         UserDto.Response response = UserDto.Response.builder()
                 .userId(1L)
                 .name(requestBody.getName())
@@ -61,10 +66,9 @@ public class UserControllerTest {
                 .subscriberCount(0L)
                 .build();
 
-        //when
         when(userService.createUser(any(UserDto.post.class))).thenReturn(response);
 
-
+        //when
         ResultActions result =
                 mockMvc.perform(
                         post("/users/signup")
@@ -73,8 +77,33 @@ public class UserControllerTest {
                                 .content(content)
                 );
 
+        //then
         result
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email").value(requestBody.getEmail()));
+    }
+
+    @Test
+    public void testGetUser() throws Exception {
+        //give
+        User user = new User();
+        user.setUserId(1L);
+        user.setName("태양");
+        user.setEmail("pxodid2000@gmail.com");
+        user.setGender("male");
+        user.setAge(24);
+
+        when(userService.findUser(anyLong())).thenReturn(user);
+
+        //when
+        ResultActions result =
+                mockMvc.perform(
+                        get("/users/1")
+                                .accept(MediaType.APPLICATION_JSON)
+                );
+
+        //then
+        result
+                .andExpect(status().isOk());
     }
 }
