@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface RecommendRepository extends JpaRepository<Recommend, Long> {
 
-    @Query(value = "select new project.server.domain.recommend.Recommend(c.cocktailId, c.name, c.imageUrl, COUNT(c.cocktailId))" +
+    @Query(value = "select new project.server.domain.recommend.entity.Recommend(c.cocktailId, c.name, c.imageUrl, COUNT(c.cocktailId))" +
             "from cocktails c " +
             "right join bookmarks b on b.cocktailInfo.cocktailId = c.cocktailId " +
             "group by c.cocktailId, b.userInfo.gender, b.userInfo.age")
     List<Recommend> findBestCocktails(Pageable pageable);
 
-    @Query("select new project.server.domain.recommend.Recommend(c.cocktailId, c.name, c.imageUrl, COUNT(c.cocktailId))" +
+    @Query("select new project.server.domain.recommend.entity.Recommend(c.cocktailId, c.name, c.imageUrl, COUNT(c.cocktailId))" +
             "from cocktails c " +
             "right join bookmarks b on b.cocktailInfo.cocktailId = c.cocktailId " +
             "where b.userInfo.gender = :gender and b.userInfo.age = :age " +
