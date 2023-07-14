@@ -100,7 +100,7 @@ export default function Card({ item, data, setData }) {
         {/* 북마크 */}
         <BookmarkBtn
           onClick={() => handleBookmarkClick(item.cocktailId, item)}
-          isBookmarked={item.isBookmarked}
+          isBookmarked={item.bookmarked}
           size="w-[20px] h-[30px]"
           absolute="true"
           top="top-0"
