@@ -25,7 +25,7 @@ public class BookmarkController {
                                        @PathVariable("cocktail-id") long cocktailId) {
         String email = AuthManager.getEmailFromAuthentication(authentication, NOT_PERMIT_UNSIGNED_USER);
         bookmarkService.createBookmark(email, cocktailId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.accepted().build();
     }
 
     @DeleteMapping("/delete/{cocktail-id}")

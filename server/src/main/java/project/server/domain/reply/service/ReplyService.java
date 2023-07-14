@@ -28,9 +28,9 @@ public class ReplyService {
         this.userService = userService;
     }
 
-    public ReplyDto.Response createReply(long commentId, ReplyDto.Post post) {
+    public ReplyDto.Response createReply(String email, long commentId, ReplyDto.Post post) {
         Comment comment = commentService.findCommentById(commentId);
-        User user = userService.findUser(post.getUserId());
+        User user = userService.findUserByEmail(email);
         Reply reply = post.postToEntity();
         reply.setComment(comment);
         reply.setUser(user);

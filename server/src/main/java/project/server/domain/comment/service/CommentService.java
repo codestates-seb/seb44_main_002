@@ -4,10 +4,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.service.CocktailReadService;
-import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.repository.CommentRepository;
+import project.server.domain.user.User;
+import project.server.domain.user.UserService;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
@@ -15,17 +16,21 @@ import project.server.exception.ExceptionCode;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final CocktailReadService cocktailReadService;
+    private final UserService userService;
 
     public CommentService(CommentRepository commentRepository,
-                          CocktailReadService cocktailReadService) {
+                          CocktailReadService cocktailReadService, UserService userService) {
         this.commentRepository = commentRepository;
         this.cocktailReadService = cocktailReadService;
+        this.userService = userService;
     }
 
     @Transactional
-    public CommentDto.Response createComment(Long cocktailId, CommentDto.Post post) {
+    public CommentDto.Response createComment(String email, Long cocktailId, CommentDto.Post post) {
+        User user = userService.findUserByEmail(email);
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         Comment comment = post.postToEntity();
+        comment.setUser(user);
         comment.setCocktail(cocktail);
         Comment savedComment = commentRepository.save(comment);
         return savedComment.entityToResponse();

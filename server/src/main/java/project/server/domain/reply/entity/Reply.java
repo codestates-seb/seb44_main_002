@@ -56,5 +56,4 @@ public class Reply {
                 .createdAt(createdAt)
                 .build();
     }
-//
 }
