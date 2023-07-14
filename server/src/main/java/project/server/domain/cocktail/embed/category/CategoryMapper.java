@@ -15,6 +15,9 @@ public class CategoryMapper {
         categoryMap.put("jin", Category.CATEGORY2);
         categoryMap.put("vodka", Category.CATEGORY3);
         categoryMap.put("whiskey", Category.CATEGORY3);
+        categoryMap.put("category_one", Category.CATEGORY1);
+        categoryMap.put("category_two", Category.CATEGORY2);
+        categoryMap.put("category_three", Category.CATEGORY3);
     }
 
     public static Category map(String key) {

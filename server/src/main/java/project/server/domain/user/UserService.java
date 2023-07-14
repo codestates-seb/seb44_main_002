@@ -62,12 +62,4 @@ public class UserService {
         User user = findUser(userId);
         userRepository.delete(user);
     }
-
-    public User findUserByAuthentication(Authentication authentication) {
-        if(authentication == null){
-            throw new BusinessLogicException(ExceptionCode.NOT_SIGN_IN);
-        }
-        String email = (String) authentication.getPrincipal();
-        return findUserByEmail(email);
-    }
 }

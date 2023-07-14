@@ -3,6 +3,7 @@ package project.server.domain.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
 
 import javax.persistence.*;
@@ -40,8 +41,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Cocktail> cocktails;
 
-    @Embedded
-    private BookmarkedCocktails bookmarkedCocktails = new BookmarkedCocktails();
+    @OneToMany
+    private Set<Bookmark> bookmarks;
 
     @Embedded
     private RatedCocktails ratedCocktails = new RatedCocktails();
@@ -65,16 +66,13 @@ public class User {
         return ratedCocktails.containCocktail(cocktailId);
     }
 
-    public boolean isBookmarked(long cocktailId) {
-        return bookmarkedCocktails.containCocktail(cocktailId);
-    }
-
-    public void cancelBookmark(long cocktailId) {
-        bookmarkedCocktails.remove(cocktailId);
-    }
-
-    public void bookmark(long cocktailId) {
-        bookmarkedCocktails.add(cocktailId);
+    public boolean isBookmarked(long cocktailId){
+        for(Bookmark bookmark : bookmarks){
+            if(bookmark.getCocktailId() == cocktailId){
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getRate(long cocktailId) {
