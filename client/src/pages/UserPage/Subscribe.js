@@ -19,16 +19,13 @@ export default function Subscribe({ userInfo }) {
           spaceBetween={10} //좌우측
           slidesPerView={2} //
           slidesPerGroup={2} // 한 화면에 나오는 슬라이드 넘어가는 수
-          navigation
+          loop={true}
+          navigation={true}
           pagination={{ clickable: true }}
           className="mySwiper"
           breakpoints={{
-            500: { slidesPerView: 3, slidesPerGroup: 3 },
-            850: { slidesPerView: 4, slidesPerGroup: 4 },
-            1200: {
-              slidesPerView: 5,
-              slidesPerGroup: 5,
-            },
+            500: { slidesPerView: 3, slidesPerGroup: 2 },
+            850: { slidesPerView: 4, slidesPerGroup: 2 },
           }}
         >
           {userInfo.subscribe.map((user) => {
