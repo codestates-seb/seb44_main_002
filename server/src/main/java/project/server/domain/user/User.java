@@ -9,6 +9,7 @@ import project.server.domain.cocktail.service.CocktailSerializer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,10 +42,10 @@ public class User {
     private String profileImageUrl;
 
     @OneToMany(mappedBy = "user")
-    private Set<Cocktail> cocktails;
+    private Set<Cocktail> cocktails = new HashSet<>();
 
-    @OneToMany
-    private Set<Bookmark> bookmarks;
+    @OneToMany(mappedBy = "user")
+    private Set<Bookmark> bookmarks = new HashSet<>();
 
     @Embedded
     private RatedCocktails ratedCocktails = new RatedCocktails();
@@ -108,5 +109,9 @@ public class User {
 
     public void cancelBookmark(Bookmark bookmark) {
         bookmarks.remove(bookmark);
+    }
+
+    public void write(Cocktail cocktail) {
+        cocktails.add(cocktail);
     }
 }
