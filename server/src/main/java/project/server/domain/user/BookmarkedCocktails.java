@@ -1,6 +1,9 @@
 package project.server.domain.user;
 
-import javax.persistence.*;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.Set;
 

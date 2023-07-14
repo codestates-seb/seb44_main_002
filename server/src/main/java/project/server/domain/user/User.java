@@ -86,7 +86,7 @@ public class User {
     }
 
     public boolean hasAuthority(Cocktail cocktail) {
-        if(isAdmin()){
+        if (isAdmin()) {
             return true;
         }
         return cocktails.contains(cocktail);

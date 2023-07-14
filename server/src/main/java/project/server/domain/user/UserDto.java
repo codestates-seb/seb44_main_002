@@ -2,10 +2,12 @@ package project.server.domain.user;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 public class UserDto {
 
     @Getter
+    @Setter
     public static class post {
         private String email;
         private String password;
