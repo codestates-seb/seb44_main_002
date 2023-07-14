@@ -40,6 +40,7 @@ public class UserDto {
     }
 
     @Getter
+    @Setter
     public static class Patch {
         private long userId;
         private String password;

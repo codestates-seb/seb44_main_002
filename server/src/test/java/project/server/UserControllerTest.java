@@ -107,6 +107,38 @@ public class UserControllerTest {
     }
 
     @Test
+    public void testPatchUser() throws Exception {
+        //give
+        UserDto.Patch requestBody = new UserDto.Patch();
+        requestBody.setUserId(1L);
+        requestBody.setPassword("patchpassword");
+
+        User updatedUser = new User();
+        updatedUser.setUserId(1L);
+        updatedUser.setEmail("pxodid2000@gmail.com");
+        updatedUser.setPassword("patchpassword");
+        updatedUser.setName("태양");
+        updatedUser.setGender("male");
+        updatedUser.setAge(24);
+
+        String content = gson.toJson(requestBody);
+
+        when(userService.updateUser(any(UserDto.Patch.class), anyLong())).thenReturn(updatedUser);
+
+        //when
+        ResultActions result =
+                mockMvc.perform(
+                        patch("/users/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                );
+
+        //then
+        result
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void testDeleteUser() throws Exception {
         // Perform the request and validate the response
         ResultActions result =
