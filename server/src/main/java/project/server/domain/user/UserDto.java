@@ -38,6 +38,7 @@ public class UserDto {
         private int age;
         private String email;
         private long subscriberCount;
+        private List<CocktailDto.SimpleResponse> cocktails;
         private List<CocktailDto.SimpleResponse> bookmarkedCocktails;
     }
 

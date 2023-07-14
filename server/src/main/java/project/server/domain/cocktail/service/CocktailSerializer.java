@@ -74,6 +74,8 @@ public class CocktailSerializer {
                 .name(cocktail.getName())
                 .imageUrl(cocktail.getImageUrl())
                 .isBookmarked(isBookmarked)
+                .userRate(cocktail.getRatedScore())
+                .viewCount(cocktail.getViewCount())
                 .build();
     }
 

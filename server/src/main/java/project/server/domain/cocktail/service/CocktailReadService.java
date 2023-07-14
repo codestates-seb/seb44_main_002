@@ -1,7 +1,6 @@
 package project.server.domain.cocktail.service;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +9,6 @@ import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.repository.CocktailRepository;
-import project.server.domain.user.User;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
@@ -60,22 +58,5 @@ public class CocktailReadService {
     public Cocktail readRandomCocktail() {
         long count = cocktailRepository.count();
         return cocktailRepository.findAll().get((int) (Math.random() * count));
-    }
-
-    @Transactional(readOnly = true)
-    public List<Cocktail> readBestCocktails() {
-        return cocktailRepository.findBestCocktails();
-    }
-
-    @Transactional(readOnly = true)
-    public List<Cocktail> readRecommendCocktails(User user) {
-        Pageable pageable = PageRequest.ofSize(5).withPage(0);
-        return cocktailRepository.findRecommendCocktails(getUserAgeGroup(user),
-                user.getGender(),
-                pageable);
-    }
-
-    private int getUserAgeGroup(User user) {
-        return user.getAge() / 10 * 10;
     }
 }

@@ -35,7 +35,7 @@ public class BookmarkService {
 
     public void deleteBookmark(String email, long cocktailId){
         User user = userService.findUserByEmail(email);
-        Bookmark bookmark = bookmarkReadService.findBookmarkByCocktailId(cocktailId);
+        Bookmark bookmark = bookmarkReadService.findBookmarkByUserIdAndCocktailId(user.getUserId(), cocktailId);
 
         bookmarkDeleteService.delete(user, bookmark);
     }
