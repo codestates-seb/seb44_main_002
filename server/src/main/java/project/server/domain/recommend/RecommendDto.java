@@ -3,8 +3,6 @@ package project.server.domain.recommend;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import project.server.domain.bookmark.embed.CocktailInfo;
-import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
 
 import java.util.List;
