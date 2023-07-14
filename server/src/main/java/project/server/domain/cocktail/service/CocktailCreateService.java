@@ -21,6 +21,7 @@ public class CocktailCreateService {
     @Transactional
     public Cocktail create(User user, Cocktail cocktail) {
         cocktail.assignUser(user);
+        user.write(cocktail);
         return cocktailRepository.save(cocktail);
     }
 }

@@ -44,7 +44,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Cocktail> cocktails = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private Set<Bookmark> bookmarks = new HashSet<>();
 
     @Embedded
