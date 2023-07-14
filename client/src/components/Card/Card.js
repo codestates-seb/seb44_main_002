@@ -32,7 +32,7 @@ export default function Card({ item, data, setData }) {
     // bookmark/delete/{cocktail-id}
     const handleBookmark = () => {
       ///bookmark/create/{cocktail-id}
-      if (item.isBookmarked) {
+      if (!item.isBookmarked) {
         fetch(`${BASE_URL}bookmark/create/${item.cocktailId}`, {
           method: 'POST',
           headers: {
