@@ -1,9 +1,11 @@
-package project.server.domain.recommend;
+package project.server.domain.recommend.service;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.server.domain.recommend.repository.RecommendRepository;
+import project.server.domain.recommend.entity.Recommend;
 import project.server.domain.user.User;
 
 import java.util.Collections;

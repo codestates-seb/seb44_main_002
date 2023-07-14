@@ -1,4 +1,4 @@
-package project.server.domain.recommend;
+package project.server.domain.recommend.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

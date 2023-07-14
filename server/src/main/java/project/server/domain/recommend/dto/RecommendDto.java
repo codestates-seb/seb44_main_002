@@ -1,8 +1,9 @@
-package project.server.domain.recommend;
+package project.server.domain.recommend.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import project.server.domain.recommend.entity.Recommend;
 
 import java.util.List;
 import java.util.stream.Collectors;
