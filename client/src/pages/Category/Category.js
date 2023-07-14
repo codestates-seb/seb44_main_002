@@ -49,7 +49,13 @@ export default function Category() {
       const url = useFilterurl(BASE_URL, currentPage, filterCondtion);
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok.');
         }
