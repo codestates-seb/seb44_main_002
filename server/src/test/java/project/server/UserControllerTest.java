@@ -21,8 +21,7 @@ import project.server.domain.user.UserService;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -105,5 +104,15 @@ public class UserControllerTest {
         //then
         result
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteUser() throws Exception {
+        // Perform the request and validate the response
+        ResultActions result =
+                mockMvc.perform(
+                        delete("/users/1"));
+
+        result.andExpect(status().isNoContent());
     }
 }
