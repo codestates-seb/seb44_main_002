@@ -69,7 +69,7 @@ export default function CocktailForm() {
         .then((res) => res.json())
         .then((json) => {
           console.log(json);
-          navigate(`/detail/${json.cocktailId}`);
+          navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
           console.log(error);
