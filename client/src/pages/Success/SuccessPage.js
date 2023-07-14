@@ -45,7 +45,7 @@ export default function SuccessPage() {
           <img
             src={userData && userData.imageUrl}
             alt="userimg"
-            className="mb-6 max-[768px]:w-[90%]"
+            className="mb-6 max-[768px]:w-[90%] rounded-full"
           />
           <div className="flex text-4xl font-bold justify-center items-center text-center max-[768px]:text-2xl">
             칵테일을 등록해주셔서 <br />
