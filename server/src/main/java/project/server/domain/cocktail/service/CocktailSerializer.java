@@ -1,5 +1,6 @@
 package project.server.domain.cocktail.service;
 
+import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.entity.Comment;
@@ -72,6 +73,15 @@ public class CocktailSerializer {
                 .cocktailId(cocktail.getCocktailId())
                 .name(cocktail.getName())
                 .imageUrl(cocktail.getImageUrl())
+                .isBookmarked(isBookmarked)
+                .build();
+    }
+
+    public static CocktailDto.SimpleResponse bookmarkEntityToSimpleResponse(boolean isBookmarked, Bookmark bookmark) {
+        return CocktailDto.SimpleResponse.builder()
+                .cocktailId(bookmark.getCocktailId())
+                .name(bookmark.getCocktailName())
+                .imageUrl(bookmark.getCocktailImageUrl())
                 .isBookmarked(isBookmarked)
                 .build();
     }

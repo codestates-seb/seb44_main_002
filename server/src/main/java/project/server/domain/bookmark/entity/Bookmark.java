@@ -37,4 +37,12 @@ public class Bookmark {
     public long getCocktailId() {
         return cocktailInfo.getCocktailId();
     }
+
+    public String getCocktailName(){
+        return cocktailInfo.getCocktailName();
+    }
+
+    public String getCocktailImageUrl(){
+        return cocktailInfo.getCocktailImageUrl();
+    }
 }
