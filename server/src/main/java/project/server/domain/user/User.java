@@ -5,11 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.cocktail.service.CocktailSerializer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity(name = "users")
 @Getter
@@ -59,6 +61,9 @@ public class User {
                 .age(age)
                 .profileImageUrl(profileImageUrl)
                 .subscriberCount(subscriberCount)
+                .bookmarkedCocktails(bookmarks.stream()
+                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
+                        .collect(Collectors.toList()))
                 .build();
     }
 
