@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
 import UserRecipe from './UserRecipe';
+import UserPageApi from './UserPageApi';
 
 import tw from 'tailwind-styled-components';
 import UserBookmarked from './UserBookmarked';
@@ -11,9 +13,21 @@ import UserBookmarked from './UserBookmarked';
 export default function UserPage() {
   const [userInfo, setUserInfo] = useState(dummyData);
   const location = useLocation().pathname.split('/')[2];
+  const logginUser = useSelector((state) => state.userinfo);
+
+  const getUser = async () => {
+    try {
+      const response = await UserPageApi.getUserData(location);
+      const json = await response.json();
+      setUserInfo(json);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     // 칵테일 정보 fetch 추가예정
+    getUser();
   }, []);
 
   const BackgroundImg = () => {
@@ -32,9 +46,9 @@ export default function UserPage() {
       <BackgroundImg />
       <OuterContainer>
         <Container>
-          <UserInfo userInfo={userInfo} />
-          <Subscribe userInfo={userInfo} />
-          <UserBookmarked userInfo={userInfo} />
+          <UserInfo userInfo={userInfo} logginUser={logginUser} />
+          <Subscribe userInfo={userInfo} logginUser={logginUser} />
+          <UserBookmarked userInfo={userInfo} logginUser={logginUser} />
           <UserRecipe userInfo={userInfo} />
         </Container>
       </OuterContainer>

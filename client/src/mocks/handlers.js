@@ -219,7 +219,7 @@ export const handlers = [
   // ----------------------------------------------------------------------------------------------
 
   // FIXME: 상세 페이지를 볼려면 밑에 코드를 주석을 푸세요
-  // rest.get(`${BASE_URL}cocktails/:id`, (req, res, ctx) => {
+  // rest.get(`${BASE_URL}cocktails/details/:id`, (req, res, ctx) => {
   //   const { cocktailId: cocktailId } = req.params;
   //   // 예시로 사용할 칵테일 상세정보
   //   const cocktailDetail = {
@@ -425,4 +425,79 @@ export const handlers = [
   //     return res(ctx.status(200), ctx.json(data));
   //   }
   // ),
+
+  // -------------------------------------------------------------------------------------------------
+
+  // 이미지 업로드
+  rest.post(`${BASE_URL}upload/cocktails`, (req, res, ctx) => {
+    const { body } = req;
+
+    // 예시로 사용할 이미지 URL
+    const imageUrl =
+      'https://img.freepik.com/free-photo/delicious-daiquiri-cocktail-with-lime_23-2149412419.jpg?w=996&t=st=1689298556~exp=1689299156~hmac=3b62d6e7665cceea6a13ff6cad4ca4ab7023aee0cc123e6ead4dfc9da2ae8967';
+
+    // 응답 데이터
+    const response = {
+      url: imageUrl,
+    };
+
+    return res(ctx.status(201), ctx.json(response));
+  }),
+
+  // ----------------------------------------------------------
+
+  // 칵테일 레시피 등록
+  rest.post(`${BASE_URL}cocktails`, (req, res, ctx) => {
+    const { headers, body } = req;
+    const { Authorization } = headers;
+
+    // 예시로 사용할 칵테일 정보
+    const cocktail = {
+      cocktailId: 1,
+      userId: 1,
+      userName: 'kim',
+      name: 'sample',
+      imageUrl:
+        'https://img.freepik.com/free-photo/delicious-daiquiri-cocktail-with-lime_23-2149412419.jpg?w=996&t=st=1689298556~exp=1689299156~hmac=3b62d6e7665cceea6a13ff6cad4ca4ab7023aee0cc123e6ead4dfc9da2ae8967',
+      recipe: [
+        {
+          process: 'step1',
+        },
+        {
+          process: 'step2',
+        },
+      ],
+      flavor: [
+        {
+          tag: 'sweet',
+        },
+        {
+          tag: 'sour',
+        },
+      ],
+      degree: 'frequency_high',
+      ingredients: [{ ingredient: 'beverage' }, { ingredient: 'salt' }],
+      viewCount: 1,
+      createdAt: '2023-05-05',
+      modifiedAt: '2023-06-18',
+      comments: [],
+      recommends: [
+        {
+          cocktailId: 1,
+          name: 'sample1',
+          imageUrl:
+            'https://cphoto.asiae.co.kr/listimglink/1/2020051809541442224_1589763254.jpg',
+        },
+        {
+          cocktailId: 2,
+          name: 'sample2',
+          imageUrl:
+            'http://res.heraldm.com/content/image/2015/03/12/20150312001242_0.jpg',
+        },
+      ],
+      isBookmarked: false,
+    };
+
+    return res(ctx.status(201), ctx.json(cocktail));
+  }),
 ];

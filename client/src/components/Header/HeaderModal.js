@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/slice/isLoginSlice';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../../redux/slice/isLoginSlice';
+import { open, close } from '../../redux/slice/isModalSlice';
 import { userinfoLogin, userinfoGet } from '../../redux/slice/userInfoSlice';
+
+import HoverButton from '../../common/Buttons/HoverButton';
+import CustomInput from '../Input/CustomInput';
+import useLoginValid from '../Validation/LoginValidation';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import HoverButton from '../../common/Buttons/HoverButton';
 import tw from 'tailwind-styled-components';
-import useLoginValid from '../Validation/LoginValidation';
-import CustomInput from '../Input/CustomInput';
 
 const style = {
   position: 'absolute',
@@ -27,9 +30,10 @@ const style = {
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function HeaderModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const isModal = useSelector((state) => state.isModal.isModal);
+
+  const handleOpen = () => dispatch(open());
+  const handleClose = () => dispatch(close());
 
   // 유효성검사 state
   const [isValid, setIsValid] = useState({
@@ -135,7 +139,7 @@ export default function HeaderModal() {
         </Button>
       </HoverButton>
       <Modal
-        open={open}
+        open={isModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

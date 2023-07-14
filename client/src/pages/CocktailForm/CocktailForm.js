@@ -37,9 +37,7 @@ export default function CocktailForm() {
 
   const navigate = useNavigate();
 
-  console.log('value: ', form, '유효성: ', isValid);
   const accessToken = localStorage.getItem('accessToken');
-  console.log(accessToken);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -1,16 +1,31 @@
 import { useNavigate, Link } from 'react-router-dom';
 
+import PasswordModal from './PasswordModal';
+import UserPageApi from './UserPageApi';
+
 import tw from 'tailwind-styled-components';
 
-export default function UserInfo({ userInfo }) {
+export default function UserInfo({ userInfo, logginUser }) {
   const navigate = useNavigate();
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  const deleteUser = () => {
+  const deleteUser = async () => {
+    try {
+      const response = await UserPageApi.deleteUser(
+        logginUser.UserId,
+        logginUser.accessToken
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clickDelete = () => {
     if (window.confirm('정말로 탈퇴하시겠습니까?')) {
       alert('삭제되었습니다.');
+      deleteUser();
       navigate('/');
     }
   };
@@ -20,7 +35,7 @@ export default function UserInfo({ userInfo }) {
       <InfoContainer>
         <UserImg
           src={`/images/user/${
-            userInfo.gender === '남' ? 'user_boy.png' : 'user_girl.png'
+            userInfo.gender === 'male' ? 'user_boy.png' : 'user_girl.png'
           }`}
           alt="user img"
         />
@@ -54,12 +69,10 @@ export default function UserInfo({ userInfo }) {
           </InnerInfo>
         </UserContainer>
       </InfoContainer>
-      {userInfo.userId === 1 && (
+      {userInfo.userId === logginUser.UserId && (
         <ButtonContainer>
-          <Link to={`/`}>
-            <Button>수정하기</Button>
-          </Link>
-          <Button onClick={deleteUser}>탈퇴하기</Button>
+          <PasswordModal />
+          <Button onClick={clickDelete}>탈퇴하기</Button>
         </ButtonContainer>
       )}
     </Container>

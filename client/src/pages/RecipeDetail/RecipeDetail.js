@@ -173,7 +173,8 @@ const cocktailDetail = {
   userId: 1,
   userName: 'chan',
   name: '체리주',
-  imageUrl: 'sample image url',
+  imageUrl:
+    'https://cphoto.asiae.co.kr/listimglink/1/2020051809541442224_1589763254.jpg',
   liquor: '럼',
   viewCount: 1,
   createdAt: '2023-07-02T01:01:01',
