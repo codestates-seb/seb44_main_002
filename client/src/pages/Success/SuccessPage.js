@@ -65,6 +65,7 @@ export default function SuccessPage() {
             color="white"
             size="w-[200px] h-[60px]"
             fontSize="text-2xl"
+            onClick={() => navigate(`/detail/${userData.cocktailId}`)}
           >
             내 레시피 확인하기
           </HoverButton>
