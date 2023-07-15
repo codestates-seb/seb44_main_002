@@ -18,6 +18,7 @@ export default function CustomInput({
   },
   text = '오류문구 출력',
   size = 'w-[220px] h-[40px]',
+  radius = 'rounded-none',
 }) {
   return (
     <div>
@@ -32,7 +33,7 @@ export default function CustomInput({
           type={type}
           value={value}
           onChange={onChange}
-          className={`${size} mt-1 px-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+          className={`${size} ${radius} mt-1 px-2 outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
             isValid ? 'border-gray-200' : 'border-error'
           }`}
         />
