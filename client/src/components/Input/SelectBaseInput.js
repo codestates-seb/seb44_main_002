@@ -17,7 +17,7 @@ export default function SelectBaseInput({
         <select
           value={value}
           onChange={onChange}
-          className={`${size} outline-none border border-solid text-gray-200 font-normal rounded-md text-sm bg-transparent ${
+          className={`${size} outline-none border border-solid cursor-pointer text-gray-200 font-normal rounded-md text-sm bg-transparent ${
             isValid ? 'border-gray-200' : 'border-error'
           }`}
         >

@@ -7,8 +7,6 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   const onUpload = async (e) => {
     const file = e.target.files[0];
 
-    // console.log(file.name);
-
     if (!file) {
       setImageSrc(null);
       inputRef.current.value = '';
@@ -36,7 +34,6 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
     formData.append('file', file);
 
     try {
-      // console.log(formData.get('image'));
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}upload/cocktails`,
         {
@@ -71,22 +68,31 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   return (
     <>
       <p
-        className={`font-bold text-error mb-1 ${
+        className={`w-full flex justify-start font-bold text-error mb-1 ${
           isValid.imageUrl && 'text-gray-200'
         }`}
       >
         칵테일 사진 등록
       </p>
-      <input
-        id="file-input"
-        ref={inputRef}
-        className={`text-gray-200 mb-1 rounded-sm ${
-          !imageSrc && 'h-[300px] border border-error border-solid'
-        } ${isValid.imageUrl && 'border-gray-200'}`}
-        accept="image/*"
-        type="file"
-        onChange={onUpload}
-      />
+      <div
+        style={{
+          backgroundImage: !imageSrc ? `url('/images/dnd.svg')` : '',
+          backgroundSize: '150px 150px',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <input
+          id="file-input"
+          ref={inputRef}
+          className={`text-gray-200 mb-1 rounded-sm w-full cursor-pointer ${
+            !imageSrc && 'h-[300px] border border-error border-solid'
+          } ${isValid.imageUrl && 'border-gray-200'}`}
+          accept="image/*"
+          type="file"
+          onChange={onUpload}
+        />
+      </div>
       <div className="h-8">
         <p className={`h-8 text-sm text-error ${isValid.imageUrl && 'hidden'}`}>
           칵테일 사진을 등록해주세요
