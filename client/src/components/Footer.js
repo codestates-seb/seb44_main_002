@@ -14,7 +14,7 @@ export default function Footer() {
             onKeyDown={() => navigate('/')}
             src={process.env.PUBLIC_URL + `/images/logo.webp`}
             alt="footerLogo"
-            className="animate-bounce cursor-pointer"
+            className="cursor-pointer"
           />
         </div>
         <FooterTextSection>
