@@ -13,11 +13,11 @@ export default function SelectBaseInput({
           isValid ? 'text-gray-200' : 'text-error'
         }`}
       >
-        베이스 술
+        <p className="mb-1">베이스 술</p>
         <select
           value={value}
           onChange={onChange}
-          className={`${size} outline-none border border-solid text-gray-200 font-normal text-sm bg-transparent ${
+          className={`${size} outline-none border border-solid text-gray-200 font-normal rounded-md text-sm bg-transparent ${
             isValid ? 'border-gray-200' : 'border-error'
           }`}
         >
@@ -30,8 +30,8 @@ export default function SelectBaseInput({
           <option value="tequila">데낄라</option>
         </select>
       </label>
-      <div className="h-7">
-        <p className={`${isValid && 'hidden'} text-error`}>
+      <div className="h-8">
+        <p className={`${isValid && 'hidden'} text-sm text-error`}>
           베이스 술을 골라주세요
         </p>
       </div>
