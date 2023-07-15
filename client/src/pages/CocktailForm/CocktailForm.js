@@ -99,6 +99,7 @@ export default function CocktailForm() {
                 text="칵테일 이름을 적어주세요"
                 isValid={isValid.name}
                 size="w-[355px] h-[40px] max-[520px]:w-[320px]"
+                radius="rounded-md"
               />
               <ImageUpload
                 form={form}
