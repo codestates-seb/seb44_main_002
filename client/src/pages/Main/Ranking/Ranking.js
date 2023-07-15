@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 
 import tw from 'tailwind-styled-components';
 
-export default function Ranking() {
+export default function Ranking({ error, setError }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [data, setData] = useState(null);
-  const [error, setError] = useState(false); // true면 error 메세지 보이게 하기
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   useEffect(() => {
