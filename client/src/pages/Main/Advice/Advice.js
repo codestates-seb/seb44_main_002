@@ -6,7 +6,7 @@ import HoverButton from '../../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
 
-export default function Advice() {
+export default function Advice({ error }) {
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function Advice() {
       <ImgContainer>
         <img
           className="w-[90%] h-[full] object-contain"
-          src="images/mainPromotion.webp"
+          src={error ? 'images/errorPromotion.png' : 'images/mainPromotion.png'}
           alt="advice"
         />
       </ImgContainer>
