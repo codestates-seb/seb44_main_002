@@ -60,7 +60,6 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         setIsValid({ ...isValid, imageUrl: false });
         setImageSrc(null);
         inputRef.current.value = '';
-        // document.getElementById('file-input').value = null;
         console.log('이미지 업로드 실패');
         // 업로드 실패 시 에러 처리
       }
@@ -81,7 +80,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
       <input
         id="file-input"
         ref={inputRef}
-        className={`text-gray-200 mb-1 ${
+        className={`text-gray-200 mb-1 rounded-sm ${
           !imageSrc && 'h-[300px] border border-error border-solid'
         } ${isValid.imageUrl && 'border-gray-200'}`}
         accept="image/*"
@@ -89,7 +88,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         onChange={onUpload}
       />
       <div className="h-8">
-        <p className={`h-8 text-error ${isValid.imageUrl && 'hidden'}`}>
+        <p className={`h-8 text-sm text-error ${isValid.imageUrl && 'hidden'}`}>
           칵테일 사진을 등록해주세요
         </p>
       </div>
