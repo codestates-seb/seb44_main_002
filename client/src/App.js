@@ -1,5 +1,5 @@
 import { useEffect, Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { login } from './redux/slice/isLoginSlice';
@@ -24,6 +24,7 @@ function App() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isSignUp = location.pathname.includes('/signup');
   const isCommented = location.pathname.includes('/comment');
   const RightPaths = [
