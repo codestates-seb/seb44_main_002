@@ -1,6 +1,9 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { login } from './redux/slice/isLoginSlice';
+import { userinfoLogin, userinfoGet } from './redux/slice/userInfoSlice';
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer';
@@ -18,7 +21,9 @@ const SuccessPage = lazy(() => import('./pages/Success/SuccessPage'));
 import './App.css';
 
 function App() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const location = useLocation();
+  const dispatch = useDispatch();
   const isSignUp = location.pathname.includes('/signup');
   const isCommented = location.pathname.includes('/comment');
   const RightPaths = [
@@ -35,15 +40,36 @@ function App() {
 
   // refresh token이 있을 경우 access token 주기적으로 재발급
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     if (document.hasFocus()) getAccessToken();
-  //   }, 1800000);
-
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
+  const handleUserInfo = async (memberId) => {
+    fetch(`${BASE_URL}users/${memberId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        //'ngrok-skip-browser-warning': 'true',
+      },
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        dispatch(userinfoGet(data));
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate('/error');
+      });
+  };
+  useEffect(() => {
+    const isToken = localStorage.getItem('accessToken');
+    // const timer = setInterval(() => {
+    //   if (document.hasFocus()) getAccessToken();
+    // }, 1800000);
+    // return () => {
+    //   clearInterval(timer);
+    // };
+    if (isToken) {
+      dispatch(login(() => login()));
+      handleUserInfo(localStorage.getItem('UserId'));
+    }
+  }, []);
 
   return (
     <div className="App">
