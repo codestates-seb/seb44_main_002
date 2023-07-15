@@ -23,7 +23,7 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
         }`}
       >
         속재료
-        <div className="flex flex-row items-center justify-center flex-wrap w-[355px] h-[100px]">
+        <div className="flex flex-row items-center justify-center flex-wrap  w-[355px] h-[100px]">
           <div className="mr-4">
             <input
               className="mr-1"
@@ -33,7 +33,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="sugar"
               onChange={checkboxHandler}
             />
-            <label htmlFor="sugar">설탕</label>
+            <label className="text-sm" htmlFor="sugar">
+              설탕
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -44,7 +46,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="salt"
               onChange={checkboxHandler}
             />
-            <label htmlFor="salt">소금</label>
+            <label className="text-sm" htmlFor="salt">
+              소금
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -55,7 +59,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="beverage"
               onChange={checkboxHandler}
             />
-            <label htmlFor="beverage">과일음료</label>
+            <label className="text-sm" htmlFor="beverage">
+              과일음료
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -66,7 +72,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="soda"
               onChange={checkboxHandler}
             />
-            <label htmlFor="soda">탄산음료</label>
+            <label className="text-sm" htmlFor="soda">
+              탄산음료
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -77,7 +85,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="lemonSqueeze"
               onChange={checkboxHandler}
             />
-            <label htmlFor="lemonSqueeze">레몬즙</label>
+            <label className="text-sm" htmlFor="lemonSqueeze">
+              레몬즙
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -88,7 +98,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="limeSqueeze"
               onChange={checkboxHandler}
             />
-            <label htmlFor="limeSqueeze">라임즙</label>
+            <label className="text-sm" htmlFor="limeSqueeze">
+              라임즙
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -99,7 +111,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="milk"
               onChange={checkboxHandler}
             />
-            <label htmlFor="milk">우유</label>
+            <label className="text-sm" htmlFor="milk">
+              우유
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -110,7 +124,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="ice"
               onChange={checkboxHandler}
             />
-            <label htmlFor="ice">얼음</label>
+            <label className="text-sm" htmlFor="ice">
+              얼음
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -121,12 +137,14 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="mint"
               onChange={checkboxHandler}
             />
-            <label htmlFor="mint">민트</label>
+            <label className="text-sm" htmlFor="mint">
+              민트
+            </label>
           </div>
         </div>
       </div>
       <div className="h-7">
-        <p className={`${isValid && 'hidden'} text-error`}>
+        <p className={`${isValid && 'hidden'} text-sm text-error`}>
           속재료를 한개 이상 골라주세요
         </p>
       </div>
