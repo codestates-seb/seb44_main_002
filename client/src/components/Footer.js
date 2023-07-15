@@ -14,24 +14,36 @@ export default function Footer() {
             onKeyDown={() => navigate('/')}
             src={process.env.PUBLIC_URL + `/images/logo.webp`}
             alt="footerLogo"
-            className="cursor-pointer"
+            className="animate-bounce cursor-pointer"
           />
         </div>
         <FooterTextSection>
-          <h1 className="mb-6">프로젝트 편한</h1>
+          <h1 className="mb-6 opacity-100">프로젝트 편한</h1>
           <p className="max-[768px]:ml-4">TEAM 002</p>
         </FooterTextSection>
         <FooterTextSection>
           <h1 className="mb-6">TEAM FE</h1>
-          <p className="mb-4 text-gray-300 max-[768px]:ml-4">황찬우</p>
-          <p className="mb-4 text-gray-300 max-[768px]:ml-2">이은희</p>
-          <p className="text-gray-300 max-[768px]:ml-2">김민재</p>
+          <p className="text-sm opacity-30 mb-4 text-gray-300 max-[768px]:ml-4">
+            황찬우
+          </p>
+          <p className="text-sm opacity-30 mb-4 text-gray-300 max-[768px]:ml-2">
+            이은희
+          </p>
+          <p className="text-sm opacity-30 text-gray-300 max-[768px]:ml-2">
+            김민재
+          </p>
         </FooterTextSection>
         <FooterTextSection>
           <h1 className="mb-6">TEAM BE</h1>
-          <p className="mb-4 text-gray-300 max-[768px]:ml-4">노재경</p>
-          <p className="mb-4 text-gray-300 max-[768px]:ml-2">김수민</p>
-          <p className="text-gray-300 max-[768px]:ml-2">박태양</p>
+          <p className="text-sm opacity-30 mb-4 text-gray-300 max-[768px]:ml-4">
+            노재경
+          </p>
+          <p className="text-sm opacity-30 mb-4 text-gray-300 max-[768px]:ml-2">
+            김수민
+          </p>
+          <p className="text-sm opacity-30 text-gray-300 max-[768px]:ml-2">
+            박태양
+          </p>
         </FooterTextSection>
       </FooterSection>
     </FooterContainer>
@@ -40,7 +52,7 @@ export default function Footer() {
 
 const FooterContainer = tw.div`
   flex
-  h-[220px]
+  h-[300px]
   justify-center
   items-center
   bg-[#242629]
@@ -62,4 +74,5 @@ const FooterTextSection = tw.div`
   flex
   flex-col
   max-[768px]:flex-row
+  
 `;
