@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <FooterContainer>
       <FooterSection>
-        <div className="flex w-[32px] h-[48px]">
+        <div className="flex w-[32px] h-[48px] mb-4 max-[768px]:w-[28px] max-[768px]:h-[44px]">
           <img
             role="presentation"
             onClick={() => navigate('/')}
@@ -40,7 +40,7 @@ export default function Footer() {
 
 const FooterContainer = tw.div`
   flex
-  h-[300px]
+  h-[220px]
   justify-center
   items-center
   bg-[#242629]
