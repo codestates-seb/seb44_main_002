@@ -67,6 +67,6 @@ export default function Ranking() {
   );
 }
 
-const Container = tw.div`flex flex-col duration-0 text-white h-[500px] mt-[70px] w-screen max-[884px]:h-full`;
+const Container = tw.div`flex flex-col text-white h-[500px] mt-[70px] w-screen max-[884px]:h-full`;
 const Title = tw.div`flex flex-[1] font-bold text-2xl ml-24 max-[884px]:justify-center max-[884px]:ml-0 max-[884px]:mb-10`;
 const ItemContainer = tw.div`flex flex-[10] justify-around items-center max-[884px]:flex-col max-[884px]:w-full`;

@@ -11,7 +11,6 @@ export default function RankingCard({ item, idx }) {
   return (
     <div className="relative cursor-pointer">
       <Item
-        className="duration-0"
         key={item.cocktailId}
         onMouseLeave={() => {
           setIsHover(false);
@@ -44,7 +43,7 @@ const Item = tw.div`flex flex-col w-[170px] max-[884px]:w-full max-[884px]:mb-8 
   props
 ) => (props.isHover ? `text-pointPurple-100` : `text-gray-300`)}`;
 const ImageContainer = tw.div`flex-[3] relative cursor-pointer rounded-full w-full max-[884px]:rounded-none max-[884px]:w-full`;
-const Image = tw.img`rounded-full h-full w-full max-[884px]:rounded-none max-[884px]:w-full`;
+const Image = tw.img`h-full w-full max-[884px]:w-full`;
 const ItemText = tw.div`flex flex-[1] items-center w-full font-bold max-[884px]:text-2xl`;
 const RankingNumber = tw.div`absolute font-black text-7xl top-[100px] max-[884px]:hidden ${(
   props
