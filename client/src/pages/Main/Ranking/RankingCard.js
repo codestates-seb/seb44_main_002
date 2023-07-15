@@ -42,7 +42,7 @@ export default function RankingCard({ item, idx }) {
 const Item = tw.div`flex flex-col justify-center items-center w-[170px] max-[884px]:w-full max-[884px]:mb-8 min-[885px]:h-[220px] ${(
   props
 ) => (props.isHover ? `text-pointPurple-100` : `text-gray-300`)}`;
-const ImageContainer = tw.div`flex-[3] relative cursor-pointer rounded-full w-full max-[884px]:rounded-none max-[884px]:w-[80%]`;
+const ImageContainer = tw.div`flex-[3] relative cursor-pointer rounded-full w-full max-[884px]:rounded-2xl max-[884px]:w-[80%] max-[884px]:drop-shadow-lg`;
 const Image = tw.img`h-full w-full max-[884px]:w-full`;
 const ItemText = tw.div`flex flex-[1] items-center w-full font-bold max-[884px]:text-2xl max-[884px]:w-[80%]`;
 const RankingNumber = tw.div`absolute font-black text-7xl top-[100px] max-[884px]:hidden ${(
