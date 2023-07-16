@@ -112,13 +112,13 @@ export default function Card({ item, data, setData }) {
     </Container>
   );
 }
+
 const Container = tw.div`
 relative 
 w-[11.25rem]
 h-[15rem] 
 ${(props) => (props.ishovering ? `text-gray-100` : `text-gray-200 `)}
 drop-shadow-3xl
-
 `;
 
 const ImgButton = tw.button`

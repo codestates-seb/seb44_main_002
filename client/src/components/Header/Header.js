@@ -18,8 +18,6 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const Swal = require('sweetalert2');
-
   // 리덕스 툴킷
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const userinfo = useSelector((state) => state.userinfo);
