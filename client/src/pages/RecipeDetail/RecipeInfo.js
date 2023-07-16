@@ -5,8 +5,8 @@ import RecipeApi from './RecipeApi';
 import tw from 'tailwind-styled-components';
 
 import { BsArrowRightShort } from 'react-icons/bs';
-import { MdIosShare } from 'react-icons/md';
 import { PiUserCircleFill } from 'react-icons/pi';
+import ImageModal from './ImgaeModal';
 
 export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   const urlCu = encodeURI(
     `https://pocketcu.co.kr/search/stock/product/main?searchWord=${cocktailDetail.liquor}`
   );
-  console.log(cocktailDetail);
+
   const deleteRecipe = async () => {
     try {
       const response = await RecipeApi.deleteCocktails(
@@ -67,6 +67,7 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
     const selectedStar = process.env.PUBLIC_URL + '/images/star_selected.webp';
     return (
       <DrawStarContainer>
+        <StarP>자신이 부여한 평점</StarP>
         <FlexContainer>
           {Array.from({ length: repetitions }, (_, index) => (
             <StarIcon
@@ -77,38 +78,39 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
             />
           ))}
         </FlexContainer>
-        <StarAverage>{`평균 : ${
-          total === 0 ? cocktailDetail.rating : total
-        }`}</StarAverage>
       </DrawStarContainer>
     );
   };
 
   return (
     <InfoContainer>
-      <InfoImage src={cocktailDetail.imageUrl} alt="와인사진" />
+      {/* <InfoImage src={cocktailDetail.imageUrl} alt="와인사진" /> */}
+      <ImageModal imageUrl={cocktailDetail.imageUrl} />
       <InfoRightContainer>
         <StarCotiner>
           <DrawStar />
-          {cocktailDetail.userId === 1 && (
-            <ModifyContainer>
-              <Link to={`/modifyPost/${cocktailDetail.cocktailId}`}>
-                <ModifyP>수정하기</ModifyP>
-              </Link>
-              <Separator>|</Separator>
-              <ModifyP onClick={deletePost}>삭제하기</ModifyP>
-            </ModifyContainer>
-          )}
+          <ModifyContainer>
+            {cocktailDetail.userId === 1 && (
+              <>
+                <Link to={`/modifyPost/${cocktailDetail.cocktailId}`}>
+                  <ModifyP>수정하기</ModifyP>
+                </Link>
+                <Separator></Separator>
+                <ModifyP onClick={deletePost}>삭제하기</ModifyP>
+                <Separator></Separator>
+              </>
+            )}
+            <ModifyP onClick={copyToClipBoard}>주소복사</ModifyP>
+          </ModifyContainer>
         </StarCotiner>
         <TitleContainer>
           <InfoTitle>{cocktailDetail.name}</InfoTitle>
-          <ShareContainer onClick={copyToClipBoard}>
-            <p>공유하기</p>
-            <MdIosShare />
-          </ShareContainer>
+          <StarAverage>{`별점 평균 : ${
+            total === 0 ? cocktailDetail.rating : total
+          }`}</StarAverage>
         </TitleContainer>
         <UserContainer>
-          <FlexWrapContainer>
+          <WriterInfo>
             <Link to={`/userpage/${cocktailDetail.userId}`}>
               <FlexContainer>
                 <PiUserCircleFill size="24px" />
@@ -118,9 +120,13 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
             <p className="mt-1 text-[10px]">
               {getTime(cocktailDetail.createdAt)}
             </p>
-          </FlexWrapContainer>
+          </WriterInfo>
           <LinkToCU href={urlCu} target="_blank">
-            <LinkToCUP>편의점 앱으로 이동</LinkToCUP> <BsArrowRightShort />
+            {/* <LinkToCUP>편의점 앱으로 이동</LinkToCUP> <BsArrowRightShort /> */}
+            <img
+              src={process.env.PUBLIC_URL + '/images/btn_cu.webp'}
+              alt="편의점 앱으로 이동"
+            />
           </LinkToCU>
         </UserContainer>
         <RecipeContiner>
@@ -163,23 +169,27 @@ max-md:mt-4
 `;
 const StarCotiner = tw.section`
 flex
+flex-wrap-reverse
 justify-between
 text-xl
-max-lg:flex-col
+max-lg:flex-col-reverse
 `;
 const StarIcon = tw.img`
 mr-1
 cursor-pointer
 `;
 const DrawStarContainer = tw.div`
-flex 
-items-end 
-max-lg:flex-col 
+flex
+flex-col
 max-lg:items-start 
-max-md:flex-row
+`;
+const StarP = tw.p`
+mb-1
+text-gray-300 
+text-xs
 `;
 const StarAverage = tw.p`
-ml-4 
+ml-1
 text-yellow-400 
 text-xs
 max-lg:ml-0
@@ -188,16 +198,23 @@ max-md:ml-2
 `;
 const ModifyContainer = tw.div`
 flex
-text-gray-300 
+flex-wrap
+items-start
+text-white
 text-xs
-max-lg:mt-2
+max-lg:mb-2
+max-lg:justify-end
 `;
 const ModifyP = tw.p`
+ml-2
 cursor-pointer
-hover:text-white
+hover:text-pointPurple-100
 `;
-const Separator = tw.p`
-mx-2
+const Separator = tw.div`
+ml-2
+h-4
+border-r-[1px]
+border-white
 `;
 const TitleContainer = tw.div`
 flex 
@@ -241,6 +258,10 @@ mt-0.5
 ml-0.5 
 mr-2.5 
 text-sm
+`;
+const WriterInfo = tw(FlexWrapContainer)`
+mb-2
+mr-2
 `;
 const LinkToCU = tw.a`
 flex

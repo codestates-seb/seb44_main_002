@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CommentValid from '../../components/Validation/CommentValidation';
@@ -9,6 +9,7 @@ import tw from 'tailwind-styled-components';
 export default function Community({ cocktailDetail, userInfo, getTime }) {
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
+  const [commentId, setCommentId] = useState(0);
   const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
 
@@ -29,13 +30,12 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
   const postReply = async () => {
     try {
       const repliInfo = {
-        userId: userInfo.UserId,
         taggedUserId: tag.userId,
         taggedUserName: tag.userName,
         content: comment,
       };
       const response = await RecipeApi.PostReplys(
-        cocktailDetail.cocktailId,
+        commentId,
         repliInfo,
         userInfo.accessToken
       );
@@ -86,17 +86,24 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
 
     if (tag.userId === '') {
       postComment();
+      location.reload();
     } else {
       postReply();
+      location.reload();
     }
   };
 
-  const changeTag = (userId, userName) => {
+  const changeTag = (userId, userName, commentId) => {
     // 본인 태그 방지
     if (userId !== 1) {
       setTag({ userId: userId, userName: userName });
+      setCommentId(commentId);
     }
   };
+
+  useEffect(() => {
+    console.log(cocktailDetail, cocktailDetail.comments);
+  }, []);
 
   return (
     <CommunityContainer>
@@ -151,7 +158,9 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                       </>
                     )}
                     <CommentButton
-                      onClick={() => changeTag(ele.userId, ele.userName)}
+                      onClick={() =>
+                        changeTag(ele.userId, ele.userName, ele.commentId)
+                      }
                     >
                       답변하기
                     </CommentButton>
@@ -190,7 +199,9 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                           </>
                         )}
                         <CommentButton
-                          onClick={() => changeTag(rp.userId, rp.userName)}
+                          onClick={() =>
+                            changeTag(rp.userId, rp.userName, ele.commentId)
+                          }
                         >
                           답변하기
                         </CommentButton>

@@ -58,10 +58,10 @@ export default {
       console.log(error);
     }
   },
-  // 답변 등록
-  async PostReplys(cocktailId, replyInfo, accessToken) {
+  // 대댓글 등록
+  async PostReplys(commentId, replyInfo, accessToken) {
     try {
-      const response = await fetch(`${API_BASE}replies/${cocktailId}`, {
+      const response = await fetch(`${API_BASE}replies/${commentId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ export default {
       console.log(error);
     }
   },
-  // 답변 삭제
+  // 대댓글 삭제
   async deleteReplies(replyId, accessToken) {
     try {
       const response = await fetch(`${API_BASE}replies/${replyId}`, {
