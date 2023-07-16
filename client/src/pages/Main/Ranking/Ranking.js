@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 
 import tw from 'tailwind-styled-components';
 
-export default function Ranking() {
+export default function Ranking({ error, setError }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [data, setData] = useState(null);
-  const [error, setError] = useState(false); // true면 error 메세지 보이게 하기
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   useEffect(() => {
@@ -67,6 +66,6 @@ export default function Ranking() {
   );
 }
 
-const Container = tw.div`flex flex-col duration-0 text-white h-[500px] mt-[70px] w-screen max-[884px]:h-full`;
+const Container = tw.div`flex flex-col text-white h-[500px] mt-[70px] w-screen max-[884px]:h-full`;
 const Title = tw.div`flex flex-[1] font-bold text-2xl ml-24 max-[884px]:justify-center max-[884px]:ml-0 max-[884px]:mb-10`;
 const ItemContainer = tw.div`flex flex-[10] justify-around items-center max-[884px]:flex-col max-[884px]:w-full`;

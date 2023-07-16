@@ -61,7 +61,7 @@ export default function CocktailRecipeInput({
 
   return (
     <>
-      <div className="flex flex-col w-[350px] max-[520px]:w-[320px]">
+      <div className="flex flex-col border border-gray-300 border-solid rounded-md p-2 w-[350px] max-[520px]:w-[320px]">
         <p
           className={`flex flex-col font-bold mb-2 ${
             isValid.recipe ? 'text-gray-200' : 'text-error'
@@ -104,7 +104,7 @@ export default function CocktailRecipeInput({
       <div className="flex w-full justify-center mb-6">
         {form.recipe.length < 99 && (
           <HoverButton
-            size="w-6 h-6 mt-1"
+            size="w-7 h-7 mt-1"
             onClick={addInput}
             disabled={!isValid.recipe}
           >
@@ -130,4 +130,5 @@ const Input = tw.input`
   font-normal
   text-sm
   bg-transparent
+  rounded-md
 `;

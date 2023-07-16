@@ -69,7 +69,7 @@ export default function CocktailForm() {
         .then((res) => res.json())
         .then((json) => {
           console.log(json);
-          navigate(`/detail/${json.cocktailId}`);
+          navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
           console.log(error);
@@ -99,6 +99,7 @@ export default function CocktailForm() {
                 text="칵테일 이름을 적어주세요"
                 isValid={isValid.name}
                 size="w-[355px] h-[40px] max-[520px]:w-[320px]"
+                radius="rounded-md"
               />
               <ImageUpload
                 form={form}
