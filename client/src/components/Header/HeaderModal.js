@@ -61,6 +61,7 @@ export default function HeaderModal() {
     })
       .then((data) => data.json())
       .then((data) => {
+        console.log(data);
         dispatch(userinfoGet(data));
       })
       .catch((err) => {
@@ -114,6 +115,7 @@ export default function HeaderModal() {
             handleUserInfo(data.headers.get('UserId'));
             // 전역상태관리 로그인으로 변경
             dispatch(login(() => login()));
+            handleClose();
             navigate('/');
           } else {
             if (data.status === 401) {
@@ -124,6 +126,7 @@ export default function HeaderModal() {
         })
         .catch((err) => {
           console.log(err);
+          handleClose();
           navigate('/error');
         });
     } else {
