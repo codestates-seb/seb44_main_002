@@ -48,8 +48,8 @@ export default function UserPage() {
         <Container>
           <UserInfo userInfo={userInfo} logginUser={logginUser} />
           <Subscribe userInfo={userInfo} logginUser={logginUser} />
-          <UserBookmarked userInfo={userInfo} logginUser={logginUser} />
           <UserRecipe userInfo={userInfo} />
+          <UserBookmarked userInfo={userInfo} logginUser={logginUser} />
         </Container>
       </OuterContainer>
     </Background>

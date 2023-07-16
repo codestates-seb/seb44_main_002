@@ -1,4 +1,5 @@
 import Card from '../../components/Card/Card';
+import OwnRecipeCard from '../../components/Card/OwnRecipeCard';
 import tw from 'tailwind-styled-components';
 
 export default function UserRecipe({ userInfo }) {
@@ -8,9 +9,11 @@ export default function UserRecipe({ userInfo }) {
       <Bookmark>
         {userInfo.bookmarked.map((ele) => {
           return (
-            <CardContainer key={ele.cocktailId}>
-              <Card item={ele} />
-            </CardContainer>
+            <>
+              <CardContainer key={ele.cocktailId}>
+                <OwnRecipeCard item={ele} />
+              </CardContainer>
+            </>
           );
         })}
       </Bookmark>
