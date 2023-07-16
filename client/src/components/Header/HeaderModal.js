@@ -61,6 +61,7 @@ export default function HeaderModal() {
     })
       .then((data) => data.json())
       .then((data) => {
+        console.log(data);
         dispatch(userinfoGet(data));
       })
       .catch((err) => {

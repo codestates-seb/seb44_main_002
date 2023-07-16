@@ -32,7 +32,7 @@ export default function Card({ item, data, setData }) {
     // bookmark/delete/{cocktail-id}
     const handleBookmark = () => {
       ///bookmark/create/{cocktail-id}
-      if (!item.isBookmarked) {
+      if (!item.bookmarked) {
         fetch(`${BASE_URL}bookmark/create/${item.cocktailId}`, {
           method: 'POST',
           headers: {
@@ -73,10 +73,10 @@ export default function Card({ item, data, setData }) {
     dispatch(updateBookmark({ id, item }));
 
     const newDate = data.map((el, idx) => {
-      const isBookmarked = el.isBookmarked;
+      const bookmarked = el.bookmarked;
       //console.log(isBookmarked);
       if (el.cocktailId === item.cocktailId) {
-        return { ...el, isBookmarked: !isBookmarked };
+        return { ...el, bookmarked: !bookmarked };
       }
       return el;
     });
