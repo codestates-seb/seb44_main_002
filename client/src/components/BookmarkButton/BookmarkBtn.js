@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
-// 사용법
-{
-  /* <BookmarkBtn
-  onClick={handleBookmarkClick}
-  isBookmarked={isBookmarked}
-  size="w-[36px] h-[60px]"
-  absolute="true"
-  top="top-0"
-  right="right-14"
-/> */
-}
 export default function BookmarkBtn({
   onClick,
   bookmarked,
