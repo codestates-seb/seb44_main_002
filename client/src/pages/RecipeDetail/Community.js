@@ -53,7 +53,6 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
       );
     } catch (error) {
       console.log(error);
-      // navigate('/catogory');
       location.reload();
     }
   };
@@ -95,15 +94,9 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
 
   const changeTag = (userId, userName, commentId) => {
     // 본인 태그 방지
-    if (userId !== 1) {
-      setTag({ userId: userId, userName: userName });
-      setCommentId(commentId);
-    }
+    setTag({ userId: userId, userName: userName });
+    setCommentId(commentId);
   };
-
-  useEffect(() => {
-    console.log(cocktailDetail, cocktailDetail.comments);
-  }, []);
 
   return (
     <CommunityContainer>
@@ -139,7 +132,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                 <CommentAndButton>
                   <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === userInfo.UserId && (
+                    {ele.userId === userInfo.userId && (
                       <>
                         <CommentButton
                           onClick={() => deleteComment(ele.commentId)}
@@ -173,14 +166,14 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                     <CommentWriter>{rp.userName}</CommentWriter>
                     <CommentContent>
                       {'@' +
-                        rp.taggedUserInfo[0].taggedUserName +
+                        rp.taggedUserInfo.taggedUserName +
                         ' ' +
                         rp.content}
                     </CommentContent>
                     <CommentAndButton>
                       <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === userInfo.UserId && (
+                        {rp.userId === userInfo.userId && (
                           <>
                             <CommentButton
                               onClick={() => deleteReply(rp.replyId)}

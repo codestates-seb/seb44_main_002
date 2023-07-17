@@ -15,7 +15,6 @@ export default function RecipeDetail() {
   const navigate = useNavigate();
 
   const [cocktail, setCocktail] = useState(cocktailDetail);
-  console.log(cocktail);
   const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
   const userInfo = useSelector((state) => state.userinfo);
 
@@ -54,7 +53,7 @@ export default function RecipeDetail() {
       setCocktail(json);
     } catch (error) {
       console.log(error);
-      // navigate('/error');
+      navigate('/error');
     }
   };
 
@@ -93,21 +92,6 @@ export default function RecipeDetail() {
     };
 
     return (
-      // <BookmarkIcon onClick={setBookmark}>
-      //   <img
-      //     width={50}
-      //     src={isBookmarked ? selectedMookmark : bookmark}
-      //     alt="bookmark"
-      //   />
-      // </BookmarkIcon>
-      // <div
-      //   className="absolute
-      // top-0 right-14
-      // cursor-pointer"
-      // >
-      //   <BookmarkButton item={item} />
-      // </div>
-      //북마크 적용--이은희
       <BookmarkBtn
         onClick={setBookmark}
         isBookmarked={isBookmarked}
