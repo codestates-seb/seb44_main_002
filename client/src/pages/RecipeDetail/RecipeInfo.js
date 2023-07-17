@@ -91,6 +91,10 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
     );
   };
 
+  useEffect(() => {
+    setScore(cocktailDetail.userRate);
+  }, [cocktailDetail]);
+
   return (
     <InfoContainer>
       <ImageModal imageUrl={cocktailDetail.imageUrl} />

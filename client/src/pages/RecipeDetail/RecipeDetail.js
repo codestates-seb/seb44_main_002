@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import RecipeInfo from './RecipeInfo';
@@ -80,6 +80,7 @@ export default function RecipeDetail() {
       const json = await response.json();
       setCocktail(json);
       setIsBookmarked(json.bookmarked);
+      console.log(json);
     } catch (error) {
       console.log(error);
       navigate('/error');
