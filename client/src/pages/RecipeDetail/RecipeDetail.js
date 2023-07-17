@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
@@ -12,10 +13,14 @@ import RecipeApi from './RecipeApi';
 import tw from 'tailwind-styled-components';
 
 export default function RecipeDetail() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [cocktail, setCocktail] = useState(cocktailDetail);
-  const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
+  const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.bookmarked);
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
   const userInfo = useSelector((state) => state.userinfo);
 
   const location_id = useLocation().pathname.split('/')[2];
@@ -41,7 +46,7 @@ export default function RecipeDetail() {
 
   const setBookmark = () => {
     // 비로그인시 설정 불가
-    if (userId) {
+    if (isLogin) {
       setIsBookmarked(!isBookmarked);
     }
   };
@@ -79,21 +84,65 @@ export default function RecipeDetail() {
       </>
     );
   };
-  const DrawBookmark = () => {
-    const bookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
-    const selectedMookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
+  const DrawBookmark = ({ cocktail }) => {
     const item = {
-      cocktailId: cocktailDetail.cocktailId,
-      name: cocktailDetail.name,
-      imageUrl: cocktailDetail.imageUrl,
-      isBookmarked: cocktailDetail.isBookmarked,
+      cocktailId: cocktail.cocktailId,
+      name: cocktail.name,
+      imageUrl: cocktail.imageUrl,
+      userRate: cocktail.userRate,
+      viewCount: cocktail.viewCount,
+      bookmarked: cocktail.bookmarked,
     };
 
+    const handleBookmarkClick = (cocktailId, item) => {
+      console.log('동작');
+      const id = cocktailId;
+
+      const handleBookmark = () => {
+        if (!item.bookmarked) {
+          fetch(`${BASE_URL}bookmark/create/${item.cocktailId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: localStorage.getItem('accessToken'),
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
+              }
+              // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
+            })
+            .catch((error) => {
+              console.error(error); // 에러 처리
+            });
+        } else {
+          fetch(`${BASE_URL}bookmark/delete/${item.cocktailId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: localStorage.getItem('accessToken'),
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
+              }
+              // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
+            })
+            .catch((error) => {
+              console.error(error); // 에러 처리
+            });
+        }
+      };
+      handleBookmark();
+      dispatch(updateBookmark({ id, item }));
+
+      setBookmark();
+    };
     return (
       <BookmarkBtn
-        onClick={setBookmark}
+        onClick={() => handleBookmarkClick(cocktail.cocktailId, item)}
         isBookmarked={isBookmarked}
         absolute="true"
         top="top-0"
@@ -106,7 +155,7 @@ export default function RecipeDetail() {
       <Background>
         <BackgroundImg />
         <Container>
-          <DrawBookmark />
+          <DrawBookmark cocktail={cocktail} />
           <RecipeInfo
             cocktailDetail={cocktail}
             userInfo={userInfo}
@@ -298,6 +347,6 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  isBookmarked: false,
+  bookmarked: false,
   adminWritten: false,
 };
