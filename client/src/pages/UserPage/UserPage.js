@@ -47,7 +47,7 @@ export default function UserPage() {
       <OuterContainer>
         <Container>
           <UserInfo userInfo={userInfo} logginUser={logginUser} />
-          <Subscribe userInfo={userInfo} logginUser={logginUser} />
+          {/* <Subscribe userInfo={userInfo} logginUser={logginUser} /> */}
           <UserRecipe userInfo={userInfo} />
           <UserBookmarked userInfo={userInfo} logginUser={logginUser} />
         </Container>
@@ -97,8 +97,8 @@ const dummyData = {
   gender: '여',
   age: 20,
   email: 'kim@example.com',
-  subscribedCount: 1200,
-  bookmarked: [
+  subscriberCount: 1200,
+  bookmarkedCocktails: [
     {
       cocktailId: 1,
       name: '라떼 밀크주',

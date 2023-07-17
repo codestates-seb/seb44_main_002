@@ -50,7 +50,7 @@ export default function UserInfo({ userInfo, logginUser }) {
           </FlexContainer>
           <InnerInfo>
             <InfoComponent>
-              <UpInfoP>{convertNum(userInfo.subscribedCount)}</UpInfoP>
+              <UpInfoP>{convertNum(userInfo.subscriberCount)}</UpInfoP>
               <DownInfoP>구독자수</DownInfoP>
             </InfoComponent>
             <InfoComponent>

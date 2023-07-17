@@ -7,7 +7,7 @@ export default function UserRecipe({ userInfo }) {
     <Container>
       <Title>자신의 레시피</Title>
       <Bookmark>
-        {userInfo.bookmarked.map((ele) => {
+        {userInfo.bookmarkedCocktails.map((ele) => {
           return (
             <>
               <CardContainer key={ele.cocktailId}>
