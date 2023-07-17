@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 
 import tw from 'tailwind-styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Recommend({ cocktailDetail }) {
   const [recommends, setRecommends] = useState(cocktailDetail);
-  const handleBookmarkClick = () => {};
+
+  useEffect(() => {
+    setRecommends(cocktailDetail);
+  }, [cocktailDetail]);
+
   return (
     <RecommendContainer>
       <RecommentP>이런 칵테일은 어떠세요?</RecommentP>
