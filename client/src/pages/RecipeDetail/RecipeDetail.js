@@ -13,8 +13,6 @@ import RecipeApi from './RecipeApi';
 import tw from 'tailwind-styled-components';
 
 export default function RecipeDetail() {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -93,56 +91,28 @@ export default function RecipeDetail() {
       viewCount: cocktail.viewCount,
       bookmarked: cocktail.bookmarked,
     };
-
-    const handleBookmarkClick = (cocktailId, item) => {
+    const handleBookmarkClick = async (cocktailId) => {
       console.log('동작');
       const id = cocktailId;
-
-      const handleBookmark = () => {
-        if (!item.bookmarked) {
-          fetch(`${BASE_URL}bookmark/create/${item.cocktailId}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: localStorage.getItem('accessToken'),
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
-              }
-              // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
-            })
-            .catch((error) => {
-              console.error(error); // 에러 처리
-            });
-        } else {
-          fetch(`${BASE_URL}bookmark/delete/${item.cocktailId}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: localStorage.getItem('accessToken'),
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
-              }
-              // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
-            })
-            .catch((error) => {
-              console.error(error); // 에러 처리
-            });
+      if (!isBookmarked) {
+        try {
+          await RecipeApi.createBookmark(item);
+        } catch (error) {
+          console.log(error);
         }
-      };
-      handleBookmark();
+      } else {
+        try {
+          await RecipeApi.deleteBookmark(item);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       dispatch(updateBookmark({ id, item }));
-
       setBookmark();
     };
     return (
       <BookmarkBtn
-        onClick={() => handleBookmarkClick(cocktail.cocktailId, item)}
+        onClick={() => handleBookmarkClick(cocktail.cocktailId)}
         isBookmarked={isBookmarked}
         absolute="true"
         top="top-0"
@@ -150,6 +120,7 @@ export default function RecipeDetail() {
       />
     );
   };
+
   return (
     <>
       <Background>
