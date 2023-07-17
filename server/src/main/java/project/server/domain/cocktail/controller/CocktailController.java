@@ -10,14 +10,12 @@ import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.user.AuthManager;
 import project.server.dto.MultiResponseDto;
+import project.server.utils.UnsignedPermission;
 
 @RestController
 @RequestMapping("/cocktails")
 @Validated
 public class CocktailController {
-
-    private static final boolean PERMIT_UNSIGNED_USER = true;
-    private static final boolean NOT_PERMIT_UNSIGNED_USER = false;
 
     private final CocktailService cocktailService;
 
@@ -28,7 +26,7 @@ public class CocktailController {
     @PostMapping
     public ResponseEntity postCocktail(Authentication authentication,
                                        @RequestBody CocktailDto.Post post) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, NOT_PERMIT_UNSIGNED_USER);
+        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         CocktailDto.Response response = cocktailService.createCocktail(email, post);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -36,7 +34,7 @@ public class CocktailController {
     @GetMapping("/{cocktail-id}")
     public ResponseEntity getCocktail(Authentication authentication,
                                       @PathVariable("cocktail-id") long cocktailId) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, PERMIT_UNSIGNED_USER);
+        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
         CocktailDto.Response response = cocktailService.readCocktail(email, cocktailId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -47,7 +45,7 @@ public class CocktailController {
                                                @RequestParam(value = "tag", required = false) String tag,
                                                @RequestParam(value = "page", defaultValue = "1") int page,
                                                @RequestParam(value = "sort", defaultValue = "most_viewed") String sort) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, PERMIT_UNSIGNED_USER);
+        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
         MultiResponseDto responses = cocktailService.readFilteredCocktails(email, category, tag, page, sort);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
@@ -56,7 +54,7 @@ public class CocktailController {
     public ResponseEntity patchCocktail(Authentication authentication,
                                         @PathVariable("cocktail-id") long cocktailId,
                                         @RequestBody CocktailDto.Patch patch) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, NOT_PERMIT_UNSIGNED_USER);
+        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         CocktailDto.Response response = cocktailService.updateCocktail(email, cocktailId, patch);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
@@ -64,7 +62,7 @@ public class CocktailController {
     @DeleteMapping("/{cocktail-id}")
     public ResponseEntity deleteCocktail(Authentication authentication,
                                          @PathVariable("cocktail-id") long cocktailId) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, NOT_PERMIT_UNSIGNED_USER);
+        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         cocktailService.removeCocktail(email, cocktailId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -73,14 +71,14 @@ public class CocktailController {
     public ResponseEntity rateCocktail(Authentication authentication,
                                        @PathVariable("cocktail-id") long cocktailId,
                                        @RequestParam("value") int value) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, NOT_PERMIT_UNSIGNED_USER);
+        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         RateDto.Response response = cocktailService.rateCocktail(email, cocktailId, value);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/random")
     public ResponseEntity readRandomCocktail(Authentication authentication) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, PERMIT_UNSIGNED_USER);
+        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
         CocktailDto.Response response = cocktailService.readRandomCocktail(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

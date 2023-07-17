@@ -13,7 +13,6 @@ public class CocktailDto {
 
     @Getter
     @Setter
-    @NoArgsConstructor
     public static class Post {
         private String name;
         private String imageUrl;
