@@ -36,7 +36,7 @@ export default function Category() {
   //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
   const [cocktailData, setCocktailData] = useState([]);
-  console.log(cocktailData);
+  // console.log(cocktailData);
   const [obj, setObj] = useState({
     totalCount: 200,
     totalPages: 5,
