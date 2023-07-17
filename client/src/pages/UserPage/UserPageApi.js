@@ -1,4 +1,5 @@
 const API_BASE = process.env.REACT_APP_BASE_URL;
+const localAccessToken = localStorage.getItem('accessToken');
 
 export default {
   // 회원 정보 조회
@@ -23,9 +24,9 @@ export default {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
-          body: JSON.stringify(password),
+          Authorization: localAccessToken,
         },
+        body: JSON.stringify(password),
       });
       if (response.ok) {
         return response;
@@ -39,11 +40,11 @@ export default {
   // 회원 탈퇴
   async deleteUser(userId, accessToken) {
     try {
-      const response = await fetch(`${API_BASE}user/${userId}`, {
+      const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localAccessToken,
         },
       });
       if (response.ok) {
