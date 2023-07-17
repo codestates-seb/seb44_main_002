@@ -160,10 +160,18 @@ export default function Header() {
               {userinfo.name}
             </div>
             <div className="mx-2">
-              <MenuItem
+              {/* <MenuItem
                 path="/userpage/:id"
                 label={<PersonIcon fontSize="large" />}
-              />
+              /> */}
+              <div
+                className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden`}
+                role="presentation"
+                onClick={() => navigate(`/userpage/${userinfo.userId}`)}
+                onKeyDown={() => navigate(`/userpage/${userinfo.userId}`)}
+              >
+                <PersonIcon fontSize="large" />
+              </div>
             </div>
             <div className="mx-2">
               <LogoutIcon
