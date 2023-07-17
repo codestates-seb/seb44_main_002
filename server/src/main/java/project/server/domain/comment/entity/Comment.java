@@ -8,7 +8,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.reply.entity.Reply;
-import project.server.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -45,7 +44,7 @@ public class Comment {
     @Column(name = "last_modified_at")
     LocalDateTime modifiedAt = LocalDateTime.now();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<Reply> replies = new ArrayList<>();
 
     public CommentDto.Response entityToResponse() {

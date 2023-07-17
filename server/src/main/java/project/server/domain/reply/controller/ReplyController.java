@@ -40,7 +40,7 @@ public class ReplyController {
 
     @DeleteMapping("/{reply-id}")
     public ResponseEntity deleteReply(@PathVariable("reply-id") @Positive Long replyId) {
-        replyService.deleteReply(replyId);
+        replyService.deleteReply(replyId); // 이게 원래 코드엿는데 빨간색 떠가지고
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

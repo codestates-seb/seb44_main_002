@@ -12,6 +12,7 @@ import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -54,6 +55,12 @@ public class ReplyService {
 
     public void deleteReply(long replyId) {
         Reply reply = findReplyById(replyId);
+        Comment comment = commentService.findCommentById(reply.getCommentId());
+        List<Reply> replies = comment.getReplies();
+        replies.remove(replyId);
+        comment.setReplies(replies);
+        commentService.saveComment(comment.getCommentId());
         replyRepository.delete(reply);
     }
+    
 }
