@@ -9,8 +9,9 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: '#3D4E83',
+  bgcolor: '#000000',
   width: '70vw',
+  height: '80vh',
 };
 export default function ImageModal({ imageUrl }) {
   const [open, setOpen] = useState(false);
@@ -37,7 +38,8 @@ export default function ImageModal({ imageUrl }) {
 }
 
 const InfoImage = tw.img`
-w-80
+w-[260px]
+h-[full]
 object-cover
 rounded-2xl
 cursor-pointer
@@ -46,5 +48,7 @@ max-md:w-full
 `;
 const ModalImage = tw.img`
 w-full
+h-full
+object-contain
 cursor-pointer
 `;
