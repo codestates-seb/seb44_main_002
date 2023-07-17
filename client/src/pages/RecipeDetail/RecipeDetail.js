@@ -14,6 +14,7 @@ import tw from 'tailwind-styled-components';
 
 export default function RecipeDetail() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [cocktail, setCocktail] = useState(cocktailDetail);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [accessToken, setAccessToken] = useState('');
@@ -120,19 +121,7 @@ export default function RecipeDetail() {
     const handleBookmarkClick = async (cocktailId) => {
       console.log('동작');
       const id = cocktailId;
-      if (!isBookmarked) {
-        try {
-          await RecipeApi.createBookmark(item);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          await RecipeApi.deleteBookmark(item);
-        } catch (error) {
-          console.log(error);
-        }
-      }
+
       dispatch(updateBookmark({ id, item }));
       setBookmark();
     };

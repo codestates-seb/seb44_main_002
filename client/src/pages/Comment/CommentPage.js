@@ -2,45 +2,23 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import CommentValid from '../../components/Validation/CommentValidation';
-// [
-//   {
-//       “commentId” : 1,
-//       “userId” : 1,
-//       “userName” : “kim”,
-//       “content” : “blah”,
-//       “replies” : [
-//           {
-//                   “replyId” : 1,
-//                   “userId” : 1,
-//                   “userName” : “jjigae”,
-//                   “taggedUserInfo” : [
-//                            {
-//                                          “taggedUserId” : 2,
-//                                          “taggedUserName” : “kimchi”,
-//                             }
-//                    ],
-//                   “content” : “shut up”,
-//                   “createdAt” : 2000-00-00T00:00:00
-//                   “modifiedAt” : 2000-00-00T00:00:00
-//       ],
-//       “createdAt” : 2000-00-00T00:00:00
-//   }
-// ],
+
 export default function CommentPage() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const { state } = useLocation();
   const [isCommented, setIsCommented] = useState(state[0]);
   const commentdata = state[1];
+  const cocktailId = state[2];
   const [isValid, setIsValid] = useState(true);
   const [comment, setComment] = useState(commentdata.content);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-  console.log(state);
+  //console.log(state);
   const handleSubmit = (e) => {
     e.preventDefault();
-    CommentValid(comment, setIsValid);
+    const isvalid = CommentValid(comment, setIsValid);
     //유효성검사가 통과되었다면
-    if (isValid) {
+    if (isvalid) {
       //댓글 수정이라면
       if (isCommented) {
         fetch(`${BASE_URL}comments/${commentdata.commentId}`, {
@@ -57,7 +35,7 @@ export default function CommentPage() {
               console.log('요청이 성공했습니다.');
               // console.log(data);
               setErrorMsg(null);
-              navigate('/');
+              navigate(`/detail/${cocktailId}`);
               alert('수정했습니다!');
             } else {
               // 응답이 실패한 경우
@@ -79,9 +57,9 @@ export default function CommentPage() {
           },
           body: JSON.stringify({
             userId: commentdata.userId,
-            taggedUserId: commentdata.taggedUserId,
-            taggedUserName: commentdata.taggedUserName,
-            content: commentdata.content,
+            taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+            taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+            content: comment,
           }),
         })
           .then((data) => {
@@ -90,7 +68,7 @@ export default function CommentPage() {
               console.log('요청이 성공했습니다.');
               // console.log(data);
               setErrorMsg(null);
-              navigate('/');
+              navigate(`/detail/${cocktailId}`);
               alert('수정했습니다!');
             } else {
               // 응답이 실패한 경우
@@ -122,25 +100,25 @@ export default function CommentPage() {
         <h1 className="mt-[30px] text-gray-200 font-bold text-[20px] mb-[2rem]">
           댓글 수정
         </h1>
-        {!isCommented && (
-          <p>@{commentdata[0].taggedUserInfo[0].taggedUserName}</p>
-        )}
+        <h3 className=" text-white flex  w-[400px] mb-2">
+          {!isCommented && <p>@{commentdata.taggedUserInfo.taggedUserName}</p>}
+        </h3>
+
         <div>
           <InputTextArea
             placeholder="댓글을 입력하세요."
             onChange={(e) => setComment(e.target.value)}
             className={
               !isValid
-                ? 'border-red-500 border-[1px]'
-                : 'border border-solid border-gray-200 w-[400px] h-[200px] mb-[2rem]'
+                ? 'border-error border-[1px] w-[400px] h-[200px] mb-[2rem] text-white '
+                : 'border border-solid border-gray-200 w-[400px] h-[200px] mb-[2rem] text-white'
             }
             value={comment}
           />
           {!isValid && (
-            <p className="text-red-500">1~200자 범위내로 작성해주세요</p>
+            <p className=" text-error ">1~200자 범위내로 작성해주세요</p>
           )}
         </div>
-        {errorMsg && <p className="text-error ">{errorMsg}</p>}
         <InputButton onClick={handleSubmit}>전송하기</InputButton>
       </section>
     </div>
