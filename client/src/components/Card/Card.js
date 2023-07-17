@@ -14,10 +14,11 @@ import tw from 'tailwind-styled-components';
 //item 칵테일에 대한 정보가 객체형태로 담겨있습니다.
 export default function Card({ item, data, setData }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
+  const [bookmarked, setbookmarked] = useState(item.bookmarked);
   const handleMouseOver = (index) => {
     setHoveredIndex(index);
   };
@@ -32,7 +33,7 @@ export default function Card({ item, data, setData }) {
     // bookmark/delete/{cocktail-id}
     const handleBookmark = () => {
       ///bookmark/create/{cocktail-id}
-      if (!item.bookmarked) {
+      if (!bookmarked) {
         fetch(`${BASE_URL}bookmark/create/${item.cocktailId}`, {
           method: 'POST',
           headers: {
@@ -72,15 +73,15 @@ export default function Card({ item, data, setData }) {
 
     dispatch(updateBookmark({ id, item }));
 
-    const newDate = data.map((el, idx) => {
-      const bookmarked = el.bookmarked;
-      //console.log(isBookmarked);
-      if (el.cocktailId === item.cocktailId) {
-        return { ...el, bookmarked: !bookmarked };
-      }
-      return el;
-    });
-    setData(newDate);
+    // const newDate = data.map((el, idx) => {
+    //   const bookmarked = el.bookmarked;
+    //   //console.log(isBookmarked);
+    //   if (el.cocktailId === item.cocktailId) {
+    //     return { ...el, bookmarked: !bookmarked };
+    //   }
+    //   return el;
+    // });
+    // setData(newDate);
   };
   return (
     <Container
@@ -100,7 +101,8 @@ export default function Card({ item, data, setData }) {
         {/* 북마크 */}
         <BookmarkBtn
           onClick={() => handleBookmarkClick(item.cocktailId, item)}
-          isBookmarked={item.bookmarked}
+          bookmarked={bookmarked}
+          setbookmarked={setbookmarked}
           size="w-[20px] h-[30px]"
           absolute="true"
           top="top-0"
