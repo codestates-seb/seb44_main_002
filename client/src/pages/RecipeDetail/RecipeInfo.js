@@ -7,6 +7,7 @@ import tw from 'tailwind-styled-components';
 import { BsArrowRightShort } from 'react-icons/bs';
 import { PiUserCircleFill } from 'react-icons/pi';
 import ImageModal from './ImgaeModal';
+import { userinfoLoginOut } from '../../redux/slice/userInfoSlice';
 
 export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   const navigate = useNavigate();
@@ -28,8 +29,14 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   };
 
   const copyToClipBoard = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('현재 주소가 클립보드에 복사되었습니다.');
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert('현재 주소가 클립보드에 복사되었습니다.');
+      })
+      .catch((error) => {
+        console.error('클립보드 복사에 실패했습니다:', error);
+      });
   };
   const modifyScore = async (score2) => {
     try {
@@ -47,9 +54,12 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   };
   const changeScore = (idx) => {
     // 로그인 여부 확인
-    if (userInfo.UserId !== '') {
+    console.log(userInfo);
+    if (userInfo.userId !== null && userInfo.age !== null) {
       setScore(idx + 1);
       modifyScore(idx + 1);
+    } else {
+      alert('로그인 후 이용가능합니다.');
     }
   };
   const deletePost = () => {
@@ -84,13 +94,12 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
 
   return (
     <InfoContainer>
-      {/* <InfoImage src={cocktailDetail.imageUrl} alt="와인사진" /> */}
       <ImageModal imageUrl={cocktailDetail.imageUrl} />
       <InfoRightContainer>
         <StarCotiner>
           <DrawStar />
           <ModifyContainer>
-            {cocktailDetail.userId === 1 && (
+            {cocktailDetail.userId === userInfo.userId && (
               <>
                 <Link to={`/modifyPost/${cocktailDetail.cocktailId}`}>
                   <ModifyP>수정하기</ModifyP>
@@ -124,7 +133,6 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
             </p>
           </WriterInfo>
           <LinkToCU href={urlCu} target="_blank">
-            {/* <LinkToCUP>편의점 앱으로 이동</LinkToCUP> <BsArrowRightShort /> */}
             <img
               src={process.env.PUBLIC_URL + '/images/btn_cu.webp'}
               alt="편의점 앱으로 이동"
