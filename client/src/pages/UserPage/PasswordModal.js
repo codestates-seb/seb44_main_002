@@ -41,7 +41,7 @@ export default function PasswordModal({ logginUser }) {
     try {
       const response = await UserPageApi.modifyUser(
         logginUser.userId,
-        { password: password },
+        { password: form.password },
         logginUser.accessToken
       );
     } catch (error) {
@@ -56,7 +56,7 @@ export default function PasswordModal({ logginUser }) {
     );
     setIsValid({ password: password, checkPassword: checkPassword });
     if (password === true && checkPassword === true) {
-      //   modifyPassword();
+      modifyPassword();
       alert('비밀번호가 정상적으로 변경되었습니다.');
       handleClose();
     }
