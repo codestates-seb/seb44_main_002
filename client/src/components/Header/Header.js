@@ -23,6 +23,37 @@ export default function Header() {
   const userinfo = useSelector((state) => state.userinfo);
   const dispatch = useDispatch();
 
+  const [hovered, setHovered] = useState(false);
+  const [randomColor, setRandomColor] = useState('');
+
+  // 글자 색 바꾸기
+  useEffect(() => {
+    // 0.2초마다 함수 실행
+    const interval = setInterval(generateRandomColor, 200);
+
+    return () => {
+      clearInterval(interval); // 컴포넌트가 언마운트될 때 interval을 정리합니다.
+    };
+  }, []);
+
+  // 색깔 랜덤으로 띄우는 함수
+  const generateRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    setRandomColor(color);
+  };
+
+  const randomColorHandler = () => {
+    setHovered(true);
+  };
+
+  const resetColor = () => {
+    setHovered(false);
+  };
+
   // 스크롤 이벤트
   const onScroll = () => {
     setPosition(window.scrollY);
@@ -112,13 +143,12 @@ export default function Header() {
           CATEGORY
         </div>
         <div
-          className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden ${
-            location.pathname.includes('/detail')
-              ? `${position ? 'text-black' : 'text-white'} font-bold`
-              : 'text-gray-200 font-normal'
-          }`}
+          className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden text-gray-200`}
           role="presentation"
           onClick={randomHandler}
+          style={{ color: hovered ? randomColor : '' }}
+          onMouseEnter={randomColorHandler}
+          onMouseLeave={resetColor}
         >
           추천
         </div>
