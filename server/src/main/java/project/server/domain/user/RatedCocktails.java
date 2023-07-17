@@ -7,6 +7,7 @@ import java.util.Map;
 @Embeddable
 public class RatedCocktails {
 
+    public static final int UNRATED_COCKTAIL = 0;
     @ElementCollection
     @CollectionTable(
             name = "rated_cocktail_rate_value",
@@ -20,7 +21,10 @@ public class RatedCocktails {
     }
 
     public int findValue(long cocktailId) {
-        return ratedCocktailIdAndRate.get(cocktailId);
+        if(ratedCocktailIdAndRate.containsKey(cocktailId)){
+            return ratedCocktailIdAndRate.get(cocktailId);
+        }
+        return UNRATED_COCKTAIL;
     }
 
     public void put(long cocktailId, int value) {

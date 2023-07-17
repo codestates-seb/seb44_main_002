@@ -25,13 +25,11 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long replyId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    private String userName;
+
+    private long commentId;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -49,12 +47,12 @@ public class Reply {
     public ReplyDto.Response entityToResponse() {
         return ReplyDto.Response.builder()
                 .replyId(replyId)
-                .userId(user.getUserId())
-                .userName(user.getName())
+                .userId(userId)
+                .userName(userName)
                 .taggedUserInfo(taggedUserInfo)
                 .content(content)
                 .createdAt(createdAt)
+                .modifiedAt(modifiedAt)
                 .build();
     }
-//
 }

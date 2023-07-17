@@ -3,12 +3,16 @@ package project.server.domain.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.cocktail.service.CocktailSerializer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity(name = "users")
 @Getter
@@ -38,10 +42,10 @@ public class User {
     private String profileImageUrl;
 
     @OneToMany(mappedBy = "user")
-    private Set<Cocktail> cocktails;
+    private Set<Cocktail> cocktails = new HashSet<>();
 
-    @Embedded
-    private BookmarkedCocktails bookmarkedCocktails = new BookmarkedCocktails();
+    @OneToMany
+    private Set<Bookmark> bookmarks = new HashSet<>();
 
     @Embedded
     private RatedCocktails ratedCocktails = new RatedCocktails();
@@ -58,6 +62,12 @@ public class User {
                 .age(age)
                 .profileImageUrl(profileImageUrl)
                 .subscriberCount(subscriberCount)
+                .cocktails(cocktails.stream()
+                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(this.isBookmarked(cocktail.getCocktailId()), cocktail))
+                        .collect(Collectors.toList()))
+                .bookmarkedCocktails(bookmarks.stream()
+                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -65,16 +75,13 @@ public class User {
         return ratedCocktails.containCocktail(cocktailId);
     }
 
-    public boolean isBookmarked(long cocktailId) {
-        return bookmarkedCocktails.containCocktail(cocktailId);
-    }
-
-    public void cancelBookmark(long cocktailId) {
-        bookmarkedCocktails.remove(cocktailId);
-    }
-
-    public void bookmark(long cocktailId) {
-        bookmarkedCocktails.add(cocktailId);
+    public boolean isBookmarked(long cocktailId){
+        for(Bookmark bookmark : bookmarks){
+            if(bookmark.getCocktailId() == cocktailId){
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getRate(long cocktailId) {
@@ -96,4 +103,15 @@ public class User {
         return roles.contains("ADMIN");
     }
 
+    public void bookmark(Bookmark bookmark) {
+        bookmarks.add(bookmark);
+    }
+
+    public void cancelBookmark(Bookmark bookmark) {
+        bookmarks.remove(bookmark);
+    }
+
+    public void write(Cocktail cocktail) {
+        cocktails.add(cocktail);
+    }
 }
