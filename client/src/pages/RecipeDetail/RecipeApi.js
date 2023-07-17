@@ -1,4 +1,5 @@
 const API_BASE = process.env.REACT_APP_BASE_URL;
+const localAccessToken = localStorage.getItem('accessToken');
 
 export default {
   // 칵테일 정보 가져오기
@@ -6,8 +7,51 @@ export default {
     try {
       const response = await fetch(`${API_BASE}cocktails/${cocktailId}`, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localAccessToken,
+        },
       });
       if (response.ok) {
+        return response;
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  // 북마크 추가
+  async postBookmark(cocktailId, accessToken) {
+    try {
+      const response = await fetch(`${API_BASE}bookmark/create/${cocktailId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localAccessToken,
+        },
+      });
+      if (response.ok) {
+        return response;
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  // 북마크 삭제
+  async deleteBookmark(cocktailId, accessToken) {
+    try {
+      const response = await fetch(`${API_BASE}bookmark/delete/${cocktailId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localAccessToken,
+        },
+      });
+      if (response.ok) {
+        location.reload();
         return response;
       } else {
         console.log('error');
@@ -25,7 +69,7 @@ export default {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: accessToken,
+            Authorization: localAccessToken,
           },
         }
       );
@@ -45,7 +89,7 @@ export default {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localAccessToken,
         },
         body: JSON.stringify(commentInfo),
       });
@@ -65,7 +109,7 @@ export default {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localAccessToken,
         },
         body: JSON.stringify(replyInfo),
       });
@@ -85,7 +129,7 @@ export default {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localAccessToken,
         },
       });
       if (response.ok) {
@@ -105,7 +149,7 @@ export default {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localAccessToken,
         },
       });
       if (response.ok) {
@@ -124,7 +168,7 @@ export default {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localAccessToken,
         },
       });
       if (response.ok) {
