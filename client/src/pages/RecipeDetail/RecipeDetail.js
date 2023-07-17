@@ -14,11 +14,9 @@ import tw from 'tailwind-styled-components';
 
 export default function RecipeDetail() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const [cocktail, setCocktail] = useState(cocktailDetail);
-  const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.bookmarked);
-  const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
   const userInfo = useSelector((state) => state.userinfo);
 
   const location_id = useLocation().pathname.split('/')[2];
@@ -42,18 +40,45 @@ export default function RecipeDetail() {
     return `${Math.floor(minutesDifference / 1440)} days ago`;
   };
 
-  const setBookmark = () => {
+  const setBookmark = async () => {
     // 비로그인시 설정 불가
-    if (isLogin) {
+    if (userInfo.userId) {
+      if (isBookmarked) {
+        // 북마크 해제
+        try {
+          const response = await RecipeApi.deleteBookmark(
+            cocktailDetail.cocktailId,
+            accessToken
+          );
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      } else {
+        // 북마크 설정
+        try {
+          const response = await RecipeApi.postBookmark(
+            cocktailDetail.cocktailId,
+            accessToken
+          );
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      }
       setIsBookmarked(!isBookmarked);
     }
   };
 
   const getCocktail = async () => {
     try {
-      const response = await RecipeApi.getCocktailData(location_id);
+      const response = await RecipeApi.getCocktailData(
+        location_id,
+        accessToken
+      );
       const json = await response.json();
       setCocktail(json);
+      setIsBookmarked(json.bookmarked);
     } catch (error) {
       console.log(error);
       navigate('/error');
@@ -63,7 +88,7 @@ export default function RecipeDetail() {
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
     getCocktail();
-  }, []);
+  }, [location_id]);
 
   const BackgroundImg = () => {
     return (
@@ -138,7 +163,7 @@ export default function RecipeDetail() {
             userInfo={userInfo}
             getTime={getTime}
           />
-          <Recommend cocktailDetail={cocktail.recommend} userInfo={userInfo} />
+          <Recommend cocktailDetail={cocktail.recommends} userInfo={userInfo} />
         </Container>
       </Background>
     </>
@@ -297,7 +322,7 @@ const cocktailDetail = {
       ],
     },
   ],
-  recommend: [
+  recommends: [
     //category idx 와 userinfo 리덕스 데이터와 겹쳐서 cocktailId와 isBookmarked  달리 수정했습니다.
     {
       cocktailId: 7,
