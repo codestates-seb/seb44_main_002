@@ -1,24 +1,98 @@
 import { useState, useEffect } from 'react';
-
-import tw from 'tailwind-styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
 import Community from './Community';
 import Recommend from './Recommend';
 import BookmarkBtn from '../../components/BookmarkButton/BookmarkBtn';
-export default function RecipeDetail() {
-  // const [cocktail, setCocktail] = useState({});
-  const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
+import RecipeApi from './RecipeApi';
 
-  const setBookmark = () => {
-    // 로그인 조건 추가 예정
-    setIsBookmarked(!isBookmarked);
+import tw from 'tailwind-styled-components';
+
+export default function RecipeDetail() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [cocktail, setCocktail] = useState(cocktailDetail);
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
+  const userInfo = useSelector((state) => state.userinfo);
+
+  const location_id = useLocation().pathname.split('/')[2];
+
+  const getTime = (createdTime = '') => {
+    const currentTime = Date.now();
+    const targetTime = new Date(createdTime).getTime();
+    const minutesDifference = Math.floor(
+      (currentTime - targetTime) / (1000 * 60)
+    );
+    if (isNaN(minutesDifference)) {
+      return 0;
+    }
+    if (minutesDifference < 1) {
+      return 'now';
+    } else if (minutesDifference < 60) {
+      return `${minutesDifference} min ago`;
+    } else if (minutesDifference < 1440) {
+      return `${Math.floor(minutesDifference / 60)} min ago`;
+    }
+    return `${Math.floor(minutesDifference / 1440)} days ago`;
+  };
+
+  const setBookmark = async () => {
+    //console.log(cocktail.cocktailId);
+    // 비로그인시 설정 불가
+    if (userInfo.userId) {
+      if (isBookmarked) {
+        // 북마크 해제
+        try {
+          const response = await RecipeApi.deleteBookmark(
+            cocktail.cocktailId,
+            accessToken
+          );
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      } else {
+        // 북마크 설정
+        try {
+          const response = await RecipeApi.postBookmark(
+            cocktail.cocktailId,
+            accessToken
+          );
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      }
+    }
+  };
+
+  const getCocktail = async () => {
+    try {
+      const response = await RecipeApi.getCocktailData(
+        location_id,
+        accessToken
+      );
+      const json = await response.json();
+      setCocktail(json);
+      setIsBookmarked(json.bookmarked);
+      console.log(json);
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
   };
 
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
-  }, []);
+    getCocktail();
+    console.log(cocktailDetail);
+  }, [location_id]);
 
   const BackgroundImg = () => {
     return (
@@ -37,53 +111,52 @@ export default function RecipeDetail() {
       </>
     );
   };
-  const DrawBookmark = () => {
-    const bookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
-    const selectedMookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
+  const DrawBookmark = ({ cocktail }) => {
     const item = {
-      cocktailId: cocktailDetail.cocktailId,
-      name: cocktailDetail.name,
-      imageUrl: cocktailDetail.imageUrl,
-      isBookmarked: cocktailDetail.isBookmarked,
+      cocktailId: cocktail.cocktailId,
+      name: cocktail.name,
+      imageUrl: cocktail.imageUrl,
+      userRate: cocktail.userRate,
+      viewCount: cocktail.viewCount,
+      bookmarked: cocktail.bookmarked,
     };
+    const handleBookmarkClick = async (cocktailId) => {
+      console.log('동작');
+      const id = cocktailId;
 
+      dispatch(updateBookmark({ id, item }));
+      setBookmark();
+    };
     return (
-      // <BookmarkIcon onClick={setBookmark}>
-      //   <img
-      //     width={50}
-      //     src={isBookmarked ? selectedMookmark : bookmark}
-      //     alt="bookmark"
-      //   />
-      // </BookmarkIcon>
-      // <div
-      //   className="absolute
-      // top-0 right-14
-      // cursor-pointer"
-      // >
-      //   <BookmarkButton item={item} />
-      // </div>
-      //북마크 적용--이은희
       <BookmarkBtn
-        onClick={setBookmark}
-        isBookmarked={isBookmarked}
+        onClick={() => handleBookmarkClick(cocktail.cocktailId)}
+        bookmarked={isBookmarked}
+        setbookmarked={setIsBookmarked}
         absolute="true"
         top="top-0"
         right="right-14"
       />
     );
   };
+
   return (
     <>
       <Background>
         <BackgroundImg />
-        <Container>
-          <DrawBookmark />
-          <RecipeInfo cocktailDetail={cocktailDetail} />
-          <Process cocktailDetail={cocktailDetail} />
-          <Community cocktailDetail={cocktailDetail} />
-          <Recommend cocktailDetail={cocktailDetail.recommends} />
+        <Container className="animate-fadeInDown1">
+          <DrawBookmark cocktail={cocktail} />
+          <RecipeInfo
+            cocktailDetail={cocktail}
+            userInfo={userInfo}
+            getTime={getTime}
+          />
+          <Process cocktailDetail={cocktail} />
+          <Community
+            cocktailDetail={cocktail}
+            userInfo={userInfo}
+            getTime={getTime}
+          />
+          <Recommend cocktailDetail={cocktail.recommends} userInfo={userInfo} />
         </Container>
       </Background>
     </>
@@ -120,13 +193,15 @@ cursor-pointer
 const cocktailDetail = {
   cocktailId: 1,
   userId: 1,
-  name: 'Admin',
-  imageUrl: 'sample image url',
+  userName: 'chan',
+  name: '체리주',
+  imageUrl:
+    'https://cphoto.asiae.co.kr/listimglink/1/2020051809541442224_1589763254.jpg',
   liquor: '럼',
   viewCount: 1,
-  createdAt: '2000-00-00',
-  modifiedAt: '2000-00-00',
-  Ingredients: [
+  createdAt: '2023-07-02T01:01:01',
+  modifiedAt: '2023-07-02T01:01:01',
+  ingredients: [
     {
       ingredient: 'Light rum',
     },
@@ -153,12 +228,20 @@ const cocktailDetail = {
     },
   ],
   recipe: [
-    `Pour the rum and top with soda water.`,
-    'Pour the rum and top with soda water.with soda water.',
-    'Pour the rum and top with soda water.Pour the rum and top with soda water.',
-    'Pour the rum and top with soda water.',
-    'Pour he rum and top with soda water. with soda water with soda water',
-    'Pour the rum and top with soda water.',
+    { process: `Pour the rum and top with soda water.` },
+    { process: 'Pour the rum and top with soda water.with soda water.' },
+    {
+      process:
+        'Pour the rum and top with soda water.Pour the rum and top with soda water.',
+    },
+    { process: 'Pour the rum and top with soda water.' },
+    {
+      process:
+        'Pour he rum and top with soda water. with soda water with soda water',
+    },
+    {
+      process: 'Pour the rum and top with soda water.',
+    },
   ],
   tags: [
     {
@@ -168,45 +251,66 @@ const cocktailDetail = {
   rating: 4.5,
   comments: [
     {
+      commentId: 1,
       userId: 2,
-      name: 'kim',
+      userName: 'kim',
       content:
         '깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!',
-      date: '2023-02-16',
+      createdAt: '2023-07-02T01:01:01',
+      modifiedAt: '2023-07-02T01:01:01',
       replies: [
         {
+          replyId: 1,
           userId: 3,
-          name: 'chan',
+          userName: 'chan',
           content: '저도 그렇게 생각합니다!',
-          taggedUserId: 2,
-          taggedUserName: 'kim',
-          date: '2023-02-16',
+          taggedUserInfo: [
+            {
+              taggedUserId: 2,
+              taggedUserName: 'kimchi',
+            },
+          ],
+          createdAt: '2023-07-02T01:01:01',
+          modifiedAt: '2023-07-02T01:01:01',
         },
       ],
     },
     {
+      commentId: 2,
       userId: 3,
-      name: 'chan',
+      userName: 'chan',
       content:
         '그놈은 멋있었다...백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.',
-      date: '2023-02-16',
+      createdAt: '2023-07-02T01:01:01',
+      modifiedAt: '2023-07-02T01:01:01',
       replies: [
         {
+          replyId: 2,
           userId: 4,
-          name: 'jae',
+          userName: 'jae',
           content: '백엔드는 멋있다.',
-          taggedUserId: 3,
-          taggedUserName: 'chan',
-          date: '2023-02-16',
+          taggedUserInfo: [
+            {
+              taggedUserId: 3,
+              taggedUserName: 'chan',
+            },
+          ],
+          createdAt: '2023-07-02T01:01:01',
+          modifiedAt: '2023-07-02T01:01:01',
         },
         {
           userId: 3,
-          name: 'euni',
+          userName: 'euni',
           content:
             '이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면',
-          taggedUserId: 4,
-          taggedUserName: 'jae',
-          date: '2023-02-16',
+          taggedUserInfo: [
+            {
+              taggedUserId: 4,
+              taggedUserName: 'jae',
+            },
+          ],
+          createdAt: '2023-07-02T01:01:01',
+          modifiedAt: '2023-07-02T01:01:01',
         },
       ],
     },
@@ -232,5 +336,6 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  isBookmarked: true,
+  bookmarked: false,
+  adminWritten: false,
 };

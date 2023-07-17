@@ -12,7 +12,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function Signup() {
   const navigate = useNavigate();
   const [test, setTest] = useState(false);
-
+  const [errorMsg, setErrorMsg] = useState(null);
   // 유효성검사 state
   const [isValid, setIsValid] = useState({
     name: true,
@@ -39,10 +39,22 @@ export default function Signup() {
   //     “age” : 30
   // }
   const handleSubmit = (e) => {
-    console.log('동작');
     e.preventDefault();
-    // 유효성 검사 로직
-    UseSignupValid(form, setIsValid);
+    // 불리언값으로나옴
+    const { name, email, password, confirmPassword, gender, age } =
+      UseSignupValid(form);
+
+    // 불리언값으로나옴
+
+    const updatedIsValid = {
+      name,
+      email,
+      password,
+      confirmPassword,
+      gender,
+      age,
+    };
+    setIsValid(updatedIsValid);
     const userinfo = {
       email: form.email,
       password: form.password,
@@ -50,34 +62,51 @@ export default function Signup() {
       gender: form.gender,
       age: form.age,
     };
-    console.log(userinfo);
+    // console.log(userinfo);
     // credentials: 'include',
-    fetch(`${BASE_URL}users/signup`, {
-      method: 'POST',
+    const allValid = Object.values(updatedIsValid).every(
+      (value) => value === true
+    );
 
-      headers: {
-        //'ngrok-skip-browser-warning': 'true',
-        'Content-Type': 'application/json', // json fetch시
-      },
-      body: JSON.stringify(userinfo),
-    })
-      .then((data) => {
-        if (data.status === 201) {
-          // 응답이 성공적인 경우
-          console.log('요청이 성공했습니다.');
-          console.log(data);
-          navigate('/');
-          // 여기에서 추가적인 처리를 수행할 수 있습니다.
-        } else {
-          // 응답이 실패한 경우
-          console.log('요청이 실패했습니다.');
-          // 실패에 대한 처리를 수행할 수 있습니다.
-        }
+    if (allValid) {
+      fetch(`${BASE_URL}users/signup`, {
+        method: 'POST',
+
+        headers: {
+          //'ngrok-skip-browser-warning': 'true',
+          'Content-Type': 'application/json', // json fetch시
+        },
+        body: JSON.stringify(userinfo),
       })
-      .catch((error) => {
-        console.log('에러', error);
-        navigate('/error');
-      });
+        .then((data) => {
+          if (data.status === 201) {
+            // 응답이 성공적인 경우
+            console.log('요청이 성공했습니다.');
+            // console.log(data);
+            setErrorMsg(null);
+            navigate('/');
+            alert('환영합니다!');
+
+            // 여기에서 추가적인 처리를 수행할 수 있습니다.
+          } else {
+            // 응답이 실패한 경우
+            console.log('요청이 실패했습니다.');
+            // 실패에 대한 처리를 수행할 수 있습니다.
+            if (data.status === 409) {
+              setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
+            }
+            if (data.status === 500) {
+              setErrorMsg('이런! 서버에 문제가 생겼어요!');
+            }
+          }
+        })
+        .catch((error) => {
+          console.log('에러', error);
+          navigate('/error');
+        });
+    } else {
+      console.log('유효성 검사 작동');
+    }
   };
 
   return (
@@ -93,7 +122,7 @@ export default function Signup() {
         <LogoSection>
           <img
             role="presentation"
-            src="images/logo.png"
+            src="images/logo.webp"
             alt="logo"
             className="w-[32.4px] h-[48px] max-[520px]:my-4 "
             onClick={() => navigate('/')}
@@ -104,16 +133,17 @@ export default function Signup() {
         <SignupBox>
           <SignupSection>
             <SignupHeader>회원가입</SignupHeader>
+            {errorMsg && <p className="text-error text-[13px]">{errorMsg}</p>}
             <form
               onSubmit={handleSubmit}
               className="flex flex-col h-full items-center"
             >
               <InputSection>
                 <CustomInput
-                  placeholder="2자 이상 10자 미만의 글자 "
+                  placeholder="공백없이 2자 이상 10자 미만의 글자 "
                   labelName="이름"
                   type="text"
-                  text="2자 이상 10자 미만으로 적어주세요"
+                  text="공백없이 2자 이상 10자 미만으로 적어주세요"
                   size="w-[22rem] h-[2.5rem] max-[520px]:w-[280px]"
                   isValid={isValid.name}
                   value={form.name}

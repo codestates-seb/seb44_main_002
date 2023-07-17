@@ -1,26 +1,101 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CommentValid from '../../components/Validation/CommentValidation';
+import RecipeApi from './RecipeApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function Community({ cocktailDetail }) {
-  const [tag, setTag] = useState('');
+export default function Community({ cocktailDetail, userInfo, getTime }) {
+  const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
+  const [commentId, setCommentId] = useState(0);
   const [isValid, setIsValid] = useState(true);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    CommentValid(comment, setIsValid);
+  // 댓글 등록
+  const postComment = async () => {
+    try {
+      const response = await RecipeApi.PostComments(
+        cocktailDetail.cocktailId,
+        { content: comment },
+        userInfo.accessToken
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const deleteAnswer = () => {};
-
-  const changeTag = (userId, username) => {
-    // 본인 태그 방지
-    if (userId !== 1) {
-      setTag(username);
+  // 대댓글 등록
+  const postReply = async () => {
+    try {
+      const repliInfo = {
+        taggedUserId: tag.userId,
+        taggedUserName: tag.userName,
+        content: comment,
+      };
+      const response = await RecipeApi.PostReplys(
+        commentId,
+        repliInfo,
+        userInfo.accessToken
+      );
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  // 댓글 삭제
+  const deleteComment = async (commentId) => {
+    try {
+      const response = await RecipeApi.deleteComments(
+        commentId,
+        userInfo.accessToken
+      );
+    } catch (error) {
+      console.log(error);
+      location.reload();
+    }
+  };
+
+  // 대댓글 삭제
+  const deleteReply = async (replyId) => {
+    try {
+      const response = await RecipeApi.deleteReplies(
+        replyId,
+        userInfo.accessToken
+      );
+    } catch (error) {
+      console.log(error);
+      location.reload();
+    }
+  };
+
+  // 댓글, 대댓글 작성
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (userInfo.userId === null) {
+      alert('로그인 후 이용해주세요');
+      return;
+    }
+
+    CommentValid(comment, setIsValid);
+
+    if (!isValid) return;
+
+    if (tag.userId === '') {
+      postComment();
+      location.reload();
+    } else {
+      postReply();
+      location.reload();
+    }
+  };
+
+  const changeTag = (userId, userName, commentId) => {
+    // 본인 태그 방지
+    setTag({ userId: userId, userName: userName });
+    setCommentId(commentId);
   };
 
   return (
@@ -28,9 +103,9 @@ export default function Community({ cocktailDetail }) {
       <CommunityHeader>댓글을 작성해보세요!</CommunityHeader>
       <InputContainer>
         <div className="w-[calc(100%-100px)] max-md:w-full">
-          {tag !== '' && (
-            <TagP onClick={() => setTag('')}>
-              {`@${tag}`}
+          {tag.userId !== '' && (
+            <TagP onClick={() => setTag({ userId: '', userName: '' })}>
+              {`@${tag.userName}`}
               <span className="ml-3">x</span>
             </TagP>
           )}
@@ -52,19 +127,33 @@ export default function Community({ cocktailDetail }) {
           return (
             <>
               <CommentContainer key={ele.userId}>
-                <CommentWriter>{ele.name}</CommentWriter>
+                <CommentWriter>{ele.userName}</CommentWriter>
                 <CommentContent>{ele.content}</CommentContent>
                 <CommentAndButton>
-                  <CommentDate>{ele.date}</CommentDate>
+                  <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === 3 && (
+                    {ele.userId === userInfo.userId && (
                       <>
-                        <CommentButton>삭제하기</CommentButton>
-                        <CommentButton>수정하기</CommentButton>
+                        <CommentButton
+                          onClick={() => deleteComment(ele.commentId)}
+                        >
+                          삭제하기
+                        </CommentButton>
+                        <CommentButton
+                          onClick={() =>
+                            navigate('/comment', {
+                              state: [true, ele, cocktailDetail.cocktailId],
+                            })
+                          }
+                        >
+                          수정하기
+                        </CommentButton>
                       </>
                     )}
                     <CommentButton
-                      onClick={() => changeTag(ele.userId, ele.name)}
+                      onClick={() =>
+                        changeTag(ele.userId, ele.userName, ele.commentId)
+                      }
                     >
                       답변하기
                     </CommentButton>
@@ -74,21 +163,38 @@ export default function Community({ cocktailDetail }) {
               {ele.replies.map((rp) => {
                 return (
                   <ReplyContainer key={rp.userId}>
-                    <CommentWriter>{rp.name}</CommentWriter>
+                    <CommentWriter>{rp.userName}</CommentWriter>
                     <CommentContent>
-                      {'@' + rp.taggedUserName + ' ' + rp.content}
+                      {'@' +
+                        rp.taggedUserInfo.taggedUserName +
+                        ' ' +
+                        rp.content}
                     </CommentContent>
                     <CommentAndButton>
-                      <CommentDate>{rp.date}</CommentDate>
+                      <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === 3 && (
+                        {rp.userId === userInfo.userId && (
                           <>
-                            <CommentButton>삭제하기</CommentButton>
-                            <CommentButton>수정하기</CommentButton>
+                            <CommentButton
+                              onClick={() => deleteReply(rp.replyId)}
+                            >
+                              삭제하기
+                            </CommentButton>
+                            <CommentButton
+                              onClick={() =>
+                                navigate('/comment', {
+                                  state: [false, rp, cocktailDetail.cocktailId],
+                                })
+                              }
+                            >
+                              수정하기
+                            </CommentButton>
                           </>
                         )}
                         <CommentButton
-                          onClick={() => changeTag(rp.userId, rp.name)}
+                          onClick={() =>
+                            changeTag(rp.userId, rp.userName, ele.commentId)
+                          }
                         >
                           답변하기
                         </CommentButton>

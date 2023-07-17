@@ -5,7 +5,7 @@ export default function CategoryBtn({
   idx,
   selectMenuHandler,
   onClick,
-  fitlerCondtion,
+  filterCondtion,
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const buttonClicked = () => {
@@ -32,7 +32,7 @@ export default function CategoryBtn({
          max-[700px]:h-[35px]
 
        ${
-         fitlerCondtion.category === data.type
+         filterCondtion.category === data.type
            ? 'text-[#ffffff] border-[#ffffff]'
            : ' text-[#8F8F8F] border-[#8F8F8F]'
        }`}

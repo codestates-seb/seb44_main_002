@@ -1,16 +1,36 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/slice/isLoginSlice';
+
+import PasswordModal from './PasswordModal';
+import UserPageApi from './UserPageApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function UserInfo({ userInfo }) {
+export default function UserInfo({ userInfo, logginUser }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
+  const deleteUser = async () => {
+    try {
+      const response = await UserPageApi.deleteUser(
+        logginUser.userId,
+        logginUser.accessToken
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const deleteUser = () => {
+  const clickDelete = () => {
     if (window.confirm('정말로 탈퇴하시겠습니까?')) {
       alert('삭제되었습니다.');
+      deleteUser();
+      dispatch(logout());
+      localStorage.clear();
       navigate('/');
     }
   };
@@ -20,22 +40,24 @@ export default function UserInfo({ userInfo }) {
       <InfoContainer>
         <UserImg
           src={`/images/user/${
-            userInfo.gender === '남' ? 'user_boy.png' : 'user_girl.png'
+            userInfo.gender === 'male' ? 'user_boy.png' : 'user_girl.png'
           }`}
           alt="user img"
         />
         <UserContainer>
           <FlexContainer>
-            {userInfo.userId === 1 ? (
+            {userInfo.userId === logginUser.userId ? (
               <p>{`안녕하세요. ${userInfo.name}님.`}</p>
             ) : (
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
-            {userInfo.userId !== 1 && <TitleButton>구독하기</TitleButton>}
+            {userInfo.userId !== logginUser.userId && (
+              <TitleButton>구독하기</TitleButton>
+            )}
           </FlexContainer>
           <InnerInfo>
             <InfoComponent>
-              <UpInfoP>{convertNum(userInfo.subscribedCount)}</UpInfoP>
+              <UpInfoP>{convertNum(userInfo.subscriberCount)}</UpInfoP>
               <DownInfoP>구독자수</DownInfoP>
             </InfoComponent>
             <InfoComponent>
@@ -46,7 +68,7 @@ export default function UserInfo({ userInfo }) {
               <UpInfoP>{userInfo.email.split('@')[0]}</UpInfoP>
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
-            {userInfo.userId !== 1 && (
+            {userInfo.userId !== logginUser.userId && (
               <InfoComponent>
                 <SubscribeButton>구독하기</SubscribeButton>
               </InfoComponent>
@@ -54,12 +76,10 @@ export default function UserInfo({ userInfo }) {
           </InnerInfo>
         </UserContainer>
       </InfoContainer>
-      {userInfo.userId === 1 && (
+      {userInfo.userId === logginUser.userId && (
         <ButtonContainer>
-          <Link to={`/`}>
-            <Button>수정하기</Button>
-          </Link>
-          <Button onClick={deleteUser}>탈퇴하기</Button>
+          <PasswordModal logginUser={logginUser} />
+          <Button onClick={clickDelete}>탈퇴하기</Button>
         </ButtonContainer>
       )}
     </Container>

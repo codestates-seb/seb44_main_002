@@ -13,10 +13,12 @@ import tw from 'tailwind-styled-components';
 }
 //item 칵테일에 대한 정보가 객체형태로 담겨있습니다.
 export default function Card({ item, data, setData }) {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
+  const [bookmarked, setbookmarked] = useState(item.bookmarked);
   const handleMouseOver = (index) => {
     setHoveredIndex(index);
   };
@@ -27,32 +29,59 @@ export default function Card({ item, data, setData }) {
   const handleBookmarkClick = (cocktailId, item) => {
     console.log('동작');
     const id = cocktailId;
+
+    // bookmark/delete/{cocktail-id}
+    const handleBookmark = () => {
+      ///bookmark/create/{cocktail-id}
+      if (!bookmarked) {
+        fetch(`${BASE_URL}bookmark/create/${item.cocktailId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
+            }
+            // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
+          })
+          .catch((error) => {
+            console.error(error); // 에러 처리
+          });
+      } else {
+        fetch(`${BASE_URL}bookmark/delete/${item.cocktailId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
+            }
+            // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
+          })
+          .catch((error) => {
+            console.error(error); // 에러 처리
+          });
+      }
+    };
+    handleBookmark();
+
     dispatch(updateBookmark({ id, item }));
 
-    const newDate = data.map((el, idx) => {
-      const isBookmarked = el.isBookmarked;
-      //console.log(isBookmarked);
-      if (el.cocktailId === item.cocktailId) {
-        return { ...el, isBookmarked: !isBookmarked };
-      }
-      return el;
-    });
-    setData(newDate);
-    // /cocktails/{cocktail-id}/bookmark
-    // const handleBookmark = () => {
-    //   fetch(`/cocktails/${item.cocktailId}/bookmark`, {
-    //     method: 'POST',
-    //     // 필요한 경우 헤더 등을 설정하세요.
-    //   })
-    //     .then((response) => {
-    //       if (!response.ok) {
-    //         throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
-    //       }
-    //       // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
-    //     })
-    //     .catch((error) => {
-    //       console.error(error); // 에러 처리
-    //     });
+    // const newDate = data.map((el, idx) => {
+    //   const bookmarked = el.bookmarked;
+    //   //console.log(isBookmarked);
+    //   if (el.cocktailId === item.cocktailId) {
+    //     return { ...el, bookmarked: !bookmarked };
+    //   }
+    //   return el;
+    // });
+    // setData(newDate);
   };
   return (
     <Container
@@ -72,7 +101,8 @@ export default function Card({ item, data, setData }) {
         {/* 북마크 */}
         <BookmarkBtn
           onClick={() => handleBookmarkClick(item.cocktailId, item)}
-          isBookmarked={item.isBookmarked}
+          bookmarked={bookmarked}
+          setbookmarked={setbookmarked}
           size="w-[20px] h-[30px]"
           absolute="true"
           top="top-0"
@@ -84,13 +114,13 @@ export default function Card({ item, data, setData }) {
     </Container>
   );
 }
+
 const Container = tw.div`
 relative 
 w-[11.25rem]
 h-[15rem] 
 ${(props) => (props.ishovering ? `text-gray-100` : `text-gray-200 `)}
 drop-shadow-3xl
-
 `;
 
 const ImgButton = tw.button`

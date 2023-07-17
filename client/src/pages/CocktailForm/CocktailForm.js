@@ -1,38 +1,82 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import CustomInput from '../components/Input/CustomInput';
-import SelectBaseInput from '../components/Input/SelectBaseInput';
-import CheckboxIngrInput from '../components/Input/CheckboxIngrInput';
-import CocktailRecipeInput from '../components/Input/CocktailRecipeInput';
+import CustomInput from '../../components/Input/CustomInput';
+import SelectBaseInput from '../../components/Input/SelectBaseInput';
+import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
+import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 
-import HoverButton from '../common/Buttons/HoverButton';
-import ImageUpload from '../components/ImageUpload';
-import useCocktailFormValid from '../components/Validation/CocktailFormValidation';
+import HoverButton from '../../common/Buttons/HoverButton';
+
+import ImageUpload from '../../components/ImageUpload';
+import CocktailTag from './CocktailTag';
+import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
 
 import tw from 'tailwind-styled-components';
 
 export default function CocktailForm() {
   const [form, setForm] = useState({
     name: '',
-    img: true,
+    imageUrl: '',
     liquor: '',
     ingredients: [],
     recipe: [{ id: 0, process: '' }],
+    degree: '',
+    flavor: [],
   });
 
   const [isValid, setIsValid] = useState({
     name: true,
-    img: true,
+    imageUrl: true,
     liquor: true,
     ingredients: true,
-    recipe: false,
+    recipe: true,
+    degree: true,
+    flavor: true,
   });
 
-  console.log('value: ', form, '유효성: ', isValid);
+  const navigate = useNavigate();
+
+  const accessToken = localStorage.getItem('accessToken');
 
   const submitHandler = (e) => {
     e.preventDefault();
-    useCocktailFormValid(form, setIsValid);
+    const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
+      useCocktailFormValid(form);
+    const updatedIsValid = {
+      name,
+      imageUrl,
+      liquor,
+      ingredients,
+      recipe,
+      degree,
+      flavor,
+    };
+    setIsValid(updatedIsValid);
+    const allValid = Object.values(updatedIsValid).every(
+      (value) => value === true
+    );
+
+    if (allValid) {
+      fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: accessToken,
+        },
+        body: JSON.stringify(form),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+          navigate(`/success/${json.cocktailId}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log('유효성 검사 작동');
+    }
   };
 
   return (
@@ -55,8 +99,14 @@ export default function CocktailForm() {
                 text="칵테일 이름을 적어주세요"
                 isValid={isValid.name}
                 size="w-[355px] h-[40px] max-[520px]:w-[320px]"
+                radius="rounded-md"
               />
-              <ImageUpload form={form} setForm={setForm} isValid={isValid} />
+              <ImageUpload
+                form={form}
+                setForm={setForm}
+                isValid={isValid}
+                setIsValid={setIsValid}
+              />
               <SelectBaseInput
                 isValid={isValid.liquor}
                 value={form.liquor}
@@ -67,9 +117,15 @@ export default function CocktailForm() {
                 isValid={isValid.ingredients}
                 setForm={setForm}
               />
-              <CocktailRecipeInput form={form} setForm={setForm} />
+              <CocktailRecipeInput
+                form={form}
+                setForm={setForm}
+                isValid={isValid}
+                setIsValid={setIsValid}
+              />
+              <CocktailTag form={form} setForm={setForm} isValid={isValid} />
             </InputSection>
-            <div className="mt-1">
+            <div className="mt-4">
               <HoverButton type="submit" size="w-32 h-12">
                 업로드
               </HoverButton>

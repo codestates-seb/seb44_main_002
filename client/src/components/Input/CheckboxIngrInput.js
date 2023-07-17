@@ -16,15 +16,14 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
     }
   };
   return (
-    <div>
+    <div className="mb-2">
       <div
         className={`flex flex-col font-bold w-[320px]  ${
-          isValid ? 'text-gray-200' : 'text-[#FF1AE8]'
+          isValid ? 'text-gray-200' : 'text-error'
         }`}
       >
         속재료
-        <div className="flex flex-row items-center justify-center flex-wrap w-[355px] h-[100px]">
-          {/* 설탕 소금 과일음료 탄산음료 레몬즙 라임즙 우유 */}
+        <div className="flex flex-row items-center justify-center flex-wrap  w-[355px] h-[100px]">
           <div className="mr-4">
             <input
               className="mr-1"
@@ -34,7 +33,9 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="sugar"
               onChange={checkboxHandler}
             />
-            <label htmlFor="sugar">설탕</label>
+            <label className="text-sm" htmlFor="sugar">
+              설탕
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -45,51 +46,61 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="salt"
               onChange={checkboxHandler}
             />
-            <label htmlFor="salt">소금</label>
+            <label className="text-sm" htmlFor="salt">
+              소금
+            </label>
           </div>
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="fruitdrink"
-              name="fruitdrink"
-              value="fruitdrink"
+              id="beverage"
+              name="beverage"
+              value="beverage"
               onChange={checkboxHandler}
             />
-            <label htmlFor="fruitdrink">과일음료</label>
+            <label className="text-sm" htmlFor="beverage">
+              과일음료
+            </label>
           </div>
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="sparklingdrink"
-              name="sparklingdrink"
-              value="sparklingdrink"
+              id="soda"
+              name="soda"
+              value="soda"
               onChange={checkboxHandler}
             />
-            <label htmlFor="sparklingdrink">탄산음료</label>
+            <label className="text-sm" htmlFor="soda">
+              탄산음료
+            </label>
           </div>
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="lemon"
-              name="lemon"
-              value="lemon"
+              id="lemonSqueeze"
+              name="lemonSqueeze"
+              value="lemonSqueeze"
               onChange={checkboxHandler}
             />
-            <label htmlFor="lemon">레몬즙</label>
+            <label className="text-sm" htmlFor="lemonSqueeze">
+              레몬즙
+            </label>
           </div>
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="lime"
-              name="lime"
-              value="lime"
+              id="limeSqueeze"
+              name="limeSqueeze"
+              value="limeSqueeze"
               onChange={checkboxHandler}
             />
-            <label htmlFor="lime">라임즙</label>
+            <label className="text-sm" htmlFor="limeSqueeze">
+              라임즙
+            </label>
           </div>
           <div className="mr-4">
             <input
@@ -100,12 +111,40 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
               value="milk"
               onChange={checkboxHandler}
             />
-            <label htmlFor="milk">우유</label>
+            <label className="text-sm" htmlFor="milk">
+              우유
+            </label>
+          </div>
+          <div className="mr-4">
+            <input
+              className="mr-1"
+              type="checkbox"
+              id="ice"
+              name="ice"
+              value="ice"
+              onChange={checkboxHandler}
+            />
+            <label className="text-sm" htmlFor="ice">
+              얼음
+            </label>
+          </div>
+          <div className="mr-4">
+            <input
+              className="mr-1"
+              type="checkbox"
+              id="mint"
+              name="mint"
+              value="mint"
+              onChange={checkboxHandler}
+            />
+            <label className="text-sm" htmlFor="mint">
+              민트
+            </label>
           </div>
         </div>
       </div>
       <div className="h-7">
-        <p className={`${isValid && 'hidden'} text-[#FF1AE8]`}>
+        <p className={`${isValid && 'hidden'} text-sm text-error`}>
           속재료를 한개 이상 골라주세요
         </p>
       </div>
