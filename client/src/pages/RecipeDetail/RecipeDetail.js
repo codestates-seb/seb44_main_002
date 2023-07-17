@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
@@ -106,21 +107,37 @@ export default function RecipeDetail() {
       </>
     );
   };
-  const DrawBookmark = () => {
-    const bookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
-    const selectedMookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
+  const DrawBookmark = ({ cocktail }) => {
     const item = {
-      cocktailId: cocktailDetail.cocktailId,
-      name: cocktailDetail.name,
-      imageUrl: cocktailDetail.imageUrl,
-      isBookmarked: cocktailDetail.isBookmarked,
+      cocktailId: cocktail.cocktailId,
+      name: cocktail.name,
+      imageUrl: cocktail.imageUrl,
+      userRate: cocktail.userRate,
+      viewCount: cocktail.viewCount,
+      bookmarked: cocktail.bookmarked,
     };
-
+    const handleBookmarkClick = async (cocktailId) => {
+      console.log('동작');
+      const id = cocktailId;
+      if (!isBookmarked) {
+        try {
+          await RecipeApi.createBookmark(item);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          await RecipeApi.deleteBookmark(item);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      dispatch(updateBookmark({ id, item }));
+      setBookmark();
+    };
     return (
       <BookmarkBtn
-        onClick={setBookmark}
+        onClick={() => handleBookmarkClick(cocktail.cocktailId)}
         isBookmarked={isBookmarked}
         absolute="true"
         top="top-0"
@@ -128,12 +145,13 @@ export default function RecipeDetail() {
       />
     );
   };
+
   return (
     <>
       <Background>
         <BackgroundImg />
         <Container>
-          <DrawBookmark />
+          <DrawBookmark cocktail={cocktail} />
           <RecipeInfo
             cocktailDetail={cocktail}
             userInfo={userInfo}

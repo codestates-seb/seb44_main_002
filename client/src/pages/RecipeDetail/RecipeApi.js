@@ -180,4 +180,46 @@ export default {
       console.log(error);
     }
   },
+  async createBookmark(item) {
+    try {
+      const response = await fetch(
+        `${API_BASE}bookmark/create/${item.cocktailId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+        }
+      );
+      if (response.ok) {
+        return response;
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async deleteBookmark(item) {
+    try {
+      const response = await fetch(
+        `${API_BASE}bookmark/delete/${item.cocktailId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+        }
+      );
+      if (response.ok) {
+        return response;
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
