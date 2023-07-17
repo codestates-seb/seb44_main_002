@@ -23,7 +23,7 @@ public class UserService {
         this.authorityUtils = authorityUtils;
     }
 
-    public UserDto.Response createUser(UserDto.post requestBody) {
+    public UserDto.Response createUser(UserDto.Post requestBody) {
         verifyExistsEmail(requestBody.getEmail());
         User user = requestBody.postToEntity();
 

@@ -9,7 +9,7 @@ import java.util.List;
 public class UserDto {
 
     @Getter
-    public static class post {
+    public static class Post {
         private String email;
         private String password;
         private String name;
