@@ -93,14 +93,7 @@ export default function RecipeDetail() {
       viewCount: cocktail.viewCount,
       bookmarked: cocktail.bookmarked,
     };
-    // {
-    //   cocktailId: 3,
-    //   name: 'test3',
-    //   imageUrl: 'https://cocktail-project.s3.ap-northeast-2.amazonaws.com/2023-07-12T05%3A58%3A15.197658%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg',
-    //   userRate: 0,
-    //   viewCount: 0,
-    //   bookmarked: true
-    // }
+
     const handleBookmarkClick = (cocktailId, item) => {
       console.log('동작');
       const id = cocktailId;
@@ -354,6 +347,6 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  isBookmarked: false,
+  bookmarked: false,
   adminWritten: false,
 };
