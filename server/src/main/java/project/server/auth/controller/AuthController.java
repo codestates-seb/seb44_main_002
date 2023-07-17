@@ -25,6 +25,7 @@ public class AuthController {
         String token = jwtTokenizer.getTokenFromHeader(tokenHeader);
         if (redisService.isSignedOut(token)) throw new BusinessLogicException(ExceptionCode.USER_INPUT_ERROR);
         redisService.signOut(token);
+        log.info("# sign out");
         return ResponseEntity.ok("Signed out successfully.");
     }
 }
