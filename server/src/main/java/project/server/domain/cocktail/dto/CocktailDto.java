@@ -21,7 +21,7 @@ public class CocktailDto {
         private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
         private String degree;
-        private List<TagDto.Post> tags;
+        private List<TagDto.Post> flavor;
     }
 
     @Getter
@@ -31,6 +31,8 @@ public class CocktailDto {
         private final String name;
         private final String imageUrl;
         private final boolean isBookmarked;
+        private final double userRate;
+        private final int viewCount;
     }
 
     @Getter

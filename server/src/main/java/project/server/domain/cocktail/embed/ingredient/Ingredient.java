@@ -10,7 +10,9 @@ public enum Ingredient {
     SALT("소금"),
     SUGAR("설탕"),
     SODA("탄산음료"),
-    BEVERAGE("과일음료");
+    BEVERAGE("과일음료"),
+    MILK("우유"),
+    MINT("민트");
 
 
     @Getter

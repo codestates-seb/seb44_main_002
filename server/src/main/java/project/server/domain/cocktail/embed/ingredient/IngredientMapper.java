@@ -16,6 +16,9 @@ public class IngredientMapper {
         ingredientMap.put("sugar", Ingredient.SUGAR);
         ingredientMap.put("soda", Ingredient.SODA);
         ingredientMap.put("beverage", Ingredient.BEVERAGE);
+        ingredientMap.put("milk", Ingredient.MILK);
+        ingredientMap.put("mint", Ingredient.MINT);
+
     }
 
     public static Ingredient map(String key){

@@ -37,9 +37,19 @@ public class UserService {
         return savedUser.entityToResponse();
     }
 
-    public void verifyExistsEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+    public User updateUser(UserDto.Patch dto, long userId, Authentication authentication) {
+        if (unsigned(authentication)) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+        User user = findUser(userId);
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        user.setPassword(encodedPassword);
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(long userId) {
+        User user = findUser(userId);
+        userRepository.delete(user);
     }
 
     public User findUser(long userId) {
@@ -50,17 +60,9 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUNT));
     }
 
-    public User updateUser(UserDto.Patch dto, long userId) {
-        User user = findUser(userId);
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
-        user.setPassword(encodedPassword);
-
-        return userRepository.save(user);
-    }
-
-    public void deleteUser(long userId) {
-        User user = findUser(userId);
-        userRepository.delete(user);
+    public void verifyExistsEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
     }
 
     public User findUserByAuthentication(Authentication authentication) {
@@ -69,5 +71,9 @@ public class UserService {
         }
         String email = (String) authentication.getPrincipal();
         return findUserByEmail(email);
+    }
+
+    private boolean unsigned(Authentication authentication) {
+        return authentication == null;
     }
 }
