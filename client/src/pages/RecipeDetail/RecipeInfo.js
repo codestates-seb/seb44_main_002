@@ -100,7 +100,9 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
                 <Separator></Separator>
               </>
             )}
-            <ModifyP onClick={copyToClipBoard}>주소복사</ModifyP>
+            <button onClick={copyToClipBoard}>
+              <ModifyP>주소복사</ModifyP>
+            </button>
           </ModifyContainer>
         </StarCotiner>
         <TitleContainer>
