@@ -1,4 +1,4 @@
-import { useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -19,6 +19,7 @@ const CommentPage = lazy(() => import('./pages/Comment/CommentPage'));
 const SuccessPage = lazy(() => import('./pages/Success/SuccessPage'));
 
 import './App.css';
+import Loading from './components/Loading';
 
 function App() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -83,7 +84,7 @@ function App() {
 
 const Routing = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/category" element={<Category />} />
