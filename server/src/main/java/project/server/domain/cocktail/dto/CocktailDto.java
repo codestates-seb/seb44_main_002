@@ -12,8 +12,8 @@ import java.util.List;
 public class CocktailDto {
 
     @Getter
+    @Setter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class Post {
         private String name;
         private String imageUrl;
@@ -37,7 +37,6 @@ public class CocktailDto {
 
     @Getter
     @Builder
-    @Data
     public static class Response {
         private final long cocktailId;
         private final boolean isAdminWritten;

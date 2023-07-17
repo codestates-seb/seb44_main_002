@@ -6,7 +6,6 @@ import lombok.Getter;
 public class TagDto {
 
     @Getter
-    @AllArgsConstructor
     public static class Post{
         private String tag;
     }
