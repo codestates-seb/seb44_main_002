@@ -1,10 +1,12 @@
 package project.server.domain.cocktail.embed.tag;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class TagDto {
 
     @Getter
+    @AllArgsConstructor
     public static class Post{
         private String tag;
     }

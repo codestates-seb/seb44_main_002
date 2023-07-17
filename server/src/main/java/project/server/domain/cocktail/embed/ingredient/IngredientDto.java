@@ -6,6 +6,7 @@ import lombok.Getter;
 public class IngredientDto {
 
     @Getter
+    @AllArgsConstructor
     public static class Post{
         private String ingredient;
     }

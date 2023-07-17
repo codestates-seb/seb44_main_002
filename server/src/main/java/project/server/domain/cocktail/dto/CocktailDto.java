@@ -1,8 +1,6 @@
 package project.server.domain.cocktail.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
@@ -14,6 +12,8 @@ import java.util.List;
 public class CocktailDto {
 
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Post {
         private String name;
         private String imageUrl;

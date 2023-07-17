@@ -1,10 +1,12 @@
 package project.server.domain.cocktail.embed.recipe;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class RecipeDto {
 
     @Getter
+    @AllArgsConstructor
     public static class Post{
         private String process;
     }

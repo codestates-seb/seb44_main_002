@@ -1,7 +1,9 @@
 package project.server.domain.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import project.server.domain.cocktail.dto.CocktailDto;
 
 import java.util.List;
@@ -9,7 +11,8 @@ import java.util.List;
 public class UserDto {
 
     @Getter
-    public static class post {
+    @Setter
+    public static class Post {
         private String email;
         private String password;
         private String name;
