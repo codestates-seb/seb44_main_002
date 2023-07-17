@@ -19,7 +19,7 @@ import { createSlice } from '@reduxjs/toolkit';
 // dispatch(updateBookmark({ id, item }));
 
 const initialState = {
-  UserId: null,
+  userId: null,
   accessToken: null,
   name: null,
   profileImageUrl: null,
@@ -72,7 +72,7 @@ const userInfoSlice = createSlice({
     userinfoLogin: (state, action) => {
       return {
         ...state,
-        UserId: action.payload.UserId,
+        userId: action.payload.userId,
         accessToken: action.payload.accessToken,
         IsAdmin: action.payload.IsAdmin,
       };
@@ -80,7 +80,7 @@ const userInfoSlice = createSlice({
     userinfoLoginOut: (state) => {
       return {
         ...state,
-        UserId: null,
+        userId: null,
         accessToken: null,
       };
     },

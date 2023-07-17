@@ -40,7 +40,7 @@ export default function PasswordModal({ logginUser }) {
   const modifyPassword = async () => {
     try {
       const response = await UserPageApi.modifyUser(
-        logginUser.UserId,
+        logginUser.userId,
         { password: password },
         logginUser.accessToken
       );
