@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/slice/isLoginSlice';
 
 import PasswordModal from './PasswordModal';
 import UserPageApi from './UserPageApi';
@@ -7,6 +9,8 @@ import tw from 'tailwind-styled-components';
 
 export default function UserInfo({ userInfo, logginUser }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
@@ -25,6 +29,8 @@ export default function UserInfo({ userInfo, logginUser }) {
     if (window.confirm('정말로 탈퇴하시겠습니까?')) {
       alert('삭제되었습니다.');
       deleteUser();
+      dispatch(logout());
+      localStorage.clear();
       navigate('/');
     }
   };
