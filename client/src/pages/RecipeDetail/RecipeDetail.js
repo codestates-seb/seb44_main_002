@@ -140,7 +140,7 @@ export default function RecipeDetail() {
     <>
       <Background>
         <BackgroundImg />
-        <Container>
+        <Container className="animate-fadeInDown1">
           <DrawBookmark cocktail={cocktail} />
           <RecipeInfo
             cocktailDetail={cocktail}

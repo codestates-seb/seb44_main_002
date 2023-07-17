@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import RecipeApi from './RecipeApi';
 
-import tw from 'tailwind-styled-components';
-
-import { BsArrowRightShort } from 'react-icons/bs';
-import { PiUserCircleFill } from 'react-icons/pi';
 import ImageModal from './ImgaeModal';
-import { userinfoLoginOut } from '../../redux/slice/userInfoSlice';
+
+import tw from 'tailwind-styled-components';
+import { PiUserCircleFill } from 'react-icons/pi';
 
 export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   const navigate = useNavigate();
