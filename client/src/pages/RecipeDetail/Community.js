@@ -142,7 +142,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                         <CommentButton
                           onClick={() =>
                             navigate('/comment', {
-                              state: [true, ele],
+                              state: [true, ele, cocktailDetail.cocktailId],
                             })
                           }
                         >
@@ -183,7 +183,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                             <CommentButton
                               onClick={() =>
                                 navigate('/comment', {
-                                  state: [false, rp],
+                                  state: [false, rp, cocktailDetail.cocktailId],
                                 })
                               }
                             >

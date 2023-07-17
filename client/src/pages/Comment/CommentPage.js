@@ -8,6 +8,7 @@ export default function CommentPage() {
   const { state } = useLocation();
   const [isCommented, setIsCommented] = useState(state[0]);
   const commentdata = state[1];
+  const cocktailId = state[2];
   const [isValid, setIsValid] = useState(true);
   const [comment, setComment] = useState(commentdata.content);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -34,7 +35,7 @@ export default function CommentPage() {
               console.log('요청이 성공했습니다.');
               // console.log(data);
               setErrorMsg(null);
-              navigate(`/detail/${2}`); //수정요망--------->
+              navigate(`/detail/${cocktailId}`);
               alert('수정했습니다!');
             } else {
               // 응답이 실패한 경우
@@ -67,7 +68,7 @@ export default function CommentPage() {
               console.log('요청이 성공했습니다.');
               // console.log(data);
               setErrorMsg(null);
-              navigate('/');
+              navigate(`/detail/${cocktailId}`);
               alert('수정했습니다!');
             } else {
               // 응답이 실패한 경우
