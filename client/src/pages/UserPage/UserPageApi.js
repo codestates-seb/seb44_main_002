@@ -40,7 +40,7 @@ export default {
   // 회원 탈퇴
   async deleteUser(userId, accessToken) {
     try {
-      const response = await fetch(`${API_BASE}user/${userId}`, {
+      const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

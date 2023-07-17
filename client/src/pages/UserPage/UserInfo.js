@@ -1,4 +1,4 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import PasswordModal from './PasswordModal';
 import UserPageApi from './UserPageApi';
@@ -10,11 +10,10 @@ export default function UserInfo({ userInfo, logginUser }) {
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
-
   const deleteUser = async () => {
     try {
       const response = await UserPageApi.deleteUser(
-        logginUser.UserId,
+        logginUser.userId,
         logginUser.accessToken
       );
     } catch (error) {
@@ -41,12 +40,14 @@ export default function UserInfo({ userInfo, logginUser }) {
         />
         <UserContainer>
           <FlexContainer>
-            {userInfo.userId === 1 ? (
+            {userInfo.userId === logginUser.userId ? (
               <p>{`안녕하세요. ${userInfo.name}님.`}</p>
             ) : (
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
-            {userInfo.userId !== 1 && <TitleButton>구독하기</TitleButton>}
+            {userInfo.userId !== logginUser.userId && (
+              <TitleButton>구독하기</TitleButton>
+            )}
           </FlexContainer>
           <InnerInfo>
             <InfoComponent>
@@ -61,7 +62,7 @@ export default function UserInfo({ userInfo, logginUser }) {
               <UpInfoP>{userInfo.email.split('@')[0]}</UpInfoP>
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
-            {userInfo.userId !== 1 && (
+            {userInfo.userId !== logginUser.userId && (
               <InfoComponent>
                 <SubscribeButton>구독하기</SubscribeButton>
               </InfoComponent>
@@ -69,9 +70,9 @@ export default function UserInfo({ userInfo, logginUser }) {
           </InnerInfo>
         </UserContainer>
       </InfoContainer>
-      {userInfo.userId === logginUser.UserId && (
+      {userInfo.userId === logginUser.userId && (
         <ButtonContainer>
-          <PasswordModal />
+          <PasswordModal logginUser={logginUser} />
           <Button onClick={clickDelete}>탈퇴하기</Button>
         </ButtonContainer>
       )}
