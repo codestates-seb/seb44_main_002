@@ -16,6 +16,7 @@ export default function RecipeDetail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cocktail, setCocktail] = useState(cocktailDetail);
+
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const userInfo = useSelector((state) => state.userinfo);
@@ -42,13 +43,14 @@ export default function RecipeDetail() {
   };
 
   const setBookmark = async () => {
+    //console.log(cocktail.cocktailId);
     // 비로그인시 설정 불가
     if (userInfo.userId) {
       if (isBookmarked) {
         // 북마크 해제
         try {
           const response = await RecipeApi.deleteBookmark(
-            cocktailDetail.cocktailId,
+            cocktail.cocktailId,
             accessToken
           );
         } catch (error) {
@@ -59,7 +61,7 @@ export default function RecipeDetail() {
         // 북마크 설정
         try {
           const response = await RecipeApi.postBookmark(
-            cocktailDetail.cocktailId,
+            cocktail.cocktailId,
             accessToken
           );
         } catch (error) {
@@ -67,7 +69,6 @@ export default function RecipeDetail() {
           navigate('/error');
         }
       }
-      setIsBookmarked(!isBookmarked);
     }
   };
 
@@ -90,6 +91,7 @@ export default function RecipeDetail() {
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
     getCocktail();
+    console.log(cocktailDetail);
   }, [location_id]);
 
   const BackgroundImg = () => {
@@ -128,7 +130,8 @@ export default function RecipeDetail() {
     return (
       <BookmarkBtn
         onClick={() => handleBookmarkClick(cocktail.cocktailId)}
-        isBookmarked={isBookmarked}
+        bookmarked={isBookmarked}
+        setbookmarked={setIsBookmarked}
         absolute="true"
         top="top-0"
         right="right-14"
