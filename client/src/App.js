@@ -68,7 +68,7 @@ function App() {
     // };
     if (isToken) {
       dispatch(login(() => login()));
-      handleUserInfo(localStorage.getItem('UserId'));
+      handleUserInfo(localStorage.getItem('userId'));
     }
   }, []);
 

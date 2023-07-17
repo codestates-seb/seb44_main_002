@@ -96,23 +96,23 @@ export default function HeaderModal() {
               data.headers.get('Authorization')
             );
 
-            localStorage.setItem('UserId', data.headers.get('UserId'));
+            localStorage.setItem('userId', data.headers.get('userId'));
             localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
             localStorage.setItem('refreshToken', data.headers.get('Refesh'));
             // Refresh accessToken 만료
-            //UserId
+            //userId
             //Name
 
             dispatch(
               userinfoLogin({
-                UserId: data.headers.get('UserId'),
+                userId: data.headers.get('userId'),
                 accessToken: data.headers.get('Authorization'),
                 IsAdmin: data.headers.get('IsAdmin'),
               })
             );
             //Isadmin:
             //사용자 정보 조회
-            handleUserInfo(data.headers.get('UserId'));
+            handleUserInfo(data.headers.get('userId'));
             // 전역상태관리 로그인으로 변경
             dispatch(login(() => login()));
             handleClose();
