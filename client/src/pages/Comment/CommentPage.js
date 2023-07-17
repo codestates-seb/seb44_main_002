@@ -118,7 +118,6 @@ export default function CommentPage() {
             <p className=" text-error ">1~200자 범위내로 작성해주세요</p>
           )}
         </div>
-        {/* {errorMsg && <p className="text-error ">{errorMsg}</p>} */}
         <InputButton onClick={handleSubmit}>전송하기</InputButton>
       </section>
     </div>
