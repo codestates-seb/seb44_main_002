@@ -99,6 +99,7 @@ const dummyData = {
   age: 20,
   email: 'kim@example.com',
   subscriberCount: 1200,
+  cocktails: [],
   bookmarkedCocktails: [
     {
       cocktailId: 1,
