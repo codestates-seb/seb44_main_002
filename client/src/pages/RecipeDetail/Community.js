@@ -74,7 +74,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (userInfo.UserId === null) {
+    if (userInfo.userId === null) {
       alert('로그인 후 이용해주세요');
       return;
     }
@@ -142,7 +142,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                         <CommentButton
                           onClick={() =>
                             navigate('/comment', {
-                              state: [true, ele],
+                              state: [true, ele, cocktailDetail.cocktailId],
                             })
                           }
                         >
@@ -183,7 +183,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                             <CommentButton
                               onClick={() =>
                                 navigate('/comment', {
-                                  state: [false, rp],
+                                  state: [false, rp, cocktailDetail.cocktailId],
                                 })
                               }
                             >

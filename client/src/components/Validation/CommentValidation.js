@@ -3,4 +3,5 @@ export default function CommentValid(comment, setIsValid) {
   const commentRegex = /^[\s\S]{1,200}$/u;
   const commentIsValid = commentRegex.test(comment);
   setIsValid(commentIsValid);
+  return commentIsValid;
 }

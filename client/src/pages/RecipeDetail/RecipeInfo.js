@@ -54,7 +54,6 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   };
   const changeScore = (idx) => {
     // 로그인 여부 확인
-    console.log(userInfo);
     if (userInfo.userId !== null && userInfo.age !== null) {
       setScore(idx + 1);
       modifyScore(idx + 1);
@@ -91,6 +90,10 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
       </DrawStarContainer>
     );
   };
+
+  useEffect(() => {
+    setScore(cocktailDetail.userRate);
+  }, [cocktailDetail]);
 
   return (
     <InfoContainer>

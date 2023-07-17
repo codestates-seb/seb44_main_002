@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
@@ -13,9 +14,10 @@ import tw from 'tailwind-styled-components';
 
 export default function RecipeDetail() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [cocktail, setCocktail] = useState(cocktailDetail);
-  const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
   const userInfo = useSelector((state) => state.userinfo);
 
   const location_id = useLocation().pathname.split('/')[2];
@@ -39,18 +41,46 @@ export default function RecipeDetail() {
     return `${Math.floor(minutesDifference / 1440)} days ago`;
   };
 
-  const setBookmark = () => {
+  const setBookmark = async () => {
     // 비로그인시 설정 불가
-    if (userId) {
+    if (userInfo.userId) {
+      if (isBookmarked) {
+        // 북마크 해제
+        try {
+          const response = await RecipeApi.deleteBookmark(
+            cocktailDetail.cocktailId,
+            accessToken
+          );
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      } else {
+        // 북마크 설정
+        try {
+          const response = await RecipeApi.postBookmark(
+            cocktailDetail.cocktailId,
+            accessToken
+          );
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      }
       setIsBookmarked(!isBookmarked);
     }
   };
 
   const getCocktail = async () => {
     try {
-      const response = await RecipeApi.getCocktailData(location_id);
+      const response = await RecipeApi.getCocktailData(
+        location_id,
+        accessToken
+      );
       const json = await response.json();
       setCocktail(json);
+      setIsBookmarked(json.bookmarked);
+      console.log(json);
     } catch (error) {
       console.log(error);
       navigate('/error');
@@ -60,7 +90,7 @@ export default function RecipeDetail() {
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
     getCocktail();
-  }, []);
+  }, [location_id]);
 
   const BackgroundImg = () => {
     return (
@@ -79,21 +109,25 @@ export default function RecipeDetail() {
       </>
     );
   };
-  const DrawBookmark = () => {
-    const bookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
-    const selectedMookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
+  const DrawBookmark = ({ cocktail }) => {
     const item = {
-      cocktailId: cocktailDetail.cocktailId,
-      name: cocktailDetail.name,
-      imageUrl: cocktailDetail.imageUrl,
-      isBookmarked: cocktailDetail.isBookmarked,
+      cocktailId: cocktail.cocktailId,
+      name: cocktail.name,
+      imageUrl: cocktail.imageUrl,
+      userRate: cocktail.userRate,
+      viewCount: cocktail.viewCount,
+      bookmarked: cocktail.bookmarked,
     };
+    const handleBookmarkClick = async (cocktailId) => {
+      console.log('동작');
+      const id = cocktailId;
 
+      dispatch(updateBookmark({ id, item }));
+      setBookmark();
+    };
     return (
       <BookmarkBtn
-        onClick={setBookmark}
+        onClick={() => handleBookmarkClick(cocktail.cocktailId)}
         isBookmarked={isBookmarked}
         absolute="true"
         top="top-0"
@@ -101,12 +135,13 @@ export default function RecipeDetail() {
       />
     );
   };
+
   return (
     <>
       <Background>
         <BackgroundImg />
         <Container>
-          <DrawBookmark />
+          <DrawBookmark cocktail={cocktail} />
           <RecipeInfo
             cocktailDetail={cocktail}
             userInfo={userInfo}
@@ -118,7 +153,7 @@ export default function RecipeDetail() {
             userInfo={userInfo}
             getTime={getTime}
           />
-          <Recommend cocktailDetail={cocktail.recommend} userInfo={userInfo} />
+          <Recommend cocktailDetail={cocktail.recommends} userInfo={userInfo} />
         </Container>
       </Background>
     </>
@@ -277,7 +312,7 @@ const cocktailDetail = {
       ],
     },
   ],
-  recommend: [
+  recommends: [
     //category idx 와 userinfo 리덕스 데이터와 겹쳐서 cocktailId와 isBookmarked  달리 수정했습니다.
     {
       cocktailId: 7,
@@ -298,6 +333,6 @@ const cocktailDetail = {
       isBookmarked: false,
     },
   ],
-  isBookmarked: false,
+  bookmarked: false,
   adminWritten: false,
 };
