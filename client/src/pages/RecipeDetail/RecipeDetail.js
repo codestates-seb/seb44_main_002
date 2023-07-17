@@ -94,7 +94,7 @@ export default function RecipeDetail() {
     const handleBookmarkClick = async (cocktailId) => {
       console.log('동작');
       const id = cocktailId;
-      if (!item.bookmarked) {
+      if (!isBookmarked) {
         try {
           await RecipeApi.createBookmark(item);
         } catch (error) {
