@@ -76,6 +76,7 @@ const Container = tw.main`
 w-full
 max-w-6xl
 mx-auto
+animate-fadeInDown1
 `;
 const NoteImg = tw.img`
 absolute 
