@@ -29,8 +29,14 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   };
 
   const copyToClipBoard = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('현재 주소가 클립보드에 복사되었습니다.');
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert('현재 주소가 클립보드에 복사되었습니다.');
+      })
+      .catch((error) => {
+        console.error('클립보드 복사에 실패했습니다:', error);
+      });
   };
   const modifyScore = async (score2) => {
     try {
