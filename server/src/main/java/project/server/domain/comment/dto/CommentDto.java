@@ -1,8 +1,7 @@
 package project.server.domain.comment.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.reply.dto.ReplyDto;
 
@@ -11,6 +10,8 @@ import java.util.List;
 
 public class CommentDto {
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Post {
         private String content;
 
@@ -31,6 +32,7 @@ public class CommentDto {
         private String content;
         private List<ReplyDto.Response> replies;
         private LocalDateTime createdAt;
+        List<ReplyDto.Response> replies;
     }
 
     @Getter

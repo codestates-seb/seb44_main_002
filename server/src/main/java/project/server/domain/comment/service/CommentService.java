@@ -50,6 +50,12 @@ public class CommentService {
         return savedComment.entityToResponse();
     }
 
+    public CommentDto.Response saveComment(long commentId) {
+        Comment comment = findCommentById(commentId);
+        Comment savedComment = commentRepository.save(comment);
+        return savedComment.entityToResponse();
+    }
+
     public Comment findCommentById(long commentId) {
         return commentRepository.findById(commentId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
