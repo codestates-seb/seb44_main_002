@@ -7,7 +7,7 @@ import UserPageApi from './UserPageApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function UserInfo({ userInfo, logginUser }) {
+export default function UserInfo({ userInfo, logginUser, isLogin }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ export default function UserInfo({ userInfo, logginUser }) {
             ) : (
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
-            {logginUser.userId && userInfo.userId !== logginUser.userId && (
+            {isLogin && userInfo.userId !== logginUser.userId && (
               <TitleButton>구독하기</TitleButton>
             )}
           </FlexContainer>
@@ -68,7 +68,7 @@ export default function UserInfo({ userInfo, logginUser }) {
               <UpInfoP>{userInfo.email.split('@')[0]}</UpInfoP>
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
-            {logginUser.userId && userInfo.userId !== logginUser.userId && (
+            {isLogin && userInfo.userId !== logginUser.userId && (
               <InfoComponent>
                 <SubscribeButton>구독하기</SubscribeButton>
               </InfoComponent>
