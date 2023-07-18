@@ -8,7 +8,7 @@
 #userpage .swiper-slide div {  position: absolute; padding: 25px 30px 10px; border: 1px dashed #ffffff; border-radius: 10px;}
 #userpage .swiper-slide img{ width: 70px; margin: 0 auto; object-fit:cover;}
 #userpage .swiper-slide p#name{ margin-top: 16px; }
-#userpage .swiper-slide p#close {position: absolute; top: 0px; right: 10px;}
+#userpage .swiper-slide p#close {position: absolute; top: 0px; right: 0px;}
 #userpage .swiper-pagination { bottom:-5px; color:white}
 
 @media (max-width:1200px) {
