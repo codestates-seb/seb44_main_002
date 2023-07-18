@@ -1,7 +1,7 @@
 import { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from './redux/slice/isLoginSlice';
 import { userinfoLogin, userinfoGet } from './redux/slice/userInfoSlice';
 
@@ -25,10 +25,11 @@ import './App.css';
 import Loading from './components/Loading';
 
 function App() {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  // const BASE_URL = process.env.REACT_APP_BASE_URL;
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userinfoUserid = useSelector((state) => state.userinfo.userid);
   const isSignUp = location.pathname.includes('/signup');
   const isCommented = location.pathname.includes('/comment');
   const RightPaths = [
@@ -44,24 +45,6 @@ function App() {
     RightPaths.some((path) => location.pathname.split('/')[1] === path);
 
   // refresh token이 있을 경우 access token 주기적으로 재발급
-
-  const handleUserInfo = async (memberId) => {
-    fetch(`${BASE_URL}users/${memberId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        //'ngrok-skip-browser-warning': 'true',
-      },
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        dispatch(userinfoGet(data));
-      })
-      .catch((err) => {
-        console.log(err);
-        navigate('/error');
-      });
-  };
   useEffect(() => {
     const isToken = localStorage.getItem('accessToken');
     // const timer = setInterval(() => {
@@ -70,9 +53,8 @@ function App() {
     // return () => {
     //   clearInterval(timer);
     // };
-    if (isToken) {
+    if (isToken && !userinfoUserid) {
       dispatch(login(() => login()));
-      handleUserInfo(localStorage.getItem('userId'));
     }
   }, []);
 

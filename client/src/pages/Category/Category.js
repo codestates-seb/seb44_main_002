@@ -36,7 +36,7 @@ export default function Category() {
   //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
   const [cocktailData, setCocktailData] = useState([]);
-  console.log(cocktailData);
+  // console.log(cocktailData);
   const [obj, setObj] = useState({
     totalCount: 200,
     totalPages: 5,
@@ -61,7 +61,7 @@ export default function Category() {
           throw new Error('Network response was not ok.');
         }
         const data = await response.json();
-        console.log(data.data);
+        //console.log(data.data);
         setCocktailData(data.data);
         setErrormsg(null);
         //성공했지만 데이터가 없는 경우
