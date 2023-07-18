@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
-import {fetchWithInterceptor,createbookmarkApi,deletebookmarkApi} from '../../api/api';
+import api from '../../api/api';
 
 import BookmarkBtn from '../BookmarkButton/BookmarkBtn';
 import tw from 'tailwind-styled-components';
@@ -31,33 +31,30 @@ export default function Card({ item }) {
 
     // bookmark/delete/{cocktail-id}
     const handleBookmark = async () => {
-       if (!bookmarked) {
-      try {
-        const response = await RecipeApi.createbookmarkApi(
-          cocktail.cocktailId,
-        );
-        if (response.ok) {
-          return response;
-        } else {
-          console.log('error');
+      if (!bookmarked) {
+        try {
+          const response = await api.createbookmarkApi(cocktail.cocktailId);
+          if (response.ok) {
+            return response;
+          } else {
+            console.log('error');
+          }
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
         }
-      } catch (error) {
-        console.log(error);
-        navigate('/error');
-      }
       } else {
-      try {
-        const response = await RecipeApi.deletebookmarkApi(
-          cocktail.cocktailId,
-        );
-        if (response.ok) {
-          return response;
-        } else {
-          console.log('error');
+        try {
+          const response = await api.deletebookmarkApi(cocktail.cocktailId);
+          if (response.ok) {
+            return response;
+          } else {
+            console.log('error');
+          }
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
         }
-      } catch (error) {
-        console.log(error);
-        navigate('/error');
       }
     };
     handleBookmark();
@@ -94,7 +91,7 @@ export default function Card({ item }) {
       <Title>{item.name}</Title>
     </Container>
   );
-};
+}
 
 const Container = tw.div`
 relative 
@@ -131,6 +128,7 @@ bg-opacity-50
   box-border
   ${(props) => (props.ishovering ? `hidden` : ``)}
 `;
+
 const Title = tw.h3`
 text-xl
 font-bold
