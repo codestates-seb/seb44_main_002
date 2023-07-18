@@ -95,8 +95,8 @@ export default function HeaderModal() {
               data.headers.get('Authorization')
             );
 
-            localStorage.setItem('userId', data.headers.get('userId'));
-            localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
+            localStorage.setItem('userId', Number(data.headers.get('userId')));
+            localStorage.setItem('IsAdmin', !!data.headers.get('IsAdmin'));
             localStorage.setItem('refreshToken', data.headers.get('Refresh'));
 
             dispatch(
