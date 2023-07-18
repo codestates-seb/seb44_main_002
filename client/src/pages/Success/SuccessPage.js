@@ -39,7 +39,7 @@ export default function SuccessPage() {
       {isLoading ? (
         <div className="relative flex items-center justify-center w-screen h-screen overflow-hidden text-white bg-gradient-to-r from-gradi-to to-gradi-from">
           <div className="z-10 flex flex-col justify-around h-full w-96">
-            <div className="flex-[1] flex justify-center items-center w-[full] h-full">
+            <div className="flex-[1] flex justify-center items-center w-full h-full">
               <img
                 role="presentation"
                 className="w-[60px] h-[80px] cursor-pointer max-[768px]:w-[50px] max-[768px]:h-[70px]"
@@ -53,7 +53,7 @@ export default function SuccessPage() {
               <img
                 src={userData && userData.imageUrl}
                 alt="userimg"
-                className="mb-6 max-[768px]:w-[90%] rounded-full"
+                className="mb-6 w-[320px] h-[320px] rounded-full"
               />
               <div className="flex text-4xl font-bold justify-center items-center text-center max-[768px]:text-2xl">
                 칵테일을 등록해주셔서 <br />
