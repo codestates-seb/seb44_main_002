@@ -133,12 +133,19 @@ export default function RecipeInfo({
         </TitleContainer>
         <UserContainer>
           <WriterInfo>
-            <Link to={`/userpage/${cocktailDetail.userId}`}>
+            {cocktailDetail.userId === 4 ? (
               <FlexContainer>
                 <PiUserCircleFill size="24px" />
-                <NameP>{cocktailDetail.userName}</NameP>
+                <NameP>관리자</NameP>
               </FlexContainer>
-            </Link>
+            ) : (
+              <Link to={`/userpage/${cocktailDetail.userId}`}>
+                <FlexContainer>
+                  <PiUserCircleFill size="24px" />
+                  <NameP>{cocktailDetail.userName}</NameP>
+                </FlexContainer>
+              </Link>
+            )}
             <p className="mt-1 text-[10px]">
               {getTime(cocktailDetail.createdAt)}
             </p>
