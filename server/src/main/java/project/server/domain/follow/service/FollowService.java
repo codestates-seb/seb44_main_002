@@ -1,11 +1,8 @@
-package project.server.domain.follow;
+package project.server.domain.follow.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.follow.entity.Follow;
-import project.server.domain.follow.service.FollowCreateService;
-import project.server.domain.follow.service.FollowDeleteService;
-import project.server.domain.follow.service.FollowReadService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 import project.server.exception.BusinessLogicException;

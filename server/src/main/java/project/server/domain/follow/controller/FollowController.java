@@ -3,7 +3,7 @@ package project.server.domain.follow.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import project.server.domain.follow.FollowService;
+import project.server.domain.follow.service.FollowService;
 import project.server.domain.user.AuthManager;
 import project.server.utils.UnsignedPermission;
 
