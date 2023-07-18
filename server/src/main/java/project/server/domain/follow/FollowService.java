@@ -29,7 +29,7 @@ public class FollowService {
     @Transactional
     public void createFollow(String followerEmail, long followingUserId) {
         User follower = userService.findUserByEmail(followerEmail);
-        User following = userService.findUser(followingUserId);
+        User following = userService.findUserByUserId(followingUserId);
         verifyFollowTarget(follower, following);
         followCreateService.createFollow(follower, following);
     }
@@ -42,7 +42,7 @@ public class FollowService {
     }
 
     private void verifyFollowTarget(User follower, User following) {
-        if(follower == following || following.isAdmin() || follower.alreadyFollowing(following)){
+        if(follower == following || following.isAdmin() || follower.following(following)){
             throw new BusinessLogicException(ExceptionCode.INVALID_FOLLOW_TARGET);
         }
     }
