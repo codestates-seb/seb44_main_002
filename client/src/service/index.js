@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { logout } from '../redux/slice/isLoginSlice';
 import { userinfoLoginOut } from '../redux/slice/userInfoSlice';

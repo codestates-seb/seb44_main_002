@@ -22,9 +22,12 @@ const fetchrefreshToken = async () => {
       alert('토큰만료로 로그아웃되었습니다.');
       handleLogOut();
     }
-    const data = await response.json();
-    jwtToken = data; // 새로운 토큰으로 기존의 토큰을 갱신
-    return jwtToken;
+    //재발급 성공 (엑세스토큰만 리스폰스헤더에)
+    if (response.ok) {
+      jwtToken = data.headers.get('Authorization'); // 새로운 토큰으로 기존의 토큰을 갱신
+      localStorage.setItem('accessToken', data.headers.get('Authorization'));
+      return jwtToken;
+    }
   } catch (error) {
     console.error(error);
     return null;
