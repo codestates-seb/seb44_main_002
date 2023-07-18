@@ -6,6 +6,7 @@ import lombok.Setter;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.service.CocktailSerializer;
+import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -53,6 +54,9 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    @OneToMany
+    private Set<Follow> follows = new HashSet<>();
+
     public UserDto.Response entityToResponse() {
         return UserDto.Response.builder()
                 .userId(userId)
@@ -67,6 +71,9 @@ public class User {
                         .collect(Collectors.toList()))
                 .bookmarkedCocktails(bookmarks.stream()
                         .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
+                        .collect(Collectors.toList()))
+                .follows(follows.stream()
+                        .map(Follow::getFollowing)
                         .collect(Collectors.toList()))
                 .build();
     }
@@ -113,5 +120,13 @@ public class User {
 
     public void write(Cocktail cocktail) {
         cocktails.add(cocktail);
+    }
+
+    public void addFollow(Follow follow) {
+        follows.add(follow);
+    }
+
+    public void cancelFollow(Follow follow) {
+        follows.remove(follow);
     }
 }
