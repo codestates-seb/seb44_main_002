@@ -2,10 +2,13 @@ import Card from '../../components/Card/Card';
 import OwnRecipeCard from '../../components/Card/OwnRecipeCard';
 import tw from 'tailwind-styled-components';
 
-export default function UserRecipe({ userInfo }) {
+export default function UserRecipe({ userInfo, logginUser }) {
   return (
     <Container>
-      <Title>자신의 레시피</Title>
+      <Title>
+        {userInfo.userId === logginUser.userId ? '자신' : userInfo.name + ' 님'}
+        의 레시피
+      </Title>
       <Bookmark>
         {userInfo.cocktails.map((ele) => {
           return (
