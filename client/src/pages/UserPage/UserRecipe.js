@@ -1,4 +1,3 @@
-import Card from '../../components/Card/Card';
 import OwnRecipeCard from '../../components/Card/OwnRecipeCard';
 import tw from 'tailwind-styled-components';
 
