@@ -8,10 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import project.server.domain.bookmark.service.BookmarkService;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
@@ -122,8 +120,38 @@ class CocktailControllerTest {
 
     @Test
     @WithAnonymousUser
-    void 칵테일_검색_테스트(){
+    void 칵테일_검색_테스트() throws Exception {
+        RecipeDto.Post process1 = new RecipeDto.Post();
+        process1.setProcess("1");
+        RecipeDto.Post process2 = new RecipeDto.Post();
+        process2.setProcess("2");
+        TagDto.Post tag = new TagDto.Post();
+        tag.setTag("sweet");
+        IngredientDto.Post ingredient = new IngredientDto.Post();
+        ingredient.setIngredient("milk");
 
+        CocktailDto.Post post = new CocktailDto.Post();
+        post.setName("test");
+        post.setDegree("frequency_high");
+        post.setRecipe(List.of(process1, process2));
+        post.setFlavor(List.of(tag));
+        post.setLiquor("rum");
+        post.setIngredients(List.of(ingredient));
+        post.setImageUrl("sample image url");
+
+        String content = gson.toJson(post);
+
+        mockMvc.perform(
+                post("/cocktails")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        mockMvc.perform(
+                get("/cocktails/random")
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
     }
 
     // app configure 삭제하면 새롭게 칵테일 등록 로직 작성 후 테스트 고쳐야함.
