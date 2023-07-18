@@ -14,6 +14,9 @@ const RecipeDetail = lazy(() => import('./pages/RecipeDetail/RecipeDetail'));
 const LostPage = lazy(() => import('./pages/LostPage'));
 const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
 const CocktailForm = lazy(() => import('./pages/CocktailForm/CocktailForm'));
+const CocktailModifyForm = lazy(() =>
+  import('./pages/CocktailForm/CocktailModifyForm')
+);
 const Signup = lazy(() => import('./pages/Signup/Signup'));
 const CommentPage = lazy(() => import('./pages/Comment/CommentPage'));
 const SuccessPage = lazy(() => import('./pages/Success/SuccessPage'));
@@ -91,6 +94,7 @@ const Routing = () => {
         <Route path="/detail/:id" element={<RecipeDetail />} />
         <Route path="/userpage/:id" element={<UserPage />} />
         <Route path="/cocktail" element={<CocktailForm />} />
+        <Route path="/cocktail/:id" element={<CocktailModifyForm />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/comment" element={<CommentPage />} />
         <Route path="/success/:id" element={<SuccessPage />} />
