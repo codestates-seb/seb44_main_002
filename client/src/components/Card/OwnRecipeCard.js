@@ -41,6 +41,7 @@ box-border
 const CocktailImg = tw.img`
 w-[11.25rem]
 h-[12.5rem]
+object-cover
 rounded-tl-2xl
 bg-black
 bg-opacity-50
