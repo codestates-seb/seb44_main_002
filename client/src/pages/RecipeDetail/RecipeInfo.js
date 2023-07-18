@@ -7,7 +7,12 @@ import ImageModal from './ImgaeModal';
 import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
 
-export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
+export default function RecipeInfo({
+  cocktailDetail,
+  userInfo,
+  getTime,
+  isLogin,
+}) {
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
@@ -44,7 +49,6 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
         userInfo.accessToken
       );
       const json = await response.json();
-      console.log(json);
       setTotal(json.rating);
     } catch (error) {
       console.log(error);
@@ -52,7 +56,7 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   };
   const changeScore = (idx) => {
     // 로그인 여부 확인
-    if (userInfo.userId !== null && userInfo.age !== null) {
+    if (isLogin) {
       setScore(idx + 1);
       modifyScore(idx + 1);
     } else {
