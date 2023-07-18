@@ -65,3 +65,4 @@ public class Comment {
     public void deleteReply(Reply reply) {
         replies.remove(reply);
     }
+}
