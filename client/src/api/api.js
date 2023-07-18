@@ -1,3 +1,4 @@
+import handleLogOut from '../service';
 const API_BASE = process.env.REACT_APP_BASE_URL;
 const localAccessToken = localStorage.getItem('accessToken');
 const refreshToken = localStorage.getItem('refreshToken');
@@ -8,18 +9,21 @@ const fetchrefreshToken = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `${localAccessToken}`,
         refresh: `${refreshToken}`,
-        // 만료된 토큰을 헤더에 포함하여 서버에 보냄
+        // 리프래쉬로 엑세스토큰 요청
       },
     });
 
     if (!response.ok) {
       throw new Error('Failed to refresh token');
     }
-
+    //완전히 만료
+    if (response.status === 401) {
+      alert('토큰만료로 로그아웃되었습니다.');
+      handleLogOut();
+    }
     const data = await response.json();
-    jwtToken = data.token; // 새로운 토큰으로 기존의 토큰을 갱신
+    jwtToken = data; // 새로운 토큰으로 기존의 토큰을 갱신
     return jwtToken;
   } catch (error) {
     console.error(error);
@@ -31,11 +35,16 @@ const fetchrefreshToken = async () => {
 const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
 
-  // 만료된 토큰으로 인증이 실패했을 경우에만 토큰 재발급
-  if (response.status === 403) {
-    // 403이 달라질 수 있음
-    const newToken = await refreshToken();
+  //200  성공
+  // 401이면  엑세스 재발급 요망
+  // 리프래쉬토큰만 드림
+  // ->200이면   재발급 성공 (엑세스토큰만 리스폰스헤더에)
+  // ->401 이면  리프래쉬 엑세스 둘다 만료
 
+  // 만료된 토큰으로 인증이 실패했을 경우에만 토큰 재발급 리프래쉬토큰은 만료되 액세스 토큰은 만료되었을 때
+  if (response.status === 401) {
+    // 401이 달라질 수 있음
+    const newToken = await refreshToken();
     localStorage.setItem('accessToken', newToken);
 
     if (newToken) {
@@ -44,13 +53,14 @@ const fetchWithInterceptor = async (url, options) => {
       return fetch(url, options);
     }
   }
-  //완전히 만료
-  if (response.status === 401) {
-    alert('토큰만료로 로그아웃되었습니다.');
+  //   200 이면 성공
+  if (response.status === 200) {
+    console.log('요청 성공');
   }
-
   return response;
 };
+
+//리프래쉬토큰 만료 되면 액세스토큰 ?
 
 export default {
   // 토큰 재발급 요청 함수
