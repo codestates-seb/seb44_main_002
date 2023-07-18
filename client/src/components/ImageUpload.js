@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 
 const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState(form.imageUrl);
   const inputRef = useRef();
 
   const onUpload = async (e) => {
@@ -106,7 +106,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
       >
         <img
           className={`w-full h-full object-contain `}
-          src={imageSrc}
+          src={form.imageUrl ? form.imageUrl : imageSrc}
           alt="preview"
         />
       </div>
