@@ -117,7 +117,7 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
         ))}
       </div>
       {/* sortFilter */}
-      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3">
+      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center  gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3 mb-5">
         <Sort
           filterCondtion={filterCondtion}
           selectMenuHandler={selectMenuHandler}

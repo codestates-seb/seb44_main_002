@@ -19,7 +19,10 @@ export default function Card({ item, data, setData }) {
   const dispatch = useDispatch();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [bookmarked, setbookmarked] = useState(item.bookmarked);
-  useEffect(() => {}, [bookmarked]);
+  useEffect(() => {
+    setbookmarked(item.bookmarked);
+    console.log(item.bookmarked);
+  }, [item]);
   const handleMouseOver = (index) => {
     setHoveredIndex(index);
   };
