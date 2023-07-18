@@ -53,7 +53,7 @@ function App() {
     //   clearInterval(timer);
     // };
     if (isToken && !userinfoUserid) {
-      dispatch(login(() => login()));
+      //dispatch(login());
     }
   }, []);
 

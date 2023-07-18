@@ -110,7 +110,7 @@ export default function HeaderModal() {
             //사용자 정보 조회
             handleUserInfo(data.headers.get('userId'));
             // 전역상태관리 로그인으로 변경
-            dispatch(login(() => login()));
+            dispatch(login());
             handleClose();
             navigate('/');
           } else {
