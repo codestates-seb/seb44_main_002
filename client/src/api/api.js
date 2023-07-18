@@ -12,7 +12,7 @@ const refreshToken = localStorage.getItem('refreshToken');
 //리프래쉬 재발급 요청
 const fetchrefreshToken = async () => {
   try {
-    const response = await fetch(`${API_BASE}auth/reisuue`, {
+    const response = await fetch(`${API_BASE}auth/reissue`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,12 +81,6 @@ export default {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      // const data = await response.json();
-      // console.log('Data:', data);
-      //  로그인이 풀렸을 때
-      // if (data.status === 401) {
-      //   alert('토큰만료로 로그아웃되었습니다.');
-      // }
     } catch (error) {
       console.error(error);
     }
