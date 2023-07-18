@@ -5,15 +5,18 @@ import { useSelector } from 'react-redux';
 import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
 import UserRecipe from './UserRecipe';
+import UserBookmarked from './UserBookmarked';
 import UserPageApi from './UserPageApi';
 
 import tw from 'tailwind-styled-components';
-import UserBookmarked from './UserBookmarked';
 
 export default function UserPage() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState(dummyData);
   const location = useLocation().pathname.split('/')[2];
+
+  const [userInfo, setUserInfo] = useState(dummyData);
+  const [localData, setLocalData] = useState({ userId: '', IsAdmin: false });
+
   const logginUser = useSelector((state) => state.userinfo);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
@@ -22,7 +25,6 @@ export default function UserPage() {
       const response = await UserPageApi.getUserData(location);
       const json = await response.json();
       setUserInfo(json);
-      console.log(json);
     } catch (error) {
       console.log(error);
       navigate('/error');
@@ -31,7 +33,10 @@ export default function UserPage() {
 
   useEffect(() => {
     getUser();
-  }, []);
+    const local_userId = parseInt(localStorage.getItem('userId'));
+    const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
+    setLocalData({ userId: local_userId, IsAdmin: local_IsAdmin });
+  }, [location]);
 
   const BackgroundImg = () => {
     return (
@@ -53,8 +58,9 @@ export default function UserPage() {
             userInfo={userInfo}
             logginUser={logginUser}
             isLogin={isLogin}
+            localData={localData}
           />
-          {/* <Subscribe userInfo={userInfo} logginUser={logginUser} /> */}
+          <Subscribe userInfo={userInfo} logginUser={logginUser} />
           <UserRecipe userInfo={userInfo} logginUser={logginUser} />
           <UserBookmarked userInfo={userInfo} logginUser={logginUser} />
         </Container>
@@ -157,6 +163,13 @@ const dummyData = {
       content: 'content2',
     },
   ],
+  follows: [
+    {
+      followingUserId: 2,
+      followingUserName: 'test2',
+      followingUserProfileImageUrl: 'url',
+    },
+  ],
   subscribe: [
     {
       userId: 1,
@@ -213,4 +226,5 @@ const dummyData = {
         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
     },
   ],
+  subscribed: false,
 };
