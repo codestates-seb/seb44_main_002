@@ -1,11 +1,18 @@
-import handleLogOut from '../service';
+import handleLogOut from '../service/index';
 const API_BASE = process.env.REACT_APP_BASE_URL;
 const localAccessToken = localStorage.getItem('accessToken');
 const refreshToken = localStorage.getItem('refreshToken');
 
+//200  성공
+// 401이면  엑세스 재발급 요망
+// 리프래쉬토큰만 드림
+// ->200이면   재발급 성공 (엑세스토큰만 리스폰스헤더에)
+// ->401 이면  리프래쉬 엑세스 둘다 만료
+
+//리프래쉬 재발급 요청
 const fetchrefreshToken = async () => {
   try {
-    const response = await fetch(`${API_BASE}ndpoint`, {
+    const response = await fetch(`${API_BASE}auth/reisuue`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,8 +31,7 @@ const fetchrefreshToken = async () => {
     }
     //재발급 성공 (엑세스토큰만 리스폰스헤더에)
     if (response.ok) {
-      jwtToken = data.headers.get('Authorization'); // 새로운 토큰으로 기존의 토큰을 갱신
-      // localStorage.setItem('accessToken', data.headers.get('Authorization'));
+      jwtToken = response.headers.get('Authorization'); // 새로운 토큰으로 기존의 토큰을 갱신
       return jwtToken;
     }
   } catch (error) {
@@ -37,13 +43,6 @@ const fetchrefreshToken = async () => {
 // Fetch API 인터셉터 함수
 const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
-
-  //200  성공
-  // 401이면  엑세스 재발급 요망
-  // 리프래쉬토큰만 드림
-  // ->200이면   재발급 성공 (엑세스토큰만 리스폰스헤더에)
-  // ->401 이면  리프래쉬 엑세스 둘다 만료
-
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
     // 401이 달라질 수 있음
@@ -64,10 +63,7 @@ const fetchWithInterceptor = async (url, options) => {
 };
 
 //리프래쉬토큰 만료 되면 액세스토큰 ?
-
 export default {
-  // 토큰 재발급 요청 함수
-
   //북마크 추가
   async createbookmarkApi(item) {
     //console.log(item);
