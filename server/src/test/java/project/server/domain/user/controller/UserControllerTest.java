@@ -1,15 +1,18 @@
-package project.server;
+package project.server.domain.user.controller;
 
 
 import com.google.gson.Gson;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -20,6 +23,7 @@ import project.server.domain.user.UserService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -27,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles(profiles = "server")
 public class UserControllerTest {
 
@@ -42,13 +47,24 @@ public class UserControllerTest {
     @Autowired
     private Gson gson;
 
+    @BeforeAll
+    void createUser(){
+        UserDto.Post post = new UserDto.Post();
+        post.setName("1");
+        post.setPassword("1234");
+        post.setAge(30);
+        post.setGender("mail");
+        post.setEmail("11@11.com");
+        userService.createUser(post);
+    }
+
     @Test
     public void testPostUser() throws Exception {
         //give
-        UserDto.post requestBody = new UserDto.post();
-        requestBody.setEmail("pxodid2000@gmail.com");
-        requestBody.setPassword("password1");
-        requestBody.setName("태양");
+        UserDto.Post requestBody = new UserDto.Post();
+        requestBody.setEmail("postTest@gmail.com");
+        requestBody.setPassword("test");
+        requestBody.setName("test");
         requestBody.setGender("male");
         requestBody.setAge(24);
 
@@ -65,7 +81,7 @@ public class UserControllerTest {
                 .subscriberCount(0L)
                 .build();
 
-        when(userService.createUser(any(UserDto.post.class))).thenReturn(response);
+        when(userService.createUser(any(UserDto.Post.class))).thenReturn(response);
 
         //when
         ResultActions result =
@@ -80,6 +96,40 @@ public class UserControllerTest {
         result
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email").value(requestBody.getEmail()));
+    }
+
+    @Test
+    @WithMockUser
+    public void testPatchUser() throws Exception {
+        //give
+        UserDto.Patch requestBody = new UserDto.Patch();
+        requestBody.setUserId(1L);
+        requestBody.setPassword("patchpassword");
+
+        User updatedUser = new User();
+        updatedUser.setUserId(1L);
+        updatedUser.setEmail("pxodid2000@gmail.com");
+        updatedUser.setPassword("patchpassword");
+        updatedUser.setName("태양");
+        updatedUser.setGender("male");
+        updatedUser.setAge(24);
+
+        String content = gson.toJson(requestBody);
+
+        when(userService.updateUser(any(UserDto.Patch.class), anyLong(), any(Authentication.class))).thenReturn(updatedUser);
+
+        //when
+        ResultActions result =
+                mockMvc.perform(
+                        patch("/users/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content)
+                                .principal(mock(Authentication.class))
+                );
+
+        //then
+        result
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -99,38 +149,6 @@ public class UserControllerTest {
                 mockMvc.perform(
                         get("/users/1")
                                 .accept(MediaType.APPLICATION_JSON)
-                );
-
-        //then
-        result
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testPatchUser() throws Exception {
-        //give
-        UserDto.Patch requestBody = new UserDto.Patch();
-        requestBody.setUserId(1L);
-        requestBody.setPassword("patchpassword");
-
-        User updatedUser = new User();
-        updatedUser.setUserId(1L);
-        updatedUser.setEmail("pxodid2000@gmail.com");
-        updatedUser.setPassword("patchpassword");
-        updatedUser.setName("태양");
-        updatedUser.setGender("male");
-        updatedUser.setAge(24);
-
-        String content = gson.toJson(requestBody);
-
-        when(userService.updateUser(any(UserDto.Patch.class), anyLong())).thenReturn(updatedUser);
-
-        //when
-        ResultActions result =
-                mockMvc.perform(
-                        patch("/users/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(content)
                 );
 
         //then

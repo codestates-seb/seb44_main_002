@@ -34,16 +34,17 @@ public class UserController {
     }
 
     @PatchMapping("/{user-id}")
-    public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
-                                    @Valid @RequestBody UserDto.Patch requestBody,
-                                    Authentication authentication) {
+    public ResponseEntity patchUser(Authentication authentication,
+                                    @PathVariable("user-id") @Positive long userId,
+                                    @Valid @RequestBody UserDto.Patch requestBody) {
         User user = userService.updateUser(requestBody, userId, authentication);
         return new ResponseEntity<>(user.entityToResponse(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{user-id}")
-    public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId) {
-        userService.deleteUser(userId);
+    public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId,
+                                     Authentication authentication) {
+        userService.deleteUser(userId,authentication);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

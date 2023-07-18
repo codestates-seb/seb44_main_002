@@ -47,7 +47,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(long userId) {
+    public void deleteUser(long userId, Authentication authentication) {
+        if(authentication == null) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         User user = findUser(userId);
         userRepository.delete(user);
     }
