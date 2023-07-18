@@ -8,6 +8,11 @@ import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 
 import HoverButton from '../../common/Buttons/HoverButton';
 
+import {
+  divisionTags,
+  transformIngredients,
+  transformLiquor,
+} from './TransformData';
 import ImageUpload from '../../components/ImageUpload';
 import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
@@ -50,7 +55,39 @@ export default function CocktailModifyForm() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetch(`${BASE_URL}cocktails/${params.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const transformedTags = divisionTags(json.tags);
+        const transformedIngredients = transformIngredients(json.ingredients);
+        const transformedLiquor = transformLiquor(json.liquor);
+        setForm({
+          ...form,
+          name: json.name,
+          imageUrl: json.imageUrl,
+          recipe: json.recipe.map((item, index) => ({
+            id: index,
+            process: item.process,
+          })),
+          degree: transformedTags.degree,
+          // 컴포넌트 설계 미스
+          // flavor: transformedTags.flavor,
+          // ingredients: transformedIngredients,
+          liquor: transformedLiquor,
+        });
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const submitHandler = (e) => {
+    console.log(form);
     e.preventDefault();
     const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
