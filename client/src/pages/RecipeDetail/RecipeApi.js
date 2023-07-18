@@ -172,6 +172,7 @@ export default {
         },
       });
       if (response.ok) {
+        location.reload();
         return response;
       } else {
         console.log('error');
