@@ -25,30 +25,24 @@ export default function Card({ item }) {
   const handleMouseOut = () => {
     setHoveredIndex(null);
   };
-  const handleBookmarkClick = (cocktailId, item) => {
+  const handleBookmarkClick = async (cocktailId, item) => {
     console.log('동작');
     const id = cocktailId;
-
-    // bookmark/delete/{cocktail-id}
-    const handleBookmark = async () => {
-      if (!bookmarked) {
-        try {
-          const response = await api.createbookmarkApi(cocktailId);
-        } catch (error) {
-          console.log(error);
-          navigate('/error');
-        }
-      } else {
-        try {
-          const response = await api.deletebookmarkApi(cocktailId);
-        } catch (error) {
-          console.log(error);
-          //navigate('/error');
-        }
+    if (!bookmarked) {
+      try {
+        const response = await api.createbookmarkApi(cocktailId);
+      } catch (error) {
+        console.log(error);
+        navigate('/error');
       }
-    };
-    handleBookmark();
-
+    } else {
+      try {
+        const response = await api.deletebookmarkApi(cocktailId);
+      } catch (error) {
+        console.log(error);
+        //navigate('/error');
+      }
+    }
     dispatch(updateBookmark({ id, item }));
   };
   return (
