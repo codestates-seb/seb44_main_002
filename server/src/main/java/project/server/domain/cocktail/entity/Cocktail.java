@@ -97,15 +97,12 @@ public class Cocktail {
         viewCount++;
     }
 
-    public void modify(CocktailDto.Patch patch) {
+    public void modify(CocktailDto.Patch patch, List<Tag> tags) {
         this.name = patch.getName();
         this.imageUrl = patch.getImageUrl();
         this.ingredients = new Ingredients(patch.getIngredients());
         this.recipe = new Recipe(patch.getRecipe());
-        this.tags = new Tags(patch.getTags().stream()
-                .map(TagDto.Post::getTag)
-                .map(TagMapper::map)
-                .collect(Collectors.toList()));
+        this.tags = new Tags(tags);
         this.modifiedAt = LocalDateTime.now();
     }
 
