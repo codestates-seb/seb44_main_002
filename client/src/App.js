@@ -45,24 +45,6 @@ function App() {
     RightPaths.some((path) => location.pathname.split('/')[1] === path);
 
   // refresh token이 있을 경우 access token 주기적으로 재발급
-
-  // const handleUserInfo = async (memberId) => {
-  //   fetch(`${BASE_URL}users/${memberId}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       //'ngrok-skip-browser-warning': 'true',
-  //     },
-  //   })
-  //     .then((data) => data.json())
-  //     .then((data) => {
-  //       dispatch(userinfoGet(data));
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       navigate('/error');
-  //     });
-  // };
   useEffect(() => {
     const isToken = localStorage.getItem('accessToken');
     // const timer = setInterval(() => {
