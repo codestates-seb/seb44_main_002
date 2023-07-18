@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.cocktail.service.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity(name = "users")
 @Getter
@@ -56,28 +54,6 @@ public class User {
 
     @OneToMany
     private Set<Follow> follows = new HashSet<>();
-
-    public UserDto.Response entityToResponse(User user) {
-        return UserDto.Response.builder()
-                .userId(userId)
-                .email(email)
-                .name(name)
-                .gender(gender)
-                .age(age)
-                .profileImageUrl(profileImageUrl)
-                .subscriberCount(subscriberCount)
-                .cocktails(cocktails.stream()
-                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(this.isBookmarked(cocktail.getCocktailId()), cocktail))
-                        .collect(Collectors.toList()))
-                .bookmarkedCocktails(bookmarks.stream()
-                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
-                        .collect(Collectors.toList()))
-                .follows(follows.stream()
-                        .map(Follow::getFollowing)
-                        .collect(Collectors.toList()))
-                .isSubscribed(alreadyFollowing(user))
-                .build();
-    }
 
     public boolean isAlreadyRated(long cocktailId) {
         return ratedCocktails.containCocktail(cocktailId);
@@ -133,7 +109,7 @@ public class User {
         subscriberCount--;
     }
 
-    public boolean alreadyFollowing(User following) {
+    public boolean following(User following) {
         for(Follow follow : follows){
             if(follow.contains(following.getUserId())){
                 return true;

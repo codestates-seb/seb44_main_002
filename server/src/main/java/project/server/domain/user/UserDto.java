@@ -44,6 +44,7 @@ public class UserDto {
         private List<CocktailDto.SimpleResponse> cocktails;
         private List<CocktailDto.SimpleResponse> bookmarkedCocktails;
         private List<Following> follows;
+        private boolean isSubscribed;
     }
 
     @Getter
