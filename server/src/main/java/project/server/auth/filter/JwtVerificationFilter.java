@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import project.server.auth.jwt.JwtTokenizer;
+import project.server.auth.redis.RedisService;
 import project.server.auth.utils.CustomAuthorityUtils;
 
 import javax.servlet.FilterChain;
@@ -21,17 +22,22 @@ import java.util.Map;
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final RedisService redisService;
 
-    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
+    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, RedisService redisService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+        this.redisService = redisService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String token = jwtTokenizer.getTokenFromHeader(request.getHeader("Authorization"));
         try {
-            Map<String, Object> claims = verifyJws(request);
-            setAuthenticationToContext(claims);
+            if (!redisService.isSignedOut(token)) {
+                Map<String, Object> claims = verifyJws(request);
+                setAuthenticationToContext(claims);
+            }
         } catch (SignatureException se) {
             request.setAttribute("exception", se);
         } catch (ExpiredJwtException ee) {
@@ -51,7 +57,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     private Map<String, Object> verifyJws(HttpServletRequest request) {
-        String jws = request.getHeader("Authorization").replace("Bearer ", "");
+        String jws = jwtTokenizer.getTokenFromHeader(request.getHeader("Authorization"));
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         return jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();

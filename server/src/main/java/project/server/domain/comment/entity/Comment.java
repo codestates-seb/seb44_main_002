@@ -29,11 +29,15 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
+
     private long userId;
+
     private String userName;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     LocalDateTime createdAt = LocalDateTime.now();
+
     @LastModifiedDate
     @Column(name = "last_modified_at")
     LocalDateTime modifiedAt = LocalDateTime.now();
@@ -53,6 +57,7 @@ public class Comment {
                         .collect(Collectors.toList()))
                 .build();
     }
+
     public void addReply(Reply reply) {
         replies.add(reply);
     }
@@ -60,4 +65,3 @@ public class Comment {
     public void deleteReply(Reply reply) {
         replies.remove(reply);
     }
-}

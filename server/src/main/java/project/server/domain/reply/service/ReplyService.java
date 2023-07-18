@@ -12,6 +12,7 @@ import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -28,13 +29,15 @@ public class ReplyService {
         this.userService = userService;
     }
 
-    public ReplyDto.Response createReply(long commentId, ReplyDto.Post post) {
+    public ReplyDto.Response createReply(String email, long commentId, ReplyDto.Post post) {
+        User user = userService.findUserByEmail(email);
         Comment comment = commentService.findCommentById(commentId);
-        User user = userService.findUser(post.getUserId());
         Reply reply = post.postToEntity();
-        reply.setComment(comment);
-        reply.setUser(user);
+        reply.setCommentId(commentId);
+        reply.setUserName(user.getName());
+        reply.setUserId(user.getUserId());
         Reply savedReply = replyRepository.save(reply);
+        comment.addReply(savedReply);
         return savedReply.entityToResponse();
     }
 
@@ -54,6 +57,6 @@ public class ReplyService {
         Comment comment = commentService.findCommentById(reply.getComment().getCommentId());
         comment.deleteReply(reply);
         replyRepository.delete(reply);
-    }
+    }    
 }
 

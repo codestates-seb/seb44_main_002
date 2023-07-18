@@ -21,11 +21,8 @@ public class Tags {
     @Column(name = "tag")
     private List<Tag> tags;
 
-    public Tags(List<TagDto.Post> tags) {
-        this.tags = tags.stream()
-                .map(TagDto.Post::getTag)
-                .map(TagMapper::map)
-                .collect(Collectors.toList());
+    public Tags(List<Tag>tags){
+        this.tags = tags;
     }
 
     public List<TagDto.Response> createResponseDtoList() {
@@ -45,5 +42,9 @@ public class Tags {
 
     private TagDto.Response createResponseDto(String tag) {
         return new TagDto.Response(tag);
+    }
+
+    public void add(Tag degree) {
+        tags.add(degree);
     }
 }

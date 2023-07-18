@@ -16,6 +16,11 @@ public class Ingredients {
     @Column(name = "ingredient")
     private List<Ingredient> ingredients;
 
+    //테스트용 삭제 요망
+    public Ingredients(List<Ingredient> ingredients, int count) {
+        this.ingredients = ingredients;
+    }
+
     public Ingredients(List<IngredientDto.Post> ingredients) {
         this.ingredients = ingredients.stream()
                 .map(IngredientDto.Post::getIngredient)

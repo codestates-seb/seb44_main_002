@@ -8,12 +8,12 @@ import project.server.domain.reply.entity.Reply;
 
 import java.time.LocalDateTime;
 
+
 @NoArgsConstructor
 public class ReplyDto {
 
     @Getter
     public static class Post {
-        private long userId;
         private long taggedUserId;
         private String taggedUserName;
         private String content;

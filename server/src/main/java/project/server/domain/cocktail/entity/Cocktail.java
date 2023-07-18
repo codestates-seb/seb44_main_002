@@ -10,6 +10,8 @@ import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
+import project.server.domain.cocktail.embed.tag.TagDto;
+import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.user.User;
@@ -83,41 +85,6 @@ public class Cocktail {
         this.ingredients = ingredients;
     }
 
-    public CocktailDto.Response entityToResponse(boolean isBookmarked) {
-        return CocktailDto.Response.builder()
-                .cocktailId(cocktailId)
-                .isAdminWritten(user.isAdmin())
-                .userId(user.getUserId())
-                .userName(user.getName())
-                .name(name)
-                .imageUrl(imageUrl)
-                .liquor(liquor.getLiquor())
-                .ingredients(ingredients.createResponseDtoList())
-                .recipe(recipe.createResponseDtoList())
-                .tags(tags.createResponseDtoList())
-                .rating(rate.getRate())
-                .viewCount(viewCount)
-                .createdAt(createdAt)
-                .modifiedAt(modifiedAt)
-                .comments(comments.stream()
-                        .map(Comment::entityToResponse)
-                        .collect(Collectors.toList()))
-                .isBookmarked(isBookmarked)
-                .recommends(recommends.stream()
-                        .map(cocktail -> cocktail.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
-                        .collect(Collectors.toList()))
-                .build();
-    }
-
-    public CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
-        return CocktailDto.SimpleResponse.builder()
-                .cocktailId(cocktail.cocktailId)
-                .name(cocktail.name)
-                .imageUrl(cocktail.imageUrl)
-                .isBookmarked(isBookmarked)
-                .build();
-    }
-
     public boolean containsAll(List<Tag> tags) {
         return this.tags.containsAll(tags);
     }
@@ -135,7 +102,10 @@ public class Cocktail {
         this.imageUrl = patch.getImageUrl();
         this.ingredients = new Ingredients(patch.getIngredients());
         this.recipe = new Recipe(patch.getRecipe());
-        this.tags = new Tags(patch.getTags());
+        this.tags = new Tags(patch.getTags().stream()
+                .map(TagDto.Post::getTag)
+                .map(TagMapper::map)
+                .collect(Collectors.toList()));
         this.modifiedAt = LocalDateTime.now();
     }
 
