@@ -17,7 +17,7 @@ const fetchrefreshToken = async () => {
     if (!response.ok) {
       throw new Error('Failed to refresh token');
     }
-    //완전히 만료
+    //완전히 만료 ->로그아웃진행
     if (response.status === 401) {
       alert('토큰만료로 로그아웃되었습니다.');
       handleLogOut();
@@ -25,7 +25,7 @@ const fetchrefreshToken = async () => {
     //재발급 성공 (엑세스토큰만 리스폰스헤더에)
     if (response.ok) {
       jwtToken = data.headers.get('Authorization'); // 새로운 토큰으로 기존의 토큰을 갱신
-      localStorage.setItem('accessToken', data.headers.get('Authorization'));
+      // localStorage.setItem('accessToken', data.headers.get('Authorization'));
       return jwtToken;
     }
   } catch (error) {
@@ -44,7 +44,7 @@ const fetchWithInterceptor = async (url, options) => {
   // ->200이면   재발급 성공 (엑세스토큰만 리스폰스헤더에)
   // ->401 이면  리프래쉬 엑세스 둘다 만료
 
-  // 만료된 토큰으로 인증이 실패했을 경우에만 토큰 재발급 리프래쉬토큰은 만료되 액세스 토큰은 만료되었을 때
+  // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
     // 401이 달라질 수 있음
     const newToken = await refreshToken();
