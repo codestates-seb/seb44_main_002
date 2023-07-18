@@ -13,6 +13,6 @@ public class AuthManager {
         if (authentication == null) {
             throw new BusinessLogicException(ExceptionCode.NOT_SIGN_IN);
         }
-        return (String) authentication.getPrincipal();
+        return authentication.getName();
     }
 }
