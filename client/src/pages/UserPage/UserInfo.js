@@ -1,30 +1,30 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/slice/isLoginSlice';
 
 import PasswordModal from './PasswordModal';
+
+import { logout } from '../../redux/slice/isLoginSlice';
 import UserPageApi from './UserPageApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function UserInfo({ userInfo, logginUser, isLogin }) {
+export default function UserInfo({ userInfo, logginUser, isLogin, localData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [buttontext, setButtonText] = useState('구독 중');
 
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
   const deleteUser = async () => {
     try {
-      const response = await UserPageApi.deleteUser(
-        logginUser.userId,
-        logginUser.accessToken
-      );
+      const response = await UserPageApi.deleteUser(localData.userId);
     } catch (error) {
       console.log(error);
+      navigate('/error');
     }
   };
-
   const clickDelete = () => {
     if (window.confirm('정말로 탈퇴하시겠습니까?')) {
       alert('삭제되었습니다.');
@@ -32,6 +32,26 @@ export default function UserInfo({ userInfo, logginUser, isLogin }) {
       dispatch(logout());
       localStorage.clear();
       navigate('/');
+    }
+  };
+
+  const clickFollow = async () => {
+    try {
+      const response = await UserPageApi.createfollow(userInfo.userId);
+      location.reload();
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
+  };
+
+  const cancelSubsctibe = async () => {
+    try {
+      const response = await UserPageApi.cancelfollow(userInfo.userId);
+      location.reload();
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
     }
   };
 
@@ -46,14 +66,25 @@ export default function UserInfo({ userInfo, logginUser, isLogin }) {
         />
         <UserContainer>
           <FlexContainer>
-            {userInfo.userId === logginUser.userId ? (
+            {userInfo.userId === localData.userId ? (
               <p>{`안녕하세요. ${userInfo.name}님.`}</p>
             ) : (
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
-            {isLogin && userInfo.userId !== logginUser.userId && (
-              <TitleButton>구독하기</TitleButton>
-            )}
+            {isLogin &&
+              userInfo.userId !== 4 &&
+              userInfo.userId !== localData.userId &&
+              (userInfo.subscribed ? (
+                <TitleButton
+                  onMouseOver={() => setButtonText('구독 취소')}
+                  onMouseOut={() => setButtonText('구독 중')}
+                  onClick={cancelSubsctibe}
+                >
+                  {buttontext}
+                </TitleButton>
+              ) : (
+                <TitleButton onClick={clickFollow}>구독하기</TitleButton>
+              ))}
           </FlexContainer>
           <InnerInfo>
             <InfoComponent>
@@ -68,15 +99,30 @@ export default function UserInfo({ userInfo, logginUser, isLogin }) {
               <UpInfoP>{userInfo.email.split('@')[0]}</UpInfoP>
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
-            {isLogin && userInfo.userId !== logginUser.userId && (
-              <InfoComponent>
-                <SubscribeButton>구독하기</SubscribeButton>
-              </InfoComponent>
-            )}
+            {isLogin &&
+              userInfo.userId !== 4 &&
+              userInfo.userId !== localData.userId &&
+              (userInfo.subscribed ? (
+                <InfoComponent>
+                  <SubscribeButton
+                    onMouseOver={() => setButtonText('구독 취소')}
+                    onMouseOut={() => setButtonText('구독 중')}
+                    onClick={cancelSubsctibe}
+                  >
+                    {buttontext}
+                  </SubscribeButton>
+                </InfoComponent>
+              ) : (
+                <InfoComponent>
+                  <SubscribeButton onClick={clickFollow}>
+                    구독하기
+                  </SubscribeButton>
+                </InfoComponent>
+              ))}
           </InnerInfo>
         </UserContainer>
       </InfoContainer>
-      {userInfo.userId === logginUser.userId && (
+      {userInfo.userId === localData.userId && (
         <ButtonContainer>
           <PasswordModal logginUser={logginUser} />
           <Button onClick={clickDelete}>탈퇴하기</Button>
