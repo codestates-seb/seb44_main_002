@@ -49,7 +49,10 @@ export default function Card({ item, data, setData }) {
             if (!response.ok) {
               throw new Error('Bookmarking failed.'); // 요청이 실패한 경우 에러 처리
             }
-            // 요청이 성공한 경우 추가적인 작업을 수행할 수 있습니다.
+            // 로그인이 풀렸을 때
+            if (data.status === 401) {
+              alert('토큰만료로 로그아웃되었습니다.');
+            }
           })
           .catch((error) => {
             console.error(error); // 에러 처리
