@@ -26,6 +26,7 @@ export default function Header() {
   const [hovered, setHovered] = useState(false);
   const [randomColor, setRandomColor] = useState('');
   const name = localStorage.getItem('name');
+  const userid = localStorage.getItem('userId');
   // 글자 색 바꾸기
   useEffect(() => {
     // 0.2초마다 함수 실행
@@ -167,8 +168,8 @@ export default function Header() {
               <div
                 className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden`}
                 role="presentation"
-                onClick={() => navigate(`/userpage/${userinfo.userId}`)}
-                onKeyDown={() => navigate(`/userpage/${userinfo.userId}`)}
+                onClick={() => navigate(`/userpage/${userid}`)}
+                onKeyDown={() => navigate(`/userpage/${userid}`)}
               >
                 <PersonIcon fontSize="large" />
               </div>
