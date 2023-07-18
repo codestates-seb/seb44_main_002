@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
@@ -19,6 +19,7 @@ export default function Card({ item, data, setData }) {
   const dispatch = useDispatch();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [bookmarked, setbookmarked] = useState(item.bookmarked);
+  useEffect(() => {}, [bookmarked]);
   const handleMouseOver = (index) => {
     setHoveredIndex(index);
   };

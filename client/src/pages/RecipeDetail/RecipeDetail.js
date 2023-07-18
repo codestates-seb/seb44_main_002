@@ -91,7 +91,6 @@ export default function RecipeDetail() {
   useEffect(() => {
     // 데이터 가져올 구문 추가 예정
     getCocktail();
-    console.log(cocktailDetail);
   }, [location_id]);
 
   const BackgroundImg = () => {
