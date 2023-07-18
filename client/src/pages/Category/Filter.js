@@ -42,7 +42,6 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
 
         if (filterCondtion.tasteTag.indexOf(Tag) >= 0) {
           //이미클릭된태그를 지울때
-          //  console.log('제거해야할때');
           const newclickedList = filterCondtion.tasteTag.filter((number) => {
             return number !== tagTasteData[idx].type;
           });
@@ -50,7 +49,6 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
         } else {
           //태그를 추가할때
           alreadyClickedTag.push(tagTasteData[idx].type);
-
           setFilterCondtion({
             ...filterCondtion,
             tasteTag: [...alreadyClickedTag],
@@ -90,9 +88,7 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
           />
         ))}
       </div>
-
       {/* 태그 */}
-      {/* max-[700px]: border-2 border-solid border-red-50 */}
       <div className="flex pt-10 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0">
         {/* 도수별 태그 */}
         {tagFrequencyData.map((data, idx) => (

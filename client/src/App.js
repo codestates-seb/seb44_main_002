@@ -25,7 +25,6 @@ import './App.css';
 import Loading from './components/Loading';
 
 function App() {
-  // const BASE_URL = process.env.REACT_APP_BASE_URL;
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
