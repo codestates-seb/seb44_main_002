@@ -11,6 +11,7 @@ export default function Community({
   userInfo,
   getTime,
   isLogin,
+  localData,
 }) {
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
@@ -137,7 +138,7 @@ export default function Community({
                 <CommentAndButton>
                   <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === userInfo.userId && (
+                    {ele.userId === localData.userId && (
                       <>
                         <CommentButton
                           onClick={() => deleteComment(ele.commentId)}
@@ -178,7 +179,7 @@ export default function Community({
                     <CommentAndButton>
                       <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === userInfo.userId && (
+                        {rp.userId === localData.userId && (
                           <>
                             <CommentButton
                               onClick={() => deleteReply(rp.replyId)}
