@@ -44,6 +44,10 @@ const fetchWithInterceptor = async (url, options) => {
       return fetch(url, options);
     }
   }
+  //완전히 만료
+  if (response.status === 401) {
+    alert('토큰만료로 로그아웃되었습니다.');
+  }
 
   return response;
 };
@@ -52,10 +56,11 @@ export default {
   // 토큰 재발급 요청 함수
 
   //북마크 추가
-  async createbookmarkApi({ item }) {
+  async createbookmarkApi(item) {
+    //console.log(item);
     try {
       const response = await fetchWithInterceptor(
-        `${BASE_URL}bookmark/create/${item.cocktailId}`,
+        `${API_BASE}bookmark/create/${item.cocktailId}`,
         {
           method: 'POST',
           headers: {
@@ -67,12 +72,12 @@ export default {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const data = await response.json();
-      console.log('Data:', data);
+      // const data = await response.json();
+      // console.log('Data:', data);
       //  로그인이 풀렸을 때
-      if (data.status === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
-      }
+      // if (data.status === 401) {
+      //   alert('토큰만료로 로그아웃되었습니다.');
+      // }
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +87,7 @@ export default {
   async deletebookmarkApi(item) {
     try {
       const response = await fetchWithInterceptor(
-        `${BASE_URL}bookmark/delete/${item.cocktailId}`,
+        `${API_BASE}bookmark/delete/${item.cocktailId}`,
         {
           method: 'DELETE',
           headers: {

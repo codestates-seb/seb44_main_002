@@ -26,18 +26,18 @@ export default function Card({ item }) {
     setHoveredIndex(null);
   };
   const handleBookmarkClick = async (cocktailId, item) => {
-    console.log('동작');
+    //console.log(item);
     const id = cocktailId;
     if (!bookmarked) {
       try {
-        const response = await api.createbookmarkApi(cocktailId);
+        const response = await api.createbookmarkApi(item);
       } catch (error) {
         console.log(error);
-        navigate('/error');
+        //  navigate('/error');
       }
     } else {
       try {
-        const response = await api.deletebookmarkApi(cocktailId);
+        const response = await api.deletebookmarkApi(item);
       } catch (error) {
         console.log(error);
         //navigate('/error');

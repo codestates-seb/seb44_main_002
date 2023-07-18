@@ -177,10 +177,6 @@ export default function Header() {
             <div className="mx-2">
               <LogoutIcon
                 onClick={() =>
-                  // window.confirm('로그아웃하시겠습니까?')
-                  //   ? handleLogOut()
-                  //   : ''
-
                   Swal.fire({
                     title: '정말로 로그아웃하시겠습니까?',
                     text: '정말로 로그아웃하시겠습니까?',
