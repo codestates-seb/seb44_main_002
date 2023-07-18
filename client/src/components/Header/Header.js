@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/slice/isLoginSlice';
-import { userinfoLoginOut } from '../../redux/slice/userInfoSlice';
 import Swal from 'sweetalert2';
 import handleLogOut from '../../service';
 
