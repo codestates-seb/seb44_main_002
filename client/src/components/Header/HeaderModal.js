@@ -63,7 +63,7 @@ export default function HeaderModal() {
       .then((data) => {
         console.log(data);
         dispatch(userinfoGet(data));
-        //localStorage.setItem('userName', data.headers.get('userName'));
+        localStorage.setItem('name', data.name);
       })
       .catch((err) => {
         console.log(err);

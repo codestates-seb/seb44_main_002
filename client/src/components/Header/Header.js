@@ -25,7 +25,7 @@ export default function Header() {
 
   const [hovered, setHovered] = useState(false);
   const [randomColor, setRandomColor] = useState('');
-
+  const name = localStorage.getItem('name');
   // 글자 색 바꾸기
   useEffect(() => {
     // 0.2초마다 함수 실행
@@ -157,7 +157,7 @@ export default function Header() {
         <>
           <HeaderDiv className="justify-end max-[768px]:hidden">
             <div className="flex mx-2 font-bold items-center">
-              {userinfo.name}
+              {userinfo.name || name}
             </div>
             <div className="mx-2">
               {/* <MenuItem
