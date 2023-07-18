@@ -33,7 +33,7 @@ public class CocktailSerializer {
                 .isBookmarked(isBookmark)
                 .recommends(cocktail.getRecommends().stream()
                         .map(recommendedCocktail
-                                -> entityToSimpleResponse(readUser.isBookmarked(cocktail.getCocktailId()), recommendedCocktail))
+                                -> entityToSimpleResponse(readUser.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
                         .collect(Collectors.toList()))
                 .userRate(rate)
                 .build();

@@ -17,10 +17,12 @@ public class RedisService {
         this.redisTemplate = redisTemplate;
     }
 
-    public void signOut(String token) {
+    public void signOut(String token, String refreshToken) {
         jwtTokenizer.verifySignature(token, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()));
         redisTemplate.opsForValue().set(token, "sign-out");
+        redisTemplate.opsForValue().set(refreshToken, "sign-out");
         redisTemplate.expire(token, jwtTokenizer.getAccessTokenExpirationMinutes(), TimeUnit.MINUTES);
+        redisTemplate.expire(refreshToken, jwtTokenizer.getRefreshTokenExpirationMinutes(), TimeUnit.MINUTES);
     }
 
     public boolean isSignedOut(String token) {

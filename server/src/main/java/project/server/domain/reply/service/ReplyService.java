@@ -40,7 +40,6 @@ public class ReplyService {
         return savedReply.entityToResponse();
     }
 
-
     public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
         Reply reply = findReplyById(replyId);
         reply.setContent(patch.getContent());
@@ -54,6 +53,9 @@ public class ReplyService {
 
     public void deleteReply(long replyId) {
         Reply reply = findReplyById(replyId);
+        Comment comment = commentService.findCommentById(reply.getCommentId());
+        comment.deleteReply(reply);
         replyRepository.delete(reply);
-    }
+    }    
 }
+

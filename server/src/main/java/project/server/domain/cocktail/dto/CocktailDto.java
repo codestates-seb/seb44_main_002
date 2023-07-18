@@ -1,8 +1,6 @@
 package project.server.domain.cocktail.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
@@ -14,6 +12,7 @@ import java.util.List;
 public class CocktailDto {
 
     @Getter
+    @Setter
     public static class Post {
         private String name;
         private String imageUrl;
@@ -37,7 +36,6 @@ public class CocktailDto {
 
     @Getter
     @Builder
-    @Data
     public static class Response {
         private final long cocktailId;
         private final boolean isAdminWritten;
@@ -65,6 +63,7 @@ public class CocktailDto {
         private String imageUrl;
         private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
-        private List<TagDto.Post> tags;
+        private String degree;
+        private List<TagDto.Post> flavor;
     }
 }

@@ -80,7 +80,7 @@ public class AppConfiguration implements InitializingBean {
                 .liquor(Liquor.RUM)
                 .ingredients(new Ingredients(List.of(Ingredient.BEVERAGE, Ingredient.ICE), 0))
                 .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
-                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/2023-07-12T05%3A58%3A15.197658%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
+                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
                 .rate(new Rate())
                 .build();
         User user1 = userRepository.findById(1L).get();
@@ -92,7 +92,7 @@ public class AppConfiguration implements InitializingBean {
                 .recipe(new Recipe(List.of("1", "2"), 0))
                 .category(Category.CATEGORY2)
                 .liquor(Liquor.WHISKEY)
-                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/2023-07-12T05%3A58%3A15.197658%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
+                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
                 .ingredients(new Ingredients(List.of(Ingredient.SUGAR, Ingredient.SALT), 0))
                 .rate(new Rate())
                 .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
@@ -106,7 +106,7 @@ public class AppConfiguration implements InitializingBean {
                 .recipe(new Recipe(List.of("1", "2", "3"), 0))
                 .category(Category.CATEGORY2)
                 .liquor(Liquor.WHISKEY)
-                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/2023-07-12T05%3A58%3A15.197658%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
+                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%83%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%85%E1%85%A9%E1%84%83%E1%85%B3.jpeg")
                 .ingredients(new Ingredients(List.of(Ingredient.SUGAR, Ingredient.SALT), 0))
                 .rate(new Rate())
                 .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
