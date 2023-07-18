@@ -12,6 +12,7 @@ export default function RecipeInfo({
   userInfo,
   getTime,
   isLogin,
+  localData,
 }) {
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
@@ -56,6 +57,10 @@ export default function RecipeInfo({
   };
   const changeScore = (idx) => {
     // 로그인 여부 확인
+    if (localData.userId === cocktailDetail.userId) {
+      alert('자신이 작성한 레시피는 평가할 수 없습니다.');
+      return;
+    }
     if (isLogin) {
       setScore(idx + 1);
       modifyScore(idx + 1);
@@ -104,7 +109,8 @@ export default function RecipeInfo({
         <StarCotiner>
           <DrawStar />
           <ModifyContainer>
-            {cocktailDetail.userId === userInfo.userId && (
+            {(localData.IsAdmin ||
+              cocktailDetail.userId === localData.userId) && (
               <>
                 <Link to={`/cocktail/${cocktailDetail.cocktailId}`}>
                   <ModifyP>수정하기</ModifyP>
