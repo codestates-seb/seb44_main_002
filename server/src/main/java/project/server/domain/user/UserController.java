@@ -17,9 +17,11 @@ import javax.validation.constraints.Positive;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final AuthManager authManager;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthManager authManager) {
         this.userService = userService;
+        this.authManager = authManager;
     }
 
     @PostMapping("/signup")
@@ -31,7 +33,7 @@ public class UserController {
     @GetMapping("/{user-id}")
     public ResponseEntity getUser(Authentication authentication,
                                   @PathVariable("user-id") @Positive long userId) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
         UserDto.Response response = userService.getUser(email, userId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -40,7 +42,7 @@ public class UserController {
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
                                     @Valid @RequestBody UserDto.Patch requestBody,
                                     Authentication authentication) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         User user = userService.updateUser(requestBody, userId, email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

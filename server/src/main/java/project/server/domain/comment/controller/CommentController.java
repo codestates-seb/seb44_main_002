@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import project.server.domain.comment.dto.CommentDto;
-import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.service.CommentService;
 import project.server.domain.user.AuthManager;
 import project.server.utils.UnsignedPermission;
@@ -17,16 +16,18 @@ import javax.validation.constraints.Positive;
 @RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
+    private final AuthManager authManager;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, AuthManager authManager) {
         this.commentService = commentService;
+        this.authManager = authManager;
     }
 
     @PostMapping("/{cocktail-id}")
     public ResponseEntity postComment(Authentication authentication,
                                       @PathVariable("cocktail-id") @Positive Long cocktailId,
                                       @Valid @RequestBody CommentDto.Post post) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         CommentDto.Response response = commentService.createComment(email, cocktailId, post);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

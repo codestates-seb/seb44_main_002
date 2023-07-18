@@ -12,16 +12,18 @@ import project.server.utils.UnsignedPermission;
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
+    private final AuthManager authManager;
 
-    public BookmarkController(BookmarkService bookmarkService) {
+    public BookmarkController(BookmarkService bookmarkService, AuthManager authManager) {
         this.bookmarkService = bookmarkService;
+        this.authManager = authManager;
     }
 
 
     @PostMapping("/create/{cocktail-id}")
     public ResponseEntity postBookmark(Authentication authentication,
                                        @PathVariable("cocktail-id") long cocktailId) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         bookmarkService.createBookmark(email, cocktailId);
         return ResponseEntity.accepted().build();
     }
@@ -29,7 +31,7 @@ public class BookmarkController {
     @DeleteMapping("/delete/{cocktail-id}")
     public ResponseEntity deleteBookmark(Authentication authentication,
                                          @PathVariable("cocktail-id") long cocktailId){
-        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         bookmarkService.deleteBookmark(email, cocktailId);
         return ResponseEntity.noContent().build();
     }
