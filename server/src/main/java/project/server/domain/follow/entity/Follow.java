@@ -32,4 +32,8 @@ public class Follow {
                 following.getName(),
                 following.getProfileImageUrl());
     }
+
+    public boolean contains(long userId) {
+        return following.getFollowingUserId() == userId;
+    }
 }

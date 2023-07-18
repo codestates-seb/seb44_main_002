@@ -57,7 +57,7 @@ public class User {
     @OneToMany
     private Set<Follow> follows = new HashSet<>();
 
-    public UserDto.Response entityToResponse() {
+    public UserDto.Response entityToResponse(User user) {
         return UserDto.Response.builder()
                 .userId(userId)
                 .email(email)
@@ -75,6 +75,7 @@ public class User {
                 .follows(follows.stream()
                         .map(Follow::getFollowing)
                         .collect(Collectors.toList()))
+                .isSubscribed(alreadyFollowing(user))
                 .build();
     }
 
@@ -124,9 +125,20 @@ public class User {
 
     public void addFollow(Follow follow) {
         follows.add(follow);
+        subscriberCount++;
     }
 
     public void cancelFollow(Follow follow) {
         follows.remove(follow);
+        subscriberCount--;
+    }
+
+    public boolean alreadyFollowing(User following) {
+        for(Follow follow : follows){
+            if(follow.contains(following.getUserId())){
+                return true;
+            }
+        }
+        return false;
     }
 }

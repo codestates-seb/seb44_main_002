@@ -42,7 +42,7 @@ public class FollowService {
     }
 
     private void verifyFollowTarget(User follower, User following) {
-        if(follower == following || following.isAdmin()){
+        if(follower == following || following.isAdmin() || follower.alreadyFollowing(following)){
             throw new BusinessLogicException(ExceptionCode.INVALID_FOLLOW_TARGET);
         }
     }
