@@ -61,7 +61,7 @@ export default function Category() {
           throw new Error('Network response was not ok.');
         }
         const data = await response.json();
-        console.log(data.data);
+        //console.log(data.data);
         setCocktailData(data.data);
         setErrormsg(null);
         //성공했지만 데이터가 없는 경우
