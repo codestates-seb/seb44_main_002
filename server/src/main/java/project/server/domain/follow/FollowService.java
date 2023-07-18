@@ -38,7 +38,8 @@ public class FollowService {
     public void removeFollow(String followerEmail, long followingUserId) {
         User follower = userService.findUserByEmail(followerEmail);
         Follow follow = followReadService.findFollowByFollowerIdAndFollowingId(follower.getUserId(), followingUserId);
-        followDeleteService.cancelFollow(follower, follow);
+        User following = userService.findUserByUserId(followingUserId);
+        followDeleteService.cancelFollow(follower, follow, following);
     }
 
     private void verifyFollowTarget(User follower, User following) {

@@ -36,7 +36,7 @@ public class User {
 
     private int age;
 
-    private long subscriberCount;
+    private long subscriberCount = 0;
 
     private String profileImageUrl;
 
@@ -101,12 +101,10 @@ public class User {
 
     public void addFollow(Follow follow) {
         follows.add(follow);
-        subscriberCount++;
     }
 
     public void cancelFollow(Follow follow) {
         follows.remove(follow);
-        subscriberCount--;
     }
 
     public boolean following(User following) {
@@ -116,5 +114,13 @@ public class User {
             }
         }
         return false;
+    }
+
+    public void addSubscriberCount() {
+        subscriberCount++;
+    }
+
+    public void subtractSubscriberCount() {
+        subscriberCount--;
     }
 }

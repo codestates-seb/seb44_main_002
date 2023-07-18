@@ -49,7 +49,6 @@ public class UserDto {
 
     @Getter
     public static class Patch {
-        private long userId;
         private String password;
     }
 }
