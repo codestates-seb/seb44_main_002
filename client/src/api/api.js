@@ -34,6 +34,7 @@ export default {
 
     // 만료된 토큰으로 인증이 실패했을 경우에만 토큰 재발급
     if (response.status === 401) {
+      // 401이 달라질 수 있음
       const newToken = await refreshToken();
 
       localStorage.setItem('accessToken', newToken);
