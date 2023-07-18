@@ -2,11 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 //북마크 기능 추가 페이지네이션 추가
-import {
-  CategoryFilter,
-  tagFrequencyData,
-  sortTypeData,
-} from '../../common/Data';
+import { CategoryFilter, sortTypeData } from '../../common/Data';
 
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
@@ -23,7 +19,6 @@ export default function Category() {
   const dispatch = useDispatch();
   //리덕스 임시 저장
   const isLogin = useSelector((state) => state.isLogin.isLogin);
-  // const bookmarkList = useSelector((state) => state.userinfo.bookmarked);
   //선택된 카테고리조건 (카테고리&태그&정렬)
   const [filterCondtion, setFilterCondtion] = useState({
     category: CategoryFilter[0].type,
@@ -36,12 +31,11 @@ export default function Category() {
   //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
   const [cocktailData, setCocktailData] = useState([]);
-  console.log(cocktailData);
+  // console.log(cocktailData);
   const [obj, setObj] = useState({
     totalCount: 200,
     totalPages: 5,
   });
-
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
 
@@ -61,11 +55,8 @@ export default function Category() {
           throw new Error('Network response was not ok.');
         }
         const data = await response.json();
-        console.log(data.data);
         setCocktailData(data.data);
         setErrormsg(null);
-        //성공했지만 데이터가 없는 경우
-
         if (data.data.length === 0) {
           setErrormsg(
             '! 데이터 요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요'
@@ -132,7 +123,6 @@ export default function Category() {
               filterCondtion={filterCondtion}
             />
             {/* 필터에 따라 출력되는 데이터 */}
-            {/* 배열 idx 에 bookmarkList 에 idx 가 같으면  */}
             <CardContainer>
               {cocktailData.map((item, index) => (
                 <Card

@@ -56,13 +56,13 @@ export default function HeaderModal() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        //'ngrok-skip-browser-warning': 'true',
       },
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         dispatch(userinfoGet(data));
+        localStorage.setItem('name', data.name);
       })
       .catch((err) => {
         console.log(err);
@@ -85,7 +85,6 @@ export default function HeaderModal() {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          // 'ngrok-skip-browser-warning': 'true',
         },
         body: JSON.stringify(form),
       })
@@ -96,12 +95,9 @@ export default function HeaderModal() {
               data.headers.get('Authorization')
             );
 
-            localStorage.setItem('userId', data.headers.get('userId'));
-            localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
-            localStorage.setItem('refreshToken', data.headers.get('Refesh'));
-            // Refresh accessToken 만료
-            //userId
-            //Name
+            localStorage.setItem('userId', Number(data.headers.get('userId')));
+            localStorage.setItem('IsAdmin', !!data.headers.get('IsAdmin'));
+            localStorage.setItem('refreshToken', data.headers.get('Refresh'));
 
             dispatch(
               userinfoLogin({
@@ -114,7 +110,7 @@ export default function HeaderModal() {
             //사용자 정보 조회
             handleUserInfo(data.headers.get('userId'));
             // 전역상태관리 로그인으로 변경
-            dispatch(login(() => login()));
+            dispatch(login());
             handleClose();
             navigate('/');
           } else {

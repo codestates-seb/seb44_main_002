@@ -25,7 +25,7 @@ export default function Advice({ error }) {
     <AdviceContainer>
       <ImgContainer>
         <img
-          className="w-[90%] h-[full] object-contain"
+          className="w-[90%] h-[full] object-contain max-w-[1000px]"
           src={error ? 'images/errorPromotion.png' : 'images/mainPromotion.png'}
           alt="advice"
         />
