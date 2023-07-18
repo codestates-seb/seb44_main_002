@@ -27,7 +27,7 @@ public class ReplyController {
                                     @Valid @RequestBody ReplyDto.Post post) {
         String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         ReplyDto.Response response = replyService.createReply(email, commentId, post);
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{reply-id}")
