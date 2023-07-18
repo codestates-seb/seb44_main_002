@@ -13,6 +13,7 @@ public enum ExceptionCode {
     INVALID_RATE_VALUE(500, "유효하지 않은 값이에용"),
     UNAUTHORIZED_USER(403, "권한이 없어용"),
     NOT_SIGN_IN(401, "로그인부터 하세용"),
+    TOKEN_EXPIRED(401, "토큰이 만료 되었어용"),
     USER_INPUT_ERROR(401, "잘못된 요청입니다"),
     IMAGE_UPLOAD_EXCEPTION(500, "이미지 업로드에 실패했어용."),
     NOT_BOOKMARKED_COCKTAILS(404, "북마크가 되어있지 않아용"),
