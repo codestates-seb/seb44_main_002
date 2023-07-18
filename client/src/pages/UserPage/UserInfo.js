@@ -198,8 +198,12 @@ max-sm:px-4
 max-sm:py-1
 `;
 const SubscribeButton = tw(Button)`
+px-0
+w-20
 max-sm:hidden
 `;
 const TitleButton = tw(Button)`
+w-16
 sm:hidden
+max-sm:px-0
 `;
