@@ -32,15 +32,22 @@ public class CommentService {
         return comment.entityToResponse();
     }
 
+    public CommentDto.Response saveComment(long commentId) {
+        Comment comment = findCommentById(commentId);
+        Comment savedComment = commentRepository.save(comment);
+        return savedComment.entityToResponse();
+    }
+
     public Comment findCommentById(long commentId) {
         return commentRepository.findById(commentId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
     }
 
-    public Comment updateComment(CommentDto.Patch patch) {
-        Comment comment = findCommentById(patch.getCommentId());
+    public CommentDto.Response updateComment(Long commentId, CommentDto.Patch patch) {
+        Comment comment = findCommentById(commentId);
         comment.setContent(patch.getContent());
-        return commentRepository.save(comment);
+        Comment savedComment = commentRepository.save(comment);
+        return savedComment.entityToResponse();
     }
 
     public void deleteComment(long commentId) {

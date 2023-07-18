@@ -24,19 +24,13 @@ public class ReplyController {
         ReplyDto.Response response = replyService.createReply(commentId, post);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
-//
+
     @PatchMapping("/{reply-id}")
     public ResponseEntity patchReply(@PathVariable("reply-id") @Positive Long replyId,
                                      @Valid @RequestBody ReplyDto.Patch patch) {
         ReplyDto.Response response = replyService.updateReply(replyId, patch);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-//    @GetMapping("/{reply-id}")
-//    public ResponseEntity getReply(@PathVariable("comment-id") @Positive Long replyId) {
-//        ReplyDto.Response response = replyService.readReply(replyId);
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
     @DeleteMapping("/{reply-id}")
     public ResponseEntity deleteReply(@PathVariable("comment-id") @Positive Long replyId) {
