@@ -102,7 +102,7 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
           <ModifyContainer>
             {cocktailDetail.userId === userInfo.userId && (
               <>
-                <Link to={`/modifyPost/${cocktailDetail.cocktailId}`}>
+                <Link to={`/cocktail/${cocktailDetail.cocktailId}`}>
                   <ModifyP>수정하기</ModifyP>
                 </Link>
                 <Separator></Separator>
