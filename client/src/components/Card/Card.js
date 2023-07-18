@@ -16,7 +16,7 @@ export default function Card({ item }) {
 
   useEffect(() => {
     setbookmarked(item.bookmarked);
-    console.log(item.bookmarked);
+    // console.log(item.bookmarked);
   }, [item]);
 
   const handleMouseOver = (index) => {
@@ -33,27 +33,17 @@ export default function Card({ item }) {
     const handleBookmark = async () => {
       if (!bookmarked) {
         try {
-          const response = await api.createbookmarkApi(cocktail.cocktailId);
-          if (response.ok) {
-            return response;
-          } else {
-            console.log('error');
-          }
+          const response = await api.createbookmarkApi(cocktailId);
         } catch (error) {
           console.log(error);
           navigate('/error');
         }
       } else {
         try {
-          const response = await api.deletebookmarkApi(cocktail.cocktailId);
-          if (response.ok) {
-            return response;
-          } else {
-            console.log('error');
-          }
+          const response = await api.deletebookmarkApi(cocktailId);
         } catch (error) {
           console.log(error);
-          navigate('/error');
+          //navigate('/error');
         }
       }
     };
