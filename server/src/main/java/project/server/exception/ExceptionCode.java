@@ -17,7 +17,9 @@ public enum ExceptionCode {
     IMAGE_UPLOAD_EXCEPTION(500, "이미지 업로드에 실패했어용."),
     NOT_BOOKMARKED_COCKTAILS(404, "북마크가 되어있지 않아용"),
     ALREADY_BOOKMARKED(500, "이미 북마크 한 칵테일이에용."),
-    BOOKMARK_NOT_FOUND(404, "북마크하지 않은 칵테일이에용.");
+    BOOKMARK_NOT_FOUND(404, "북마크하지 않은 칵테일이에용."),
+    FOLLOW_NOT_FOUND(404, "팔로우가 안돼있어용."),
+    INVALID_FOLLOW_TARGET(500, "팔로우 할 수 없는 대상이에용.");
 
     private final int status;
 

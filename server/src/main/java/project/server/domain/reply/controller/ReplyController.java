@@ -27,7 +27,7 @@ public class ReplyController {
                                     @Valid @RequestBody ReplyDto.Post post) {
         String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         ReplyDto.Response response = replyService.createReply(email, commentId, post);
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{reply-id}")
@@ -39,7 +39,7 @@ public class ReplyController {
 
     @DeleteMapping("/{reply-id}")
     public ResponseEntity deleteReply(@PathVariable("reply-id") @Positive Long replyId) {
-        replyService.deleteReply(replyId); // 이게 원래 코드엿는데 빨간색 떠가지고
+        replyService.deleteReply(replyId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -32,7 +32,6 @@ public class CommentDto {
         private String content;
         private List<ReplyDto.Response> replies;
         private LocalDateTime createdAt;
-        List<ReplyDto.Response> replies;
     }
 
     @Getter
