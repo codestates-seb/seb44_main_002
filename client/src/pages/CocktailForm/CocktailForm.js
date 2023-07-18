@@ -10,11 +10,18 @@ import HoverButton from '../../common/Buttons/HoverButton';
 
 import ImageUpload from '../../components/ImageUpload';
 import CocktailTag from './CocktailTag';
+import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
 
 import tw from 'tailwind-styled-components';
 
 export default function CocktailForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  setTimeout(() => {
+    setIsLoading(true);
+  }, 500);
+
   const [form, setForm] = useState({
     name: '',
     imageUrl: '',
@@ -80,60 +87,75 @@ export default function CocktailForm() {
   };
 
   return (
-    <Background>
-      <img
-        className="absolute right-0 bottom-0 z-0"
-        src="images/background/fire_cocktail.png"
-        alt="backgroundimg"
-      />
-      <Container>
-        <div className="flex flex-col z-10 items-center">
-          <SignupHeader>칵테일 등록</SignupHeader>
-          <form onSubmit={submitHandler} className="flex flex-col items-center">
-            <InputSection>
-              <CustomInput
-                type="text"
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                value={form.name}
-                labelName="칵테일 이름"
-                text="칵테일 이름을 적어주세요"
-                isValid={isValid.name}
-                size="w-[355px] h-[40px] max-[520px]:w-[320px]"
-                radius="rounded-md"
-              />
-              <ImageUpload
-                form={form}
-                setForm={setForm}
-                isValid={isValid}
-                setIsValid={setIsValid}
-              />
-              <SelectBaseInput
-                isValid={isValid.liquor}
-                value={form.liquor}
-                onChange={(e) => setForm({ ...form, liquor: e.target.value })}
-                size="w-[355px] h-[40px] max-[520px]:w-[320px]"
-              />
-              <CheckboxIngrInput
-                isValid={isValid.ingredients}
-                setForm={setForm}
-              />
-              <CocktailRecipeInput
-                form={form}
-                setForm={setForm}
-                isValid={isValid}
-                setIsValid={setIsValid}
-              />
-              <CocktailTag form={form} setForm={setForm} isValid={isValid} />
-            </InputSection>
-            <div className="mt-4">
-              <HoverButton type="submit" size="w-32 h-12">
-                업로드
-              </HoverButton>
+    <>
+      {!isLoading ? (
+        <Loading />
+      ) : (
+        <Background>
+          <img
+            className="absolute bottom-0 right-0 z-0"
+            src="images/background/fire_cocktail.png"
+            alt="backgroundimg"
+          />
+          <Container>
+            <div className="z-10 flex flex-col items-center">
+              <SignupHeader>칵테일 등록</SignupHeader>
+              <form
+                onSubmit={submitHandler}
+                className="flex flex-col items-center"
+              >
+                <InputSection>
+                  <CustomInput
+                    type="text"
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    value={form.name}
+                    labelName="칵테일 이름"
+                    text="칵테일 이름을 적어주세요"
+                    isValid={isValid.name}
+                    size="w-[355px] h-[40px] max-[520px]:w-[320px]"
+                    radius="rounded-md"
+                  />
+                  <ImageUpload
+                    form={form}
+                    setForm={setForm}
+                    isValid={isValid}
+                    setIsValid={setIsValid}
+                  />
+                  <SelectBaseInput
+                    isValid={isValid.liquor}
+                    value={form.liquor}
+                    onChange={(e) =>
+                      setForm({ ...form, liquor: e.target.value })
+                    }
+                    size="w-[355px] h-[40px] max-[520px]:w-[320px]"
+                  />
+                  <CheckboxIngrInput
+                    isValid={isValid.ingredients}
+                    setForm={setForm}
+                  />
+                  <CocktailRecipeInput
+                    form={form}
+                    setForm={setForm}
+                    isValid={isValid}
+                    setIsValid={setIsValid}
+                  />
+                  <CocktailTag
+                    form={form}
+                    setForm={setForm}
+                    isValid={isValid}
+                  />
+                </InputSection>
+                <div className="mt-4">
+                  <HoverButton type="submit" size="w-32 h-12">
+                    업로드
+                  </HoverButton>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-      </Container>
-    </Background>
+          </Container>
+        </Background>
+      )}
+    </>
   );
 }
 
