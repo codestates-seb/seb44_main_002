@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 export default function Recommend({ cocktailDetail }) {
   const [recommends, setRecommends] = useState(cocktailDetail);
-
+  //console.log(recommends);
   useEffect(() => {
     setRecommends(cocktailDetail);
   }, [cocktailDetail]);

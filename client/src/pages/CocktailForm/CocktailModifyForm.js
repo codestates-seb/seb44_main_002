@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
@@ -15,12 +15,17 @@ import useCocktailFormValid from '../../components/Validation/CocktailFormValida
 
 import tw from 'tailwind-styled-components';
 
-export default function CocktailForm() {
+export default function CocktailModifyForm() {
+  // 로딩화면
   const [isLoading, setIsLoading] = useState(false);
 
   setTimeout(() => {
     setIsLoading(true);
   }, 500);
+
+  const params = useParams();
+
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const [form, setForm] = useState({
     name: '',
@@ -41,10 +46,9 @@ export default function CocktailForm() {
     degree: true,
     flavor: true,
   });
+  const accessToken = localStorage.getItem('accessToken');
 
   const navigate = useNavigate();
-
-  const accessToken = localStorage.getItem('accessToken');
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -59,14 +63,23 @@ export default function CocktailForm() {
       degree,
       flavor,
     };
-    setIsValid(updatedIsValid);
+    setIsValid((prevIsValid) => ({
+      ...prevIsValid,
+      name,
+      imageUrl,
+      liquor,
+      ingredients,
+      recipe,
+      degree,
+      flavor,
+    }));
     const allValid = Object.values(updatedIsValid).every(
       (value) => value === true
     );
 
     if (allValid) {
-      fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
-        method: 'POST',
+      fetch(`${BASE_URL}cocktails/${params.id}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: accessToken,
@@ -99,7 +112,7 @@ export default function CocktailForm() {
           />
           <Container>
             <div className="z-10 flex flex-col items-center">
-              <SignupHeader>칵테일 등록</SignupHeader>
+              <SignupHeader>칵테일 수정</SignupHeader>
               <form
                 onSubmit={submitHandler}
                 className="flex flex-col items-center"

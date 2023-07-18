@@ -14,8 +14,8 @@ export default function OwnRecipeCard({ item }) {
         <ContainerP>
           <Title>{item.name}</Title>
           <Content>
-            <p>별점 : 4.5</p>
-            <p>조회수 : 12</p>
+            <p>{'별점 : ' + item.userRate}</p>
+            <p>{'조회수 : ' + item.viewCount}</p>
           </Content>
         </ContainerP>
       </Container>

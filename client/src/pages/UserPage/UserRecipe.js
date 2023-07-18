@@ -2,20 +2,27 @@ import Card from '../../components/Card/Card';
 import OwnRecipeCard from '../../components/Card/OwnRecipeCard';
 import tw from 'tailwind-styled-components';
 
-export default function UserRecipe({ userInfo }) {
+export default function UserRecipe({ userInfo, logginUser }) {
   return (
     <Container>
-      <Title>자신의 레시피</Title>
+      <Title>
+        {userInfo.userId === logginUser.userId ? '자신' : userInfo.name + ' 님'}
+        의 레시피
+      </Title>
       <Bookmark>
-        {userInfo.bookmarkedCocktails.map((ele) => {
-          return (
-            <>
-              <CardContainer key={ele.cocktailId}>
-                <OwnRecipeCard item={ele} />
-              </CardContainer>
-            </>
-          );
-        })}
+        {userInfo.cocktails.length === 0 ? (
+          <p className="text-white mx-auto">작성한 레시피가 없습니다.</p>
+        ) : (
+          userInfo.cocktails.map((ele) => {
+            return (
+              <>
+                <CardContainer key={ele.cocktailId}>
+                  <OwnRecipeCard item={ele} />
+                </CardContainer>
+              </>
+            );
+          })
+        )}
       </Bookmark>
     </Container>
   );

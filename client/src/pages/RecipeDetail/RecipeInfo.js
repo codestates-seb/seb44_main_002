@@ -7,7 +7,13 @@ import ImageModal from './ImgaeModal';
 import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
 
-export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
+export default function RecipeInfo({
+  cocktailDetail,
+  userInfo,
+  getTime,
+  isLogin,
+  localData,
+}) {
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
@@ -44,7 +50,6 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
         userInfo.accessToken
       );
       const json = await response.json();
-      console.log(json);
       setTotal(json.rating);
     } catch (error) {
       console.log(error);
@@ -52,7 +57,11 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
   };
   const changeScore = (idx) => {
     // 로그인 여부 확인
-    if (userInfo.userId !== null && userInfo.age !== null) {
+    if (localData.userId === cocktailDetail.userId) {
+      alert('자신이 작성한 레시피는 평가할 수 없습니다.');
+      return;
+    }
+    if (isLogin) {
       setScore(idx + 1);
       modifyScore(idx + 1);
     } else {
@@ -100,9 +109,10 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
         <StarCotiner>
           <DrawStar />
           <ModifyContainer>
-            {cocktailDetail.userId === userInfo.userId && (
+            {(localData.IsAdmin ||
+              cocktailDetail.userId === localData.userId) && (
               <>
-                <Link to={`/modifyPost/${cocktailDetail.cocktailId}`}>
+                <Link to={`/cocktail/${cocktailDetail.cocktailId}`}>
                   <ModifyP>수정하기</ModifyP>
                 </Link>
                 <Separator></Separator>
@@ -123,12 +133,19 @@ export default function RecipeInfo({ cocktailDetail, userInfo, getTime }) {
         </TitleContainer>
         <UserContainer>
           <WriterInfo>
-            <Link to={`/userpage/${cocktailDetail.userId}`}>
+            {cocktailDetail.userId === 4 ? (
               <FlexContainer>
                 <PiUserCircleFill size="24px" />
-                <NameP>{cocktailDetail.userName}</NameP>
+                <NameP>관리자</NameP>
               </FlexContainer>
-            </Link>
+            ) : (
+              <Link to={`/userpage/${cocktailDetail.userId}`}>
+                <FlexContainer>
+                  <PiUserCircleFill size="24px" />
+                  <NameP>{cocktailDetail.userName}</NameP>
+                </FlexContainer>
+              </Link>
+            )}
             <p className="mt-1 text-[10px]">
               {getTime(cocktailDetail.createdAt)}
             </p>

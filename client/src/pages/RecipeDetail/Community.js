@@ -6,7 +6,13 @@ import RecipeApi from './RecipeApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function Community({ cocktailDetail, userInfo, getTime }) {
+export default function Community({
+  cocktailDetail,
+  userInfo,
+  getTime,
+  isLogin,
+  localData,
+}) {
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
   const [commentId, setCommentId] = useState(0);
@@ -74,7 +80,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (userInfo.userId === null) {
+    if (!isLogin) {
       alert('로그인 후 이용해주세요');
       return;
     }
@@ -132,7 +138,7 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                 <CommentAndButton>
                   <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === userInfo.userId && (
+                    {(localData.IsAdmin || ele.userId === localData.userId) && (
                       <>
                         <CommentButton
                           onClick={() => deleteComment(ele.commentId)}
@@ -173,7 +179,8 @@ export default function Community({ cocktailDetail, userInfo, getTime }) {
                     <CommentAndButton>
                       <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === userInfo.userId && (
+                        {(localData.IsAdmin ||
+                          rp.userId === localData.userId) && (
                           <>
                             <CommentButton
                               onClick={() => deleteReply(rp.replyId)}

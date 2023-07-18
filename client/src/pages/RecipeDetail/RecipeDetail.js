@@ -19,7 +19,10 @@ export default function RecipeDetail() {
 
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [accessToken, setAccessToken] = useState('');
+  const [localData, setLocalData] = useState({ userId: '', IsAdmin: false });
+
   const userInfo = useSelector((state) => state.userinfo);
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   const location_id = useLocation().pathname.split('/')[2];
 
@@ -43,7 +46,6 @@ export default function RecipeDetail() {
   };
 
   const setBookmark = async () => {
-    //console.log(cocktail.cocktailId);
     // 비로그인시 설정 불가
     if (userInfo.userId) {
       if (isBookmarked) {
@@ -89,9 +91,10 @@ export default function RecipeDetail() {
   };
 
   useEffect(() => {
-    // 데이터 가져올 구문 추가 예정
     getCocktail();
-    console.log(cocktailDetail);
+    const local_userId = parseInt(localStorage.getItem('userId'));
+    const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
+    setLocalData({ userId: local_userId, IsAdmin: local_IsAdmin });
   }, [location_id]);
 
   const BackgroundImg = () => {
@@ -121,7 +124,6 @@ export default function RecipeDetail() {
       bookmarked: cocktail.bookmarked,
     };
     const handleBookmarkClick = async (cocktailId) => {
-      console.log('동작');
       const id = cocktailId;
 
       dispatch(updateBookmark({ id, item }));
@@ -149,12 +151,16 @@ export default function RecipeDetail() {
             cocktailDetail={cocktail}
             userInfo={userInfo}
             getTime={getTime}
+            isLogin={isLogin}
+            localData={localData}
           />
           <Process cocktailDetail={cocktail} />
           <Community
             cocktailDetail={cocktail}
             userInfo={userInfo}
             getTime={getTime}
+            isLogin={isLogin}
+            localData={localData}
           />
           <Recommend cocktailDetail={cocktail.recommends} userInfo={userInfo} />
         </Container>

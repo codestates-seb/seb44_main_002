@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import UserInfo from './UserInfo';
@@ -11,22 +11,25 @@ import tw from 'tailwind-styled-components';
 import UserBookmarked from './UserBookmarked';
 
 export default function UserPage() {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(dummyData);
   const location = useLocation().pathname.split('/')[2];
   const logginUser = useSelector((state) => state.userinfo);
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   const getUser = async () => {
     try {
       const response = await UserPageApi.getUserData(location);
       const json = await response.json();
       setUserInfo(json);
+      console.log(json);
     } catch (error) {
       console.log(error);
+      navigate('/error');
     }
   };
 
   useEffect(() => {
-    // 칵테일 정보 fetch 추가예정
     getUser();
   }, []);
 
@@ -46,9 +49,13 @@ export default function UserPage() {
       <BackgroundImg />
       <OuterContainer>
         <Container>
-          <UserInfo userInfo={userInfo} logginUser={logginUser} />
+          <UserInfo
+            userInfo={userInfo}
+            logginUser={logginUser}
+            isLogin={isLogin}
+          />
           {/* <Subscribe userInfo={userInfo} logginUser={logginUser} /> */}
-          <UserRecipe userInfo={userInfo} />
+          <UserRecipe userInfo={userInfo} logginUser={logginUser} />
           <UserBookmarked userInfo={userInfo} logginUser={logginUser} />
         </Container>
       </OuterContainer>
@@ -99,6 +106,7 @@ const dummyData = {
   age: 20,
   email: 'kim@example.com',
   subscriberCount: 1200,
+  cocktails: [],
   bookmarkedCocktails: [
     {
       cocktailId: 1,

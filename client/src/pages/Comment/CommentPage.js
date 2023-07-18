@@ -87,7 +87,7 @@ export default function CommentPage() {
   };
 
   return (
-    <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-100% pt-[5rem] flex flex-col  items-center ">
+    <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-[100vh] pt-[5rem] flex flex-col  items-center ">
       <button onClick={() => navigate('/')}>
         <img
           src="/images/logo.webp"
