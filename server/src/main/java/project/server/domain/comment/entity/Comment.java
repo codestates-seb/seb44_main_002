@@ -24,10 +24,8 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;
-
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
-
     @ManyToOne
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
@@ -63,4 +61,7 @@ public class Comment {
     public void addReply(Reply reply) {
         replies.add(reply);
     }
-}
+
+    public void deleteReply(Reply reply) {
+        replies.remove(reply);
+    }

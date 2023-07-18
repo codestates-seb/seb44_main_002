@@ -30,7 +30,6 @@ public class ReplyController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    //
     @PatchMapping("/{reply-id}")
     public ResponseEntity patchReply(@PathVariable("reply-id") @Positive Long replyId,
                                      @Valid @RequestBody ReplyDto.Patch patch) {
