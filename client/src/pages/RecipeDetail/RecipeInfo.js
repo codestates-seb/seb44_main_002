@@ -109,7 +109,8 @@ export default function RecipeInfo({
         <StarCotiner>
           <DrawStar />
           <ModifyContainer>
-            {cocktailDetail.userId === localData.userId && (
+            {(localData.IsAdmin ||
+              cocktailDetail.userId === localData.userId) && (
               <>
                 <Link to={`/cocktail/${cocktailDetail.cocktailId}`}>
                   <ModifyP>수정하기</ModifyP>

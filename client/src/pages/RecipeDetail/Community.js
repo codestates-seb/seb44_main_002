@@ -138,7 +138,7 @@ export default function Community({
                 <CommentAndButton>
                   <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === localData.userId && (
+                    {(localData.IsAdmin || ele.userId === localData.userId) && (
                       <>
                         <CommentButton
                           onClick={() => deleteComment(ele.commentId)}
@@ -179,7 +179,8 @@ export default function Community({
                     <CommentAndButton>
                       <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === localData.userId && (
+                        {(localData.IsAdmin ||
+                          rp.userId === localData.userId) && (
                           <>
                             <CommentButton
                               onClick={() => deleteReply(rp.replyId)}

@@ -93,7 +93,7 @@ export default function RecipeDetail() {
   useEffect(() => {
     getCocktail();
     const local_userId = parseInt(localStorage.getItem('userId'));
-    const local_IsAdmin = localStorage.getItem('IsAdmin');
+    const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
     setLocalData({ userId: local_userId, IsAdmin: local_IsAdmin });
   }, [location_id]);
 
