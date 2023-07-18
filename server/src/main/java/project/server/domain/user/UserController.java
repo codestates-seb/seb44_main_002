@@ -3,6 +3,7 @@ package project.server.domain.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity postUser(@Valid @RequestBody UserDto.post requestBody) {
+    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post requestBody) {
         UserDto.Response response = userService.createUser(requestBody);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -34,8 +35,9 @@ public class UserController {
 
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
-                                    @Valid @RequestBody UserDto.Patch requestBody) {
-        User user = userService.updateUser(requestBody, userId);
+                                    @Valid @RequestBody UserDto.Patch requestBody,
+                                    Authentication authentication) {
+        User user = userService.updateUser(requestBody, userId, authentication);
         return new ResponseEntity<>(user.entityToResponse(), HttpStatus.OK);
     }
 

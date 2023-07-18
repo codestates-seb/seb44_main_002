@@ -1,4 +1,4 @@
-package project.server.domain.recommendcocktail.embed;
+package project.server.domain.bookmark.embed;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

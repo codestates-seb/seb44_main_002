@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -38,7 +39,7 @@ public class ImageService {
             throw new BusinessLogicException(ExceptionCode.IMAGE_UPLOAD_EXCEPTION);
         }
 
-        String objectKey = StringUtils.cleanPath(file.getOriginalFilename());
+        String objectKey = LocalDateTime.now() + StringUtils.cleanPath(file.getOriginalFilename());
 
 
         try {
@@ -75,7 +76,7 @@ public class ImageService {
             throw new BusinessLogicException(ExceptionCode.IMAGE_UPLOAD_EXCEPTION);
         }
 
-        String objectKey = StringUtils.cleanPath(file.getOriginalFilename());
+        String objectKey = LocalDateTime.now() + StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
             // S3에 업로드

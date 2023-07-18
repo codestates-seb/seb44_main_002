@@ -6,19 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
-import project.server.domain.cocktail.embed.ingredient.Ingredients;
-import project.server.domain.cocktail.embed.liquor.LiquorMapper;
-import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.rate.RateDto;
-import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
-import project.server.domain.cocktail.repository.CocktailRepository;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.comment.entity.Comment;
-import project.server.domain.recommendcocktail.service.RecommendCocktailService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 import project.server.dto.MultiResponseDto;
@@ -36,106 +29,95 @@ public class CocktailService {
     private static final String SEPARATOR = ",";
     private static final int MAX_RATE_VALUE = 5;
     private static final int MIN_RATE_VALUE = 1;
-    private static final boolean UNSIGNED_USER_BOOKMARK = false;
+    private static final boolean BOOKMARK_DEFAULT = false;
     private static final int UNSIGNED_USER_RATE = 0;
 
-    private final CocktailRepository cocktailRepository;
-    private final RecommendCocktailService recommendCocktailService;
+    private final CocktailCreateService cocktailCreateService;
+    private final CocktailDeleteService cocktailDeleteService;
+    private final CocktailReadService cocktailReadService;
+    private final CocktailUpdateService cocktailUpdateService;
     private final UserService userService;
 
-    public CocktailService(CocktailRepository cocktailRepository, RecommendCocktailService recommendCocktailService, UserService userService) {
-        this.cocktailRepository = cocktailRepository;
-        this.recommendCocktailService = recommendCocktailService;
+    public CocktailService(CocktailCreateService cocktailCreateService, CocktailDeleteService cocktailDeleteService, CocktailReadService cocktailReadService, CocktailUpdateService cocktailUpdateService, UserService userService) {
+        this.cocktailCreateService = cocktailCreateService;
+        this.cocktailDeleteService = cocktailDeleteService;
+        this.cocktailReadService = cocktailReadService;
+        this.cocktailUpdateService = cocktailUpdateService;
         this.userService = userService;
     }
 
-    public CocktailDto.Response createCocktail(Authentication authentication, CocktailDto.Post post) {
-        User user = userService.findUserByAuthentication(authentication);
-        Cocktail cocktail = cocktailPostDtoToEntity(post);
-        cocktail.assignUser(user);
-        Cocktail savedCocktail = cocktailRepository.save(cocktail);
-        recommendCocktailService.createRecommendCocktail(cocktail, user);
-        savedCocktail.assignRecommends(createRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
-        return entityToResponse(savedCocktail, false, UNSIGNED_USER_RATE);
+    public CocktailDto.Response createCocktail(String email, CocktailDto.Post dto) {
+        User user = userService.findUserByEmail(email);
+        Cocktail cocktail = CocktailDeserializer.postDtoToEntity(dto);
+        Cocktail savedCocktail = cocktailCreateService.create(user, cocktail);
+        savedCocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
+        return CocktailSerializer.entityToSignedUserResponse(user, savedCocktail, BOOKMARK_DEFAULT, user.getRate(savedCocktail.getCocktailId()));
     }
 
-    public CocktailDto.Response readCocktail(Authentication authentication, long cocktailId) {
-        Cocktail cocktail = findCocktailById(cocktailId);
-        cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+    public CocktailDto.Response readCocktail(String email, long cocktailId) {
+        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
-        if (unsigned(authentication)) {
-            return entityToResponse(cocktail, UNSIGNED_USER_BOOKMARK, UNSIGNED_USER_RATE);
+        if (unsigned(email)) {
+            return CocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
         }
-        User user = userService.findUserByAuthentication(authentication);
-        return entityToResponse(cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
+        User user = userService.findUserByEmail(email);
+        return CocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
-    public MultiResponseDto readFilteredCocktails(Authentication authentication, String category, String tag, int page, String sortValue) {
+    public MultiResponseDto readFilteredCocktails(String email, String category, String tag, int page, String sortValue) {
         Sort sort = setSort(sortValue);
         Pageable pageable = PageRequest.ofSize(DEFAULT_SIZE).withPage(page - 1).withSort(sort);
         if (isNotSelectCategoryAndTag(category, tag)) {
-            return readEveryCocktails(authentication, pageable);
+            Page<Cocktail> cocktailPage = cocktailReadService.readAllCocktails(pageable);
+            return cocktailsSimpleResponseDto(email, cocktailPage);
         }
         if (isNotSelectCategory(category)) {
-            return readFilteringByTagsCocktails(authentication, tag, pageable);
+            return filterByTagCocktailsSimpleResponse(email, tag, pageable);
         }
         if (isNotSelectTag(tag)) {
-            return readFilteringByCategoryCocktails(authentication, category, pageable);
+            return filterByCategoryCocktailsSimpleResponse(email, category, pageable);
         }
-        return readFilteringByTagsAndCategoryCocktails(authentication, category, tag, pageable);
+        return filterByTagsAndCategoryCocktails(email, category, tag, pageable);
     }
 
-    public CocktailDto.Response updateCocktail(Authentication authentication, long cocktailId, CocktailDto.Patch patch) {
-        User user = userService.findUserByAuthentication(authentication);
-        Cocktail cocktail = findCocktailById(cocktailId);
+    public CocktailDto.Response updateCocktail(String email, long cocktailId, CocktailDto.Patch patch) {
+        User user = userService.findUserByEmail(email);
+        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         verifyUser(user, cocktail);
-        cocktail.modify(patch);
-        cocktail.assignRecommends(createRecommendCocktails(cocktail.getTags(), cocktailId));
-        return entityToResponse(cocktail, false, UNSIGNED_USER_RATE);
+        cocktailUpdateService.modify(cocktail, patch);
+        cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+        return CocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
-    public void removeCocktail(Authentication authentication, long cocktailId) {
-        User user = userService.findUserByAuthentication(authentication);
-        Cocktail cocktail = findCocktailById(cocktailId);
+    public void removeCocktail(String email, long cocktailId) {
+        User user = userService.findUserByEmail(email);
+        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         verifyUser(user, cocktail);
-        cocktailRepository.delete(cocktail);
+        cocktailDeleteService.delete(cocktail);
     }
 
-    public Cocktail findCocktailById(long cocktailId) {
-        return cocktailRepository.findById(cocktailId).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.COCKTAIL_NOT_FOUND));
-    }
-
-    public RateDto.Response rateCocktail(Authentication authentication, long cocktailId, int value) {
+    public RateDto.Response rateCocktail(String email, long cocktailId, int value) {
         verifyRateValue(value);
-        User user = userService.findUserByAuthentication(authentication);
-        Cocktail cocktail = findCocktailById(cocktailId);
+        User user = userService.findUserByEmail(email);
+        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         if (user.isAlreadyRated(cocktailId)) {
             return reCalculateCocktailsRate(cocktailId, value, user, cocktail);
         }
         return calculateCocktailsRate(cocktailId, value, user, cocktail);
     }
 
-    public void bookmarkCocktail(Authentication authentication, long cocktailId) {
-        User user = userService.findUserByAuthentication(authentication);
-        Cocktail cocktail = findCocktailById(cocktailId);
-        if (user.isBookmarked(cocktailId)) {
-            recommendCocktailService.subtractBookmarkCount(user, cocktail);
-            user.cancelBookmark(cocktailId);
-            return;
+    public CocktailDto.Response readRandomCocktail(String email) {
+        Cocktail cocktail = cocktailReadService.readRandomCocktail();
+        if(unsigned(email)){
+            return CocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
         }
-        recommendCocktailService.addBookmarkCount(user, cocktail);
-        user.bookmark(cocktailId);
+        User user = userService.findUserByEmail(email);
+        return CocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktail.getCocktailId()), user.getRate(cocktail.getCocktailId()));
     }
 
-    public CocktailDto.Response readRandomCocktail(Authentication authentication) {
-        long count = cocktailRepository.count();
-        long id = (long) (Math.random()*count);
-        return readCocktail(authentication, id);
-    }
-
-    private boolean unsigned(Authentication authentication) {
-        return authentication == null;
+    private boolean unsigned(String email) {
+        return email == null;
     }
 
     private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
@@ -157,40 +139,6 @@ public class CocktailService {
         }
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> readEveryCocktails(Authentication authentication, Pageable pageable) {
-        Page<Cocktail> cocktailPage = cocktailRepository.findAll(pageable);
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(authentication, cocktailPage.getContent());
-        return new MultiResponseDto<>(responses, cocktailPage);
-    }
-
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByCategoryCocktails(Authentication authentication, String category, Pageable pageable) {
-        Category selectedCategory = CategoryMapper.map(category);
-        Page<Cocktail> cocktailPage = cocktailRepository.findByCategory(selectedCategory, pageable);
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(authentication, cocktailPage.getContent());
-        return new MultiResponseDto<>(responses, cocktailPage);
-    }
-
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsCocktails(Authentication authentication, String tag, Pageable pageable) {
-        List<Tag> tags = createTagList(tag);
-        Page<Cocktail> cocktailPage = cocktailRepository.findDistinctByTagsTagsIn(tags, pageable);
-        return createFilteredByTagCockatilsMultiResponseDto(authentication, tags, cocktailPage);
-    }
-
-    private MultiResponseDto<CocktailDto.SimpleResponse> readFilteringByTagsAndCategoryCocktails(Authentication authentication, String category, String tag, Pageable pageable) {
-        List<Tag> tags = createTagList(tag);
-        Category selectedCategory = CategoryMapper.map(category);
-        Page<Cocktail> cocktailPage = cocktailRepository.findDistinctByCategoryAndTagsTagsIn(selectedCategory, tags, pageable);
-        return createFilteredByTagCockatilsMultiResponseDto(authentication, tags, cocktailPage);
-    }
-
-    private MultiResponseDto<CocktailDto.SimpleResponse> createFilteredByTagCockatilsMultiResponseDto(Authentication authentication, List<Tag> tags, Page<Cocktail> cocktailPage) {
-        List<Cocktail> filteredCocktails = cocktailPage.get()
-                .filter(cocktail -> cocktail.containsAll(tags))
-                .collect(Collectors.toList());
-        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(authentication, filteredCocktails);
-        return new MultiResponseDto<>(responses, cocktailPage);
-    }
-
     private List<Tag> createTagList(String tag) {
         return Arrays.stream(tag.split(SEPARATOR))
                 .map(TagMapper::map)
@@ -210,85 +158,66 @@ public class CocktailService {
         return Sort.by(Sort.Order.asc("rate.rate"));
     }
 
-    private List<CocktailDto.SimpleResponse> createSimpleResponses(Authentication authentication, List<Cocktail> cocktails) {
-        if (unsigned(authentication)) {
-            return cocktails.stream()
-                    .map(cocktail -> entityToSimpleResponse(UNSIGNED_USER_BOOKMARK, cocktail))
-                    .collect(Collectors.toList());
-        }
-        User user = userService.findUserByAuthentication(authentication);
-        return cocktails.stream()
-                .map(cocktail -> entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
-                .collect(Collectors.toList());
-    }
-
-    private List<Cocktail> createRecommendCocktails(Tags tags, long cocktailId) {
-        return cocktailRepository.findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRateRateDesc(tags.getRandomTag(), cocktailId);
-    }
-
-    /**
-     * 리팩토링 요구됨.
-     */
-    private Cocktail cocktailPostDtoToEntity(CocktailDto.Post post) {
-        Cocktail cocktail = Cocktail.builder()
-                .name(post.getName())
-                .imageUrl(post.getImageUrl())
-                .recipe(new Recipe(post.getRecipe()))
-                .tags(new Tags(post.getTags()))
-                .category(CategoryMapper.map(post.getLiquor()))
-                .rate(new Rate())
-                .liquor(LiquorMapper.map(post.getLiquor()))
-                .ingredients(new Ingredients(post.getIngredients()))
-                .build();
-
-        cocktail.addDegree(TagMapper.map(post.getDegree()));
-
-        return cocktail;
-    }
-
-    private CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
-        return CocktailDto.SimpleResponse.builder()
-                .cocktailId(cocktail.getCocktailId())
-                .name(cocktail.getName())
-                .imageUrl(cocktail.getImageUrl())
-                .isBookmarked(isBookmarked)
-                .build();
-    }
-
-    private CocktailDto.Response entityToResponse(Cocktail cocktail, boolean isBookmarked, int rate) {
-        User user = cocktail.getUser();
-        return CocktailDto.Response.builder()
-                .cocktailId(cocktail.getCocktailId())
-                .isAdminWritten(user.isAdmin())
-                .userId(user.getUserId())
-                .userName(user.getName())
-                .name(cocktail.getName())
-                .imageUrl(cocktail.getImageUrl())
-                .liquor(cocktail.getLiquor().getLiquor())
-                .ingredients(cocktail.getIngredients().createResponseDtoList())
-                .recipe(cocktail.getRecipe().createResponseDtoList())
-                .tags(cocktail.getTags().createResponseDtoList())
-                .rating(cocktail.getRate().getRate())
-                .viewCount(cocktail.getViewCount())
-                .createdAt(cocktail.getCreatedAt())
-                .modifiedAt(cocktail.getModifiedAt())
-                .comments(cocktail.getComments().stream()
-                        .map(Comment::entityToResponse)
-                        .collect(Collectors.toList()))
-                .isBookmarked(isBookmarked)
-                .recommends(cocktail.getRecommends().stream()
-                        .map(recommendedCocktail
-                                -> entityToSimpleResponse(user.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
-                        .collect(Collectors.toList()))
-                .userRate(rate)
-                .build();
-    }
-
     private void verifyUser(User user, Cocktail cocktail) {
         if (!user.hasAuthority(cocktail)) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
     }
+
+    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagCocktailsSimpleResponse(String email, String tag, Pageable pageable) {
+        List<Tag> tags = createTagList(tag);
+        Page<Cocktail> cocktailPage = cocktailReadService.readFilteredByTagsCocktails(tags, pageable);
+        return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktailPage);
+    }
+
+    private MultiResponseDto<CocktailDto.SimpleResponse> createFilteredByTagCockatilsMultiResponseDto(String email, List<Tag> tags, Page<Cocktail> cocktailPage) {
+        List<Cocktail> filteredCocktails = cocktailPage.get()
+                .filter(cocktail -> cocktail.containsAll(tags))
+                .collect(Collectors.toList());
+        List<CocktailDto.SimpleResponse> responses = createSimpleResponses(email, filteredCocktails);
+        return new MultiResponseDto<>(responses, cocktailPage);
+    }
+
+    private MultiResponseDto<CocktailDto.SimpleResponse> filterByCategoryCocktailsSimpleResponse(String email, String category, Pageable pageable) {
+        Category selectedCategory = CategoryMapper.map(category);
+        Page<Cocktail> cocktailPage = cocktailReadService.readFilteredByCategoryCocktails(selectedCategory, pageable);
+        return cocktailsSimpleResponseDto(email, cocktailPage);
+    }
+
+    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagsAndCategoryCocktails(String email, String category, String tag, Pageable pageable) {
+        List<Tag> tags = createTagList(tag);
+        Category selectedCategory = CategoryMapper.map(category);
+        Page<Cocktail> cocktailPage = cocktailReadService.readFilterByCategoryAndTagsCocktails(selectedCategory, tags, pageable);
+        return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktailPage);
+    }
+
+    // tags 때문에 아래랑 겹침 메모장 보고 수정 필요
+    private MultiResponseDto<CocktailDto.SimpleResponse> cocktailsSimpleResponseDto(String email, Page<Cocktail> cocktailPage) {
+        if (unsigned(email)) {
+            List<CocktailDto.SimpleResponse> responses = cocktailPage.stream()
+                    .map(cocktail -> CocktailSerializer.entityToSimpleResponse(BOOKMARK_DEFAULT, cocktail))
+                    .collect(Collectors.toList());
+            return new MultiResponseDto<>(responses, cocktailPage);
+        }
+        User user = userService.findUserByEmail(email);
+        List<CocktailDto.SimpleResponse> responses = cocktailPage.stream()
+                .map(cocktail -> CocktailSerializer.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
+                .collect(Collectors.toList());
+        return new MultiResponseDto<>(responses, cocktailPage);
+    }
+
+    private List<CocktailDto.SimpleResponse> createSimpleResponses(String email, List<Cocktail> cocktails) {
+        if (unsigned(email)) {
+            return cocktails.stream()
+                    .map(cocktail -> CocktailSerializer.entityToSimpleResponse(BOOKMARK_DEFAULT, cocktail))
+                    .collect(Collectors.toList());
+        }
+        User user = userService.findUserByEmail(email);
+        return cocktails.stream()
+                .map(cocktail -> CocktailSerializer.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
+                .collect(Collectors.toList());
+    }
+
 
     private boolean isNotSelectTag(String tag) {
         return tag == null;

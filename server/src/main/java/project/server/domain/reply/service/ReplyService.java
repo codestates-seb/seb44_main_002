@@ -28,16 +28,17 @@ public class ReplyService {
         this.userService = userService;
     }
 
-    public ReplyDto.Response createReply(long commentId, ReplyDto.Post post) {
+    public ReplyDto.Response createReply(String email, long commentId, ReplyDto.Post post) {
+        User user = userService.findUserByEmail(email);
         Comment comment = commentService.findCommentById(commentId);
-        User user = userService.findUser(post.getUserId());
         Reply reply = post.postToEntity();
-        reply.setComment(comment);
-        reply.setUser(user);
+        reply.setCommentId(commentId);
+        reply.setUserName(user.getName());
+        reply.setUserId(user.getUserId());
         Reply savedReply = replyRepository.save(reply);
+        comment.addReply(savedReply);
         return savedReply.entityToResponse();
     }
-
 
     public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
         Reply reply = findReplyById(replyId);
@@ -52,7 +53,9 @@ public class ReplyService {
 
     public void deleteReply(long replyId) {
         Reply reply = findReplyById(replyId);
+        Comment comment = commentService.findCommentById(reply.getCommentId());
+        comment.deleteReply(reply);
         replyRepository.delete(reply);
-    }
+    }    
 }
-//
+
