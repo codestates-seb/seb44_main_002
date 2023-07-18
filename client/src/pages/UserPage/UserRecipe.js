@@ -10,15 +10,19 @@ export default function UserRecipe({ userInfo, logginUser }) {
         의 레시피
       </Title>
       <Bookmark>
-        {userInfo.cocktails.map((ele) => {
-          return (
-            <>
-              <CardContainer key={ele.cocktailId}>
-                <OwnRecipeCard item={ele} />
-              </CardContainer>
-            </>
-          );
-        })}
+        {userInfo.cocktails.length === 0 ? (
+          <p className="text-white mx-auto">작성한 레시피가 없습니다.</p>
+        ) : (
+          userInfo.cocktails.map((ele) => {
+            return (
+              <>
+                <CardContainer key={ele.cocktailId}>
+                  <OwnRecipeCard item={ele} />
+                </CardContainer>
+              </>
+            );
+          })
+        )}
       </Bookmark>
     </Container>
   );
