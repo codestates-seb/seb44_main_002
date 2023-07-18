@@ -9,6 +9,8 @@ import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
 import Sort from './Sort';
 import SortConditionButton from './SortConditionButton';
+import tw from 'tailwind-styled-components';
+
 export default function Filter({ setFilterCondtion, filterCondtion }) {
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 필터상태 저장
 
@@ -77,7 +79,7 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
   return (
     <div className="w-[100%] ">
       {/* 카테고리 */}
-      <div className="flex border-b-2 border-solid border-white ">
+      <CategoryContainer>
         {CategoryFilter.map((data, idx) => (
           <CategoryBtn
             key={data.id}
@@ -87,7 +89,7 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
             selectMenuHandler={selectMenuHandler}
           />
         ))}
-      </div>
+      </CategoryContainer>
       {/* 태그 */}
       <div className="flex pt-10 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0">
         {/* 도수별 태그 */}
@@ -136,3 +138,10 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
     </div>
   );
 }
+
+const CategoryContainer = tw.div`
+flex border-b-2 border-solid border-white 
+`;
+const TagContainer = tw.div`
+flex border-b-2 border-solid border-white 
+`;
