@@ -156,19 +156,6 @@ export default function RecipeInfo({
                 <NameP>탈퇴한 유저입니다.</NameP>
               </FlexContainer>
             )}
-            {/* {cocktailDetail.userId === 4 ? (
-              <FlexContainer>
-                <PiUserCircleFill size="24px" />
-                <NameP>관리자</NameP>
-              </FlexContainer>
-            ) : (
-              <Link to={`/userpage/${cocktailDetail.userId}`}>
-                <FlexContainer>
-                  <PiUserCircleFill size="24px" />
-                  <NameP>{cocktailDetail.userName}</NameP>
-                </FlexContainer>
-              </Link>
-            )} */}
             <p className="mt-1 text-[10px]">
               {getTime(cocktailDetail.createdAt)}
             </p>
