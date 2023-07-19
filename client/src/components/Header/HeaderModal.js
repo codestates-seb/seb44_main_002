@@ -81,6 +81,7 @@ export default function HeaderModal() {
     });
 
     if (email && password) {
+      //분리된 api 연결
       // try {
       //   const response = await api.loginApi(form);
       //   //성공
