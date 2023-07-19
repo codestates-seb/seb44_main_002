@@ -61,11 +61,13 @@ public class UserService {
     }
 
     public UserDto.Response getUser(String email, long userId) {
+        User user = findUserByUserId(userId);
+        if(!user.isActiveUser()){
+            throw new BusinessLogicException(ExceptionCode.DELETED_USER);
+        }
         if(unsigned(email)){
-            User user = findUserByUserId(userId);
             return UserSerializer.entityToUnsignedResponse(user);
         }
-        User user = findUserByUserId(userId);
         User readUser = findUserByEmail(email);
         return UserSerializer.entityToSignedResponse(user, readUser);
     }
