@@ -11,19 +11,19 @@ import java.util.List;
 
 public interface RecommendRepository extends JpaRepository<Cocktail, Long> {
 
-    @Query(value = "select b.cocktail_id as cocktailId, cocktail_name as name, cocktail_image_url as imageUrl, COUNT(b.cocktail_id) as cnt " +
+    @Query(value = "select b.cocktail_id as cocktailId, cocktail_name as name, cocktail_image_url as imageUrl " +
             "from cocktails c " +
             "right join bookmarks b on b.cocktail_id = c.cocktail_id " +
             "group by b.cocktail_id, b.gender, b.age " +
-            "order by cnt desc", nativeQuery = true)
+            "order by COUNT(b.cocktail_id) desc", nativeQuery = true)
     List<Recommend> findBestCocktails(Pageable pageable);
 
-    @Query(value = "select b.cocktail_id as cocktailId, cocktail_name as name, cocktail_image_url as imageUrl, COUNT(b.cocktail_id) as cnt " +
+    @Query(value = "select b.cocktail_id as cocktailId, cocktail_name as name, cocktail_image_url as imageUrl " +
             "from cocktails c " +
             "right join bookmarks b on b.cocktail_id = c.cocktail_id " +
             "where b.age=:age and b.gender=:gender " +
             "group by b.cocktail_id, b.gender, b.age " +
-            "order by cnt desc ", nativeQuery = true)
+            "order by COUNT(b.cocktail_id) desc ", nativeQuery = true)
     List<Recommend> findRecommendCocktails(@Param(value = "age") int userAgeGroup,
                                            @Param(value = "gender") String gender,
                                            Pageable pageable);

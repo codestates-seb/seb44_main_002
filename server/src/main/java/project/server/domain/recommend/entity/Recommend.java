@@ -6,6 +6,4 @@ public interface Recommend {
     String getName();
 
     String getImageUrl();
-
-    long getCnt();
 }
