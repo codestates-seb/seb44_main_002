@@ -43,20 +43,28 @@ public class CommentService {
         return CommentSerializer.entityToResponse(comment);
     }
 
-    public CommentDto.Response updateComment(Long commentId, CommentDto.Patch patch) {
+    public CommentDto.Response updateComment(String email, Long commentId, CommentDto.Patch patch) {
+        User user = userService.findUserByEmail(email);
         Comment comment = findCommentById(commentId);
+        if(!user.hasAuthority(comment.getUserId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
         comment.setContent(patch.getContent());
         Comment savedComment = commentRepository.save(comment);
         return CommentSerializer.entityToResponse(savedComment);
     }
 
+    public void deleteComment(String email, long commentId) {
+        User user = userService.findUserByEmail(email);
+        Comment comment = findCommentById(commentId);
+        if(!user.hasAuthority(comment.getUserId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+        commentRepository.delete(comment);
+    }
+
     public Comment findCommentById(long commentId) {
         return commentRepository.findById(commentId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
-    }
-
-    public void deleteComment(long commentId) {
-        Comment comment = findCommentById(commentId);
-        commentRepository.delete(comment);
     }
 }

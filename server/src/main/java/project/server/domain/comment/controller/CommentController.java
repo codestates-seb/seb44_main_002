@@ -33,9 +33,11 @@ public class CommentController {
     }
 
     @PatchMapping("/{comment-id}")
-    public ResponseEntity patchComment(@PathVariable("comment-id") @Positive Long commentId,
+    public ResponseEntity patchComment(Authentication authentication,
+                                       @PathVariable("comment-id") @Positive Long commentId,
                                        @Valid @RequestBody CommentDto.Patch patch) {
-        CommentDto.Response response = commentService.updateComment(commentId, patch);
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        CommentDto.Response response = commentService.updateComment(email, commentId, patch);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -46,8 +48,10 @@ public class CommentController {
     }
 
     @DeleteMapping("/{comment-id}")
-    public ResponseEntity deleteComment(@PathVariable("comment-id") long commentId) {
-        commentService.deleteComment(commentId);
+    public ResponseEntity deleteComment(Authentication authentication,
+                                        @PathVariable("comment-id") long commentId) {
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        commentService.deleteComment(email, commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
