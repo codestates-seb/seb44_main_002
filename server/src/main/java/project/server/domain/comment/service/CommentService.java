@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.service.CocktailReadService;
+import project.server.domain.comment.CommentSerializer;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.repository.CommentRepository;
@@ -30,24 +31,23 @@ public class CommentService {
         User user = userService.findUserByEmail(email);
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         Comment comment = post.postToEntity();
-        comment.setUserName(user.getName());
-        comment.setUserId(user.getUserId());
-        comment.setCocktail(cocktail);
+        comment.setUser(user);
         Comment savedComment = commentRepository.save(comment);
-        return savedComment.entityToResponse();
+        cocktail.addComment(savedComment);
+        return CommentSerializer.entityToResponse(savedComment);
     }
 
     @Transactional(readOnly = true)
     public CommentDto.Response readComment(long commentId) {
         Comment comment = findCommentById(commentId);
-        return comment.entityToResponse();
+        return CommentSerializer.entityToResponse(comment);
     }
 
     public CommentDto.Response updateComment(Long commentId, CommentDto.Patch patch) {
         Comment comment = findCommentById(commentId);
         comment.setContent(patch.getContent());
         Comment savedComment = commentRepository.save(comment);
-        return savedComment.entityToResponse();
+        return CommentSerializer.entityToResponse(savedComment);
     }
 
     public Comment findCommentById(long commentId) {

@@ -44,7 +44,7 @@ public class User {
 
     private String profileImageUrl;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Cocktail> cocktails = new HashSet<>();
 
     @OneToMany
@@ -56,31 +56,10 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Follow> follows = new HashSet<>();
 
     private boolean isActiveUser = true;
-
-    public UserDto.Response entityToResponse() {
-        return UserDto.Response.builder()
-                .userId(userId)
-                .email(email)
-                .name(name)
-                .gender(gender)
-                .age(age)
-                .profileImageUrl(profileImageUrl)
-                .subscriberCount(subscriberCount)
-                .cocktails(cocktails.stream()
-                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(this.isBookmarked(cocktail.getCocktailId()), cocktail))
-                        .collect(Collectors.toList()))
-                .bookmarkedCocktails(bookmarks.stream()
-                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
-                        .collect(Collectors.toList()))
-                .follows(follows.stream()
-                        .map(Follow::getFollowing)
-                        .collect(Collectors.toList()))
-                .build();
-    }
 
     public boolean isAlreadyRated(long cocktailId) {
         return ratedCocktails.containCocktail(cocktailId);
@@ -103,11 +82,11 @@ public class User {
         ratedCocktails.put(cocktailId, value);
     }
 
-    public boolean hasAuthority(Cocktail cocktail) {
+    public boolean hasAuthority(long userId) {
         if(isAdmin()){
             return true;
         }
-        return cocktails.contains(cocktail);
+        return isActiveUser && this.userId == userId;
     }
 
     public boolean isAdmin() {

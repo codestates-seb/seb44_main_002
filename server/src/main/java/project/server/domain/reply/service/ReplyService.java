@@ -3,6 +3,7 @@ package project.server.domain.reply.service;
 import org.springframework.stereotype.Service;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.service.CommentService;
+import project.server.domain.reply.ReplySerializer;
 import project.server.domain.reply.repository.ReplyRepository;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.reply.entity.Reply;
@@ -33,17 +34,16 @@ public class ReplyService {
         Comment comment = commentService.findCommentById(commentId);
         Reply reply = post.postToEntity();
         reply.setCommentId(commentId);
-        reply.setUserName(user.getName());
-        reply.setUserId(user.getUserId());
+        reply.setUser(user);
         Reply savedReply = replyRepository.save(reply);
         comment.addReply(savedReply);
-        return savedReply.entityToResponse();
+        return ReplySerializer.entityToResponse(savedReply);
     }
 
     public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
         Reply reply = findReplyById(replyId);
         reply.setContent(patch.getContent());
-        return reply.entityToResponse();
+        return ReplySerializer.entityToResponse(reply);
     }
 
     public Reply findReplyById(long replyId) {

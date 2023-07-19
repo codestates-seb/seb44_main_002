@@ -11,6 +11,8 @@ import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.cocktail.utils.CocktailDeserializer;
+import project.server.domain.cocktail.utils.CocktailSerializer;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 import project.server.dto.MultiResponseDto;
@@ -163,7 +165,7 @@ public class CocktailService {
     }
 
     private void verifyUser(User user, Cocktail cocktail) {
-        if (!user.hasAuthority(cocktail)) {
+        if (!user.hasAuthority(cocktail.getUserId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
     }
