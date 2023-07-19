@@ -86,14 +86,6 @@ export default function HeaderModal() {
         const response = await api.loginApi(form);
         //성공
         if (response.status === 200) {
-          //로컬스토리지에 저장
-          localStorage.setItem(
-            'accessToken',
-            response.headers.get('Authorization')
-          );
-          localStorage.setItem('userId', response.headers.get('userId'));
-          localStorage.setItem('IsAdmin', response.headers.get('IsAdmin'));
-          localStorage.setItem('refreshToken', response.headers.get('Refresh'));
           //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
           dispatch(
             userinfoLogin({

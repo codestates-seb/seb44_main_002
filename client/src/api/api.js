@@ -22,20 +22,16 @@ const fetchrefreshToken = async () => {
     });
     //완전히 만료 ->로그아웃진행
     if (response.status === 401) {
-      //handleLogOut();
       return false;
     }
     //재발급 성공 (엑세스토큰만 리스폰스헤더에)
     if (response.ok) {
-      console.log('재발급완료');
-      // console.log(response.headers.get('Authorization'));
       localStorage.setItem(
         'accessToken',
         response.headers.get('Authorization')
         // 새로운 토큰으로 기존의 토큰을 갱신
       );
       const token = response.headers.get('Authorization');
-      console.log(token);
       return token;
     }
   } catch (error) {
@@ -49,17 +45,13 @@ const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
-    console.log('재발급 요망');
     const newToken = await fetchrefreshToken();
 
     if (newToken) {
       // 새로 발급받은 토큰을 헤더에 포함하여 다시 요청
-      console.log('재발급성공후 재시도');
       options.headers.Authorization = newToken;
-      console.log(options);
       const response = await fetch(url, options);
       return response;
-      //return fetch(url, options);
     } else {
       return 401;
     }
@@ -100,13 +92,18 @@ export default {
     try {
       const response = await fetch(`${API_BASE}auth/signin`, {
         method: 'POST',
-        // credentials: 'include',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
         body: JSON.stringify(form),
       });
       if (response.ok) {
+        //로컬스토리지에 저장
+        localStorage.setItem(
+          'accessToken',
+          response.headers.get('Authorization')
+        );
+        localStorage.setItem('userId', response.headers.get('userId'));
+        localStorage.setItem('IsAdmin', response.headers.get('IsAdmin'));
+        localStorage.setItem('refreshToken', response.headers.get('Refresh'));
+
         return response;
       }
       if (response.status === 401) {
