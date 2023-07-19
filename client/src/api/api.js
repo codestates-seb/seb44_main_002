@@ -89,7 +89,7 @@ export default {
       const response = await fetch(`${API_BASE}auth/signout`, {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           Authorization: localStorage.getItem('accessToken'),
           Refresh: localStorage.getItem('refreshToken'),
         },

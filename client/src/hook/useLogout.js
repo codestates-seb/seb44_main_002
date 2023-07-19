@@ -10,10 +10,6 @@ export function useLogout() {
   const dispatch = useDispatch();
 
   const handlelogout = () => {
-    localStorage.clear();
-    dispatch(logout());
-    dispatch(userinfoLoginOut());
-
     //로그아웃 하는 api 호출
     try {
       const response = api.logoutApi();
@@ -22,6 +18,9 @@ export function useLogout() {
       console.log(error);
       //  navigate('/error');
     }
+    localStorage.clear();
+    dispatch(logout());
+    dispatch(userinfoLoginOut());
   };
   return handlelogout;
 }
