@@ -10,8 +10,6 @@ import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
-import project.server.domain.cocktail.embed.tag.TagDto;
-import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.user.User;
@@ -20,7 +18,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity(name = "cocktails")
 @Getter
@@ -100,7 +97,7 @@ public class Cocktail {
     public void modify(CocktailDto.Patch patch, List<Tag> tags) {
         this.name = patch.getName();
         this.imageUrl = patch.getImageUrl();
-        this.ingredients = new Ingredients(patch.getIngredients());
+        this.ingredients = new Ingredients(patch.getBaseIngredients(), patch.getAdditionalIngredients());
         this.recipe = new Recipe(patch.getRecipe());
         this.tags = new Tags(tags);
         this.modifiedAt = LocalDateTime.now();

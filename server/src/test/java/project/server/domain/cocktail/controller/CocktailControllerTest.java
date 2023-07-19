@@ -63,7 +63,8 @@ class CocktailControllerTest {
         post.setRecipe(List.of(process1, process2));
         post.setFlavor(List.of(tag));
         post.setLiquor("rum");
-        post.setIngredients(List.of(ingredient));
+        post.setBaseIngredients(List.of(ingredient));
+        post.setAdditionalIngredients(null);
         post.setImageUrl("sample image url");
 
         // 가짜 응답 생성
