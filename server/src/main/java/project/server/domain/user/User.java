@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.cocktail.utils.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity(name = "users")
 @Getter
@@ -44,7 +42,7 @@ public class User {
 
     private String profileImageUrl;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Cocktail> cocktails = new HashSet<>();
 
     @OneToMany
@@ -56,31 +54,10 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<Follow> follows = new HashSet<>();
 
     private boolean isActiveUser = true;
-
-    public UserDto.Response entityToResponse() {
-        return UserDto.Response.builder()
-                .userId(userId)
-                .email(email)
-                .name(name)
-                .gender(gender)
-                .age(age)
-                .profileImageUrl(profileImageUrl)
-                .subscriberCount(subscriberCount)
-                .cocktails(cocktails.stream()
-                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(this.isBookmarked(cocktail.getCocktailId()), cocktail))
-                        .collect(Collectors.toList()))
-                .bookmarkedCocktails(bookmarks.stream()
-                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
-                        .collect(Collectors.toList()))
-                .follows(follows.stream()
-                        .map(Follow::getFollowing)
-                        .collect(Collectors.toList()))
-                .build();
-    }
 
     public boolean isAlreadyRated(long cocktailId) {
         return ratedCocktails.containCocktail(cocktailId);
