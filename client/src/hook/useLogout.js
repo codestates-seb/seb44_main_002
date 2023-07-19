@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { logout } from '../redux/slice/isLoginSlice';
 import { userinfoLoginOut } from '../redux/slice/userInfoSlice';
+import api from '../api/api';
 
 export function useLogout() {
   const navigate = useNavigate();
@@ -12,8 +13,15 @@ export function useLogout() {
     localStorage.clear();
     dispatch(logout());
     dispatch(userinfoLoginOut());
-    navigate('/');
+
     //로그아웃 하는 api 호출
+    try {
+      const response = api.logoutApi();
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+      //  navigate('/error');
+    }
   };
   return handlelogout;
 }
