@@ -32,7 +32,7 @@ public class CocktailDeserializer {
                 .category(CategoryMapper.map(dto.getLiquor()))
                 .rate(new Rate())
                 .liquor(LiquorMapper.map(dto.getLiquor()))
-                .ingredients(new Ingredients(dto.getBaseIngredients(), dto.getAdditionalIngredients()))
+                .ingredients(new Ingredients(dto.getIngredients()))
                 .build();
     }
 }

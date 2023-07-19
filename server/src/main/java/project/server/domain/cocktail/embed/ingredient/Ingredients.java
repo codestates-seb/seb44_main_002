@@ -17,11 +17,8 @@ public class Ingredients {
     @Column(name = "ingredient")
     private Set<String> ingredients;
 
-    public Ingredients(List<IngredientDto.Post> baseIngredients, List<IngredientDto.Post> additionalIngredients) {
-        if (hasAdditionalIngredients(additionalIngredients)) {
-            baseIngredients.addAll(additionalIngredients);
-        }
-        this.ingredients = baseIngredients.stream()
+    public Ingredients(List<IngredientDto.Post> ingredients) {
+        this.ingredients = ingredients.stream()
                 .map(IngredientDto.Post::getIngredient)
                 .collect(Collectors.toSet());
     }

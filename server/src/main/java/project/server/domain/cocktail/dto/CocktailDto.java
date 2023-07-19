@@ -17,8 +17,7 @@ public class CocktailDto {
         private String name;
         private String imageUrl;
         private String liquor;
-        private List<IngredientDto.Post> baseIngredients;
-        private List<IngredientDto.Post> additionalIngredients;
+        private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
         private String degree;
         private List<TagDto.Post> flavor;
@@ -63,8 +62,7 @@ public class CocktailDto {
     public static class Patch {
         private String name;
         private String imageUrl;
-        private List<IngredientDto.Post> baseIngredients;
-        private List<IngredientDto.Post> additionalIngredients;
+        private List<IngredientDto.Post> ingredients;
         private List<RecipeDto.Post> recipe;
         private String degree;
         private List<TagDto.Post> flavor;
