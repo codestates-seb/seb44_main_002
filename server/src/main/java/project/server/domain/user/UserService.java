@@ -42,9 +42,7 @@ public class UserService {
 
     public User updateUser(UserDto.Patch dto, long userId, String email) {
         User user = findUserByEmail(email);
-        if(user.getUserId() != userId){
-            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
-        }
+        user.hasAuthority(userId);
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
         return userRepository.save(user);
@@ -78,7 +76,6 @@ public class UserService {
     public User findUserByUserId(long userId){
         return userRepository.findById(userId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUNT));
     }
-
 
     private boolean unsigned(String email) {
         return email == null;

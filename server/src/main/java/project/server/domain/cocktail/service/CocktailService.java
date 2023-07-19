@@ -163,7 +163,7 @@ public class CocktailService {
     }
 
     private void verifyUser(User user, Cocktail cocktail) {
-        if (!user.hasAuthority(cocktail)) {
+        if (!user.hasAuthority(cocktail.getUserId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
     }

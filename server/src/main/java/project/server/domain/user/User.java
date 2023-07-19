@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.cocktail.service.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity(name = "users")
 @Getter
@@ -101,11 +103,11 @@ public class User {
         ratedCocktails.put(cocktailId, value);
     }
 
-    public boolean hasAuthority(Cocktail cocktail) {
+    public boolean hasAuthority(long userId) {
         if(isAdmin()){
             return true;
         }
-        return cocktails.contains(cocktail);
+        return isActiveUser && this.userId == userId;
     }
 
     public boolean isAdmin() {
