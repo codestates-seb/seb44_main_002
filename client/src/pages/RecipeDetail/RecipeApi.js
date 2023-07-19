@@ -123,15 +123,18 @@ export default {
     }
   },
   // 댓글 삭제
-  async deleteComments(commentId) {
+  async deleteComments(commentId, cocktailId) {
     try {
-      const response = await fetch(`${API_BASE}comments/${commentId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localAccessToken,
-        },
-      });
+      const response = await fetch(
+        `${API_BASE}comments/${commentId}?cocktail-id=${cocktailId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localAccessToken,
+          },
+        }
+      );
       if (response.ok) {
         location.reload();
         return response;
