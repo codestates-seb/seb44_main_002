@@ -7,6 +7,10 @@ export default {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localAccessToken,
+        },
       });
       if (response.ok) {
         return response;
@@ -18,7 +22,7 @@ export default {
     }
   },
   // 회원 정보 수정
-  async modifyUser(userId, password, accessToken) {
+  async modifyUser(userId, password) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'PATCH',
@@ -38,9 +42,47 @@ export default {
     }
   },
   // 회원 탈퇴
-  async deleteUser(userId, accessToken) {
+  async deleteUser(userId) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localAccessToken,
+        },
+      });
+      if (response.ok) {
+        return response;
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  // 구독하기
+  async createfollow(userId) {
+    try {
+      const response = await fetch(`${API_BASE}follow/create/${userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localAccessToken,
+        },
+      });
+      if (response.ok) {
+        return response;
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  // 구독취소
+  async cancelfollow(userId) {
+    try {
+      const response = await fetch(`${API_BASE}follow/cancel/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
