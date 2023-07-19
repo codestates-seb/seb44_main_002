@@ -85,25 +85,25 @@ export default function HeaderModal() {
       try {
         const response = await api.loginApi(form);
         //성공
-        if (response === 200) {
+        if (response.status === 200) {
           //로컬스토리지에 저장
           localStorage.setItem(
             'accessToken',
-            data.headers.get('Authorization')
+            response.headers.get('Authorization')
           );
-          localStorage.setItem('userId', data.headers.get('userId'));
-          localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
-          localStorage.setItem('refreshToken', data.headers.get('Refresh'));
+          localStorage.setItem('userId', response.headers.get('userId'));
+          localStorage.setItem('IsAdmin', response.headers.get('IsAdmin'));
+          localStorage.setItem('refreshToken', response.headers.get('Refresh'));
           //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
           dispatch(
             userinfoLogin({
-              userId: data.headers.get('userId'),
-              accessToken: data.headers.get('Authorization'),
-              IsAdmin: data.headers.get('IsAdmin'),
+              userId: response.headers.get('userId'),
+              accessToken: response.headers.get('Authorization'),
+              IsAdmin: response.headers.get('IsAdmin'),
             })
           );
           //사용자 정보 조회
-          handleUserInfo(data.headers.get('userId'));
+          handleUserInfo(response.headers.get('userId'));
           // 전역상태관리 로그인으로 변경
           dispatch(login());
           handleClose();

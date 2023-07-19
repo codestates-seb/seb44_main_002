@@ -98,7 +98,7 @@ export default {
   //로그인
   async loginApi(form) {
     try {
-      const response = await fetch(`${BASE_URL}auth/signin`, {
+      const response = await fetch(`${API_BASE}auth/signin`, {
         method: 'POST',
         // credentials: 'include',
         // headers: {
@@ -107,7 +107,7 @@ export default {
         body: JSON.stringify(form),
       });
       if (response.ok) {
-        return 200;
+        return response;
       }
       if (response.status === 401) {
         return 401;
