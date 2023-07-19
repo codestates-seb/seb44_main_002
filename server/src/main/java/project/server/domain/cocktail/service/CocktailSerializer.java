@@ -12,25 +12,7 @@ public class CocktailSerializer {
 
     public static CocktailDto.Response entityToSignedUserResponse(User readUser, Cocktail cocktail, boolean isBookmark, int rate) {
         User author = cocktail.getUser();
-        return CocktailDto.Response.builder()
-                .cocktailId(cocktail.getCocktailId())
-                .isAdminWritten(author.isAdmin())
-                .userId(author.getUserId())
-                .userName(author.getName())
-                .name(cocktail.getName())
-                .imageUrl(cocktail.getImageUrl())
-                .liquor(cocktail.getLiquor().getLiquor())
-                .ingredients(cocktail.getIngredients().createResponseDtoList())
-                .recipe(cocktail.getRecipe().createResponseDtoList())
-                .tags(cocktail.getTags().createResponseDtoList())
-                .rating(cocktail.getRate().getRate())
-                .viewCount(cocktail.getViewCount())
-                .createdAt(cocktail.getCreatedAt())
-                .modifiedAt(cocktail.getModifiedAt())
-                .comments(cocktail.getComments().stream()
-                        .map(Comment::entityToResponse)
-                        .collect(Collectors.toList()))
-                .isBookmarked(isBookmark)
+        return entityToResponse(cocktail, isBookmark, author)
                 .recommends(cocktail.getRecommends().stream()
                         .map(recommendedCocktail
                                 -> entityToSimpleResponse(readUser.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
@@ -41,25 +23,7 @@ public class CocktailSerializer {
 
     public static CocktailDto.Response entityToUnsignedResponse(Cocktail cocktail, boolean unsignedUserBookmark, int unsignedUserRate) {
         User author = cocktail.getUser();
-        return CocktailDto.Response.builder()
-                .cocktailId(cocktail.getCocktailId())
-                .isAdminWritten(author.isAdmin())
-                .userId(author.getUserId())
-                .userName(author.getName())
-                .name(cocktail.getName())
-                .imageUrl(cocktail.getImageUrl())
-                .liquor(cocktail.getLiquor().getLiquor())
-                .ingredients(cocktail.getIngredients().createResponseDtoList())
-                .recipe(cocktail.getRecipe().createResponseDtoList())
-                .tags(cocktail.getTags().createResponseDtoList())
-                .rating(cocktail.getRate().getRate())
-                .viewCount(cocktail.getViewCount())
-                .createdAt(cocktail.getCreatedAt())
-                .modifiedAt(cocktail.getModifiedAt())
-                .comments(cocktail.getComments().stream()
-                        .map(Comment::entityToResponse)
-                        .collect(Collectors.toList()))
-                .isBookmarked(unsignedUserBookmark)
+        return entityToResponse(cocktail, unsignedUserBookmark, author)
                 .recommends(cocktail.getRecommends().stream()
                         .map(recommendedCocktail
                                 -> entityToSimpleResponse(unsignedUserBookmark, recommendedCocktail))
@@ -86,5 +50,27 @@ public class CocktailSerializer {
                 .imageUrl(bookmark.getCocktailImageUrl())
                 .isBookmarked(isBookmarked)
                 .build();
+    }
+
+    private static CocktailDto.Response.ResponseBuilder entityToResponse(Cocktail cocktail, boolean isBookmark, User author) {
+        return CocktailDto.Response.builder()
+                .cocktailId(cocktail.getCocktailId())
+                .isAdminWritten(author.isAdmin())
+                .userId(author.getUserId())
+                .userName(author.getName())
+                .name(cocktail.getName())
+                .imageUrl(cocktail.getImageUrl())
+                .liquor(cocktail.getLiquor().getLiquor())
+                .ingredients(cocktail.getIngredients().createResponseDtoList())
+                .recipe(cocktail.getRecipe().createResponseDtoList())
+                .tags(cocktail.getTags().createResponseDtoList())
+                .rating(cocktail.getRate().getRate())
+                .viewCount(cocktail.getViewCount())
+                .createdAt(cocktail.getCreatedAt())
+                .modifiedAt(cocktail.getModifiedAt())
+                .comments(cocktail.getComments().stream()
+                        .map(Comment::entityToResponse)
+                        .collect(Collectors.toList()))
+                .isBookmarked(isBookmark);
     }
 }

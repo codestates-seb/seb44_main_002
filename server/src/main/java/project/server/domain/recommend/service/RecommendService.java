@@ -3,7 +3,6 @@ package project.server.domain.recommend.service;
 import org.springframework.stereotype.Service;
 import project.server.domain.recommend.dto.RecommendDto;
 import project.server.domain.recommend.entity.Recommend;
-import project.server.domain.recommend.service.RecommendReadService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 

@@ -1,12 +1,14 @@
 package project.server.domain.user;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
+@Service
 public class AuthManager {
 
-    public static String getEmailFromAuthentication(Authentication authentication, boolean permitUnsignedUser) {
+    public String getEmailFromAuthentication(Authentication authentication, boolean permitUnsignedUser) {
         if (authentication == null && permitUnsignedUser) {
             return null;
         }

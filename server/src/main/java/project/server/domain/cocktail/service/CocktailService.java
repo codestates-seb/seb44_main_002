@@ -1,7 +1,7 @@
 package project.server.domain.cocktail.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
@@ -9,7 +9,6 @@ import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.TagMapper;
-import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.user.User;
@@ -21,6 +20,7 @@ import project.server.exception.ExceptionCode;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 public class CocktailService {
@@ -56,12 +56,16 @@ public class CocktailService {
 
     public CocktailDto.Response readCocktail(String email, long cocktailId) {
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        log.info("# 칵테일에 태그 기반 추천 칵테일 할당");
         cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+        log.info("# 칵테일 조회 수 증가");
         cocktail.incrementViewCount();
         if (unsigned(email)) {
+            log.info("# cocktailId : {} 조회 완료", cocktailId);
             return CocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
         }
         User user = userService.findUserByEmail(email);
+        log.info("# cocktailId : {} 조회 완료", cocktailId);
         return CocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 

@@ -1,6 +1,5 @@
 package project.server.domain.user;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.server.auth.utils.CustomAuthorityUtils;
@@ -34,26 +33,32 @@ public class UserService {
         user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
-        return savedUser.entityToResponse();
+        return UserSerializer.entityToUnsignedResponse(savedUser);
     }
 
-    public User updateUser(UserDto.Patch dto, long userId, Authentication authentication) {
-        if (unsigned(authentication)) {
+    public User updateUser(UserDto.Patch dto, long userId, String email) {
+        User user = findUserByEmail(email);
+        if(user.getUserId() != userId){
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
-        User user = findUser(userId);
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
         return userRepository.save(user);
     }
 
     public void deleteUser(long userId) {
-        User user = findUser(userId);
+        User user = findUserByUserId(userId);
         userRepository.delete(user);
     }
 
-    public User findUser(long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUNT));
+    public UserDto.Response getUser(String email, long userId) {
+        if(unsigned(email)){
+            User user = findUserByUserId(userId);
+            return UserSerializer.entityToUnsignedResponse(user);
+        }
+        User user = findUserByUserId(userId);
+        User readUser = findUserByEmail(email);
+        return UserSerializer.entityToSignedResponse(user, readUser);
     }
 
     public User findUserByEmail(String email) {
@@ -65,15 +70,12 @@ public class UserService {
         if (user.isPresent()) throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
     }
 
-    public User findUserByAuthentication(Authentication authentication) {
-        if(authentication == null){
-            throw new BusinessLogicException(ExceptionCode.NOT_SIGN_IN);
-        }
-        String email = (String) authentication.getPrincipal();
-        return findUserByEmail(email);
+    public User findUserByUserId(long userId){
+        return userRepository.findById(userId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUNT));
     }
 
-    private boolean unsigned(Authentication authentication) {
-        return authentication == null;
+
+    private boolean unsigned(String email) {
+        return email == null;
     }
 }

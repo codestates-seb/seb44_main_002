@@ -50,7 +50,7 @@ public class ImageService {
                     .build(), RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
             // Member 조회
-            User user = userService.findUser(userId);
+            User user = userService.findUserByUserId(userId);
 
             // 파일 저장 경로 설정
             String filePath = "https://" + S3_BUCKET_NAME + ".s3.ap-northeast-2.amazonaws.com/" + objectKey;
