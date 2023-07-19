@@ -51,7 +51,6 @@ export default function HeaderModal() {
   const navigate = useNavigate();
 
   // 사용자 이름및 사용자 정보 조회 함수
-  // 유저 정보 조회할때 토근으로 조회 권한 여부  credentials: 'include',
   const handleUserInfo = (memberId) => {
     fetch(`${BASE_URL}users/${memberId}`, {
       method: 'GET',
@@ -111,49 +110,6 @@ export default function HeaderModal() {
         handleClose();
         navigate('/error');
       }
-      // fetch(`${BASE_URL}auth/signin`, {
-      //   method: 'POST',
-      //   credentials: 'include',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(form),
-      // })
-      //   .then((data) => {
-      //     if (data.status === 200) {
-      //       localStorage.setItem(
-      //         'accessToken',
-      //         data.headers.get('Authorization')
-      //       );
-      //       localStorage.setItem('userId', data.headers.get('userId'));
-      //       localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
-      //       localStorage.setItem('refreshToken', data.headers.get('Refresh'));
-      //       dispatch(
-      //         userinfoLogin({
-      //           userId: data.headers.get('userId'),
-      //           accessToken: data.headers.get('Authorization'),
-      //           IsAdmin: data.headers.get('IsAdmin'),
-      //         })
-      //       );
-      //       //Isadmin:
-      //       //사용자 정보 조회
-      //       handleUserInfo(data.headers.get('userId'));
-      //       // 전역상태관리 로그인으로 변경
-      //       dispatch(login());
-      //       handleClose();
-      //       navigate('/');
-      //     } else {
-      //       if (data.status === 401) {
-      //         setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
-      //       }
-      //       console.log('요청이 실패했습니다.');
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     handleClose();
-      //     navigate('/error');
-      //   });
     } else {
       console.log('유효성 검사 작동');
     }
