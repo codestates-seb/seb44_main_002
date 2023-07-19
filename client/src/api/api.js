@@ -1,4 +1,4 @@
-import handleLogOut from '../service/index';
+//import useLogout from '../service/index';
 const API_BASE = process.env.REACT_APP_BASE_URL;
 const localAccessToken = localStorage.getItem('accessToken');
 const refreshToken = localStorage.getItem('refreshToken');
@@ -27,7 +27,7 @@ const fetchrefreshToken = async () => {
     //완전히 만료 ->로그아웃진행
     if (response.status === 401) {
       alert('토큰만료로 로그아웃되었습니다.');
-      handleLogOut();
+      //handleLogOut();
     }
     //재발급 성공 (엑세스토큰만 리스폰스헤더에)
     if (response.ok) {
@@ -46,7 +46,7 @@ const fetchWithInterceptor = async (url, options) => {
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
     // 401이 달라질 수 있음
-    const newToken = await refreshToken();
+    const newToken = await fetchrefreshToken();
     localStorage.setItem('accessToken', newToken);
 
     if (newToken) {
