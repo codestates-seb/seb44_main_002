@@ -1,6 +1,6 @@
 package project.server.domain.user;
 
-import project.server.domain.cocktail.service.CocktailSerializer;
+import project.server.domain.cocktail.utils.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
 
 import java.util.stream.Collectors;

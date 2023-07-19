@@ -1,4 +1,4 @@
-package project.server.domain.cocktail.service;
+package project.server.domain.cocktail.utils;
 
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.dto.CocktailDto;
