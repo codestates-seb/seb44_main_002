@@ -16,12 +16,14 @@ import project.server.exception.ExceptionCode;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final CommentSerializer commentSerializer;
     private final CocktailReadService cocktailReadService;
     private final UserService userService;
 
     public CommentService(CommentRepository commentRepository,
-                          CocktailReadService cocktailReadService, UserService userService) {
+                          CommentSerializer commentSerializer, CocktailReadService cocktailReadService, UserService userService) {
         this.commentRepository = commentRepository;
+        this.commentSerializer = commentSerializer;
         this.cocktailReadService = cocktailReadService;
         this.userService = userService;
     }
@@ -34,13 +36,13 @@ public class CommentService {
         comment.setUser(user);
         Comment savedComment = commentRepository.save(comment);
         cocktail.addComment(savedComment);
-        return CommentSerializer.entityToResponse(savedComment);
+        return commentSerializer.entityToResponse(savedComment);
     }
 
     @Transactional(readOnly = true)
     public CommentDto.Response readComment(long commentId) {
         Comment comment = findCommentById(commentId);
-        return CommentSerializer.entityToResponse(comment);
+        return commentSerializer.entityToResponse(comment);
     }
 
     public CommentDto.Response updateComment(String email, Long commentId, CommentDto.Patch patch) {
@@ -51,7 +53,7 @@ public class CommentService {
         }
         comment.setContent(patch.getContent());
         Comment savedComment = commentRepository.save(comment);
-        return CommentSerializer.entityToResponse(savedComment);
+        return commentSerializer.entityToResponse(savedComment);
     }
 
     public void deleteComment(String email, long commentId, long cocktailId) {

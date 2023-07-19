@@ -18,13 +18,15 @@ import javax.transaction.Transactional;
 @Transactional
 public class ReplyService {
     private final ReplyRepository replyRepository;
+    private final ReplySerializer replySerializer;
     private final CommentService commentService;
     private final UserService userService;
 
     public ReplyService(ReplyRepository replyRepository,
-                        CommentService commentService,
+                        ReplySerializer replySerializer, CommentService commentService,
                         UserService userService) {
         this.replyRepository = replyRepository;
+        this.replySerializer = replySerializer;
         this.commentService = commentService;
         this.userService = userService;
     }
@@ -37,13 +39,13 @@ public class ReplyService {
         reply.setUser(user);
         Reply savedReply = replyRepository.save(reply);
         comment.addReply(savedReply);
-        return ReplySerializer.entityToResponse(savedReply);
+        return replySerializer.entityToResponse(savedReply);
     }
 
     public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
         Reply reply = findReplyById(replyId);
         reply.setContent(patch.getContent());
-        return ReplySerializer.entityToResponse(reply);
+        return replySerializer.entityToResponse(reply);
     }
 
     public Reply findReplyById(long replyId) {

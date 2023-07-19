@@ -1,5 +1,6 @@
 package project.server.domain.cocktail.utils;
 
+import org.springframework.stereotype.Service;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
@@ -8,9 +9,16 @@ import project.server.domain.user.User;
 
 import java.util.stream.Collectors;
 
+@Service
 public class CocktailSerializer {
 
-    public static CocktailDto.Response entityToSignedUserResponse(User readUser, Cocktail cocktail, boolean isBookmark, int rate) {
+    private final CommentSerializer commentSerializer;
+
+    public CocktailSerializer(CommentSerializer commentSerializer) {
+        this.commentSerializer = commentSerializer;
+    }
+
+    public CocktailDto.Response entityToSignedUserResponse(User readUser, Cocktail cocktail, boolean isBookmark, int rate) {
         User author = cocktail.getUser();
         return entityToResponse(cocktail, isBookmark, author)
                 .recommends(cocktail.getRecommends().stream()
@@ -21,7 +29,7 @@ public class CocktailSerializer {
                 .build();
     }
 
-    public static CocktailDto.Response entityToUnsignedResponse(Cocktail cocktail, boolean unsignedUserBookmark, int unsignedUserRate) {
+    public CocktailDto.Response entityToUnsignedResponse(Cocktail cocktail, boolean unsignedUserBookmark, int unsignedUserRate) {
         User author = cocktail.getUser();
         return entityToResponse(cocktail, unsignedUserBookmark, author)
                 .recommends(cocktail.getRecommends().stream()
@@ -32,7 +40,7 @@ public class CocktailSerializer {
                 .build();
     }
 
-    public static CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
+    public CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
         return CocktailDto.SimpleResponse.builder()
                 .cocktailId(cocktail.getCocktailId())
                 .name(cocktail.getName())
@@ -43,7 +51,7 @@ public class CocktailSerializer {
                 .build();
     }
 
-    public static CocktailDto.SimpleResponse bookmarkEntityToSimpleResponse(boolean isBookmarked, Bookmark bookmark) {
+    public CocktailDto.SimpleResponse bookmarkEntityToSimpleResponse(boolean isBookmarked, Bookmark bookmark) {
         return CocktailDto.SimpleResponse.builder()
                 .cocktailId(bookmark.getCocktailId())
                 .name(bookmark.getCocktailName())
@@ -52,7 +60,7 @@ public class CocktailSerializer {
                 .build();
     }
 
-    private static CocktailDto.Response.ResponseBuilder entityToResponse(Cocktail cocktail, boolean isBookmark, User author) {
+    private CocktailDto.Response.ResponseBuilder entityToResponse(Cocktail cocktail, boolean isBookmark, User author) {
         return CocktailDto.Response.builder()
                 .cocktailId(cocktail.getCocktailId())
                 .isAdminWritten(author.isAdmin())
@@ -69,7 +77,7 @@ public class CocktailSerializer {
                 .createdAt(cocktail.getCreatedAt())
                 .modifiedAt(cocktail.getModifiedAt())
                 .comments(cocktail.getComments().stream()
-                        .map(CommentSerializer::entityToResponse)
+                        .map(commentSerializer::entityToResponse)
                         .collect(Collectors.toList()))
                 .isBookmarked(isBookmark)
                 .isActiveUserWritten(author.isActiveUser());
