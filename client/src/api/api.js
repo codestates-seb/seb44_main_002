@@ -1,4 +1,4 @@
-import handleLogOut from '../service/index';
+//import useLogout from '../service/index';
 const API_BASE = process.env.REACT_APP_BASE_URL;
 const localAccessToken = localStorage.getItem('accessToken');
 const refreshToken = localStorage.getItem('refreshToken');
@@ -16,7 +16,7 @@ const fetchrefreshToken = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        refresh: `${refreshToken}`,
+        Refresh: localStorage.getItem('refreshToken'),
         // 리프래쉬로 엑세스토큰 요청
       },
     });
@@ -27,7 +27,7 @@ const fetchrefreshToken = async () => {
     //완전히 만료 ->로그아웃진행
     if (response.status === 401) {
       alert('토큰만료로 로그아웃되었습니다.');
-      handleLogOut();
+      //handleLogOut();
     }
     //재발급 성공 (엑세스토큰만 리스폰스헤더에)
     if (response.ok) {
@@ -45,8 +45,7 @@ const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
-    // 401이 달라질 수 있음
-    const newToken = await refreshToken();
+    const newToken = await fetchrefreshToken();
     localStorage.setItem('accessToken', newToken);
 
     if (newToken) {
@@ -64,6 +63,44 @@ const fetchWithInterceptor = async (url, options) => {
 
 //리프래쉬토큰 만료 되면 액세스토큰 ?
 export default {
+  //회원가입
+  async signupApi(userinfo) {
+    try {
+      const response = await fetch(`${API_BASE}users/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userinfo),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  //로그인
+
+  //로그아웃
+  async logoutApi() {
+    try {
+      const response = await fetch(`${API_BASE}auth/signout`, {
+        method: 'DELETE',
+        headers: {
+          // 'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('accessToken'),
+          Refresh: localStorage.getItem('refreshToken'),
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
   //북마크 추가
   async createbookmarkApi(item) {
     //console.log(item);
