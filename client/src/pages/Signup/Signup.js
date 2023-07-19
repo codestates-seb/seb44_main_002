@@ -135,20 +135,30 @@ export default function Signup() {
       />
       <SignupContainer>
         {/* 로고 */}
-        <LogoSection>
-          <img
-            role="presentation"
-            src="images/logo.webp"
-            alt="logo"
-            className="w-[32.4px] h-[48px] max-[520px]:my-4 "
-            onClick={() => navigate('/')}
-            onKeyDown={() => navigate('/')}
-          />
-        </LogoSection>
+        <div>
+          <></>
+          <LogoSection>
+            <img
+              role="presentation"
+              src="images/logo.webp"
+              alt="logo"
+              className="w-[32.4px] h-[48px] max-[520px]:my-4  "
+              onClick={() => navigate('/')}
+              onKeyDown={() => navigate('/')}
+            />
+          </LogoSection>
+        </div>
         {/* 회원가입 폼 */}
         <SignupBox>
           <SignupSection>
-            <SignupHeader>회원가입</SignupHeader>
+            <div className="w-[80%] flex flex-row justify-between ">
+              <div></div>
+              <SignupHeader>회원가입</SignupHeader>
+              {/* 뒤로가기 버튼 */}
+              <button onClick={() => navigate('/')}>
+                <img src="images/delete/x.png" alt="뒤로가기" />
+              </button>
+            </div>
             {errorMsg && <p className="text-error text-[13px]">{errorMsg}</p>}
             <form
               onSubmit={handleSubmit}
@@ -211,6 +221,7 @@ export default function Signup() {
                   onChange={(e) => setForm({ ...form, age: e.target.value })}
                 />
               </InputSection>
+              {/* 회원가입 버튼  */}
               <ButtonSection>
                 <HoverButton
                   type="submit"
@@ -253,10 +264,10 @@ const SignupContainer = tw.div`
 
 const LogoSection = tw.div`
 flex
-flex-[1]
 justify-center
 items-center
 mt-[3rem]
+
 `;
 
 const SignupBox = tw.div`
