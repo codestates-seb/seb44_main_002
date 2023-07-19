@@ -9,6 +9,7 @@ import AddIngreInput from '../../components/Input/AddIngreInput';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 import { divisionTags, transformLiquor } from './TransformData';
+import { PatchCocktailForm, GetCocktailForm } from '../../api/CocktailFormApi';
 import ImageUpload from '../../components/ImageUpload';
 import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
@@ -52,14 +53,8 @@ export default function CocktailModifyForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${BASE_URL}cocktails/${params.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: accessToken,
-      },
-    })
-      .then((res) => res.json())
+    // cocktailform get 요청 api 분리
+    GetCocktailForm(params.id)
       .then((json) => {
         // console.log(json);
         const transformedTags = divisionTags(json.tags);
@@ -113,15 +108,8 @@ export default function CocktailModifyForm() {
     );
 
     if (allValid) {
-      fetch(`${BASE_URL}cocktails/${params.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
-        },
-        body: JSON.stringify(form),
-      })
-        .then((res) => res.json())
+      // cocktailform patch 요청 api 분리
+      PatchCocktailForm(form, params.id)
         .then((json) => {
           // console.log(json);
           navigate(`/success/${json.cocktailId}`);
