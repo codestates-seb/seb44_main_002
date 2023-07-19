@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import api from '../../api/api';
 import HoverButton from '../../common/Buttons/HoverButton';
 import CustomInput from '../../components/Input/CustomInput';
 import UseSignupValid from '../../components/Validation/SignupValidation';
@@ -38,14 +38,12 @@ export default function Signup() {
   //     “gender” : “example”,
   //     “age” : 30
   // }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 불리언값으로나옴
     const { name, email, password, confirmPassword, gender, age } =
       UseSignupValid(form);
-
     // 불리언값으로나옴
-
     const updatedIsValid = {
       name,
       email,
@@ -62,48 +60,66 @@ export default function Signup() {
       gender: form.gender,
       age: form.age,
     };
-    // console.log(userinfo);
     // credentials: 'include',
     const allValid = Object.values(updatedIsValid).every(
       (value) => value === true
     );
-
     if (allValid) {
-      fetch(`${BASE_URL}users/signup`, {
-        method: 'POST',
-
-        headers: {
-          //'ngrok-skip-browser-warning': 'true',
-          'Content-Type': 'application/json', // json fetch시
-        },
-        body: JSON.stringify(userinfo),
-      })
-        .then((data) => {
-          if (data.status === 201) {
-            // 응답이 성공적인 경우
-            console.log('요청이 성공했습니다.');
-            // console.log(data);
-            setErrorMsg(null);
-            navigate('/');
-            alert('환영합니다!');
-
-            // 여기에서 추가적인 처리를 수행할 수 있습니다.
-          } else {
-            // 응답이 실패한 경우
-            console.log('요청이 실패했습니다.');
-            // 실패에 대한 처리를 수행할 수 있습니다.
-            if (data.status === 409) {
-              setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
-            }
-            if (data.status === 500) {
-              setErrorMsg('이런! 서버에 문제가 생겼어요!');
-            }
+      try {
+        const response = await api.signupApi(userinfo);
+        if (response.status === 201) {
+          // 응답이 성공적인 경우
+          console.log('요청이 성공했습니다.');
+          setErrorMsg(null);
+          navigate('/');
+          alert('환영합니다!');
+        } else {
+          // 응답이 실패한 경우
+          console.log('요청이 실패했습니다.');
+          if (data.status === 409) {
+            setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
           }
-        })
-        .catch((error) => {
-          console.log('에러', error);
-          navigate('/error');
-        });
+          if (data.status === 500) {
+            setErrorMsg('이런! 서버에 문제가 생겼어요!');
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        //  navigate('/error');
+      }
+      // fetch(`${BASE_URL}users/signup`, {
+      //   method: 'POST',
+      //   headers: {
+      //     //'ngrok-skip-browser-warning': 'true',
+      //     'Content-Type': 'application/json', // json fetch시
+      //   },
+      //   body: JSON.stringify(userinfo),
+      // })
+      //   .then((data) => {
+      //     if (data.status === 201) {
+      //       // 응답이 성공적인 경우
+      //       console.log('요청이 성공했습니다.');
+      //       // console.log(data);
+      //       setErrorMsg(null);
+      //       navigate('/');
+      //       alert('환영합니다!');
+      //       // 여기에서 추가적인 처리를 수행할 수 있습니다.
+      //     } else {
+      //       // 응답이 실패한 경우
+      //       console.log('요청이 실패했습니다.');
+      //       // 실패에 대한 처리를 수행할 수 있습니다.
+      //       if (data.status === 409) {
+      //         setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
+      //       }
+      //       if (data.status === 500) {
+      //         setErrorMsg('이런! 서버에 문제가 생겼어요!');
+      //       }
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.log('에러', error);
+      //     navigate('/error');
+      //   });
     } else {
       console.log('유효성 검사 작동');
     }

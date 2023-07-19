@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import handleLogOut from '../../service';
+import { useLogout } from '../../hook/useLogout';
 
 import HeaderModal from './HeaderModal';
 import Hamburger from './Hamburger';
@@ -12,18 +12,18 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Header() {
+  const [hovered, setHovered] = useState(false);
+  const [randomColor, setRandomColor] = useState('');
   const [position, setPosition] = useState(0);
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
   // 리덕스 툴킷
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const userinfo = useSelector((state) => state.userinfo);
-  const dispatch = useDispatch();
 
-  const [hovered, setHovered] = useState(false);
-  const [randomColor, setRandomColor] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const logout = useLogout();
+
   const name = localStorage.getItem('name');
   const userid = localStorage.getItem('userId');
   // 글자 색 바꾸기
@@ -186,7 +186,7 @@ export default function Header() {
                     // 만약 Promise리턴을 받으면,
                     if (result.isConfirmed) {
                       // 만약 모달창에서 confirm 버튼을 눌렀다면
-                      handleLogOut();
+                      logout();
                     }
                   })
                 }
@@ -196,7 +196,7 @@ export default function Header() {
             </div>
           </HeaderDiv>
           <HeaderDiv className="justify-end min-[769px]:hidden">
-            <Hamburger handleLogOut={handleLogOut} />
+            <Hamburger />
           </HeaderDiv>
         </>
       ) : (
