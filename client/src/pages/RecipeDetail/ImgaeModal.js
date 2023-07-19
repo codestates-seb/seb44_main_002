@@ -29,8 +29,9 @@ export default function ImageModal({ imageUrl }) {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={style}>
-          <ModalImage src={imageUrl} onClick={handleClose} alt="와인사진" />
+        <Box sx={style} onClick={handleClose}>
+          <ModalImage src={imageUrl} alt="와인사진" />
+          <CloseP>✕</CloseP>
         </Box>
       </Modal>
     </>
@@ -50,5 +51,13 @@ const ModalImage = tw.img`
 w-full
 h-full
 object-contain
+cursor-pointer
+`;
+const CloseP = tw.p`
+fixed
+text-3xl 
+text-white  
+top-1 
+right-1 
 cursor-pointer
 `;
