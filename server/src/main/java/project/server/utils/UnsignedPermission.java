@@ -1,7 +1,5 @@
 package project.server.utils;
 
-import lombok.Getter;
-
 public enum UnsignedPermission {
     PERMIT(true),
     NOT_PERMIT(false);

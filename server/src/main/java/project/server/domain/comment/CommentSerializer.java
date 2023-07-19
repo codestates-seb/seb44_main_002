@@ -3,7 +3,6 @@ package project.server.domain.comment;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.reply.ReplySerializer;
-import project.server.domain.reply.entity.Reply;
 
 import java.util.stream.Collectors;
 
