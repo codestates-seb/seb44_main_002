@@ -53,33 +53,16 @@ export default function HeaderModal() {
   // 사용자 이름및 사용자 정보 조회 함수
   const handleUserInfo = async (memberId) => {
     try {
-      const response = await api.createbookmarkApi(memberId);
-      if (response.ok) {
-        const data = response.json();
-        dispatch(userinfoGet(data));
-        localStorage.setItem('name', data.name);
-      }
+      const response = await api.getUserinfoApi(memberId);
+      console.log('동작');
+
+      const data = await response.json();
+      dispatch(userinfoGet(data));
+      localStorage.setItem('name', data.name);
     } catch (error) {
       console.log(error);
       navigate('/error');
     }
-
-    // fetch(`${BASE_URL}users/${memberId}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // })
-    //   .then((data) => data.json())
-    //   .then((data) => {
-    //     // console.log(data);
-    //     dispatch(userinfoGet(data));
-    //     localStorage.setItem('name', data.name);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     navigate('/error');
-    //   });
   };
   // 로그인 버튼 클릭시 실행되는 함수
   const handleSubmit = async (e) => {
