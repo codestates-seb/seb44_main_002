@@ -10,7 +10,7 @@ import HoverButton from '../../common/Buttons/HoverButton';
 
 import {
   divisionTags,
-  transformIngredients,
+  // transformBaseIngredients,
   transformLiquor,
 } from './TransformData';
 import ImageUpload from '../../components/ImageUpload';
@@ -36,7 +36,8 @@ export default function CocktailModifyForm() {
     name: '',
     imageUrl: '',
     liquor: '',
-    ingredients: [],
+    baseIngredients: [],
+    additionalIngredients: [],
     recipe: [{ id: 0, process: '' }],
     degree: '',
     flavor: [],
@@ -46,7 +47,7 @@ export default function CocktailModifyForm() {
     name: true,
     imageUrl: true,
     liquor: true,
-    ingredients: true,
+    baseIngredients: true,
     recipe: true,
     degree: true,
     flavor: true,
@@ -65,8 +66,11 @@ export default function CocktailModifyForm() {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         const transformedTags = divisionTags(json.tags);
-        const transformedIngredients = transformIngredients(json.ingredients);
+        // const transformedbaseIngredients = transformBaseIngredients(
+        //   json.ingredients
+        // );
         const transformedLiquor = transformLiquor(json.liquor);
         setForm({
           ...form,
@@ -79,7 +83,7 @@ export default function CocktailModifyForm() {
           degree: transformedTags.degree,
           // 컴포넌트 설계 미스
           // flavor: transformedTags.flavor,
-          // ingredients: transformedIngredients,
+          // baseIngredients: transformedbaseIngredients,
           liquor: transformedLiquor,
         });
       })
@@ -89,13 +93,13 @@ export default function CocktailModifyForm() {
   const submitHandler = (e) => {
     console.log(form);
     e.preventDefault();
-    const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
+    const { name, imageUrl, liquor, baseIngredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
     const updatedIsValid = {
       name,
       imageUrl,
       liquor,
-      ingredients,
+      baseIngredients,
       recipe,
       degree,
       flavor,
@@ -105,7 +109,7 @@ export default function CocktailModifyForm() {
       name,
       imageUrl,
       liquor,
-      ingredients,
+      baseIngredients,
       recipe,
       degree,
       flavor,
@@ -144,7 +148,9 @@ export default function CocktailModifyForm() {
         <Background>
           <img
             className="absolute bottom-0 right-0 z-0"
-            src="images/background/fire_cocktail.png"
+            src={
+              process.env.PUBLIC_URL + `/images/background/fire_cocktail.png`
+            }
             alt="backgroundimg"
           />
           <Container>
@@ -180,7 +186,8 @@ export default function CocktailModifyForm() {
                     size="w-[355px] h-[40px] max-[520px]:w-[320px]"
                   />
                   <CheckboxIngrInput
-                    isValid={isValid.ingredients}
+                    isValid={isValid.baseIngredients}
+                    form={form}
                     setForm={setForm}
                   />
                   <CocktailRecipeInput
