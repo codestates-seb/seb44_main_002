@@ -56,13 +56,12 @@ export default function UserPage() {
         <Container>
           <UserInfo
             userInfo={userInfo}
-            logginUser={logginUser}
             isLogin={isLogin}
             localData={localData}
           />
-          <Subscribe userInfo={userInfo} logginUser={logginUser} />
-          <UserRecipe userInfo={userInfo} logginUser={logginUser} />
-          <UserBookmarked userInfo={userInfo} logginUser={logginUser} />
+          <Subscribe userInfo={userInfo} />
+          <UserRecipe userInfo={userInfo} localData={localData} />
+          <UserBookmarked userInfo={userInfo} />
         </Container>
       </OuterContainer>
     </Background>
