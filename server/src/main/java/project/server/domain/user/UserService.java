@@ -14,6 +14,7 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
+    public static final boolean DELETED_USER = false;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
@@ -38,21 +39,25 @@ public class UserService {
         return UserSerializer.entityToUnsignedResponse(savedUser);
     }
 
-    public User updateUser(UserDto.Patch dto, long userId, String email) {
-        User user = findUserByEmail(email);
-        user.hasAuthority(userId);
+    public UserDto.Response updateUser(UserDto.Patch dto, long userId, String email) {
+        User requestUser = findUserByEmail(email);
+        if(!requestUser.hasAuthority(userId)){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+        User user = findUserByUserId(userId);
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
-        return userRepository.save(user);
+        return UserSerializer.entityToSignedResponse(user, requestUser);
     }
 
     public void deleteUser(long userId, String email) {
-        User user = findUserByEmail(email);
-        if(user.getUserId() != userId){
+        User requestUser = findUserByEmail(email);
+        if(!requestUser.hasAuthority(userId)){
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
+        User user = findUserByUserId(userId);
+        user.setActiveUser(DELETED_USER);
         user.setEmail("");
-        user.setActiveUser(false);
     }
 
     public UserDto.Response getUser(String email, long userId) {

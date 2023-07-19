@@ -43,8 +43,8 @@ public class UserController {
                                     @Valid @RequestBody UserDto.Patch requestBody,
                                     Authentication authentication) {
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
-        User user = userService.updateUser(requestBody, userId, email);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        UserDto.Response response = userService.updateUser(requestBody, userId, email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{user-id}")
