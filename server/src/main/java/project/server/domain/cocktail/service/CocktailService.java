@@ -224,7 +224,6 @@ public class CocktailService {
                 .collect(Collectors.toList());
     }
 
-
     private boolean isNotSelectTag(String tag) {
         return tag == null;
     }
