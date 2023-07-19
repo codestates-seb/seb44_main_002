@@ -61,7 +61,6 @@ const fetchWithInterceptor = async (url, options) => {
   return response;
 };
 
-//리프래쉬토큰 만료 되면 액세스토큰 ?
 export default {
   //회원가입
   async signupApi(userinfo) {
