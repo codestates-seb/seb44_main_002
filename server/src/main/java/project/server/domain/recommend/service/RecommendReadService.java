@@ -4,11 +4,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.server.domain.recommend.repository.RecommendRepository;
 import project.server.domain.recommend.entity.Recommend;
+import project.server.domain.recommend.repository.RecommendRepository;
 import project.server.domain.user.User;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -25,19 +24,15 @@ public class RecommendReadService {
     @Transactional(readOnly = true)
     public List<Recommend> readBestCocktails() {
         Pageable pageable = PageRequest.ofSize(DEFAULT_ELEMENTS_COUNT).withPage(0);
-        List<Recommend> recommends = recommendRepository.findBestCocktails(pageable);
-        Collections.sort(recommends);
-        return recommends;
+        return recommendRepository.findBestCocktails(pageable);
     }
 
     @Transactional(readOnly = true)
     public List<Recommend> readRecommendCocktails(User user) {
         Pageable pageable = PageRequest.ofSize(DEFAULT_ELEMENTS_COUNT).withPage(0);
-        List<Recommend> recommends = recommendRepository.findRecommendCocktails(getUserAgeGroup(user),
+        return recommendRepository.findRecommendCocktails(getUserAgeGroup(user),
                 user.getGender(),
                 pageable);
-        Collections.sort(recommends);
-        return recommends;
     }
 
     private int getUserAgeGroup(User user) {
