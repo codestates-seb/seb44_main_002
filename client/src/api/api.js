@@ -16,7 +16,7 @@ const fetchrefreshToken = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        refresh: localStorage.getItem('refreshToken'),
+        Refresh: localStorage.getItem('refreshToken'),
         // 리프래쉬로 엑세스토큰 요청
       },
     });
@@ -67,12 +67,12 @@ export default {
   //로그아웃
   async logoutApi() {
     try {
-      const response = await fetch(`${API_BASE}/auth/signout`, {
+      const response = await fetch(`${API_BASE}auth/signout`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           Authorization: localStorage.getItem('accessToken'),
-          refresh: localStorage.getItem('refreshToken'),
+          Refresh: localStorage.getItem('refreshToken'),
         },
       });
       if (!response.ok) {
