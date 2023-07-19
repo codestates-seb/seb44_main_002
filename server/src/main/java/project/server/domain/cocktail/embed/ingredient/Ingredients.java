@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Embeddable
@@ -14,7 +15,7 @@ public class Ingredients {
     @ElementCollection
     @CollectionTable(name = "cocktail_ingredient", joinColumns = @JoinColumn(name = "cocktail_id"))
     @Column(name = "ingredient")
-    private List<String> ingredients;
+    private Set<String> ingredients;
 
     public Ingredients(List<IngredientDto.Post> baseIngredients, List<IngredientDto.Post> additionalIngredients) {
         if (additionalIngredients != null) {
@@ -22,7 +23,7 @@ public class Ingredients {
         }
         this.ingredients = baseIngredients.stream()
                 .map(IngredientDto.Post::getIngredient)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     public List<IngredientDto.Response> createResponseDtoList() {
