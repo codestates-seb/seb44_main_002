@@ -37,6 +37,7 @@ public class ReplyDto {
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private boolean isActiveUserWritten;
     }
 
     @Getter

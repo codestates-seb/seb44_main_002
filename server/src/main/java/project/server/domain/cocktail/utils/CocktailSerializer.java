@@ -3,7 +3,7 @@ package project.server.domain.cocktail.utils;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.comment.entity.Comment;
+import project.server.domain.comment.CommentSerializer;
 import project.server.domain.user.User;
 
 import java.util.stream.Collectors;
@@ -69,8 +69,9 @@ public class CocktailSerializer {
                 .createdAt(cocktail.getCreatedAt())
                 .modifiedAt(cocktail.getModifiedAt())
                 .comments(cocktail.getComments().stream()
-                        .map(Comment::entityToResponse)
+                        .map(CommentSerializer::entityToResponse)
                         .collect(Collectors.toList()))
-                .isBookmarked(isBookmark);
+                .isBookmarked(isBookmark)
+                .isActiveUserWritten(author.isActiveUser());
     }
 }

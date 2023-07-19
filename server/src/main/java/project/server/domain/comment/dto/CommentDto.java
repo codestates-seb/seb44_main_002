@@ -32,6 +32,7 @@ public class CommentDto {
         private String content;
         private List<ReplyDto.Response> replies;
         private LocalDateTime createdAt;
+        private boolean isActiveUserWritten;
     }
 
     @Getter
