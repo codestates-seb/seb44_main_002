@@ -22,7 +22,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const useLogout = useLogout();
+  const logout = useLogout();
 
   const name = localStorage.getItem('name');
   const userid = localStorage.getItem('userId');
@@ -186,7 +186,7 @@ export default function Header() {
                     // 만약 Promise리턴을 받으면,
                     if (result.isConfirmed) {
                       // 만약 모달창에서 confirm 버튼을 눌렀다면
-                      useLogout();
+                      logout();
                     }
                   })
                 }

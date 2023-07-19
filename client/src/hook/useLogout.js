@@ -8,12 +8,12 @@ export function useLogout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const logout = () => {
+  const handlelogout = () => {
     localStorage.clear();
     dispatch(logout());
     dispatch(userinfoLoginOut());
     navigate('/');
     //로그아웃 하는 api 호출
   };
-  return logout;
+  return handlelogout;
 }
