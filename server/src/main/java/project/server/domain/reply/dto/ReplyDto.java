@@ -3,6 +3,7 @@ package project.server.domain.reply.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import project.server.domain.reply.TaggedUserInfo;
 import project.server.domain.reply.entity.Reply;
 
@@ -41,6 +42,7 @@ public class ReplyDto {
     }
 
     @Getter
+    @Setter
     public static class Patch {
         private long replyId;
         private TaggedUserInfo taggedUserInfo;
