@@ -76,10 +76,10 @@ export default function Signup() {
         } else {
           // 응답이 실패한 경우
           console.log('요청이 실패했습니다.');
-          if (data.status === 409) {
+          if (response.status === 409) {
             setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
           }
-          if (data.status === 500) {
+          if (response.status === 500) {
             setErrorMsg('이런! 서버에 문제가 생겼어요!');
           }
         }
