@@ -82,86 +82,86 @@ export default function HeaderModal() {
 
     if (email && password) {
       //분리된 api 연결
-      // try {
-      //   const response = await api.loginApi(form);
-      //   //성공
-      //   if (response === 200) {
-      //     //로컬스토리지에 저장
-      //     localStorage.setItem(
-      //       'accessToken',
-      //       data.headers.get('Authorization')
-      //     );
-      //     localStorage.setItem('userId', data.headers.get('userId'));
-      //     localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
-      //     localStorage.setItem('refreshToken', data.headers.get('Refresh'));
-      //     //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
-      //     dispatch(
-      //       userinfoLogin({
-      //         userId: data.headers.get('userId'),
-      //         accessToken: data.headers.get('Authorization'),
-      //         IsAdmin: data.headers.get('IsAdmin'),
-      //       })
-      //     );
-      //     //사용자 정보 조회
-      //     handleUserInfo(data.headers.get('userId'));
-      //     // 전역상태관리 로그인으로 변경
-      //     dispatch(login());
-      //     handleClose();
-      //     navigate('/');
-      //   } else {
-      //     // 응답 실패
-      //     if (response === 401) {
-      //       setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
-      //     }
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      //   handleClose();
-      //   navigate('/error');
-      // }
-      fetch(`${BASE_URL}auth/signin`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      })
-        .then((data) => {
-          if (data.status === 200) {
-            localStorage.setItem(
-              'accessToken',
-              data.headers.get('Authorization')
-            );
-            localStorage.setItem('userId', data.headers.get('userId'));
-            localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
-            localStorage.setItem('refreshToken', data.headers.get('Refresh'));
-            dispatch(
-              userinfoLogin({
-                userId: data.headers.get('userId'),
-                accessToken: data.headers.get('Authorization'),
-                IsAdmin: data.headers.get('IsAdmin'),
-              })
-            );
-            //Isadmin:
-            //사용자 정보 조회
-            handleUserInfo(data.headers.get('userId'));
-            // 전역상태관리 로그인으로 변경
-            dispatch(login());
-            handleClose();
-            navigate('/');
-          } else {
-            if (data.status === 401) {
-              setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
-            }
-            console.log('요청이 실패했습니다.');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
+      try {
+        const response = await api.loginApi(form);
+        //성공
+        if (response === 200) {
+          //로컬스토리지에 저장
+          localStorage.setItem(
+            'accessToken',
+            data.headers.get('Authorization')
+          );
+          localStorage.setItem('userId', data.headers.get('userId'));
+          localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
+          localStorage.setItem('refreshToken', data.headers.get('Refresh'));
+          //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
+          dispatch(
+            userinfoLogin({
+              userId: data.headers.get('userId'),
+              accessToken: data.headers.get('Authorization'),
+              IsAdmin: data.headers.get('IsAdmin'),
+            })
+          );
+          //사용자 정보 조회
+          handleUserInfo(data.headers.get('userId'));
+          // 전역상태관리 로그인으로 변경
+          dispatch(login());
           handleClose();
-          navigate('/error');
-        });
+          navigate('/');
+        } else {
+          // 응답 실패
+          if (response === 401) {
+            setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        handleClose();
+        navigate('/error');
+      }
+      // fetch(`${BASE_URL}auth/signin`, {
+      //   method: 'POST',
+      //   credentials: 'include',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(form),
+      // })
+      //   .then((data) => {
+      //     if (data.status === 200) {
+      //       localStorage.setItem(
+      //         'accessToken',
+      //         data.headers.get('Authorization')
+      //       );
+      //       localStorage.setItem('userId', data.headers.get('userId'));
+      //       localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
+      //       localStorage.setItem('refreshToken', data.headers.get('Refresh'));
+      //       dispatch(
+      //         userinfoLogin({
+      //           userId: data.headers.get('userId'),
+      //           accessToken: data.headers.get('Authorization'),
+      //           IsAdmin: data.headers.get('IsAdmin'),
+      //         })
+      //       );
+      //       //Isadmin:
+      //       //사용자 정보 조회
+      //       handleUserInfo(data.headers.get('userId'));
+      //       // 전역상태관리 로그인으로 변경
+      //       dispatch(login());
+      //       handleClose();
+      //       navigate('/');
+      //     } else {
+      //       if (data.status === 401) {
+      //         setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
+      //       }
+      //       console.log('요청이 실패했습니다.');
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     handleClose();
+      //     navigate('/error');
+      //   });
     } else {
       console.log('유효성 검사 작동');
     }
