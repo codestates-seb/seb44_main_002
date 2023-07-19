@@ -15,17 +15,17 @@ import tw from 'tailwind-styled-components';
 export default function RecipeDetail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cocktail, setCocktail] = useState(cocktailDetail);
 
+  const [cocktail, setCocktail] = useState(cocktailDetail);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [accessToken, setAccessToken] = useState('');
   const [localData, setLocalData] = useState({ userId: '', IsAdmin: false });
 
-  const userInfo = useSelector((state) => state.userinfo);
+  // const userInfo = useSelector((state) => state.userinfo);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   const location_id = useLocation().pathname.split('/')[2];
 
+  // 시간 출력 함수
   const getTime = (createdTime = '') => {
     const currentTime = Date.now();
     const targetTime = new Date(createdTime).getTime();
@@ -47,14 +47,11 @@ export default function RecipeDetail() {
 
   const setBookmark = async () => {
     // 비로그인시 설정 불가
-    if (userInfo.userId) {
+    if (localData.userId) {
       if (isBookmarked) {
         // 북마크 해제
         try {
-          const response = await RecipeApi.deleteBookmark(
-            cocktail.cocktailId,
-            accessToken
-          );
+          const response = await RecipeApi.deleteBookmark(cocktail.cocktailId);
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -62,10 +59,7 @@ export default function RecipeDetail() {
       } else {
         // 북마크 설정
         try {
-          const response = await RecipeApi.postBookmark(
-            cocktail.cocktailId,
-            accessToken
-          );
+          const response = await RecipeApi.postBookmark(cocktail.cocktailId);
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -76,10 +70,7 @@ export default function RecipeDetail() {
 
   const getCocktail = async () => {
     try {
-      const response = await RecipeApi.getCocktailData(
-        location_id,
-        accessToken
-      );
+      const response = await RecipeApi.getCocktailData(location_id);
       const json = await response.json();
       setCocktail(json);
       setIsBookmarked(json.bookmarked);
@@ -105,7 +96,6 @@ export default function RecipeDetail() {
           alt="음표"
           className="absolute top-0 right-[-400px] pointer-events-none"
         />
-        {/* 배경 왕별 */}
         <img
           src="/images/background/star-dynamic-gradient.png"
           alt="별"
@@ -145,11 +135,10 @@ export default function RecipeDetail() {
     <>
       <Background>
         <BackgroundImg />
-        <Container className="animate-fadeInDown1">
+        <Container>
           <DrawBookmark cocktail={cocktail} />
           <RecipeInfo
             cocktailDetail={cocktail}
-            userInfo={userInfo}
             getTime={getTime}
             isLogin={isLogin}
             localData={localData}
@@ -157,12 +146,11 @@ export default function RecipeDetail() {
           <Process cocktailDetail={cocktail} />
           <Community
             cocktailDetail={cocktail}
-            userInfo={userInfo}
             getTime={getTime}
             isLogin={isLogin}
             localData={localData}
           />
-          <Recommend cocktailDetail={cocktail.recommends} userInfo={userInfo} />
+          <Recommend cocktailDetail={cocktail.recommends} />
         </Container>
       </Background>
     </>
@@ -189,6 +177,7 @@ max-w-6xl
 bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
+animate-fadeInDown1
 `;
 const BookmarkIcon = tw.div`
 absolute

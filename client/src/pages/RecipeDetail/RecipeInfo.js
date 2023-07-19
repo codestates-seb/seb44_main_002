@@ -1,53 +1,38 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import RecipeApi from './RecipeApi';
 
 import ImageModal from './ImgaeModal';
+import RecipeApi from './RecipeApi';
 
 import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
 
 export default function RecipeInfo({
   cocktailDetail,
-  userInfo,
   getTime,
   isLogin,
   localData,
 }) {
   const navigate = useNavigate();
+
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
-  const urlCu = encodeURI(
-    `https://pocketcu.co.kr/search/stock/product/main?searchWord=${cocktailDetail.liquor}`
-  );
 
   const deleteRecipe = async () => {
     try {
       const response = await RecipeApi.deleteCocktails(
-        cocktailDetail.cocktailId,
-        userInfo.accessToken
+        cocktailDetail.cocktailId
       );
     } catch (error) {
       console.log(error);
     }
   };
 
-  const copyToClipBoard = () => {
-    navigator.clipboard
-      .writeText(window.location.href)
-      .then(() => {
-        alert('현재 주소가 클립보드에 복사되었습니다.');
-      })
-      .catch((error) => {
-        console.error('클립보드 복사에 실패했습니다:', error);
-      });
-  };
   const modifyScore = async (score2) => {
     try {
       const response = await RecipeApi.modifyRate(
         cocktailDetail.cocktailId,
-        score2,
-        userInfo.accessToken
+        score2
       );
       const json = await response.json();
       setTotal(json.rating);
@@ -55,6 +40,7 @@ export default function RecipeInfo({
       console.log(error);
     }
   };
+
   const changeScore = (idx) => {
     // 로그인 여부 확인
     if (localData.userId === cocktailDetail.userId) {
@@ -75,6 +61,23 @@ export default function RecipeInfo({
       deleteRecipe();
       navigate('/category');
     }
+  };
+
+  const copyToClipBoard = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert('현재 주소가 클립보드에 복사되었습니다.');
+      })
+      .catch((error) => {
+        console.error('클립보드 복사에 실패했습니다:', error);
+      });
+  };
+
+  const encodingUrl = (liquor) => {
+    const baseurl =
+      'https://pocketcu.co.kr/search/stock/product/main?searchWord=';
+    return encodeURI(baseurl + liquor);
   };
 
   const DrawStar = () => {
@@ -150,7 +153,7 @@ export default function RecipeInfo({
               {getTime(cocktailDetail.createdAt)}
             </p>
           </WriterInfo>
-          <LinkToCU href={urlCu} target="_blank">
+          <LinkToCU href={encodingUrl(cocktailDetail.liquor)} target="_blank">
             <img
               src={process.env.PUBLIC_URL + '/images/btn_cu.webp'}
               alt="편의점 앱으로 이동"
