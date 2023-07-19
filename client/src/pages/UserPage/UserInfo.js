@@ -3,20 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import PasswordModal from './PasswordModal';
-
 import { logout } from '../../redux/slice/isLoginSlice';
 import UserPageApi from './UserPageApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function UserInfo({ userInfo, logginUser, isLogin, localData }) {
+export default function UserInfo({ userInfo, isLogin, localData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [buttontext, setButtonText] = useState('구독 중');
 
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
+
   const deleteUser = async () => {
     try {
       const response = await UserPageApi.deleteUser(localData.userId);
@@ -60,7 +61,11 @@ export default function UserInfo({ userInfo, logginUser, isLogin, localData }) {
       <InfoContainer>
         <UserImg
           src={`/images/user/${
-            userInfo.gender === 'male' ? 'user_boy.png' : 'user_girl.png'
+            userInfo.userId === 4
+              ? 'user_admin.png'
+              : userInfo.gender === 'male'
+              ? 'user_boy.png'
+              : 'user_girl.png'
           }`}
           alt="user img"
         />
@@ -124,7 +129,7 @@ export default function UserInfo({ userInfo, logginUser, isLogin, localData }) {
       </InfoContainer>
       {userInfo.userId === localData.userId && (
         <ButtonContainer>
-          <PasswordModal logginUser={logginUser} />
+          <PasswordModal localData={localData} />
           <Button onClick={clickDelete}>탈퇴하기</Button>
         </ButtonContainer>
       )}
@@ -198,8 +203,12 @@ max-sm:px-4
 max-sm:py-1
 `;
 const SubscribeButton = tw(Button)`
+px-0
+w-20
 max-sm:hidden
 `;
 const TitleButton = tw(Button)`
+w-16
 sm:hidden
+max-sm:px-0
 `;

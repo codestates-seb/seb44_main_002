@@ -4,12 +4,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
     if (checked) {
       setForm((prevForm) => ({
         ...prevForm,
-        ingredients: [...prevForm.ingredients, { ingredient: name }],
+        baseIngredients: [...prevForm.baseIngredients, { ingredient: name }],
       }));
     } else {
       setForm((prevForm) => ({
         ...prevForm,
-        ingredients: prevForm.ingredients.filter(
+        baseIngredients: prevForm.baseIngredients.filter(
           (ingredient) => ingredient.ingredient !== name
         ),
       }));
@@ -22,18 +22,18 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
           isValid ? 'text-gray-200' : 'text-error'
         }`}
       >
-        속재료
+        기본 속재료
         <div className="flex flex-row items-center justify-center flex-wrap  w-[355px] h-[100px]">
           <div className="mr-4">
             <input
               className="mr-1"
               type="checkbox"
-              id="sugar"
-              name="sugar"
-              value="sugar"
+              id="설탕"
+              name="설탕"
+              value="설탕"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="sugar">
+            <label className="text-sm" htmlFor="설탕">
               설탕
             </label>
           </div>
@@ -41,12 +41,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="salt"
-              name="salt"
-              value="salt"
+              id="소금"
+              name="소금"
+              value="소금"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="salt">
+            <label className="text-sm" htmlFor="소금">
               소금
             </label>
           </div>
@@ -54,12 +54,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="beverage"
-              name="beverage"
-              value="beverage"
+              id="과일음료"
+              name="과일음료"
+              value="과일음료"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="beverage">
+            <label className="text-sm" htmlFor="과일음료">
               과일음료
             </label>
           </div>
@@ -67,12 +67,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="soda"
-              name="soda"
-              value="soda"
+              id="탄산음료"
+              name="탄산음료"
+              value="탄산음료"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="soda">
+            <label className="text-sm" htmlFor="탄산음료">
               탄산음료
             </label>
           </div>
@@ -80,12 +80,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="lemonSqueeze"
-              name="lemonSqueeze"
-              value="lemonSqueeze"
+              id="레몬즙"
+              name="레몬즙"
+              value="레몬즙"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="lemonSqueeze">
+            <label className="text-sm" htmlFor="레몬즙">
               레몬즙
             </label>
           </div>
@@ -93,12 +93,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="limeSqueeze"
-              name="limeSqueeze"
-              value="limeSqueeze"
+              id="라임즙"
+              name="라임즙"
+              value="라임즙"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="limeSqueeze">
+            <label className="text-sm" htmlFor="라임즙">
               라임즙
             </label>
           </div>
@@ -106,12 +106,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="milk"
-              name="milk"
-              value="milk"
+              id="우유"
+              name="우유"
+              value="우유"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="milk">
+            <label className="text-sm" htmlFor="우유">
               우유
             </label>
           </div>
@@ -119,12 +119,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="ice"
-              name="ice"
-              value="ice"
+              id="얼음"
+              name="얼음"
+              value="얼음"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="ice">
+            <label className="text-sm" htmlFor="얼음">
               얼음
             </label>
           </div>
@@ -132,12 +132,12 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
             <input
               className="mr-1"
               type="checkbox"
-              id="mint"
-              name="mint"
-              value="mint"
+              id="민트"
+              name="민트"
+              value="민트"
               onChange={checkboxHandler}
             />
-            <label className="text-sm" htmlFor="mint">
+            <label className="text-sm" htmlFor="민트">
               민트
             </label>
           </div>
@@ -145,7 +145,7 @@ export default function CheckboxIngrInput({ isValid = true, setForm }) {
       </div>
       <div className="h-7">
         <p className={`${isValid && 'hidden'} text-sm text-error`}>
-          속재료를 한개 이상 골라주세요
+          기본 속재료를 한개 이상 골라주세요
         </p>
       </div>
     </div>

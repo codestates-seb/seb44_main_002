@@ -1,11 +1,12 @@
 import OwnRecipeCard from '../../components/Card/OwnRecipeCard';
+
 import tw from 'tailwind-styled-components';
 
-export default function UserRecipe({ userInfo, logginUser }) {
+export default function UserRecipe({ userInfo, localData }) {
   return (
     <Container>
       <Title>
-        {userInfo.userId === logginUser.userId ? '자신' : userInfo.name + ' 님'}
+        {userInfo.userId === localData.userId ? '자신' : userInfo.name + ' 님'}
         의 레시피
       </Title>
       <Bookmark>
