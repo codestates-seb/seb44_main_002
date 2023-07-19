@@ -2,31 +2,47 @@
 @import '~swiper/css/pagination';
 @import '~swiper/css/navigation';
 
-#userpage {--swiper-theme-color:white}
+/* #userpage {--swiper-theme-color:white}
 #userpage .swiper { margin-top:20px; padding: 0 50px;}
-#userpage .swiper-slide { height: 170px; } 
-#userpage .swiper-slide div {  position: absolute; padding: 25px 30px 10px; border: 1px dashed #ffffff; border-radius: 10px;}
+#userpage .swiper-slide { height: 170px; width: 130px !important; } 
+#userpage .swiper-slide div {  position: relative; padding: 25px 30px 10px; border: 1px dashed #ffffff; border-radius: 10px;}
 #userpage .swiper-slide img{ width: 70px; margin: 0 auto; object-fit:cover;}
 #userpage .swiper-slide p#name{ margin-top: 16px; }
 #userpage .swiper-slide p#close {position: absolute; top: 0px; right: 0px;}
 #userpage .swiper-pagination { bottom:-5px; color:white}
 
 @media (max-width:1200px) {
-    #userpage .swiper-slide { height: 170px; }
+    #userpage .swiper-slide { width: 110px !important; }
     #userpage .swiper-slide div { height: 130px; }
     #userpage .swiper-slide img{ width: 50px; }
     #userpage .swiper-pagination { bottom:-5px; }
 }
 
 @media (max-width:630px) {
-    #userpage .swiper-slide { height: 135px; }
-    #userpage .swiper-slide div { height: 100px; padding: 15px 20px 12px; }
+    #userpage .swiper-slide { height: 135px; width: 80px !important; }
+    #userpage .swiper-slide div { height: 100px; padding: 15px 15px 12px; }
     #userpage .swiper-slide img{ width: 40px; }
-    #userpage .swiper-slide p{ font-size: 13px; }
+    #userpage .swiper-slide p{ font-size: 12px; }
+} */
+
+#userpage {--swiper-theme-color:white}
+#userpage .swiper { margin-top:20px; padding: 0 50px;}
+#userpage .swiper-slide div {  position: relative; padding: 25px 30px 10px; border: 1px dashed #ffffff; border-radius: 10px;}
+#userpage .swiper-slide img{ width: 70px; margin: 0 auto; object-fit:cover;}
+#userpage .swiper-slide p#name{ margin-top: 16px; }
+#userpage .swiper-slide p#close {position: absolute; top: 0px; right: 0px;}
+#userpage .swiper-pagination { bottom:-5px; color:white}
+
+@media (max-width:1200px) {
+    #userpage .swiper-slide div { height: 130px; }
+    #userpage .swiper-slide img{ width: 50px; }
+    #userpage .swiper-pagination { bottom:-5px; }
 }
 
 @media (max-width:630px) {
-    #userpage .swiper-slide { height: 135px; }
     #userpage .swiper-slide div { height: 100px; padding: 15px 15px 12px; }
+    #userpage .swiper-slide img{ width: 40px; }
     #userpage .swiper-slide p{ font-size: 12px; }
+    #userpage .swiper-button-prev:after {font-size: 25px;}
+    #userpage .swiper-button-next:after {font-size: 25px;}
 }
