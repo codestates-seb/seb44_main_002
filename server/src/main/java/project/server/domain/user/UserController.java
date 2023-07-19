@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.server.utils.UnsignedPermission;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -15,10 +16,12 @@ import javax.validation.constraints.Positive;
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
-    UserService userService;
+    private final UserService userService;
+    private final AuthManager authManager;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthManager authManager) {
         this.userService = userService;
+        this.authManager = authManager;
     }
 
     @PostMapping("/signup")
@@ -28,21 +31,25 @@ public class UserController {
     }
 
     @GetMapping("/{user-id}")
-    public ResponseEntity getUser(@PathVariable("user-id") @Positive long userId) {
-        User user = userService.findUser(userId);
-        return new ResponseEntity<>(user.entityToResponse(), HttpStatus.OK);
+    public ResponseEntity getUser(Authentication authentication,
+                                  @PathVariable("user-id") @Positive long userId) {
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
+        UserDto.Response response = userService.getUser(email, userId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
                                     @Valid @RequestBody UserDto.Patch requestBody,
                                     Authentication authentication) {
-        User user = userService.updateUser(requestBody, userId, authentication);
-        return new ResponseEntity<>(user.entityToResponse(), HttpStatus.OK);
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        User user = userService.updateUser(requestBody, userId, email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/{user-id}")
-    public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId) {
+    public ResponseEntity deleteUser(Authentication authentication,
+                                     @PathVariable("user-id") @Positive long userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

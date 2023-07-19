@@ -16,16 +16,18 @@ import javax.validation.constraints.Positive;
 @RequestMapping("/replies")
 public class ReplyController {
     private final ReplyService replyService;
+    private final AuthManager authManager;
 
-    public ReplyController(ReplyService replyService) {
+    public ReplyController(ReplyService replyService, AuthManager authManager) {
         this.replyService = replyService;
+        this.authManager = authManager;
     }
 
     @PostMapping("/{comment-id}")
     public ResponseEntity postReply(Authentication authentication,
                                     @PathVariable("comment-id") @Positive Long commentId,
                                     @Valid @RequestBody ReplyDto.Post post) {
-        String email = AuthManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         ReplyDto.Response response = replyService.createReply(email, commentId, post);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

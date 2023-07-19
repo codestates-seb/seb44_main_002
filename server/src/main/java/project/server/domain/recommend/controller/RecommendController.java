@@ -15,9 +15,11 @@ import project.server.domain.user.AuthManager;
 public class RecommendController {
 
     private final RecommendService recommendService;
+    private final AuthManager authManager;
 
-    public RecommendController(RecommendService recommendService) {
+    public RecommendController(RecommendService recommendService, AuthManager authManager) {
         this.recommendService = recommendService;
+        this.authManager = authManager;
     }
 
     @GetMapping("/unsigned")
@@ -28,7 +30,7 @@ public class RecommendController {
 
     @GetMapping("/signed")
     public ResponseEntity getRecommendCocktailsForSignedUsers(Authentication authentication){
-        String email = AuthManager.getEmailFromAuthentication(authentication, false);
+        String email = authManager.getEmailFromAuthentication(authentication, false);
         RecommendDto.SignedResponse response = recommendService.readRecommendCocktailsForSignedUser(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

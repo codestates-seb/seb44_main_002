@@ -1,11 +1,8 @@
-package project.server.domain.follow;
+package project.server.domain.follow.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.follow.entity.Follow;
-import project.server.domain.follow.service.FollowCreateService;
-import project.server.domain.follow.service.FollowDeleteService;
-import project.server.domain.follow.service.FollowReadService;
 import project.server.domain.user.User;
 import project.server.domain.user.UserService;
 import project.server.exception.BusinessLogicException;
@@ -29,7 +26,7 @@ public class FollowService {
     @Transactional
     public void createFollow(String followerEmail, long followingUserId) {
         User follower = userService.findUserByEmail(followerEmail);
-        User following = userService.findUser(followingUserId);
+        User following = userService.findUserByUserId(followingUserId);
         verifyFollowTarget(follower, following);
         followCreateService.createFollow(follower, following);
     }
@@ -38,11 +35,12 @@ public class FollowService {
     public void removeFollow(String followerEmail, long followingUserId) {
         User follower = userService.findUserByEmail(followerEmail);
         Follow follow = followReadService.findFollowByFollowerIdAndFollowingId(follower.getUserId(), followingUserId);
-        followDeleteService.cancelFollow(follower, follow);
+        User following = userService.findUserByUserId(followingUserId);
+        followDeleteService.cancelFollow(follower, follow, following);
     }
 
     private void verifyFollowTarget(User follower, User following) {
-        if(follower == following || following.isAdmin()){
+        if(follower == following || following.isAdmin() || follower.following(following)){
             throw new BusinessLogicException(ExceptionCode.INVALID_FOLLOW_TARGET);
         }
     }

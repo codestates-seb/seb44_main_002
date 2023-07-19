@@ -24,5 +24,6 @@ public class FollowCreateService {
 
         Follow savedFollower = followRepository.save(follow);
         follower.addFollow(savedFollower);
+        following.addSubscriberCount();
     }
 }

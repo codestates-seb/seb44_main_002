@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.cocktail.service.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity(name = "users")
 @Getter
@@ -40,7 +38,7 @@ public class User {
 
     private int age;
 
-    private long subscriberCount;
+    private long subscriberCount = 0;
 
     private String profileImageUrl;
 
@@ -132,5 +130,22 @@ public class User {
 
     public void cancelFollow(Follow follow) {
         follows.remove(follow);
+    }
+
+    public boolean following(User following) {
+        for(Follow follow : follows){
+            if(follow.contains(following.getUserId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addSubscriberCount() {
+        subscriberCount++;
+    }
+
+    public void subtractSubscriberCount() {
+        subscriberCount--;
     }
 }

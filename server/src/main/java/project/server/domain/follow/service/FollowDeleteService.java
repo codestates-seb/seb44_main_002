@@ -16,8 +16,9 @@ public class FollowDeleteService {
     }
 
     @Transactional
-    public void cancelFollow(User follower, Follow follow) {
+    public void cancelFollow(User follower, Follow follow, User following) {
         follower.cancelFollow(follow);
+        following.subtractSubscriberCount();
         followRepository.delete(follow);
     }
 }
