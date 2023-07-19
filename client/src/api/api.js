@@ -45,7 +45,6 @@ const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
-    // 401이 달라질 수 있음
     const newToken = await fetchrefreshToken();
     localStorage.setItem('accessToken', newToken);
 
@@ -77,6 +76,7 @@ export default {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
