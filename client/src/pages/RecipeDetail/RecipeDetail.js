@@ -20,18 +20,22 @@ export default function RecipeDetail() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [localData, setLocalData] = useState({ userId: '', IsAdmin: false });
 
-  // const userInfo = useSelector((state) => state.userinfo);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   const location_id = useLocation().pathname.split('/')[2];
 
   // 시간 출력 함수
-  const getTime = (createdTime = '') => {
-    const currentTime = Date.now();
-    const targetTime = new Date(createdTime).getTime();
+  const getTime = (createdTime) => {
+    if (createdTime === undefined) {
+      return 0;
+    }
+    const currentTime = new Date();
+    const targetTime = new Date(createdTime);
+    currentTime.setHours(currentTime.getHours() - 9); // 세계 표준시를 한국 시간과 오차
     const minutesDifference = Math.floor(
-      (currentTime - targetTime) / (1000 * 60)
+      (currentTime.getTime() - targetTime.getTime()) / (1000 * 60)
     );
+
     if (isNaN(minutesDifference)) {
       return 0;
     }
@@ -40,7 +44,7 @@ export default function RecipeDetail() {
     } else if (minutesDifference < 60) {
       return `${minutesDifference} min ago`;
     } else if (minutesDifference < 1440) {
-      return `${Math.floor(minutesDifference / 60)} min ago`;
+      return `${Math.floor(minutesDifference / 60)} hours ago`;
     }
     return `${Math.floor(minutesDifference / 1440)} days ago`;
   };
@@ -74,11 +78,19 @@ export default function RecipeDetail() {
       const json = await response.json();
       setCocktail(json);
       setIsBookmarked(json.bookmarked);
-      console.log(json);
     } catch (error) {
       console.log(error);
       navigate('/error');
     }
+  };
+
+  const reAnimate = () => {
+    // detail 페이지에서 단순히 id만 바뀔 경우에도 애니메이션 효과 부여
+    const container = document.querySelector('#container');
+    container.classList.remove('animate-fadeInDown1');
+    setTimeout(() => {
+      container.classList.add('animate-fadeInDown1');
+    }, 10);
   };
 
   useEffect(() => {
@@ -86,6 +98,8 @@ export default function RecipeDetail() {
     const local_userId = parseInt(localStorage.getItem('userId'));
     const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
     setLocalData({ userId: local_userId, IsAdmin: local_IsAdmin });
+
+    reAnimate();
   }, [location_id]);
 
   const BackgroundImg = () => {
@@ -135,7 +149,7 @@ export default function RecipeDetail() {
     <>
       <Background>
         <BackgroundImg />
-        <Container>
+        <Container id="container">
           <DrawBookmark cocktail={cocktail} />
           <RecipeInfo
             cocktailDetail={cocktail}
@@ -191,8 +205,7 @@ const cocktailDetail = {
   userId: 1,
   userName: '',
   name: '',
-  imageUrl:
-    'https://cphoto.asiae.co.kr/listimglink/1/2020051809541442224_1589763254.jpg',
+  imageUrl: '',
   activeUserWritten: true,
   liquor: '럼',
   viewCount: 1,
