@@ -62,13 +62,16 @@ public class UserService {
 
     public UserDto.Response getUser(String email, long userId) {
         User user = findUserByUserId(userId);
-        if(!user.isActiveUser()){
-            throw new BusinessLogicException(ExceptionCode.DELETED_USER);
-        }
         if(unsigned(email)){
+            if(!user.isActiveUser()){
+                throw new BusinessLogicException(ExceptionCode.DELETED_USER);
+            }
             return UserSerializer.entityToUnsignedResponse(user);
         }
         User readUser = findUserByEmail(email);
+        if(!user.isActiveUser() && !readUser.isAdmin()){
+            throw new BusinessLogicException(ExceptionCode.DELETED_USER);
+        }
         return UserSerializer.entityToSignedResponse(user, readUser);
     }
 
