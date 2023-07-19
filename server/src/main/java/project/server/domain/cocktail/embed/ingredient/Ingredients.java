@@ -14,23 +14,19 @@ public class Ingredients {
     @ElementCollection
     @CollectionTable(name = "cocktail_ingredient", joinColumns = @JoinColumn(name = "cocktail_id"))
     @Column(name = "ingredient")
-    private List<Ingredient> ingredients;
+    private List<String> ingredients;
 
-    //테스트용 삭제 요망
-    public Ingredients(List<Ingredient> ingredients, int count) {
-        this.ingredients = ingredients;
-    }
-
-    public Ingredients(List<IngredientDto.Post> ingredients) {
-        this.ingredients = ingredients.stream()
+    public Ingredients(List<IngredientDto.Post> baseIngredients, List<IngredientDto.Post> additionalIngredients) {
+        if (additionalIngredients != null) {
+            baseIngredients.addAll(additionalIngredients);
+        }
+        this.ingredients = baseIngredients.stream()
                 .map(IngredientDto.Post::getIngredient)
-                .map(IngredientMapper::map)
                 .collect(Collectors.toList());
     }
 
     public List<IngredientDto.Response> createResponseDtoList() {
         return ingredients.stream()
-                .map(Ingredient::getIngredient)
                 .map(this::createResponseDto)
                 .collect(Collectors.toList());
     }
