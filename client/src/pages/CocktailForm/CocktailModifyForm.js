@@ -232,6 +232,7 @@ bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
 max-[520px]:rounded-none
+animate-fadeInDown1
 `;
 
 const SignupHeader = tw.h1`
