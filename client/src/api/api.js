@@ -3,12 +3,6 @@ const API_BASE = process.env.REACT_APP_BASE_URL;
 const localAccessToken = localStorage.getItem('accessToken');
 const refreshToken = localStorage.getItem('refreshToken');
 
-//200  성공
-// 401이면  엑세스 재발급 요망
-// 리프래쉬토큰만 드림
-// ->200이면   재발급 성공 (엑세스토큰만 리스폰스헤더에)
-// ->401 이면  리프래쉬 엑세스 둘다 만료
-
 //리프래쉬 재발급 요청
 const fetchrefreshToken = async () => {
   try {
@@ -17,19 +11,17 @@ const fetchrefreshToken = async () => {
       headers: {
         'Content-Type': 'application/json',
         Refresh: localStorage.getItem('refreshToken'),
-        // 리프래쉬로 엑세스토큰 요청
       },
     });
     //완전히 만료 ->로그아웃진행
     if (response.status === 401) {
       return false;
     }
-    //재발급 성공 (엑세스토큰만 리스폰스헤더에)
+    //재발급 성공
     if (response.ok) {
       localStorage.setItem(
         'accessToken',
         response.headers.get('Authorization')
-        // 새로운 토큰으로 기존의 토큰을 갱신
       );
       const token = response.headers.get('Authorization');
       return token;
@@ -95,7 +87,6 @@ export default {
         body: JSON.stringify(form),
       });
       if (response.ok) {
-        //로컬스토리지에 저장
         localStorage.setItem(
           'accessToken',
           response.headers.get('Authorization')
@@ -121,7 +112,6 @@ export default {
       const response = await fetch(`${API_BASE}auth/signout`, {
         method: 'DELETE',
         headers: {
-          // 'Content-Type': 'application/json',
           Authorization: localStorage.getItem('accessToken'),
           Refresh: localStorage.getItem('refreshToken'),
         },
@@ -135,7 +125,6 @@ export default {
   },
   //북마크 추가
   async createbookmarkApi(item) {
-    //console.log(item);
     try {
       const response = await fetchWithInterceptor(
         `${API_BASE}bookmark/create/${item.cocktailId}`,
@@ -143,7 +132,7 @@ export default {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('accessToken'), // 토큰을 헤더에 포함하여 보호된 API에 요청
+            Authorization: localStorage.getItem('accessToken'),
           },
         }
       );
