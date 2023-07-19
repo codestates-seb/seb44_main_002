@@ -64,6 +64,25 @@ const fetchWithInterceptor = async (url, options) => {
 
 //리프래쉬토큰 만료 되면 액세스토큰 ?
 export default {
+  //회원가입
+  async signupApi(userinfo) {
+    try {
+      const response = await fetch(`${API_BASE}users/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userinfo),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  //로그인
+
   //로그아웃
   async logoutApi() {
     try {
