@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CommentValid from '../../components/Validation/CommentValidation';
@@ -8,25 +8,23 @@ import tw from 'tailwind-styled-components';
 
 export default function Community({
   cocktailDetail,
-  userInfo,
   getTime,
   isLogin,
   localData,
 }) {
+  const navigate = useNavigate();
+
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
   const [commentId, setCommentId] = useState(0);
   const [isValid, setIsValid] = useState(true);
-  const navigate = useNavigate();
 
   // 댓글 등록
   const postComment = async () => {
     try {
-      const response = await RecipeApi.PostComments(
-        cocktailDetail.cocktailId,
-        { content: comment },
-        userInfo.accessToken
-      );
+      const response = await RecipeApi.PostComments(cocktailDetail.cocktailId, {
+        content: comment,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -40,11 +38,7 @@ export default function Community({
         taggedUserName: tag.userName,
         content: comment,
       };
-      const response = await RecipeApi.PostReplys(
-        commentId,
-        repliInfo,
-        userInfo.accessToken
-      );
+      const response = await RecipeApi.PostReplys(commentId, repliInfo);
     } catch (error) {
       console.log(error);
     }
@@ -53,10 +47,7 @@ export default function Community({
   // 댓글 삭제
   const deleteComment = async (commentId) => {
     try {
-      const response = await RecipeApi.deleteComments(
-        commentId,
-        userInfo.accessToken
-      );
+      const response = await RecipeApi.deleteComments(commentId);
     } catch (error) {
       console.log(error);
       location.reload();
@@ -66,10 +57,7 @@ export default function Community({
   // 대댓글 삭제
   const deleteReply = async (replyId) => {
     try {
-      const response = await RecipeApi.deleteReplies(
-        replyId,
-        userInfo.accessToken
-      );
+      const response = await RecipeApi.deleteReplies(replyId);
     } catch (error) {
       console.log(error);
       location.reload();
@@ -85,8 +73,8 @@ export default function Community({
       return;
     }
 
+    // 유효성 검사
     CommentValid(comment, setIsValid);
-
     if (!isValid) return;
 
     if (tag.userId === '') {
@@ -99,7 +87,6 @@ export default function Community({
   };
 
   const changeTag = (userId, userName, commentId) => {
-    // 본인 태그 방지
     setTag({ userId: userId, userName: userName });
     setCommentId(commentId);
   };

@@ -28,6 +28,7 @@ module.exports = {
         // 사용법 : class 에 animate-애니메이션이름
         fadeInLeft1: 'fadeInLeft1 1s both',
         fadeInRight1: 'fadeInRight1 1s both',
+        fadeInRight2: 'fadeInRight2 1s both',
         fadeInUp1: 'fadeInsUp1 1s both',
         fadeInDown1: 'fadeInDown1 1s both',
       },
@@ -38,6 +39,10 @@ module.exports = {
         },
         fadeInRight1: {
           from: { opacity: '0', transform: 'translateX(1%)' },
+          to: { opacity: '1', transform: 'translateX(0%)' },
+        },
+        fadeInRight2: {
+          from: { opacity: '0', transform: 'translateX(15%)' },
           to: { opacity: '1', transform: 'translateX(0%)' },
         },
         fadeInDown1: {

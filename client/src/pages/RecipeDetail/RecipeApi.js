@@ -22,7 +22,7 @@ export default {
     }
   },
   // 북마크 추가
-  async postBookmark(cocktailId, accessToken) {
+  async postBookmark(cocktailId) {
     try {
       const response = await fetch(`${API_BASE}bookmark/create/${cocktailId}`, {
         method: 'POST',
@@ -41,7 +41,7 @@ export default {
     }
   },
   // 북마크 삭제
-  async deleteBookmark(cocktailId, accessToken) {
+  async deleteBookmark(cocktailId) {
     try {
       const response = await fetch(`${API_BASE}bookmark/delete/${cocktailId}`, {
         method: 'DELETE',
@@ -61,7 +61,7 @@ export default {
     }
   },
   // 별점 등록, 수정
-  async modifyRate(cocktailId, score, accessToken) {
+  async modifyRate(cocktailId, score) {
     try {
       const response = await fetch(
         `${API_BASE}cocktails/${cocktailId}/rate?value=${score}`,
@@ -83,7 +83,7 @@ export default {
     }
   },
   // 댓글 등록
-  async PostComments(cocktailId, commentInfo, accessToken) {
+  async PostComments(cocktailId, commentInfo) {
     try {
       const response = await fetch(`${API_BASE}comments/${cocktailId}`, {
         method: 'POST',
@@ -103,7 +103,7 @@ export default {
     }
   },
   // 대댓글 등록
-  async PostReplys(commentId, replyInfo, accessToken) {
+  async PostReplys(commentId, replyInfo) {
     try {
       const response = await fetch(`${API_BASE}replies/${commentId}`, {
         method: 'POST',
@@ -123,7 +123,7 @@ export default {
     }
   },
   // 댓글 삭제
-  async deleteComments(commentId, accessToken) {
+  async deleteComments(commentId) {
     try {
       const response = await fetch(`${API_BASE}comments/${commentId}`, {
         method: 'DELETE',
@@ -143,7 +143,7 @@ export default {
     }
   },
   // 칵테일 레시피 삭제
-  async deleteCocktails(cocktailId, accessToken) {
+  async deleteCocktails(cocktailId) {
     try {
       const response = await fetch(`${API_BASE}cocktails/${cocktailId}`, {
         method: 'DELETE',
@@ -162,7 +162,7 @@ export default {
     }
   },
   // 대댓글 삭제
-  async deleteReplies(replyId, accessToken) {
+  async deleteReplies(replyId) {
     try {
       const response = await fetch(`${API_BASE}replies/${replyId}`, {
         method: 'DELETE',
