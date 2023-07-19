@@ -1,4 +1,5 @@
 import Card from '../../components/Card/Card';
+
 import tw from 'tailwind-styled-components';
 
 export default function UserBookmarked({ userInfo }) {

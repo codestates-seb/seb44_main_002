@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-//북마크 기능 추가 페이지네이션 추가
 import { CategoryFilter, sortTypeData } from '../../common/Data';
 
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
-// import Pagination from '../../components/Pagination/Pagination';
 import useFilterurl from '../../components/FIlterUrl/Filterurl';
-
+// import Pagination from '../../components/Pagination/Pagination';
 import tw from 'tailwind-styled-components';
 
+// 페이지네이션 추가
 export default function Category() {
   //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  console.log(BASE_URL);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //리덕스 임시 저장

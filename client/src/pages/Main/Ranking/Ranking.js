@@ -6,11 +6,13 @@ import tw from 'tailwind-styled-components';
 
 export default function Ranking({ error, setError }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+  //console.log(BASE_URL);
   const [data, setData] = useState(null);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   useEffect(() => {
     let endpoint = `${BASE_URL}recommend/unsigned`;
+    // console.log(endpoint);
     let headers = {
       'Content-Type': 'application/json',
     };

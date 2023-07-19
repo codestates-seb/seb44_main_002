@@ -26,7 +26,8 @@ export default function CocktailForm() {
     name: '',
     imageUrl: '',
     liquor: '',
-    ingredients: [],
+    baseIngredients: [],
+    additionalIngredients: [],
     recipe: [{ id: 0, process: '' }],
     degree: '',
     flavor: [],
@@ -36,7 +37,7 @@ export default function CocktailForm() {
     name: true,
     imageUrl: true,
     liquor: true,
-    ingredients: true,
+    baseIngredients: true,
     recipe: true,
     degree: true,
     flavor: true,
@@ -47,14 +48,15 @@ export default function CocktailForm() {
   const accessToken = localStorage.getItem('accessToken');
 
   const submitHandler = (e) => {
+    console.log(form);
     e.preventDefault();
-    const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
+    const { name, imageUrl, liquor, baseIngredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
     const updatedIsValid = {
       name,
       imageUrl,
       liquor,
-      ingredients,
+      baseIngredients,
       recipe,
       degree,
       flavor,
@@ -94,7 +96,9 @@ export default function CocktailForm() {
         <Background>
           <img
             className="absolute bottom-0 right-0 z-0"
-            src="images/background/fire_cocktail.png"
+            src={
+              process.env.PUBLIC_URL + `/images/background/fire_cocktail.png`
+            }
             alt="backgroundimg"
           />
           <Container>
@@ -130,7 +134,8 @@ export default function CocktailForm() {
                     size="w-[355px] h-[40px] max-[520px]:w-[320px]"
                   />
                   <CheckboxIngrInput
-                    isValid={isValid.ingredients}
+                    isValid={isValid.baseIngredients}
+                    form={form}
                     setForm={setForm}
                   />
                   <CocktailRecipeInput
@@ -182,6 +187,7 @@ bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
 max-[520px]:rounded-none
+animate-fadeInDown1
 `;
 
 const SignupHeader = tw.h1`
