@@ -187,60 +187,26 @@ cursor-pointer
 
 const cocktailDetail = {
   cocktailId: 1,
+  adminWritten: false,
   userId: 1,
-  userName: 'chan',
-  name: '체리주',
+  userName: '',
+  name: '',
   imageUrl:
     'https://cphoto.asiae.co.kr/listimglink/1/2020051809541442224_1589763254.jpg',
+  activeUserWritten: true,
   liquor: '럼',
   viewCount: 1,
   createdAt: '2023-07-02T01:01:01',
   modifiedAt: '2023-07-02T01:01:01',
   ingredients: [
     {
-      ingredient: 'Light rum',
-    },
-    {
-      ingredient: 'Lime',
-    },
-    {
-      ingredient: 'Sugar',
-    },
-    {
-      ingredient: 'Mint',
-    },
-    {
-      ingredient: 'Soda water',
-    },
-    {
-      ingredient: 'Tonic water',
-    },
-    {
-      ingredient: 'Lemon water',
-    },
-    {
-      ingredient: 'Lime water',
+      ingredient: '',
     },
   ],
-  recipe: [
-    { process: `Pour the rum and top with soda water.` },
-    { process: 'Pour the rum and top with soda water.with soda water.' },
-    {
-      process:
-        'Pour the rum and top with soda water.Pour the rum and top with soda water.',
-    },
-    { process: 'Pour the rum and top with soda water.' },
-    {
-      process:
-        'Pour he rum and top with soda water. with soda water with soda water',
-    },
-    {
-      process: 'Pour the rum and top with soda water.',
-    },
-  ],
+  recipe: [{ process: `` }],
   tags: [
     {
-      tag: 'value',
+      tag: '',
     },
   ],
   rating: 4.5,
@@ -248,60 +214,22 @@ const cocktailDetail = {
     {
       commentId: 1,
       userId: 2,
-      userName: 'kim',
-      content:
-        '깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!',
+      userName: '',
+      content: '',
+      activeUserWritten: true,
       createdAt: '2023-07-02T01:01:01',
       modifiedAt: '2023-07-02T01:01:01',
       replies: [
         {
           replyId: 1,
           userId: 3,
-          userName: 'chan',
-          content: '저도 그렇게 생각합니다!',
+          userName: '',
+          content: '',
+          activeUserWritten: true,
           taggedUserInfo: [
             {
-              taggedUserId: 2,
-              taggedUserName: 'kimchi',
-            },
-          ],
-          createdAt: '2023-07-02T01:01:01',
-          modifiedAt: '2023-07-02T01:01:01',
-        },
-      ],
-    },
-    {
-      commentId: 2,
-      userId: 3,
-      userName: 'chan',
-      content:
-        '그놈은 멋있었다...백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.',
-      createdAt: '2023-07-02T01:01:01',
-      modifiedAt: '2023-07-02T01:01:01',
-      replies: [
-        {
-          replyId: 2,
-          userId: 4,
-          userName: 'jae',
-          content: '백엔드는 멋있다.',
-          taggedUserInfo: [
-            {
-              taggedUserId: 3,
-              taggedUserName: 'chan',
-            },
-          ],
-          createdAt: '2023-07-02T01:01:01',
-          modifiedAt: '2023-07-02T01:01:01',
-        },
-        {
-          userId: 3,
-          userName: 'euni',
-          content:
-            '이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면',
-          taggedUserInfo: [
-            {
-              taggedUserId: 4,
-              taggedUserName: 'jae',
+              taggedUserId: 1,
+              taggedUserName: '',
             },
           ],
           createdAt: '2023-07-02T01:01:01',
@@ -314,23 +242,10 @@ const cocktailDetail = {
     //category idx 와 userinfo 리덕스 데이터와 겹쳐서 cocktailId와 isBookmarked  달리 수정했습니다.
     {
       cocktailId: 7,
-      name: '라떼 밀크주',
+      name: '',
       imageUrl: 'https://2bob.co.kr/data/recipe/20210707094952-WOE78.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 8,
-      name: '논알콜 청포도 모히토',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706172910-2B1WD.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 9,
-      name: '시트러스 주스',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
       isBookmarked: false,
     },
   ],
   bookmarked: false,
-  adminWritten: false,
 };
