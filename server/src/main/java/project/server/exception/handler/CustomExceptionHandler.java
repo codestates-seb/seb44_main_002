@@ -24,5 +24,4 @@ public class CustomExceptionHandler {
         final ErrorResponse response = ErrorResponse.of(ec);
         return new ResponseEntity<>(response, HttpStatus.valueOf(ec.getStatus()));
     }
-
 }
