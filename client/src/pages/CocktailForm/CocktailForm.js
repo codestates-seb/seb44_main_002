@@ -12,6 +12,7 @@ import ImageUpload from '../../components/ImageUpload';
 import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
+import { PostCocktailForm } from '../../api/CocktailFormApi';
 
 import tw from 'tailwind-styled-components';
 
@@ -80,15 +81,8 @@ export default function CocktailForm() {
     );
 
     if (allValid) {
-      fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
-        },
-        body: JSON.stringify(form),
-      })
-        .then((res) => res.json())
+      // cocktailform post 요청 api 분리
+      PostCocktailForm(form)
         .then((json) => {
           // console.log(json);
           navigate(`/success/${json.cocktailId}`);

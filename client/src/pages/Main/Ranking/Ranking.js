@@ -3,7 +3,7 @@ import RankingCard from './RankingCard';
 import { useSelector } from 'react-redux';
 
 import tw from 'tailwind-styled-components';
-import { RankingApi } from './RankingApi';
+import { RankingApi } from '../../../api/RankingApi';
 
 export default function Ranking({ error, setError }) {
   const [data, setData] = useState(null);
