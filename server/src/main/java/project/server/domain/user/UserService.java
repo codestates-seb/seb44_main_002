@@ -2,6 +2,7 @@ package project.server.domain.user;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.server.auth.utils.CustomAuthorityUtils;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -32,6 +34,8 @@ public class UserService {
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
 
+        user.setActiveUser(true);
+
         User savedUser = userRepository.save(user);
         return UserSerializer.entityToUnsignedResponse(savedUser);
     }
@@ -48,7 +52,8 @@ public class UserService {
 
     public void deleteUser(long userId) {
         User user = findUserByUserId(userId);
-        userRepository.delete(user);
+        user.setEmail("");
+        user.setActiveUser(false);
     }
 
     public UserDto.Response getUser(String email, long userId) {

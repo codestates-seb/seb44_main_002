@@ -8,6 +8,7 @@ import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    @Email
     @Column(nullable = false)
     private String email;
 
@@ -54,6 +56,29 @@ public class User {
 
     @OneToMany
     private Set<Follow> follows = new HashSet<>();
+
+    private boolean isActiveUser = true;
+
+    public UserDto.Response entityToResponse() {
+        return UserDto.Response.builder()
+                .userId(userId)
+                .email(email)
+                .name(name)
+                .gender(gender)
+                .age(age)
+                .profileImageUrl(profileImageUrl)
+                .subscriberCount(subscriberCount)
+                .cocktails(cocktails.stream()
+                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(this.isBookmarked(cocktail.getCocktailId()), cocktail))
+                        .collect(Collectors.toList()))
+                .bookmarkedCocktails(bookmarks.stream()
+                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(true, bookmark))
+                        .collect(Collectors.toList()))
+                .follows(follows.stream()
+                        .map(Follow::getFollowing)
+                        .collect(Collectors.toList()))
+                .build();
+    }
 
     public boolean isAlreadyRated(long cocktailId) {
         return ratedCocktails.containCocktail(cocktailId);
