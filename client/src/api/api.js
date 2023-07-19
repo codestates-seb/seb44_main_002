@@ -73,10 +73,15 @@ export default {
         },
         body: JSON.stringify(userinfo),
       });
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
+      if (response.ok) {
+        return 201;
       }
-      return response;
+      if (response.status === 409) {
+        return 409;
+      }
+      if (response.status === 500) {
+        return 500;
+      }
     } catch (error) {
       console.error(error);
     }

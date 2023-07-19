@@ -67,7 +67,7 @@ export default function Signup() {
     if (allValid) {
       try {
         const response = await api.signupApi(userinfo);
-        if (response.status === 201) {
+        if (response === 201) {
           // 응답이 성공적인 경우
           console.log('요청이 성공했습니다.');
           setErrorMsg(null);
@@ -76,10 +76,10 @@ export default function Signup() {
         } else {
           // 응답이 실패한 경우
           console.log('요청이 실패했습니다.');
-          if (response.status === 409) {
+          if (response === 409) {
             setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
           }
-          if (response.status === 500) {
+          if (response === 500) {
             setErrorMsg('이런! 서버에 문제가 생겼어요!');
           }
         }
