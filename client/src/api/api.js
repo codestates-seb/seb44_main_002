@@ -87,7 +87,28 @@ export default {
     }
   },
   //로그인
-
+  async loginApi(form) {
+    try {
+      const response = await fetch(`${BASE_URL}auth/signin`, {
+        method: 'POST',
+        // credentials: 'include',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        body: JSON.stringify(form),
+      });
+      if (response.ok) {
+        return 200;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+    } catch (error) {
+      console.log(error);
+      handleClose();
+      navigate('/error');
+    }
+  },
   //로그아웃
   async logoutApi() {
     try {
