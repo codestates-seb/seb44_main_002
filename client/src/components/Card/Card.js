@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
 import api from '../../api/api';
-
+import { useLogout } from '../../hook/useLogout';
 import BookmarkBtn from '../BookmarkButton/BookmarkBtn';
 import tw from 'tailwind-styled-components';
 
 export default function Card({ item }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const logout = useLogout();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [bookmarked, setbookmarked] = useState(item.bookmarked);
 
@@ -31,16 +31,24 @@ export default function Card({ item }) {
     if (!bookmarked) {
       try {
         const response = await api.createbookmarkApi(item);
+        if (response === 401) {
+          alert('토큰만료로 로그아웃되었습니다.');
+          logout();
+        }
       } catch (error) {
         console.log(error);
-        //  navigate('/error');
+        navigate('/error');
       }
     } else {
       try {
         const response = await api.deletebookmarkApi(item);
+        if (response === 401) {
+          alert('토큰만료로 로그아웃되었습니다.');
+          logout();
+        }
       } catch (error) {
         console.log(error);
-        //navigate('/error');
+        navigate('/error');
       }
     }
     dispatch(updateBookmark({ id, item }));
