@@ -50,7 +50,8 @@ public class UserController {
     @DeleteMapping("/{user-id}")
     public ResponseEntity deleteUser(Authentication authentication,
                                      @PathVariable("user-id") @Positive long userId) {
-        userService.deleteUser(userId);
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        userService.deleteUser(userId,email);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
