@@ -45,7 +45,7 @@ public class Cocktail {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "cocktail")
+    @OneToMany
     private List<Comment> comments = new ArrayList<>();
 
     @Embedded
@@ -121,5 +121,9 @@ public class Cocktail {
 
     public long getUserId() {
         return user.getUserId();
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 }
