@@ -34,8 +34,6 @@ public class UserService {
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
 
-        user.setActiveUser(true);
-
         User savedUser = userRepository.save(user);
         return UserSerializer.entityToUnsignedResponse(savedUser);
     }
@@ -50,8 +48,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(long userId) {
-        User user = findUserByUserId(userId);
+    public void deleteUser(long userId, String email) {
+        User user = findUserByEmail(email);
+        if(user.getUserId() != userId){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
         user.setEmail("");
         user.setActiveUser(false);
     }
