@@ -9,6 +9,7 @@ import project.server.domain.cocktail.service.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    @Email
     @Column(nullable = false)
     private String email;
 
@@ -56,6 +58,8 @@ public class User {
 
     @OneToMany
     private Set<Follow> follows = new HashSet<>();
+
+    private boolean isActiveUser = true;
 
     public UserDto.Response entityToResponse() {
         return UserDto.Response.builder()

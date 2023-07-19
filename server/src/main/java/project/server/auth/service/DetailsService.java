@@ -43,6 +43,7 @@ public class DetailsService implements UserDetailsService {
             setAge(user.getAge());
             setGender(user.getGender());
             setRoles(user.getRoles());
+            setActiveUser(user.isActiveUser());
         }
 
         @Override

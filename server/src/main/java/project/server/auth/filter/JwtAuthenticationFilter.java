@@ -9,6 +9,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import project.server.auth.dto.SignInDto;
 import project.server.auth.jwt.JwtTokenizer;
 import project.server.domain.user.User;
+import project.server.exception.BusinessLogicException;
+import project.server.exception.ExceptionCode;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -47,6 +49,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) throws ServletException, IOException {
         User user = (User) authResult.getPrincipal();
+
+        if (!user.isActiveUser()) throw new BusinessLogicException(ExceptionCode.DELETED_USER);
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(user);
