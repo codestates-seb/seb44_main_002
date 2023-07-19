@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/slice/isLoginSlice';
-import { userinfoLoginOut } from '../../redux/slice/userInfoSlice';
 import Swal from 'sweetalert2';
+import handleLogOut from '../../service';
 
 import HeaderModal from './HeaderModal';
 import Hamburger from './Hamburger';
@@ -78,13 +77,13 @@ export default function Header() {
       {label}
     </div>
   );
-  const handleLogOut = () => {
-    console.log('동작');
-    localStorage.clear();
-    dispatch(logout());
-    dispatch(userinfoLoginOut());
-    navigate('/');
-  };
+  // const handleLogOut = () => {
+  //   // console.log('동작');
+  //   localStorage.clear();
+  //   dispatch(logout());
+  //   dispatch(userinfoLoginOut());
+  //   navigate('/');
+  // };
 
   const randomHandler = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}cocktails/random`, {
@@ -161,10 +160,6 @@ export default function Header() {
               {userinfo.name || name}
             </div>
             <div className="mx-2">
-              {/* <MenuItem
-                path="/userpage/:id"
-                label={<PersonIcon fontSize="large" />}
-              /> */}
               <div
                 className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden`}
                 role="presentation"
@@ -177,10 +172,6 @@ export default function Header() {
             <div className="mx-2">
               <LogoutIcon
                 onClick={() =>
-                  // window.confirm('로그아웃하시겠습니까?')
-                  //   ? handleLogOut()
-                  //   : ''
-
                   Swal.fire({
                     title: '정말로 로그아웃하시겠습니까?',
                     text: '정말로 로그아웃하시겠습니까?',
