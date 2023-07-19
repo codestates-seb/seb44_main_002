@@ -8,7 +8,6 @@ import GenderRadioInput from '../../components/Input/GenderRadioInput';
 
 import tw from 'tailwind-styled-components';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 export default function Signup() {
   const navigate = useNavigate();
   const [test, setTest] = useState(false);
@@ -31,13 +30,6 @@ export default function Signup() {
     gender: '',
     age: '',
   });
-  //   {
-  //     "email": "hgd@gmail.com",
-  //     "password": "Abcd123123",
-  //     "name": "홍길동",
-  //     “gender” : “example”,
-  //     “age” : 30
-  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 불리언값으로나옴
