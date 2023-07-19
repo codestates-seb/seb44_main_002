@@ -49,9 +49,10 @@ public class CommentController {
 
     @DeleteMapping("/{comment-id}")
     public ResponseEntity deleteComment(Authentication authentication,
-                                        @PathVariable("comment-id") long commentId) {
+                                        @PathVariable("comment-id") long commentId,
+                                        @RequestParam("cocktail-id") long cocktailId) {
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
-        commentService.deleteComment(email, commentId);
+        commentService.deleteComment(email, commentId, cocktailId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

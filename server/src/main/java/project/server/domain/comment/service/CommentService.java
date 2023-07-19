@@ -54,12 +54,14 @@ public class CommentService {
         return CommentSerializer.entityToResponse(savedComment);
     }
 
-    public void deleteComment(String email, long commentId) {
+    public void deleteComment(String email, long commentId, long cocktailId) {
         User user = userService.findUserByEmail(email);
         Comment comment = findCommentById(commentId);
         if(!user.hasAuthority(comment.getUserId())){
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
+        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        cocktail.removeComment(comment);
         commentRepository.delete(comment);
     }
 
