@@ -29,27 +29,27 @@ export const divisionTags = (tags) => {
   return { degree: degreeResult, flavor: flavorResult };
 };
 
-// 속재료 한글 -> 영어
-export const transformIngredients = (ingredients) => {
-  const ingredientsMapping = {
-    소금: 'salt',
-    설탕: 'sugar',
-    레몬즙: 'lemonSqueeze',
-    라임즙: 'limeSqueeze',
-    과일음료: 'beverage',
-    탄산음료: 'soda',
-    민트: 'mint',
-    얼음: 'ice',
-    우유: 'milk',
+// 속재료 분리
+export const transformBaseIngredients = (baseIngredients) => {
+  const baseIngredientsMapping = {
+    소금: '소금',
+    설탕: '설탕',
+    레몬즙: '레몬즙',
+    라임즙: '라임즙',
+    과일음료: '과일음료',
+    탄산음료: '탄산음료',
+    민트: '민트',
+    얼음: '얼음',
+    우유: '우유',
   };
 
-  const transformedIngredients = ingredients.map((item) => {
+  const transformedbaseIngredients = baseIngredients.map((item) => {
     const ingredientName = item.ingredient;
-    const mappedIngredient = ingredientsMapping[ingredientName];
+    const mappedIngredient = baseIngredientsMapping[ingredientName];
     return { ingredient: mappedIngredient || ingredientName };
   });
 
-  return transformedIngredients;
+  return transformedbaseIngredients;
 };
 
 // 베이스 술 변환
