@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import UserPageApi from './UserPageApi';
-import { useNavigate } from 'react-router-dom';
 import CustomInput from '../../components/Input/CustomInput';
 import modifyPasswordValid from '../../components/Validation/ModifyPwdValidation';
 
@@ -21,9 +21,7 @@ const style = {
   p: 4,
   borderRadius: 5,
 };
-export default function PasswordModal({ logginUser }) {
-  const navigate = useNavigate();
-
+export default function PasswordModal({ localData }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ password: '', checkPassword: '' });
   const [isValid, setIsValid] = useState({
@@ -39,11 +37,9 @@ export default function PasswordModal({ logginUser }) {
   };
   const modifyPassword = async () => {
     try {
-      const response = await UserPageApi.modifyUser(
-        logginUser.userId,
-        { password: form.password },
-        logginUser.accessToken
-      );
+      const response = await UserPageApi.modifyUser(localData.userId, {
+        password: form.password,
+      });
     } catch (error) {
       console.log(error);
     }

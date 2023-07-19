@@ -3,16 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
-import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
+import AddIngreInput from '../../components/Input/AddIngreInput';
 
 import HoverButton from '../../common/Buttons/HoverButton';
 
-import {
-  divisionTags,
-  transformIngredients,
-  transformLiquor,
-} from './TransformData';
+import { divisionTags, transformLiquor } from './TransformData';
+import { PatchCocktailForm, GetCocktailForm } from '../../api/CocktailFormApi';
 import ImageUpload from '../../components/ImageUpload';
 import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
@@ -56,17 +53,11 @@ export default function CocktailModifyForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${BASE_URL}cocktails/${params.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: accessToken,
-      },
-    })
-      .then((res) => res.json())
+    // cocktailform get 요청 api 분리
+    GetCocktailForm(params.id)
       .then((json) => {
+        // console.log(json);
         const transformedTags = divisionTags(json.tags);
-        const transformedIngredients = transformIngredients(json.ingredients);
         const transformedLiquor = transformLiquor(json.liquor);
         setForm({
           ...form,
@@ -79,7 +70,9 @@ export default function CocktailModifyForm() {
           degree: transformedTags.degree,
           // 컴포넌트 설계 미스
           // flavor: transformedTags.flavor,
-          // ingredients: transformedIngredients,
+          ingredients: json.ingredients.map((item) => ({
+            ingredient: item.ingredient,
+          })),
           liquor: transformedLiquor,
         });
       })
@@ -87,7 +80,7 @@ export default function CocktailModifyForm() {
   }, []);
 
   const submitHandler = (e) => {
-    console.log(form);
+    // console.log(form);
     e.preventDefault();
     const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
@@ -115,17 +108,10 @@ export default function CocktailModifyForm() {
     );
 
     if (allValid) {
-      fetch(`${BASE_URL}cocktails/${params.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
-        },
-        body: JSON.stringify(form),
-      })
-        .then((res) => res.json())
+      // cocktailform patch 요청 api 분리
+      PatchCocktailForm(form, params.id)
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
@@ -144,7 +130,9 @@ export default function CocktailModifyForm() {
         <Background>
           <img
             className="absolute bottom-0 right-0 z-0"
-            src="images/background/fire_cocktail.png"
+            src={
+              process.env.PUBLIC_URL + `/images/background/fire_cocktail.png`
+            }
             alt="backgroundimg"
           />
           <Container>
@@ -179,9 +167,10 @@ export default function CocktailModifyForm() {
                     }
                     size="w-[355px] h-[40px] max-[520px]:w-[320px]"
                   />
-                  <CheckboxIngrInput
-                    isValid={isValid.ingredients}
+                  <AddIngreInput
+                    form={form}
                     setForm={setForm}
+                    isValid={isValid.ingredients}
                   />
                   <CocktailRecipeInput
                     form={form}
@@ -232,6 +221,7 @@ bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
 max-[520px]:rounded-none
+animate-fadeInDown1
 `;
 
 const SignupHeader = tw.h1`

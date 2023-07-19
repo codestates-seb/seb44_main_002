@@ -14,8 +14,8 @@ export default function OwnRecipeCard({ item }) {
         <ContainerP>
           <Title>{item.name}</Title>
           <Content>
-            <p>{'별점 : ' + item.userRate}</p>
-            <p>{'조회수 : ' + item.viewCount}</p>
+            <ContentP>{'별점 : ' + item.userRate}</ContentP>
+            <ContentP>{'조회수 : ' + item.viewCount}</ContentP>
           </Content>
         </ContainerP>
       </Container>
@@ -37,6 +37,8 @@ h-[12.5rem]
 rounded-tl-2xl 
 rounded-br-2xl 
 box-border
+max-sm:w-36
+max-sm:h-40
  `;
 const CocktailImg = tw.img`
 w-[11.25rem]
@@ -46,6 +48,8 @@ rounded-tl-2xl
 bg-black
 bg-opacity-50
 box-border
+max-sm:w-36
+max-sm:h-40
 `;
 const ContainerP = tw.div`
 w-24
@@ -60,12 +64,20 @@ border-l-0
 rounded-br-2xl
 `;
 const Title = tw.p`
+w-full
 text-xl
 font-bold
+truncate
+max-sm:text-lg
 `;
 const Content = tw.div`
 flex 
 flex-col 
+w-full
 items-end 
 text-sm
+`;
+const ContentP = tw.p`
+w-full
+truncate
 `;

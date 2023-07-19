@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { useLogout } from '../../hook/useLogout';
 import Swal from 'sweetalert2';
 
 import Button from '@mui/material/Button';
@@ -12,8 +12,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HeaderModal from './HeaderModal';
 import HoverButton from '../../common/Buttons/HoverButton';
 
-export default function Hamburger({ handleLogOut }) {
+export default function Hamburger() {
   const [position, setPosition] = useState(0);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
+  //리덕스툴킷
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const dispatch = useDispatch();
+  const handleLogOut = useLogout();
 
   // 스크롤 이벤트
   const onScroll = () => {
@@ -26,14 +34,6 @@ export default function Hamburger({ handleLogOut }) {
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const navigate = useNavigate();
-
-  //리덕스툴킷
-  const isLogin = useSelector((state) => state.isLogin.isLogin);
-  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -125,8 +125,6 @@ export default function Hamburger({ handleLogOut }) {
 
           <MenuItem
             onClick={() =>
-              //window.confirm('로그아웃하시겠습니까?') ? handleLogOut() : ''
-
               Swal.fire({
                 title: '정말로 로그아웃하시겠습니까?',
                 text: '정말로 로그아웃하시겠습니까?',

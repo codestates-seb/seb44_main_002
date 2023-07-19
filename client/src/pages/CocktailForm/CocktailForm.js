@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
-import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
+import AddIngreInput from '../../components/Input/AddIngreInput';
 
 import HoverButton from '../../common/Buttons/HoverButton';
 
@@ -12,6 +12,7 @@ import ImageUpload from '../../components/ImageUpload';
 import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
+import { PostCocktailForm } from '../../api/CocktailFormApi';
 
 import tw from 'tailwind-styled-components';
 
@@ -46,7 +47,22 @@ export default function CocktailForm() {
 
   const accessToken = localStorage.getItem('accessToken');
 
+  // // 엔터 누르면 submit되는 현상 막기
+  const preventFormSubmission = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', preventFormSubmission);
+    return () => {
+      document.removeEventListener('keydown', preventFormSubmission);
+    };
+  }, []);
+
   const submitHandler = (e) => {
+    // console.log(form);
     e.preventDefault();
     const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
@@ -65,17 +81,10 @@ export default function CocktailForm() {
     );
 
     if (allValid) {
-      fetch(`${process.env.REACT_APP_BASE_URL}cocktails`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: accessToken,
-        },
-        body: JSON.stringify(form),
-      })
-        .then((res) => res.json())
+      // cocktailform post 요청 api 분리
+      PostCocktailForm(form)
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
@@ -94,7 +103,9 @@ export default function CocktailForm() {
         <Background>
           <img
             className="absolute bottom-0 right-0 z-0"
-            src="images/background/fire_cocktail.png"
+            src={
+              process.env.PUBLIC_URL + `/images/background/fire_cocktail.png`
+            }
             alt="backgroundimg"
           />
           <Container>
@@ -129,8 +140,9 @@ export default function CocktailForm() {
                     }
                     size="w-[355px] h-[40px] max-[520px]:w-[320px]"
                   />
-                  <CheckboxIngrInput
+                  <AddIngreInput
                     isValid={isValid.ingredients}
+                    form={form}
                     setForm={setForm}
                   />
                   <CocktailRecipeInput
@@ -182,6 +194,7 @@ bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
 max-[520px]:rounded-none
+animate-fadeInDown1
 `;
 
 const SignupHeader = tw.h1`

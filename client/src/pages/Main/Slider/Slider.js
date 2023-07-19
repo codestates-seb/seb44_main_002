@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { open } from '../../../redux/slice/isModalSlice';
@@ -8,7 +8,6 @@ import { Autoplay, Pagination, Navigation } from 'swiper';
 
 import tw from 'tailwind-styled-components';
 import './Slider.css';
-import 'animate.css';
 
 export default function Slider() {
   const progressCircle = useRef(null);
@@ -21,6 +20,16 @@ export default function Slider() {
   const onAutoplayTimeLeft = (s, time, progress) => {
     progressCircle.current.style.setProperty('--progress', 1 - progress);
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
+
+  const onSlideChangeHandler = () => {
+    // 애니메이션을 다시 시작
+    const animatedTexts = document.querySelectorAll('.animate-fadeInRight2');
+    animatedTexts.forEach((textElement) => {
+      textElement.classList.remove('animate-fadeInRight2');
+      void textElement.offsetWidth; // reflow 강제 실행
+      textElement.classList.add('animate-fadeInRight2');
+    });
   };
 
   const cocktailFormHandler = () => {
@@ -45,25 +54,24 @@ export default function Slider() {
         }}
         navigation={true}
         loop={true}
+        onSlideChange={onSlideChangeHandler}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
         {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
-        <SwiperSlide className="swiper-slide relative">
+        <SwiperSlide className="relative swiper-slide">
           <img
-            className="w-full h-full object-cover absolute"
+            className="absolute object-cover w-full h-full"
             src="images/swiper/슬라이더샘플3.png"
             alt="sample"
           />
-          <div className="text-white absolute left-24 text-7xl font-bold max-[768px]:text-center max-[768px]:text-4xl max-[768px]:left-12">
-            <p className="flex justify-start mb-2 animate__animated animate__slideInRight">
-              안녕하세요
-            </p>
-            <p className="flex justify-start mb-6 animate__animated animate__slideInRight">
-              <span className="text-pointPurple-100 mr-2">편한</span>
+          <div className="text-white animate-fadeInRight2 absolute left-24 text-7xl font-bold max-[768px]:text-center max-[768px]:text-4xl max-[768px]:left-12">
+            <p className="flex justify-start mb-2 ">안녕하세요</p>
+            <p className="flex justify-start mb-6 ">
+              <span className="mr-2 text-pointPurple-100">편한</span>
               <span>사이트입니다</span>
             </p>
-            <p className="text-lg flex justify-start animate__animated animate__slideInRight">
+            <p className="flex justify-start text-lg ">
               편의점 한잔이라는 뜻을 가지고 있습니다
             </p>
           </div>
@@ -71,21 +79,16 @@ export default function Slider() {
         {/* TODO: 커스텀이미지 넣을거면 밑에 코드 사용할것 */}
         <SwiperSlide className="swiper-slide flex justify-around max-[768px]:flex-col max-[768px]:justify-center">
           <SliderCustomText>
-            <p className="animate__animated animate__slideInRight">
+            <p className="">
               <span className="text-pointPurple-100">오늘</span>
               <span>은,</span>
             </p>
-            <p className="animate__animated animate__slideInRight">
-              안먹고 자면
-            </p>
-            <p className="animate__animated animate__slideInRight">아쉽잖아.</p>
-            <p className="text-lg text-gray-200 mt-10 animate__animated animate__slideInRight">
+            <p className="">안먹고 자면</p>
+            <p className="">아쉽잖아.</p>
+            <p className="mt-10 text-lg text-gray-200 ">
               오늘 하루를 깔끔하게 마무리해보세요
             </p>
-            <button
-              onClick={() => navigate('/category')}
-              className="text-lg animate__animated animate__slideInRight"
-            >
+            <button onClick={() => navigate('/category')} className="text-lg ">
               레시피 찾아보기 ➡️
             </button>
           </SliderCustomText>
@@ -94,17 +97,13 @@ export default function Slider() {
 
         <SwiperSlide className="swiper-slide flex justify-around max-[768px]:flex-col max-[768px]:justify-center">
           <SliderCustomText>
-            <p className="animate__animated animate__slideInRight">
+            <p className="">
               <span className="text-pointPurple-100">댓글</span>
               <span>로,</span>
             </p>
-            <p className="animate__animated animate__slideInRight">
-              다양한 유저와
-            </p>
-            <p className="animate__animated animate__slideInRight">
-              소통해보세요!
-            </p>
-            <p className="text-lg text-gray-200 mt-10 animate__animated animate__slideInRight">
+            <p className="">다양한 유저와</p>
+            <p className="">소통해보세요!</p>
+            <p className="mt-10 text-lg text-gray-200 ">
               술을 좋아하는 사람들의 이야기!
             </p>
           </SliderCustomText>
@@ -113,17 +112,13 @@ export default function Slider() {
 
         <SwiperSlide className="swiper-slide flex justify-around max-[768px]:flex-col max-[768px]:justify-center">
           <SliderCustomText>
-            <p className="animate__animated animate__slideInRight">
+            <p className="">
               <span className="text-pointPurple-100">이중필터</span>
               <span>로,</span>
             </p>
-            <p className="animate__animated animate__slideInRight">
-              원하는 레시피를
-            </p>
-            <p className="animate__animated animate__slideInRight">
-              쉽게 찾아보세요!
-            </p>
-            <p className="text-lg text-gray-200 mt-10 animate__animated animate__slideInRight">
+            <p className="">원하는 레시피를</p>
+            <p className="">쉽게 찾아보세요!</p>
+            <p className="mt-10 text-lg text-gray-200 ">
               오늘 뭐 마실지 고민하지마세요
             </p>
           </SliderCustomText>
@@ -132,20 +127,16 @@ export default function Slider() {
 
         <SwiperSlide className="swiper-slide flex justify-around max-[768px]:flex-col max-[768px]:justify-center">
           <SliderCustomText>
-            <p className="animate__animated animate__slideInRight">
+            <p className="">
               <span className="text-pointPurple-100">나만의 레시피</span>
               <span>를</span>
             </p>
-            <p className="animate__animated animate__slideInRight">
-              다른 사람들에게
-            </p>
-            <p className="animate__animated animate__slideInRight">
-              뽐내보세요!
-            </p>
-            <p className="text-lg text-gray-200 mt-10 animate__animated animate__slideInRight">
+            <p className="">다른 사람들에게</p>
+            <p className="">뽐내보세요!</p>
+            <p className="mt-10 text-lg text-gray-200 ">
               세상에 하나뿐인 당신만의 레시피
             </p>
-            <button onClick={cocktailFormHandler} className="text-lg">
+            <button onClick={cocktailFormHandler} className="text-lg ">
               레시피 등록하러 가기 ➡️
             </button>
           </SliderCustomText>
@@ -172,6 +163,8 @@ const SliderCustomText = tw.div`
   max-[768px]:text-center 
   max-[768px]:text-4xl 
   max-[768px]:order-2
+  animate-fadeInRight2
+  font-bold
 `;
 
 const SliderCustomImg = tw.img`

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import CommentValid from '../../components/Validation/CommentValidation';
 import RecipeApi from './RecipeApi';
@@ -8,25 +8,23 @@ import tw from 'tailwind-styled-components';
 
 export default function Community({
   cocktailDetail,
-  userInfo,
   getTime,
   isLogin,
   localData,
 }) {
+  const navigate = useNavigate();
+
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
   const [commentId, setCommentId] = useState(0);
   const [isValid, setIsValid] = useState(true);
-  const navigate = useNavigate();
 
   // 댓글 등록
   const postComment = async () => {
     try {
-      const response = await RecipeApi.PostComments(
-        cocktailDetail.cocktailId,
-        { content: comment },
-        userInfo.accessToken
-      );
+      const response = await RecipeApi.PostComments(cocktailDetail.cocktailId, {
+        content: comment,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -40,11 +38,7 @@ export default function Community({
         taggedUserName: tag.userName,
         content: comment,
       };
-      const response = await RecipeApi.PostReplys(
-        commentId,
-        repliInfo,
-        userInfo.accessToken
-      );
+      const response = await RecipeApi.PostReplys(commentId, repliInfo);
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +49,7 @@ export default function Community({
     try {
       const response = await RecipeApi.deleteComments(
         commentId,
-        userInfo.accessToken
+        cocktailDetail.cocktailId
       );
     } catch (error) {
       console.log(error);
@@ -66,10 +60,7 @@ export default function Community({
   // 대댓글 삭제
   const deleteReply = async (replyId) => {
     try {
-      const response = await RecipeApi.deleteReplies(
-        replyId,
-        userInfo.accessToken
-      );
+      const response = await RecipeApi.deleteReplies(replyId);
     } catch (error) {
       console.log(error);
       location.reload();
@@ -77,7 +68,7 @@ export default function Community({
   };
 
   // 댓글, 대댓글 작성
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isLogin) {
@@ -85,21 +76,22 @@ export default function Community({
       return;
     }
 
-    CommentValid(comment, setIsValid);
-
+    // 유효성 검사
+    const isValid = await CommentValid(comment, setIsValid);
     if (!isValid) return;
 
-    if (tag.userId === '') {
-      postComment();
-      location.reload();
-    } else {
-      postReply();
-      location.reload();
+    if (isValid) {
+      if (tag.userId === '') {
+        postComment();
+        location.reload();
+      } else {
+        postReply();
+        location.reload();
+      }
     }
   };
 
   const changeTag = (userId, userName, commentId) => {
-    // 본인 태그 방지
     setTag({ userId: userId, userName: userName });
     setCommentId(commentId);
   };
@@ -133,7 +125,13 @@ export default function Community({
           return (
             <>
               <CommentContainer key={ele.userId}>
-                <CommentWriter>{ele.userName}</CommentWriter>
+                {ele.activeUserWritten ? (
+                  <Link to={`/userpage/${ele.userId}`}>
+                    <CommentWriter>{ele.userName}</CommentWriter>
+                  </Link>
+                ) : (
+                  <CommentWriter>탈퇴한 유저</CommentWriter>
+                )}
                 <CommentContent>{ele.content}</CommentContent>
                 <CommentAndButton>
                   <CommentDate>{getTime(ele.createdAt)}</CommentDate>
@@ -156,20 +154,28 @@ export default function Community({
                         </CommentButton>
                       </>
                     )}
-                    <CommentButton
-                      onClick={() =>
-                        changeTag(ele.userId, ele.userName, ele.commentId)
-                      }
-                    >
-                      답변하기
-                    </CommentButton>
+                    {ele.activeUserWritten && (
+                      <CommentButton
+                        onClick={() =>
+                          changeTag(ele.userId, ele.userName, ele.commentId)
+                        }
+                      >
+                        답변하기
+                      </CommentButton>
+                    )}
                   </ButtonContainer>
                 </CommentAndButton>
               </CommentContainer>
               {ele.replies.map((rp) => {
                 return (
                   <ReplyContainer key={rp.userId}>
-                    <CommentWriter>{rp.userName}</CommentWriter>
+                    {rp.activeUserWritten ? (
+                      <Link to={`/userpage/${rp.userId}`}>
+                        <CommentWriter>{rp.userName}</CommentWriter>
+                      </Link>
+                    ) : (
+                      <CommentWriter>탈퇴한 유저</CommentWriter>
+                    )}
                     <CommentContent>
                       {'@' +
                         rp.taggedUserInfo.taggedUserName +
@@ -198,13 +204,15 @@ export default function Community({
                             </CommentButton>
                           </>
                         )}
-                        <CommentButton
-                          onClick={() =>
-                            changeTag(rp.userId, rp.userName, ele.commentId)
-                          }
-                        >
-                          답변하기
-                        </CommentButton>
+                        {rp.activeUserWritten && (
+                          <CommentButton
+                            onClick={() =>
+                              changeTag(rp.userId, rp.userName, ele.commentId)
+                            }
+                          >
+                            답변하기
+                          </CommentButton>
+                        )}
                       </ButtonContainer>
                     </CommentAndButton>
                   </ReplyContainer>
@@ -280,17 +288,22 @@ max-md:flex-col
 max-md:items-start
 `;
 const CommentWriter = tw.p`
+inline-block
 text-gray-200 
 text-xs
 `;
 const CommentContent = tw.p`
+w-[calc(100%-215px)]
 text-gray-100
 text-sm
+max-md:w-full
 `;
 const CommentDate = tw.p`
+w-[calc(100%-215px)]
 mt-1.5
 text-gray-200 
 text-xs
+max-md:w-full
 `;
 const CommentAndButton = tw.div`
 flex 

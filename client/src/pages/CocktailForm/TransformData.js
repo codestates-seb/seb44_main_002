@@ -29,29 +29,6 @@ export const divisionTags = (tags) => {
   return { degree: degreeResult, flavor: flavorResult };
 };
 
-// 속재료 한글 -> 영어
-export const transformIngredients = (ingredients) => {
-  const ingredientsMapping = {
-    소금: 'salt',
-    설탕: 'sugar',
-    레몬즙: 'lemonSqueeze',
-    라임즙: 'limeSqueeze',
-    과일음료: 'beverage',
-    탄산음료: 'soda',
-    민트: 'mint',
-    얼음: 'ice',
-    우유: 'milk',
-  };
-
-  const transformedIngredients = ingredients.map((item) => {
-    const ingredientName = item.ingredient;
-    const mappedIngredient = ingredientsMapping[ingredientName];
-    return { ingredient: mappedIngredient || ingredientName };
-  });
-
-  return transformedIngredients;
-};
-
 // 베이스 술 변환
 export const transformLiquor = (liquor) => {
   const liquorMapping = {

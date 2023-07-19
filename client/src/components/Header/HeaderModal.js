@@ -9,6 +9,7 @@ import { userinfoLogin, userinfoGet } from '../../redux/slice/userInfoSlice';
 import HoverButton from '../../common/Buttons/HoverButton';
 import CustomInput from '../Input/CustomInput';
 import useLoginValid from '../Validation/LoginValidation';
+import api from '../../api/api';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -50,8 +51,7 @@ export default function HeaderModal() {
   const navigate = useNavigate();
 
   // 사용자 이름및 사용자 정보 조회 함수
-  // 유저 정보 조회할때 토근으로 조회 권한 여부  credentials: 'include',
-  const handleUserInfo = async (memberId) => {
+  const handleUserInfo = (memberId) => {
     fetch(`${BASE_URL}users/${memberId}`, {
       method: 'GET',
       headers: {
@@ -70,7 +70,7 @@ export default function HeaderModal() {
       });
   };
   // 로그인 버튼 클릭시 실행되는 함수
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 유효성 검사 로직
     const { email, password } = useLoginValid(form);
@@ -80,51 +80,36 @@ export default function HeaderModal() {
     });
 
     if (email && password) {
-      fetch(`${BASE_URL}auth/signin`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      })
-        .then((data) => {
-          if (data.status === 200) {
-            localStorage.setItem(
-              'accessToken',
-              data.headers.get('Authorization')
-            );
-
-            localStorage.setItem('userId', data.headers.get('userId'));
-            localStorage.setItem('IsAdmin', data.headers.get('IsAdmin'));
-            localStorage.setItem('refreshToken', data.headers.get('Refresh'));
-
-            dispatch(
-              userinfoLogin({
-                userId: data.headers.get('userId'),
-                accessToken: data.headers.get('Authorization'),
-                IsAdmin: data.headers.get('IsAdmin'),
-              })
-            );
-            //Isadmin:
-            //사용자 정보 조회
-            handleUserInfo(data.headers.get('userId'));
-            // 전역상태관리 로그인으로 변경
-            dispatch(login());
-            handleClose();
-            navigate('/');
-          } else {
-            if (data.status === 401) {
-              setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
-            }
-            console.log('요청이 실패했습니다.');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
+      //분리된 api 연결
+      try {
+        const response = await api.loginApi(form);
+        //성공
+        if (response.status === 200) {
+          //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
+          dispatch(
+            userinfoLogin({
+              userId: response.headers.get('userId'),
+              accessToken: response.headers.get('Authorization'),
+              IsAdmin: response.headers.get('IsAdmin'),
+            })
+          );
+          //사용자 정보 조회
+          handleUserInfo(response.headers.get('userId'));
+          // 전역상태관리 로그인으로 변경
+          dispatch(login());
           handleClose();
-          navigate('/error');
-        });
+          navigate('/');
+        } else {
+          // 응답 실패
+          if (response === 401) {
+            setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        handleClose();
+        navigate('/error');
+      }
     } else {
       console.log('유효성 검사 작동');
     }

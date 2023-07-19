@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/slice/isLoginSlice';
-import { userinfoLoginOut } from '../../redux/slice/userInfoSlice';
 import Swal from 'sweetalert2';
+import { useLogout } from '../../hook/useLogout';
 
 import HeaderModal from './HeaderModal';
 import Hamburger from './Hamburger';
@@ -13,18 +12,18 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Header() {
+  const [hovered, setHovered] = useState(false);
+  const [randomColor, setRandomColor] = useState('');
   const [position, setPosition] = useState(0);
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
   // 리덕스 툴킷
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const userinfo = useSelector((state) => state.userinfo);
-  const dispatch = useDispatch();
 
-  const [hovered, setHovered] = useState(false);
-  const [randomColor, setRandomColor] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const logout = useLogout();
+
   const name = localStorage.getItem('name');
   const userid = localStorage.getItem('userId');
   // 글자 색 바꾸기
@@ -78,13 +77,13 @@ export default function Header() {
       {label}
     </div>
   );
-  const handleLogOut = () => {
-    console.log('동작');
-    localStorage.clear();
-    dispatch(logout());
-    dispatch(userinfoLoginOut());
-    navigate('/');
-  };
+  // const handleLogOut = () => {
+  //   // console.log('동작');
+  //   localStorage.clear();
+  //   dispatch(logout());
+  //   dispatch(userinfoLoginOut());
+  //   navigate('/');
+  // };
 
   const randomHandler = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}cocktails/random`, {
@@ -161,10 +160,6 @@ export default function Header() {
               {userinfo.name || name}
             </div>
             <div className="mx-2">
-              {/* <MenuItem
-                path="/userpage/:id"
-                label={<PersonIcon fontSize="large" />}
-              /> */}
               <div
                 className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden`}
                 role="presentation"
@@ -177,10 +172,6 @@ export default function Header() {
             <div className="mx-2">
               <LogoutIcon
                 onClick={() =>
-                  // window.confirm('로그아웃하시겠습니까?')
-                  //   ? handleLogOut()
-                  //   : ''
-
                   Swal.fire({
                     title: '정말로 로그아웃하시겠습니까?',
                     text: '정말로 로그아웃하시겠습니까?',
@@ -195,7 +186,7 @@ export default function Header() {
                     // 만약 Promise리턴을 받으면,
                     if (result.isConfirmed) {
                       // 만약 모달창에서 confirm 버튼을 눌렀다면
-                      handleLogOut();
+                      logout();
                     }
                   })
                 }
@@ -205,7 +196,7 @@ export default function Header() {
             </div>
           </HeaderDiv>
           <HeaderDiv className="justify-end min-[769px]:hidden">
-            <Hamburger handleLogOut={handleLogOut} />
+            <Hamburger />
           </HeaderDiv>
         </>
       ) : (

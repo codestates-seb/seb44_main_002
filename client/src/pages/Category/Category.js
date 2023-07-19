@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-//북마크 기능 추가 페이지네이션 추가
 import { CategoryFilter, sortTypeData } from '../../common/Data';
 
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
-// import Pagination from '../../components/Pagination/Pagination';
 import useFilterurl from '../../components/FIlterUrl/Filterurl';
-
 import tw from 'tailwind-styled-components';
 
+// 페이지네이션 추가
 export default function Category() {
   //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //리덕스 임시 저장
@@ -79,7 +78,7 @@ export default function Category() {
   }, [filterCondtion, currentPage]);
 
   return (
-    <div className="overflow-hidden">
+    <DivContainer>
       <Container>
         {/* 배경 음표 */}
         <img
@@ -94,16 +93,16 @@ export default function Category() {
           className="absolute bottom-[-400px] right-[900px] pointer-events-none"
         />
         {/* 가운데정렬을 위한 block */}
-        <Section>
+        <Main>
           {/* 레시피 등록 버튼 */}
-          <div className="flex justify-end pb-5 ">
+          <PostButtonContainer>
+            {/* 등록버튼 더 강조해서 css 하기 -> border-gradient border border-solid from-red-500 to-yellow-500 */}
             <HoverButton
               size="w-[15.6rem] h-[60px] max-[990px]:w-[10rem] max-[700px]:w-[8rem] max-[700px]:h-[40px] "
               className="absolute bottom-0 right-0"
               radius="rounded-[30px]"
               color="text-[#BB40F1] bg-transparent"
               fontSize="max-[990px]:text-sm max-[700px]:text-xs max-[500px]:text-[10px]"
-              // border-gradient border border-solid from-red-500 to-yellow-500
               borderColor="border-[#BB40F1]"
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
               onClick={() =>
@@ -114,9 +113,9 @@ export default function Category() {
             >
               나만의 레시피 등록하기
             </HoverButton>
-          </div>
+          </PostButtonContainer>
 
-          <div className="border-1 border-solid border-red">
+          <Section>
             {/* 필터 */}
             <Filter
               setFilterCondtion={setFilterCondtion}
@@ -135,9 +134,9 @@ export default function Category() {
               ))}
             </CardContainer>
             {/* 에러메시지 */}
-            {errormsg && <p className="text-error mb-4">{errormsg}</p>}
+            {errormsg && <ErrorMessage>{errormsg}</ErrorMessage>}
             {/* 페이지네이션 */}
-            <div className="flex justify-start mb-[100px] gap-2">
+            <PaginationContainer>
               {obj && (
                 <>
                   {obj.totalCount > 16 && (
@@ -172,13 +171,15 @@ export default function Category() {
                   )}
                 </>
               )}
-            </div>
-          </div>
-        </Section>
+            </PaginationContainer>
+          </Section>
+        </Main>
       </Container>
-    </div>
+    </DivContainer>
   );
 }
+const DivContainer = tw.div`overflow-hidden`;
+
 const Container = tw.div`
 relative
  bg-gradient-to-r 
@@ -190,11 +191,19 @@ relative
     flex 
     justify-center 
      `;
-const Section = tw.section`
+const Main = tw.main`
 w-[55rem] 
 max-[990px]:w-[40rem] 
 max-[700px]:w-[30rem] 
 max-[500px]:w-[20rem]`;
+
+const PostButtonContainer = tw.div`
+flex justify-end pb-5
+`;
+
+const Section = tw.section`
+border-1 border-solid border-red
+`;
 const CardContainer = tw.div`
 w-[100%]   
 grid grid-cols-4 
@@ -207,3 +216,10 @@ max-[700px]:flex-wrap
 max-[500px]:flex 
 max-[500px]:justify-center 
 max-[500px]:flex-wrap `;
+
+const ErrorMessage = tw.p`
+text-error mb-4`;
+
+const PaginationContainer = tw.div`
+flex justify-start mb-[100px] gap-2
+`;

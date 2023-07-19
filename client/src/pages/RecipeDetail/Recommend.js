@@ -1,13 +1,12 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import Card from '../../components/Card/Card';
 
 import tw from 'tailwind-styled-components';
-import { useEffect, useState } from 'react';
 
 export default function Recommend({ cocktailDetail }) {
   const [recommends, setRecommends] = useState(cocktailDetail);
-  //console.log(recommends);
+
   useEffect(() => {
     setRecommends(cocktailDetail);
   }, [cocktailDetail]);
@@ -18,7 +17,6 @@ export default function Recommend({ cocktailDetail }) {
       <CardContainer>
         {recommends.map((ele) => {
           return (
-            //북마크 클릭시 link 가 이동해서 card 안에 navigate(`/detail/${item.cocktailId}`)으로 수정했습니다.
             <div className="mb-12 mr-4" key={ele.cocktailId}>
               <Card item={ele} setData={setRecommends} data={recommends} />
             </div>
