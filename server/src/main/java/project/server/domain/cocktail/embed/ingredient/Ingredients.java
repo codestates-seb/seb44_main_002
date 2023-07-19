@@ -18,7 +18,7 @@ public class Ingredients {
     private Set<String> ingredients;
 
     public Ingredients(List<IngredientDto.Post> baseIngredients, List<IngredientDto.Post> additionalIngredients) {
-        if (additionalIngredients != null) {
+        if (hasAdditionalIngredients(additionalIngredients)) {
             baseIngredients.addAll(additionalIngredients);
         }
         this.ingredients = baseIngredients.stream()
@@ -34,5 +34,9 @@ public class Ingredients {
 
     private IngredientDto.Response createResponseDto(String ingredient) {
         return new IngredientDto.Response(ingredient);
+    }
+
+    private boolean hasAdditionalIngredients(List<IngredientDto.Post> additionalIngredients) {
+        return additionalIngredients != null;
     }
 }
