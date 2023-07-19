@@ -123,6 +123,20 @@ export default {
       console.error(error);
     }
   },
+  //유저 조회
+  async getUserinfoApi(memberId) {
+    try {
+      const response = await fetch(`${API_BASE}users/${memberId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
   //북마크 추가
   async createbookmarkApi(item) {
     try {
