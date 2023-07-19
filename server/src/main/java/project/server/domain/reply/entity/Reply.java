@@ -9,7 +9,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.reply.TaggedUserInfo;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.user.User;
-import project.server.domain.comment.entity.Comment;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,9 +24,8 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long replyId;
 
-    private long userId;
-
-    private String userName;
+    @ManyToOne
+    private User user;
 
     private long commentId;
 
