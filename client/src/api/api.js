@@ -20,19 +20,23 @@ const fetchrefreshToken = async () => {
         // 리프래쉬로 엑세스토큰 요청
       },
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to refresh token');
-    }
     //완전히 만료 ->로그아웃진행
     if (response.status === 401) {
-      alert('토큰만료로 로그아웃되었습니다.');
       //handleLogOut();
+      return false;
     }
     //재발급 성공 (엑세스토큰만 리스폰스헤더에)
     if (response.ok) {
-      jwtToken = response.headers.get('Authorization'); // 새로운 토큰으로 기존의 토큰을 갱신
-      return jwtToken;
+      console.log('재발급완료');
+      // console.log(response.headers.get('Authorization'));
+      localStorage.setItem(
+        'accessToken',
+        response.headers.get('Authorization')
+        // 새로운 토큰으로 기존의 토큰을 갱신
+      );
+      const token = response.headers.get('Authorization');
+      console.log(token);
+      return token;
     }
   } catch (error) {
     console.error(error);
@@ -45,13 +49,19 @@ const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
+    console.log('재발급 요망');
     const newToken = await fetchrefreshToken();
-    localStorage.setItem('accessToken', newToken);
 
     if (newToken) {
       // 새로 발급받은 토큰을 헤더에 포함하여 다시 요청
-      options.headers['Authorization'] = `${newToken}`;
-      return fetch(url, options);
+      console.log('재발급성공후 재시도');
+      options.headers.Authorization = newToken;
+      console.log(options);
+      const response = await fetch(url, options);
+      return response;
+      //return fetch(url, options);
+    } else {
+      return 401;
     }
   }
   //   200 이면 성공
@@ -61,7 +71,6 @@ const fetchWithInterceptor = async (url, options) => {
   return response;
 };
 
-//리프래쉬토큰 만료 되면 액세스토큰 ?
 export default {
   //회원가입
   async signupApi(userinfo) {
@@ -73,16 +82,42 @@ export default {
         },
         body: JSON.stringify(userinfo),
       });
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
+      if (response.ok) {
+        return 201;
       }
-      return response;
+      if (response.status === 409) {
+        return 409;
+      }
+      if (response.status === 500) {
+        return 500;
+      }
     } catch (error) {
       console.error(error);
     }
   },
   //로그인
-
+  async loginApi(form) {
+    try {
+      const response = await fetch(`${BASE_URL}auth/signin`, {
+        method: 'POST',
+        // credentials: 'include',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        body: JSON.stringify(form),
+      });
+      if (response.ok) {
+        return 200;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+    } catch (error) {
+      console.log(error);
+      handleClose();
+      navigate('/error');
+    }
+  },
   //로그아웃
   async logoutApi() {
     try {
@@ -115,8 +150,10 @@ export default {
           },
         }
       );
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
+
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
       }
     } catch (error) {
       console.error(error);
@@ -132,18 +169,13 @@ export default {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: localAccessToken,
+            Authorization: localStorage.getItem('accessToken'),
           },
         }
       );
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
-      }
-      const data = await response.json();
-      console.log('Data:', data);
-      //  로그인이 풀렸을 때
-      if (data.status === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
       }
     } catch (error) {
       console.error(error);
