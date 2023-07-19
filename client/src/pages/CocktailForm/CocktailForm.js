@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
-import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 import AddIngreInput from '../../components/Input/AddIngreInput';
 
@@ -27,8 +26,7 @@ export default function CocktailForm() {
     name: '',
     imageUrl: '',
     liquor: '',
-    baseIngredients: [],
-    additionalIngredients: [],
+    ingredients: [],
     recipe: [{ id: 0, process: '' }],
     degree: '',
     flavor: [],
@@ -38,7 +36,7 @@ export default function CocktailForm() {
     name: true,
     imageUrl: true,
     liquor: true,
-    baseIngredients: true,
+    ingredients: true,
     recipe: true,
     degree: true,
     flavor: true,
@@ -63,15 +61,15 @@ export default function CocktailForm() {
   }, []);
 
   const submitHandler = (e) => {
-    console.log(form);
+    // console.log(form);
     e.preventDefault();
-    const { name, imageUrl, liquor, baseIngredients, recipe, degree, flavor } =
+    const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
     const updatedIsValid = {
       name,
       imageUrl,
       liquor,
-      baseIngredients,
+      ingredients,
       recipe,
       degree,
       flavor,
@@ -92,7 +90,7 @@ export default function CocktailForm() {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
@@ -148,12 +146,11 @@ export default function CocktailForm() {
                     }
                     size="w-[355px] h-[40px] max-[520px]:w-[320px]"
                   />
-                  <CheckboxIngrInput
-                    isValid={isValid.baseIngredients}
+                  <AddIngreInput
+                    isValid={isValid.ingredients}
                     form={form}
                     setForm={setForm}
                   />
-                  <AddIngreInput form={form} setForm={setForm} />
                   <CocktailRecipeInput
                     form={form}
                     setForm={setForm}

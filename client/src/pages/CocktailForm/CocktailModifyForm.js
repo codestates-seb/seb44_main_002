@@ -3,16 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
-import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
+import AddIngreInput from '../../components/Input/AddIngreInput';
 
 import HoverButton from '../../common/Buttons/HoverButton';
 
-import {
-  divisionTags,
-  // transformBaseIngredients,
-  transformLiquor,
-} from './TransformData';
+import { divisionTags, transformLiquor } from './TransformData';
 import ImageUpload from '../../components/ImageUpload';
 import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
@@ -36,8 +32,7 @@ export default function CocktailModifyForm() {
     name: '',
     imageUrl: '',
     liquor: '',
-    baseIngredients: [],
-    additionalIngredients: [],
+    ingredients: [],
     recipe: [{ id: 0, process: '' }],
     degree: '',
     flavor: [],
@@ -47,7 +42,7 @@ export default function CocktailModifyForm() {
     name: true,
     imageUrl: true,
     liquor: true,
-    baseIngredients: true,
+    ingredients: true,
     recipe: true,
     degree: true,
     flavor: true,
@@ -66,11 +61,8 @@ export default function CocktailModifyForm() {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        // console.log(json);
         const transformedTags = divisionTags(json.tags);
-        // const transformedbaseIngredients = transformBaseIngredients(
-        //   json.ingredients
-        // );
         const transformedLiquor = transformLiquor(json.liquor);
         setForm({
           ...form,
@@ -83,7 +75,9 @@ export default function CocktailModifyForm() {
           degree: transformedTags.degree,
           // 컴포넌트 설계 미스
           // flavor: transformedTags.flavor,
-          // baseIngredients: transformedbaseIngredients,
+          ingredients: json.ingredients.map((item) => ({
+            ingredient: item.ingredient,
+          })),
           liquor: transformedLiquor,
         });
       })
@@ -91,15 +85,15 @@ export default function CocktailModifyForm() {
   }, []);
 
   const submitHandler = (e) => {
-    console.log(form);
+    // console.log(form);
     e.preventDefault();
-    const { name, imageUrl, liquor, baseIngredients, recipe, degree, flavor } =
+    const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
     const updatedIsValid = {
       name,
       imageUrl,
       liquor,
-      baseIngredients,
+      ingredients,
       recipe,
       degree,
       flavor,
@@ -109,7 +103,7 @@ export default function CocktailModifyForm() {
       name,
       imageUrl,
       liquor,
-      baseIngredients,
+      ingredients,
       recipe,
       degree,
       flavor,
@@ -129,7 +123,7 @@ export default function CocktailModifyForm() {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
+          // console.log(json);
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
@@ -185,10 +179,10 @@ export default function CocktailModifyForm() {
                     }
                     size="w-[355px] h-[40px] max-[520px]:w-[320px]"
                   />
-                  <CheckboxIngrInput
-                    isValid={isValid.baseIngredients}
+                  <AddIngreInput
                     form={form}
                     setForm={setForm}
+                    isValid={isValid.ingredients}
                   />
                   <CocktailRecipeInput
                     form={form}
