@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
 import CheckboxIngrInput from '../../components/Input/CheckboxIngrInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
+import AddIngreInput from '../../components/Input/AddIngreInput';
 
 import HoverButton from '../../common/Buttons/HoverButton';
 
@@ -46,6 +47,20 @@ export default function CocktailForm() {
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem('accessToken');
+
+  // // 엔터 누르면 submit되는 현상 막기
+  const preventFormSubmission = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', preventFormSubmission);
+    return () => {
+      document.removeEventListener('keydown', preventFormSubmission);
+    };
+  }, []);
 
   const submitHandler = (e) => {
     console.log(form);
@@ -138,6 +153,7 @@ export default function CocktailForm() {
                     form={form}
                     setForm={setForm}
                   />
+                  <AddIngreInput form={form} setForm={setForm} />
                   <CocktailRecipeInput
                     form={form}
                     setForm={setForm}
