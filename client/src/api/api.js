@@ -74,7 +74,7 @@ export default {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: localAccessToken, // 토큰을 헤더에 포함하여 보호된 API에 요청
+            Authorization: localStorage.getItem('accessToken'), // 토큰을 헤더에 포함하여 보호된 API에 요청
           },
         }
       );
