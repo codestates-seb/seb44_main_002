@@ -3,40 +3,16 @@ import RankingCard from './RankingCard';
 import { useSelector } from 'react-redux';
 
 import tw from 'tailwind-styled-components';
+import { RankingApi } from './RankingApi';
 
 export default function Ranking({ error, setError }) {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  //console.log(BASE_URL);
   const [data, setData] = useState(null);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   useEffect(() => {
-    let endpoint = `${BASE_URL}recommend/unsigned`;
-    // console.log(endpoint);
-    let headers = {
-      'Content-Type': 'application/json',
-    };
-
-    if (isLogin) {
-      endpoint = `${BASE_URL}recommend/signed`;
-      headers = {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('accessToken'),
-      };
-    }
-
-    fetch(endpoint, {
-      method: 'GET',
-      headers: headers,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('네트워크 응답이 정상이 아닙니다');
-        }
-        return res.json();
-      })
+    // rankingApi fetch
+    RankingApi(isLogin)
       .then((json) => {
-        console.log('서버 응답:', json);
         if (json.bestCocktails.length === 0) {
           setError(true);
         } else {
@@ -45,7 +21,7 @@ export default function Ranking({ error, setError }) {
         }
       })
       .catch((error) => {
-        console.log('에러:', error);
+        console.log(error);
         setError(true);
       });
   }, [isLogin]);
