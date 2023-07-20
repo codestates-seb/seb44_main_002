@@ -97,7 +97,6 @@ export default function Community({
         postReply();
       }
     }
-    //location.reload();
   };
 
   // 대댓글을 달 댓글에 대한 정보 수정
