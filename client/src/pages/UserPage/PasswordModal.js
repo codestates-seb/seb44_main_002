@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import UserPageApi from './UserPageApi';
+import UserPageApi from '../../api/UserPageApi';
 import CustomInput from '../../components/Input/CustomInput';
 import modifyPasswordValid from '../../components/Validation/ModifyPwdValidation';
 
@@ -37,13 +37,9 @@ export default function PasswordModal({ localData }) {
   };
   const modifyPassword = async () => {
     try {
-      const response = await UserPageApi.modifyUser(
-        localData.userId,
-        {
-          password: form.password,
-        },
-        localData.accessToken
-      );
+      const response = await UserPageApi.modifyUser(localData.userId, {
+        password: form.password,
+      });
     } catch (error) {
       console.log(error);
     }

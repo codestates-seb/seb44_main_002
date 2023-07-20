@@ -2,13 +2,14 @@ const API_BASE = process.env.REACT_APP_BASE_URL;
 
 export default {
   // 회원 정보 조회
-  async getUserData(userId, accessToken) {
+  async getUserData(userId) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localStorage.getItem('accessToken'),
+          Refresh: localStorage.getItem('refreshToken'),
         },
       });
       if (response.ok) {
@@ -21,13 +22,14 @@ export default {
     }
   },
   // 회원 정보 수정
-  async modifyUser(userId, password, accessToken) {
+  async modifyUser(userId, password) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localStorage.getItem('accessToken'),
+          Refresh: localStorage.getItem('refreshToken'),
         },
         body: JSON.stringify(password),
       });
@@ -41,13 +43,14 @@ export default {
     }
   },
   // 회원 탈퇴
-  async deleteUser(userId, accessToken) {
+  async deleteUser(userId) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localStorage.getItem('accessToken'),
+          Refresh: localStorage.getItem('refreshToken'),
         },
       });
       if (response.ok) {
@@ -60,13 +63,14 @@ export default {
     }
   },
   // 구독하기
-  async createfollow(userId, accessToken) {
+  async createfollow(userId) {
     try {
       const response = await fetch(`${API_BASE}follow/create/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localStorage.getItem('accessToken'),
+          Refresh: localStorage.getItem('refreshToken'),
         },
       });
       if (response.ok) {
@@ -79,13 +83,14 @@ export default {
     }
   },
   // 구독취소
-  async cancelfollow(userId, accessToken) {
+  async cancelfollow(userId) {
     try {
       const response = await fetch(`${API_BASE}follow/cancel/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: accessToken,
+          Authorization: localStorage.getItem('accessToken'),
+          Refresh: localStorage.getItem('refreshToken'),
         },
       });
       if (response.ok) {
