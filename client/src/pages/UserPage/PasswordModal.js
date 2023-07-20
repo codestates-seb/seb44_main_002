@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import UserPageApi from './UserPageApi';
+import UserPageApi from '../../api/UserPageApi';
 import CustomInput from '../../components/Input/CustomInput';
 import modifyPasswordValid from '../../components/Validation/ModifyPwdValidation';
 

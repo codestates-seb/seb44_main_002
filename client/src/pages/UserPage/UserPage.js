@@ -6,7 +6,7 @@ import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
 import UserRecipe from './UserRecipe';
 import UserBookmarked from './UserBookmarked';
-import UserPageApi from './UserPageApi';
+import UserPageApi from '../../api/UserPageApi';
 
 import tw from 'tailwind-styled-components';
 

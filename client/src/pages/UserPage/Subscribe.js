@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import UserPageApi from './UserPageApi';
+import UserPageApi from '../../api/UserPageApi';
 
 import tw from 'tailwind-styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
