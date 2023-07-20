@@ -15,7 +15,10 @@ export default function Subscribe({ userInfo }) {
 
   const cancleFollow = async (id) => {
     try {
-      const response = await UserPageApi.cancelfollow(id);
+      const response = await UserPageApi.cancelfollow(
+        id,
+        localData.accessToken
+      );
       location.reload();
     } catch (error) {
       console.log(error);

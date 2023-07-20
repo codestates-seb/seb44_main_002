@@ -5,19 +5,19 @@ import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 import AddIngreInput from '../../components/Input/AddIngreInput';
-
-import HoverButton from '../../common/Buttons/HoverButton';
-
-import { divisionTags, transformLiquor } from './TransformData';
-import { PatchCocktailForm, GetCocktailForm } from '../../api/CocktailFormApi';
 import ImageUpload from '../../components/ImageUpload';
-import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
+import { divisionTags, transformLiquor } from './TransformData';
+import { PatchCocktailForm, GetCocktailForm } from '../../api/CocktailFormApi';
+import CocktailTag from './CocktailTag';
+import HoverButton from '../../common/Buttons/HoverButton';
+import { useLogout } from '../../hook/useLogout';
 
 import tw from 'tailwind-styled-components';
 
 export default function CocktailModifyForm() {
+  const logout = useLogout();
   // 로딩화면
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,8 +26,6 @@ export default function CocktailModifyForm() {
   }, 500);
 
   const params = useParams();
-
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const [form, setForm] = useState({
     name: '',
@@ -48,7 +46,20 @@ export default function CocktailModifyForm() {
     degree: true,
     flavor: true,
   });
-  const accessToken = localStorage.getItem('accessToken');
+
+  // // 엔터 누르면 submit되는 현상 막기
+  const preventFormSubmission = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', preventFormSubmission);
+    return () => {
+      document.removeEventListener('keydown', preventFormSubmission);
+    };
+  }, []);
 
   const navigate = useNavigate();
 
@@ -56,6 +67,10 @@ export default function CocktailModifyForm() {
     // cocktailform get 요청 api 분리
     GetCocktailForm(params.id)
       .then((json) => {
+        if (response === 401) {
+          alert('토큰만료로 로그아웃되었습니다.');
+          logout();
+        }
         // console.log(json);
         const transformedTags = divisionTags(json.tags);
         const transformedLiquor = transformLiquor(json.liquor);
@@ -69,7 +84,7 @@ export default function CocktailModifyForm() {
           })),
           degree: transformedTags.degree,
           // 컴포넌트 설계 미스
-          // flavor: transformedTags.flavor,
+          flavor: transformedTags.flavor,
           ingredients: json.ingredients.map((item) => ({
             ingredient: item.ingredient,
           })),

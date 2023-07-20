@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { CategoryFilter, sortTypeData } from '../../common/Data';
-
+import { useLogout } from '../../hook/useLogout';
+import api from '../../api/api';
 import Card from '../../components/Card/Card';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
@@ -16,6 +17,7 @@ export default function Category() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const logout = useLogout();
   //리덕스 임시 저장
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   //선택된 카테고리조건 (카테고리&태그&정렬)
@@ -43,15 +45,11 @@ export default function Category() {
       const url = useFilterurl(BASE_URL, currentPage, filterCondtion);
 
       try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('accessToken'),
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
+        const response = await api.getfilter(url);
+        if (response === 401) {
+          alert('토큰만료로 로그아웃되었습니다.');
+          logout();
+          return;
         }
         const data = await response.json();
         setCocktailData(data.data);

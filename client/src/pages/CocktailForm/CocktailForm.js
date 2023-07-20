@@ -5,18 +5,19 @@ import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 import AddIngreInput from '../../components/Input/AddIngreInput';
-
-import HoverButton from '../../common/Buttons/HoverButton';
-
 import ImageUpload from '../../components/ImageUpload';
-import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
+
+import { useLogout } from '../../hook/useLogout';
+import CocktailTag from './CocktailTag';
 import { PostCocktailForm } from '../../api/CocktailFormApi';
+import HoverButton from '../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
 
 export default function CocktailForm() {
+  const logout = useLogout();
   const [isLoading, setIsLoading] = useState(false);
 
   setTimeout(() => {
@@ -44,8 +45,6 @@ export default function CocktailForm() {
   });
 
   const navigate = useNavigate();
-
-  const accessToken = localStorage.getItem('accessToken');
 
   // // 엔터 누르면 submit되는 현상 막기
   const preventFormSubmission = (e) => {
@@ -85,6 +84,10 @@ export default function CocktailForm() {
       PostCocktailForm(form)
         .then((json) => {
           // console.log(json);
+          if (response === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+          }
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
