@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import project.server.domain.recommend.service.RecommendService;
 import project.server.domain.recommend.dto.RecommendDto;
 import project.server.domain.user.AuthManager;
+import project.server.utils.UnsignedPermission;
 
 @RestController
 @RequestMapping("/recommend")
@@ -30,7 +31,7 @@ public class RecommendController {
 
     @GetMapping("/signed")
     public ResponseEntity getRecommendCocktailsForSignedUsers(Authentication authentication){
-        String email = authManager.getEmailFromAuthentication(authentication, false);
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         RecommendDto.SignedResponse response = recommendService.readRecommendCocktailsForSignedUser(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

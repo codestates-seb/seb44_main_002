@@ -136,7 +136,7 @@ public class AppConfiguration implements InitializingBean {
                 .category(Category.CATEGORY1)
                 .liquor(Liquor.TEQUILA)
                 .name("그레이브 야드")
-                .imageUrl("https://wine21.speedgabia.com/WINE_MST/TITLE/0146000/W0146857.jpg")
+                .imageUrl("https://i0.wp.com/haileydaily.com/wp-content/uploads/2023/07/%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8-%EC%BB%A4%ED%94%BC.png?resize=300%2C300&ssl=1")
                 .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("보드카", "진", "럼", "버번 위스키", "트리플 섹", "스타우드", "라거"))))
                 .recipe(new Recipe(List.of("잔에 보드카 30ml를 넣어줍니다."
                         , "진 30ml를 넣어줍니다."
