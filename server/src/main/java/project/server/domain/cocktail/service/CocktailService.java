@@ -71,7 +71,7 @@ public class CocktailService {
             return cocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
         }
         User user = userService.findUserByEmail(email);
-        log.info("# cocktailId : {} 조회 완료", cocktailId);
+        log.info("# userId : {} , cocktailId : {} 조회 완료", user.getUserId(), cocktailId);
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
