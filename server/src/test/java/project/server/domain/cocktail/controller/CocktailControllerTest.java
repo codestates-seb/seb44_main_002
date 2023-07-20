@@ -57,14 +57,14 @@ class CocktailControllerTest {
         IngredientDto.Post ingredient = new IngredientDto.Post();
         ingredient.setIngredient("milk");
 
-        CocktailDto.Post post = new CocktailDto.Post();
-        post.setName("test");
-        post.setDegree("frequency_high");
-        post.setRecipe(List.of(process1, process2));
-        post.setFlavor(List.of(tag));
-        post.setLiquor("rum");
-        post.setIngredients(List.of(ingredient));
-        post.setImageUrl("sample image url");
+        CocktailDto.Post dto = new CocktailDto.Post();
+        dto.setName("test");
+        dto.setDegree("frequency_high");
+        dto.setRecipe(List.of(process1, process2));
+        dto.setFlavor(List.of(tag));
+        dto.setLiquor("rum");
+        dto.setIngredients(List.of(ingredient));
+        dto.setImageUrl("sample image url");
 
         // 가짜 응답 생성
         CocktailDto.Response fakeResponse = CocktailDto.Response.builder()
@@ -86,7 +86,7 @@ class CocktailControllerTest {
         when(cocktailService.createCocktail(authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get()), new CocktailDto.Post()))
                 .thenReturn(fakeResponse);
 
-        String content = gson.toJson(post);
+        String content = gson.toJson(dto);
 
         // MockMvc를 사용하여 컨트롤러 메서드 호출
         mockMvc.perform(

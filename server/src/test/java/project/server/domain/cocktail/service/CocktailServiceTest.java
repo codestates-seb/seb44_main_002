@@ -47,12 +47,6 @@ class CocktailServiceTest {
     @InjectMocks
     private CocktailService cocktailService;
 
-    /**
-     *  return 값이 CocktailSerializer#entityToSignedUser();
-     *  얘까지 값을 정해줘놓고 테스트를 하는게 맞나...?
-     *  어떤 값은 mock 객체로 대체하고, 어떤 값은 기본 값을 넣어줘야 하는지를 잘 모르겠다.
-     *  어떤 값을 검증해야하는거지??
-     */
     @Test
     void createCocktailTest() {
         // given
