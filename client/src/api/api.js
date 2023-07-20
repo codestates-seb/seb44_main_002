@@ -158,7 +158,7 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 3000) {
+      if (response.status === 218) {
         console.log('재발급받고 엑세스 토큰담겨있음.');
 
         localStorage.setItem(
@@ -192,7 +192,7 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 3000) {
+      if (response.status === 218) {
         console.log('재발급받고 엑세스 토큰담겨있음.');
 
         localStorage.setItem(
@@ -226,7 +226,7 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 3000) {
+      if (response.status === 218) {
         console.log('재발급받고 엑세스 토큰담겨있음.');
 
         localStorage.setItem(
@@ -257,7 +257,7 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 3000) {
+      if (response.status === 218) {
         console.log('재발급받고 엑세스 토큰담겨있음.');
 
         localStorage.setItem(
@@ -293,7 +293,7 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 3000) {
+      if (response.status === 218) {
         console.log('재발급받고 엑세스 토큰담겨있음.');
 
         localStorage.setItem(
