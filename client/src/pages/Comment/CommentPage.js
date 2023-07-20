@@ -15,12 +15,9 @@ export default function CommentPage() {
   const [comment, setComment] = useState(commentdata.content);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-<<<<<<< HEAD
-  //console.log(state);
-=======
+
   const logout = useLogout();
 
->>>>>>> cc03f9d18641ef750401bba47b6278677789634d
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isvalid = CommentValid(comment, setIsValid);
@@ -43,7 +40,6 @@ export default function CommentPage() {
             navigate(`/detail/${cocktailId}`);
             alert('수정했습니다!');
           }
-
         } catch (error) {
           console.log(error);
           navigate('/error');
