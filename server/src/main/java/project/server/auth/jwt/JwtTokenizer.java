@@ -101,6 +101,5 @@ public class JwtTokenizer {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 }
 
