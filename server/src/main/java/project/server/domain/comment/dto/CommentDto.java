@@ -1,17 +1,17 @@
 package project.server.domain.comment.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import project.server.domain.cocktail.entity.Cocktail;
+import lombok.*;
+
 import project.server.domain.comment.entity.Comment;
+import project.server.domain.reply.dto.ReplyDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CommentDto {
     @Getter
-    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Post {
         private String content;
 
@@ -30,14 +30,14 @@ public class CommentDto {
         private long userId;
         private String userName;
         private String content;
+        private List<ReplyDto.Response> replies;
         private LocalDateTime createdAt;
+        private boolean isActiveUserWritten;
     }
 
     @Getter
     @Setter
-    @AllArgsConstructor
     public static class Patch {
-        private long commentId;
         private String content;
     }
 }

@@ -8,7 +8,12 @@ public enum Liquor {
     VODKA("보드카"),
     TEQUILA("데킬라"),
     LIQUEUR("리큐르"),
-    JIN("진");
+    JIN("진"),
+    SOJU("소주"),
+    BEER("맥주"),
+    WINE("와인"),
+    MAKGEOLLI("막걸리"),
+    ETC("기타");
 
     @Getter
     private final String liquor;
