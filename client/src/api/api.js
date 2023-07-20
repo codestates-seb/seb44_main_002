@@ -275,23 +275,20 @@ export default {
   //대댓글 수정
   async patchRepliesApi(replyId, comment, commentdata) {
     try {
-      const response = await fetchWithInterceptor(
-        `${API_BASE}replies/${replyId}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('accessToken'),
-            Refresh: localStorage.getItem('refreshToken'),
-          },
-          body: JSON.stringify({
-            userId: commentdata.userId,
-            taggedUserId: commentdata.taggedUserInfo.taggedUserId,
-            taggedUserName: commentdata.taggedUserInfo.taggedUserName,
-            content: comment,
-          }),
-        }
-      );
+      const response = await fetch(`${API_BASE}replies/${replyId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('accessToken'),
+          Refresh: localStorage.getItem('refreshToken'),
+        },
+        body: JSON.stringify({
+          userId: commentdata.userId,
+          taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+          taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+          content: comment,
+        }),
+      });
       if (response.status === 401) {
         console.log('로그아웃해야함.');
         return 401;

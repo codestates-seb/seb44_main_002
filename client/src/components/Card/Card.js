@@ -16,7 +16,6 @@ export default function Card({ item }) {
 
   useEffect(() => {
     setbookmarked(item.bookmarked);
-    // console.log(item.bookmarked);
   }, [item]);
 
   const handleMouseOver = (index) => {
@@ -26,7 +25,6 @@ export default function Card({ item }) {
     setHoveredIndex(null);
   };
   const handleBookmarkClick = async (cocktailId, item) => {
-    //console.log(item);
     const id = cocktailId;
     if (!bookmarked) {
       try {
