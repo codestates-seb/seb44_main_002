@@ -8,7 +8,7 @@ import Process from './Process';
 import Community from './Community';
 import Recommend from './Recommend';
 import BookmarkBtn from '../../components/BookmarkButton/BookmarkBtn';
-import RecipeApi from './RecipeApi';
+import RecipeApi from '../../api/RecipeApi';
 
 import tw from 'tailwind-styled-components';
 

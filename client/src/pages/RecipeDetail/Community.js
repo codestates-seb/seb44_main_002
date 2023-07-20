@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import CommentValid from '../../components/Validation/CommentValidation';
-import RecipeApi from './RecipeApi';
+import RecipeApi from '../../api/RecipeApi';
 
 import tw from 'tailwind-styled-components';
 
@@ -62,7 +62,6 @@ export default function Community({
       );
     } catch (error) {
       console.log(error);
-      location.reload();
     }
   };
 
@@ -75,7 +74,6 @@ export default function Community({
       );
     } catch (error) {
       console.log(error);
-      location.reload();
     }
   };
 
@@ -95,10 +93,8 @@ export default function Community({
     if (isValid) {
       if (tag.userId === '') {
         postComment();
-        //location.reload();
       } else {
         postReply();
-        //location.reload();
       }
     }
     //location.reload();

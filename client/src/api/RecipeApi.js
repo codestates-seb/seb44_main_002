@@ -50,7 +50,6 @@ export default {
         },
       });
       if (response.ok) {
-        location.reload();
         return response;
       } else {
         console.log('error');
@@ -114,6 +113,7 @@ export default {
         body: JSON.stringify(replyInfo),
       });
       if (response.ok) {
+        location.reload();
         return response;
       } else {
         console.log('error');
