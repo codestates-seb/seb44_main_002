@@ -84,7 +84,7 @@ export default function CocktailForm() {
       PostCocktailForm(form)
         .then((json) => {
           // console.log(json);
-          if (response === 401) {
+          if (json === 401) {
             alert('토큰만료로 로그아웃되었습니다.');
             logout();
           }

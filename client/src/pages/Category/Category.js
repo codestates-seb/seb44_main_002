@@ -52,6 +52,7 @@ export default function Category() {
           return;
         }
         const data = await response.json();
+        //console.log(data);
         setCocktailData(data.data);
         setErrormsg(null);
         if (data.data.length === 0) {
