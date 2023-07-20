@@ -45,7 +45,7 @@ export default function CommentPage() {
         //대댓글 수정이라면
       } else {
         try {
-          const response = await api.patchCommentApi(
+          const response = await api.patchRepliesApi(
             commentdata.replyId,
             comment,
             commentdata

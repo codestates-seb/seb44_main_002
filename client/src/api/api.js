@@ -253,7 +253,10 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response === 200 || response.status === 200) {
+      if (response === 200) {
+        return 200;
+      }
+      if (response.status === 200) {
         return 200;
       }
     } catch (error) {
