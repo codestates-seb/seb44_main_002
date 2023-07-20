@@ -315,6 +315,7 @@ export default {
               Authorization: response.headers.get('Authorization'),
               Refresh: localStorage.getItem('refreshToken'),
             },
+            body: JSON.stringify({ content: comment }),
           });
           return data;
         }
@@ -363,6 +364,12 @@ export default {
               Authorization: response.headers.get('Authorization'),
               Refresh: localStorage.getItem('refreshToken'),
             },
+            body: JSON.stringify({
+              userId: commentdata.userId,
+              taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+              taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+              content: comment,
+            }),
           });
           return data;
         }
