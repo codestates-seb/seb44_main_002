@@ -32,8 +32,4 @@ public class Ingredients {
     private IngredientDto.Response createResponseDto(String ingredient) {
         return new IngredientDto.Response(ingredient);
     }
-
-    private boolean hasAdditionalIngredients(List<IngredientDto.Post> additionalIngredients) {
-        return additionalIngredients != null;
-    }
 }
