@@ -62,7 +62,6 @@ export default function Community({
       );
     } catch (error) {
       console.log(error);
-      location.reload();
     }
   };
 
@@ -75,7 +74,6 @@ export default function Community({
       );
     } catch (error) {
       console.log(error);
-      location.reload();
     }
   };
 
@@ -95,10 +93,8 @@ export default function Community({
     if (isValid) {
       if (tag.userId === '') {
         postComment();
-        location.reload();
       } else {
         postReply();
-        location.reload();
       }
     }
   };
