@@ -10,8 +10,10 @@ export default function CommentPage() {
   const [isCommented, setIsCommented] = useState(state[0]);
   const commentdata = state[1];
   const cocktailId = state[2];
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
+  console.log(isValid);
   const [comment, setComment] = useState(commentdata.content);
+
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
 
@@ -19,10 +21,10 @@ export default function CommentPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const isvalid = CommentValid(comment, setIsValid);
     //유효성검사가 통과되었다면
-    if (isvalid) {
+    if (isValid) {
       //댓글 수정이라면
+      console.log('유효성검사 통과');
       if (isCommented) {
         try {
           const response = await api.patchCommentApi(
@@ -46,6 +48,7 @@ export default function CommentPage() {
 
         //대댓글 수정이라면
       } else {
+        console.log('대댓글 수정');
         try {
           const response = await api.patchRepliesApi(
             commentdata.replyId,
@@ -88,7 +91,10 @@ export default function CommentPage() {
         <div>
           <InputTextArea
             placeholder="댓글을 입력하세요."
-            onChange={(e) => setComment(e.target.value)}
+            onChange={(e) => {
+              setComment(e.target.value);
+              CommentValid(comment, setIsValid);
+            }}
             className={
               !isValid
                 ? 'border-error border-[1px] w-[400px] h-[200px] mb-[2rem] text-white '
