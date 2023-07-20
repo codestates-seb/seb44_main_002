@@ -18,7 +18,11 @@ export default function RecipeDetail() {
 
   const [cocktail, setCocktail] = useState(cocktailDetail);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [localData, setLocalData] = useState({ userId: '', IsAdmin: false });
+  const [localData, setLocalData] = useState({
+    userId: '',
+    IsAdmin: false,
+    accessToken: '',
+  });
 
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
@@ -55,7 +59,10 @@ export default function RecipeDetail() {
       if (isBookmarked) {
         // 북마크 해제
         try {
-          const response = await RecipeApi.deleteBookmark(cocktail.cocktailId);
+          const response = await RecipeApi.deleteBookmark(
+            cocktail.cocktailId,
+            localData.accessToken
+          );
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -63,7 +70,10 @@ export default function RecipeDetail() {
       } else {
         // 북마크 설정
         try {
-          const response = await RecipeApi.postBookmark(cocktail.cocktailId);
+          const response = await RecipeApi.postBookmark(
+            cocktail.cocktailId,
+            localData.accessToken
+          );
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -74,7 +84,10 @@ export default function RecipeDetail() {
 
   const getCocktail = async () => {
     try {
-      const response = await RecipeApi.getCocktailData(location_id);
+      const response = await RecipeApi.getCocktailData(
+        location_id,
+        localData.accessToken
+      );
       const json = await response.json();
       setCocktail(json);
       setIsBookmarked(json.bookmarked);
@@ -97,7 +110,12 @@ export default function RecipeDetail() {
     getCocktail();
     const local_userId = parseInt(localStorage.getItem('userId'));
     const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
-    setLocalData({ userId: local_userId, IsAdmin: local_IsAdmin });
+    const local_accessToken = localStorage.getItem('accessToken');
+    setLocalData({
+      userId: local_userId,
+      IsAdmin: local_IsAdmin,
+      accessToken: local_accessToken,
+    });
 
     reAnimate();
   }, [location_id]);
