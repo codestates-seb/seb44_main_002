@@ -5,15 +5,13 @@ import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 import AddIngreInput from '../../components/Input/AddIngreInput';
-
-import HoverButton from '../../common/Buttons/HoverButton';
-
-import { divisionTags, transformLiquor } from './TransformData';
-import { PatchCocktailForm, GetCocktailForm } from '../../api/CocktailFormApi';
 import ImageUpload from '../../components/ImageUpload';
-import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
+import { divisionTags, transformLiquor } from './TransformData';
+import { PatchCocktailForm, GetCocktailForm } from '../../api/CocktailFormApi';
+import CocktailTag from './CocktailTag';
+import HoverButton from '../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
 
