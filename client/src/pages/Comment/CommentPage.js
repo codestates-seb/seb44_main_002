@@ -15,6 +15,7 @@ export default function CommentPage() {
   const [comment, setComment] = useState(commentdata.content);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
+
   const logout = useLogout();
 
   const handleSubmit = async (e) => {
@@ -33,6 +34,7 @@ export default function CommentPage() {
             alert('토큰만료로 로그아웃되었습니다.');
             logout();
           }
+
           if (response === 200) {
             setErrorMsg(null);
             navigate(`/detail/${cocktailId}`);
@@ -42,6 +44,7 @@ export default function CommentPage() {
           console.log(error);
           navigate('/error');
         }
+
         //대댓글 수정이라면
       } else {
         try {

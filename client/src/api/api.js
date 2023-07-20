@@ -3,6 +3,13 @@ const API_BASE = process.env.REACT_APP_BASE_URL;
 const localAccessToken = localStorage.getItem('accessToken');
 const refreshToken = localStorage.getItem('refreshToken');
 
+//사용법
+// import { useLogout } from '../../hook/useLogout';
+// const logout = useLogout();
+// if (response === 401) {
+//   alert('토큰만료로 로그아웃되었습니다.');
+//   logout();
+// }
 //리프래쉬 재발급 요청
 const fetchrefreshToken = async () => {
   try {
@@ -34,7 +41,7 @@ const fetchrefreshToken = async () => {
 };
 
 // Fetch API 인터셉터 함수
-const fetchWithInterceptor = async (url, options) => {
+export const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
