@@ -168,6 +168,7 @@ export default {
         localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -201,6 +202,7 @@ export default {
         localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -234,6 +236,7 @@ export default {
         localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -264,6 +267,7 @@ export default {
         localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -302,6 +306,7 @@ export default {
         localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
