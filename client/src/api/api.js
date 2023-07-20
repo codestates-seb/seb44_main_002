@@ -1,8 +1,5 @@
 //import useLogout from '../service/index';
 const API_BASE = process.env.REACT_APP_BASE_URL;
-const localAccessToken = localStorage.getItem('accessToken');
-const refreshToken = localStorage.getItem('refreshToken');
-
 //사용법
 // import { useLogout } from '../../hook/useLogout';
 // const logout = useLogout();
