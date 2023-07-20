@@ -223,9 +223,39 @@ export default {
       if (response === 200) {
         return 200;
       }
+      if (response.status === 200) {
+        return 200;
+      }
     } catch (error) {
       console.error(error);
     }
   },
   //대댓글 수정
+  async patchCommentApi(commentId, comment) {
+    try {
+      const response = await fetchWithInterceptor(
+        `${API_BASE}comments/${commentId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+          body: JSON.stringify({ content: comment }),
+        }
+      );
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
+      if (response === 200) {
+        return 200;
+      }
+      if (response.status === 200) {
+        return 200;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
