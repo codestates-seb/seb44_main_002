@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import ImageModal from './ImgaeModal';
-import RecipeApi from './RecipeApi';
+import RecipeApi from '../../api/RecipeApi';
 
 import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
