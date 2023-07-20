@@ -93,6 +93,7 @@ export default {
         body: JSON.stringify(commentInfo),
       });
       if (response.ok) {
+        location.reload();
         return response;
       } else {
         console.log('error');
