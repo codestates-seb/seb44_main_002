@@ -137,6 +137,26 @@ export default {
       console.error(error);
     }
   },
+  //카테고리 filter
+  async getfilter(url) {
+    try {
+      const response = await fetchWithInterceptor(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('accessToken'),
+        },
+      });
+
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
   //북마크 추가
   async createbookmarkApi(item) {
     try {
