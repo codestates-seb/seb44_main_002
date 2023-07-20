@@ -15,12 +15,9 @@ export default function CommentPage() {
   const [comment, setComment] = useState(commentdata.content);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-<<<<<<< HEAD
-  //console.log(state);
-=======
+
   const logout = useLogout();
 
->>>>>>> cc03f9d18641ef750401bba47b6278677789634d
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isvalid = CommentValid(comment, setIsValid);
@@ -29,58 +26,26 @@ export default function CommentPage() {
       //댓글 수정이라면
       if (isCommented) {
         try {
-<<<<<<< HEAD
-          const response = await api.createbookmarkApi(item);
-=======
           const response = await api.patchCommentApi(
             commentdata.commentId,
             comment
           );
->>>>>>> cc03f9d18641ef750401bba47b6278677789634d
+
           if (response === 401) {
             alert('토큰만료로 로그아웃되었습니다.');
             logout();
           }
-<<<<<<< HEAD
-=======
+
           if (response === 200) {
             setErrorMsg(null);
             navigate(`/detail/${cocktailId}`);
             alert('수정했습니다!');
           }
->>>>>>> cc03f9d18641ef750401bba47b6278677789634d
         } catch (error) {
           console.log(error);
           navigate('/error');
         }
-<<<<<<< HEAD
-        // fetch(`${BASE_URL}comments/${commentdata.commentId}`, {
-        //   method: 'PATCH',
-        //   headers: {
-        //     //'ngrok-skip-browser-warning': 'true',
-        //     'Content-Type': 'application/json', // json fetch시
-        //   },
-        //   body: JSON.stringify({ content: comment }),
-        // })
-        //   .then((data) => {
-        //     if (data.status === 200) {
-        //       // 응답이 성공적인 경우
-        //       console.log('요청이 성공했습니다.');
-        //       // console.log(data);
-        //       setErrorMsg(null);
-        //       navigate(`/detail/${cocktailId}`);
-        //       alert('수정했습니다!');
-        //     } else {
-        //       // 응답이 실패한 경우
-        //       console.log('요청이 실패했습니다.');
-        //     }
-        //   })
-        //   .catch((error) => {
-        //     console.log('에러', error);
-        //     navigate('/error');
-        //   });
-=======
->>>>>>> cc03f9d18641ef750401bba47b6278677789634d
+
         //대댓글 수정이라면
       } else {
         try {
