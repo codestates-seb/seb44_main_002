@@ -87,7 +87,12 @@ export default function CocktailForm() {
           if (json === 401) {
             alert('토큰만료로 로그아웃되었습니다.');
             logout();
+            return;
           }
+          return json;
+        })
+        .then((data) => data.json())
+        .then((json) => {
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
