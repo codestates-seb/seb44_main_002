@@ -51,15 +51,18 @@ export default function Category() {
           logout();
           return;
         }
+
         const data = await response.json();
+        console.log(data);
         console.log('성공');
         setCocktailData(data.data);
         setErrormsg(null);
-        if (data.data.length === 0) {
+        if (data.length === 0) {
           setErrormsg(
             '! 데이터 요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요'
           );
         }
+        return data;
       } catch (error) {
         console.error('Error:', error);
         // navigate('/error');
