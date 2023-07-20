@@ -9,6 +9,11 @@ export default function TagFrequencyButton({
   filterCondtion,
 }) {
   const [isClicked, setIsClicked] = useState(false);
+  const [buttonStyle, setButtonStyle] = useState({
+    size: 'w-[110px] h-[30px]',
+    fontSize: 'text-[1rem]',
+    radius: 'rounded-[30px]',
+  });
   //console.log(fitlerCondtion.frequencyTag === data.type);
   const buttonClicked = () => {
     setIsClicked(!isClicked);
@@ -19,9 +24,9 @@ export default function TagFrequencyButton({
 
   return (
     <HoverButton
-      size="w-[110px] h-[30px]"
-      fontSize="text-[1rem]"
-      radius="rounded-[30px]"
+      size={buttonStyle.size}
+      fontSize={buttonStyle.fontSize}
+      radius={buttonStyle.radius}
       color={`${
         filterCondtion.frequencyTag === data.type
           ? 'text-[#BB40F1] bg-transparent'
