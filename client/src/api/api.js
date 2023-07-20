@@ -19,6 +19,7 @@ const fetchrefreshToken = async () => {
     }
     //재발급 성공
     if (response.ok) {
+      console.log('재발급 성공');
       localStorage.setItem(
         'accessToken',
         response.headers.get('Authorization')
@@ -172,7 +173,7 @@ export default {
       );
 
       if (response === 401) {
-        console.log('로그아웃해야함.');
+        console.log('로그아웃됨.');
         return 401;
       }
     } catch (error) {
@@ -196,6 +197,67 @@ export default {
       if (response === 401) {
         console.log('로그아웃해야함.');
         return 401;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  //댓글수정
+  async patchCommentApi(commentId, comment) {
+    try {
+      const response = await fetchWithInterceptor(
+        `${API_BASE}comments/${commentId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+          body: JSON.stringify({ content: comment }),
+        }
+      );
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
+      if (response === 200) {
+        return 200;
+      }
+      if (response.status === 200) {
+        return 200;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  //대댓글 수정
+  async patchRepliesApi(replyId, comment, commentdata) {
+    try {
+      const response = await fetchWithInterceptor(
+        `${API_BASE}replies/${replyId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+          body: JSON.stringify({
+            userId: commentdata.userId,
+            taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+            taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+            content: comment,
+          }),
+        }
+      );
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
+      if (response === 200) {
+        return 200;
+      }
+      if (response.status === 200) {
+        return 200;
       }
     } catch (error) {
       console.error(error);

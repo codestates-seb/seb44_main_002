@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import api from '../../api/api';
+import { useLogout } from '../../hook/useLogout';
 import tw from 'tailwind-styled-components';
 import CommentValid from '../../components/Validation/CommentValidation';
 
@@ -13,7 +15,12 @@ export default function CommentPage() {
   const [comment, setComment] = useState(commentdata.content);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
+<<<<<<< HEAD
   //console.log(state);
+=======
+  const logout = useLogout();
+
+>>>>>>> cc03f9d18641ef750401bba47b6278677789634d
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isvalid = CommentValid(comment, setIsValid);
@@ -22,15 +29,31 @@ export default function CommentPage() {
       //댓글 수정이라면
       if (isCommented) {
         try {
+<<<<<<< HEAD
           const response = await api.createbookmarkApi(item);
+=======
+          const response = await api.patchCommentApi(
+            commentdata.commentId,
+            comment
+          );
+>>>>>>> cc03f9d18641ef750401bba47b6278677789634d
           if (response === 401) {
             alert('토큰만료로 로그아웃되었습니다.');
             logout();
           }
+<<<<<<< HEAD
+=======
+          if (response === 200) {
+            setErrorMsg(null);
+            navigate(`/detail/${cocktailId}`);
+            alert('수정했습니다!');
+          }
+>>>>>>> cc03f9d18641ef750401bba47b6278677789634d
         } catch (error) {
           console.log(error);
           navigate('/error');
         }
+<<<<<<< HEAD
         // fetch(`${BASE_URL}comments/${commentdata.commentId}`, {
         //   method: 'PATCH',
         //   headers: {
@@ -56,38 +79,59 @@ export default function CommentPage() {
         //     console.log('에러', error);
         //     navigate('/error');
         //   });
+=======
+>>>>>>> cc03f9d18641ef750401bba47b6278677789634d
         //대댓글 수정이라면
       } else {
-        fetch(`${BASE_URL}replies/${commentdata.replyId}`, {
-          method: 'PATCH',
-          headers: {
-            //'ngrok-skip-browser-warning': 'true',
-            'Content-Type': 'application/json', // json fetch시
-          },
-          body: JSON.stringify({
-            userId: commentdata.userId,
-            taggedUserId: commentdata.taggedUserInfo.taggedUserId,
-            taggedUserName: commentdata.taggedUserInfo.taggedUserName,
-            content: comment,
-          }),
-        })
-          .then((data) => {
-            if (data.status === 200) {
-              // 응답이 성공적인 경우
-              console.log('요청이 성공했습니다.');
-              // console.log(data);
-              setErrorMsg(null);
-              navigate(`/detail/${cocktailId}`);
-              alert('수정했습니다!');
-            } else {
-              // 응답이 실패한 경우
-              console.log('요청이 실패했습니다.');
-            }
-          })
-          .catch((error) => {
-            console.log('에러', error);
-            navigate('/error');
-          });
+        try {
+          const response = await api.patchRepliesApi(
+            commentdata.replyId,
+            comment,
+            commentdata
+          );
+          if (response === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+          }
+          if (response === 200) {
+            setErrorMsg(null);
+            navigate(`/detail/${cocktailId}`);
+            alert('수정했습니다!');
+          }
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+        //   fetch(`${BASE_URL}replies/${commentdata.replyId}`, {
+        //     method: 'PATCH',
+        //     headers: {
+        //       //'ngrok-skip-browser-warning': 'true',
+        //       'Content-Type': 'application/json', // json fetch시
+        //     },
+        //     body: JSON.stringify({
+        //       userId: commentdata.userId,
+        //       taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+        //       taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+        //       content: comment,
+        //     }),
+        //   })
+        //     .then((data) => {
+        //       if (data.status === 200) {
+        //         // 응답이 성공적인 경우
+        //         console.log('요청이 성공했습니다.');
+        //         // console.log(data);
+        //         setErrorMsg(null);
+        //         navigate(`/detail/${cocktailId}`);
+        //         alert('수정했습니다!');
+        //       } else {
+        //         // 응답이 실패한 경우
+        //         console.log('요청이 실패했습니다.');
+        //       }
+        //     })
+        //     .catch((error) => {
+        //       console.log('에러', error);
+        //       navigate('/error');
+        //     });
       }
     } else {
       console.log('유효성검사에 걸렸습니다.');
@@ -96,22 +140,18 @@ export default function CommentPage() {
   };
 
   return (
-    <div className="relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-[100vh] pt-[5rem] flex flex-col  items-center ">
+    <Container>
+      {/* 로고 */}
       <button onClick={() => navigate('/')}>
-        <img
-          src="/images/logo.webp"
-          alt="로고"
-          className="w-[30px] mb-[2rem] "
-        />
+        <LogoImg src="/images/logo.webp" alt="로고" />
       </button>
 
-      <section className="w-[520px] h-[520px] rounded-2xl bg-[#000000]/40 mb-[10rem] flex flex-col items-center">
-        <h1 className="mt-[30px] text-gray-200 font-bold text-[20px] mb-[2rem]">
-          댓글 수정
-        </h1>
-        <h3 className=" text-white flex  w-[400px] mb-2">
+      <SectionDiv>
+        <Title>댓글 수정</Title>
+        {/* 태그된 유저이름 */}
+        <TaguserH3>
           {!isCommented && <p>@{commentdata.taggedUserInfo.taggedUserName}</p>}
-        </h3>
+        </TaguserH3>
 
         <div>
           <InputTextArea
@@ -129,14 +169,30 @@ export default function CommentPage() {
           )}
         </div>
         <InputButton onClick={handleSubmit}>전송하기</InputButton>
-      </section>
-    </div>
+      </SectionDiv>
+    </Container>
   );
 }
+const Container = tw.div`
+relative bg-gradient-to-r from-gradi-to to-gradi-from w-screen h-[100vh] pt-[5rem] flex flex-col  items-center 
+`;
+const LogoImg = tw.img`
+w-[30px] mb-[2rem] 
+`;
+const SectionDiv = tw.section`
+w-[520px] h-[520px] rounded-2xl bg-[#000000]/40 mb-[10rem] flex flex-col items-center
+`;
+const Title = tw.h1`
+mt-[30px] text-gray-200 font-bold text-[20px] mb-[2rem]
+`;
+const TaguserH3 = tw.h3`
+text-white flex  w-[400px] mb-2
+`;
 const InputTextArea = tw.textarea`
 h-24 
 w-full
 bg-transparent 
+
 `;
 const InputButton = tw.button`
 h-8 
