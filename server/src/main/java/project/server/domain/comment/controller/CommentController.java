@@ -34,7 +34,7 @@ public class CommentController {
 
     @PatchMapping("/{comment-id}")
     public ResponseEntity patchComment(Authentication authentication,
-                                       @PathVariable("comment-id") @Positive Long commentId,
+                                       @PathVariable("comment-id") @Positive long commentId,
                                        @Valid @RequestBody CommentDto.Patch patch) {
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         CommentDto.Response response = commentService.updateComment(email, commentId, patch);
