@@ -48,7 +48,20 @@ export default function CocktailModifyForm() {
     degree: true,
     flavor: true,
   });
-  const accessToken = localStorage.getItem('accessToken');
+
+  // // 엔터 누르면 submit되는 현상 막기
+  const preventFormSubmission = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', preventFormSubmission);
+    return () => {
+      document.removeEventListener('keydown', preventFormSubmission);
+    };
+  }, []);
 
   const navigate = useNavigate();
 
