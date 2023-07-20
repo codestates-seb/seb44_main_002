@@ -18,17 +18,13 @@ export default function UserPage() {
   const [localData, setLocalData] = useState({
     userId: '',
     IsAdmin: false,
-    accessToken: '',
   });
 
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   const getUser = async () => {
     try {
-      const response = await UserPageApi.getUserData(
-        location,
-        localData.accessToken
-      );
+      const response = await UserPageApi.getUserData(location);
       const json = await response.json();
       setUserInfo(json);
     } catch (error) {
@@ -41,11 +37,9 @@ export default function UserPage() {
     getUser();
     const local_userId = parseInt(localStorage.getItem('userId'));
     const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
-    const local_accessToken = localStorage.getItem('accessToken');
     setLocalData({
       userId: local_userId,
       IsAdmin: local_IsAdmin,
-      accessToken: local_accessToken,
     });
   }, [location]);
 

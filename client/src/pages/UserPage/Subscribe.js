@@ -15,10 +15,7 @@ export default function Subscribe({ userInfo }) {
 
   const cancleFollow = async (id) => {
     try {
-      const response = await UserPageApi.cancelfollow(
-        id,
-        localData.accessToken
-      );
+      const response = await UserPageApi.cancelfollow(id);
       location.reload();
     } catch (error) {
       console.log(error);
@@ -42,7 +39,7 @@ export default function Subscribe({ userInfo }) {
 
   const UserList = () => {
     return (
-      <div id="userpage">
+      <SliderContainer id="userpage">
         {userInfo.follows.length === 0 ? (
           <p className="mt-12 text-white text-center">
             구독한 유저가 없습니다.
@@ -92,7 +89,7 @@ export default function Subscribe({ userInfo }) {
             })}
           </Swiper>
         )}
-      </div>
+      </SliderContainer>
     );
   };
   return (
@@ -120,4 +117,7 @@ pb-2.5
 z-10
 cursor-pointer
 hover:text-pointPurple-100
+`;
+const SliderContainer = tw.div`
+mt-12
 `;
