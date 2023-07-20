@@ -27,8 +27,6 @@ export default function CocktailModifyForm() {
 
   const params = useParams();
 
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-
   const [form, setForm] = useState({
     name: '',
     imageUrl: '',
@@ -82,7 +80,7 @@ export default function CocktailModifyForm() {
           })),
           degree: transformedTags.degree,
           // 컴포넌트 설계 미스
-          // flavor: transformedTags.flavor,
+          flavor: transformedTags.flavor,
           ingredients: json.ingredients.map((item) => ({
             ingredient: item.ingredient,
           })),
