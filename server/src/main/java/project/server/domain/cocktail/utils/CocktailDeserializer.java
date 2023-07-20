@@ -1,5 +1,6 @@
 package project.server.domain.cocktail.utils;
 
+import org.springframework.stereotype.Service;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.embed.category.CategoryMapper;
 import project.server.domain.cocktail.embed.ingredient.Ingredients;
@@ -15,9 +16,10 @@ import project.server.domain.cocktail.entity.Cocktail;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class CocktailDeserializer {
 
-    public static Cocktail postDtoToEntity(CocktailDto.Post dto) {
+    public Cocktail postDtoToEntity(CocktailDto.Post dto) {
         List<Tag> tags =dto.getFlavor().stream()
                 .map(TagDto.Post::getTag)
                 .map(TagMapper::map)
@@ -32,7 +34,7 @@ public class CocktailDeserializer {
                 .category(CategoryMapper.map(dto.getLiquor()))
                 .rate(new Rate())
                 .liquor(LiquorMapper.map(dto.getLiquor()))
-                .ingredients(new Ingredients(dto.getBaseIngredients(), dto.getAdditionalIngredients()))
+                .ingredients(new Ingredients(dto.getIngredients()))
                 .build();
     }
 }

@@ -16,12 +16,14 @@ import project.server.exception.ExceptionCode;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final CommentSerializer commentSerializer;
     private final CocktailReadService cocktailReadService;
     private final UserService userService;
 
     public CommentService(CommentRepository commentRepository,
-                          CocktailReadService cocktailReadService, UserService userService) {
+                          CommentSerializer commentSerializer, CocktailReadService cocktailReadService, UserService userService) {
         this.commentRepository = commentRepository;
+        this.commentSerializer = commentSerializer;
         this.cocktailReadService = cocktailReadService;
         this.userService = userService;
     }
@@ -34,29 +36,39 @@ public class CommentService {
         comment.setUser(user);
         Comment savedComment = commentRepository.save(comment);
         cocktail.addComment(savedComment);
-        return CommentSerializer.entityToResponse(savedComment);
+        return commentSerializer.entityToResponse(savedComment);
     }
 
     @Transactional(readOnly = true)
     public CommentDto.Response readComment(long commentId) {
         Comment comment = findCommentById(commentId);
-        return CommentSerializer.entityToResponse(comment);
+        return commentSerializer.entityToResponse(comment);
     }
 
-    public CommentDto.Response updateComment(Long commentId, CommentDto.Patch patch) {
+    public CommentDto.Response updateComment(String email, Long commentId, CommentDto.Patch patch) {
+        User user = userService.findUserByEmail(email);
         Comment comment = findCommentById(commentId);
+        if(!user.hasAuthority(comment.getUserId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
         comment.setContent(patch.getContent());
         Comment savedComment = commentRepository.save(comment);
-        return CommentSerializer.entityToResponse(savedComment);
+        return commentSerializer.entityToResponse(savedComment);
+    }
+
+    public void deleteComment(String email, long commentId, long cocktailId) {
+        User user = userService.findUserByEmail(email);
+        Comment comment = findCommentById(commentId);
+        if(!user.hasAuthority(comment.getUserId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        cocktail.removeComment(comment);
+        commentRepository.delete(comment);
     }
 
     public Comment findCommentById(long commentId) {
         return commentRepository.findById(commentId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
-    }
-
-    public void deleteComment(long commentId) {
-        Comment comment = findCommentById(commentId);
-        commentRepository.delete(comment);
     }
 }

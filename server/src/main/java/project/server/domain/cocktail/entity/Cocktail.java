@@ -97,7 +97,7 @@ public class Cocktail {
     public void modify(CocktailDto.Patch patch, List<Tag> tags) {
         this.name = patch.getName();
         this.imageUrl = patch.getImageUrl();
-        this.ingredients = new Ingredients(patch.getBaseIngredients(), patch.getAdditionalIngredients());
+        this.ingredients = new Ingredients(patch.getIngredients());
         this.recipe = new Recipe(patch.getRecipe());
         this.tags = new Tags(tags);
         this.modifiedAt = LocalDateTime.now();
@@ -125,5 +125,9 @@ public class Cocktail {
 
     public void addComment(Comment comment) {
         comments.add(comment);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
     }
 }

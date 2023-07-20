@@ -15,11 +15,14 @@ import java.util.Optional;
 public class UserService {
 
     public static final boolean DELETED_USER = false;
+
+    private final UserSerializer userSerializer;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
+    public UserService(UserSerializer userSerializer, UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
+        this.userSerializer = userSerializer;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
@@ -36,7 +39,7 @@ public class UserService {
         user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
-        return UserSerializer.entityToUnsignedResponse(savedUser);
+        return userSerializer.entityToUnsignedResponse(savedUser);
     }
 
     public UserDto.Response updateUser(UserDto.Patch dto, long userId, String email) {
@@ -47,7 +50,7 @@ public class UserService {
         User user = findUserByUserId(userId);
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
-        return UserSerializer.entityToSignedResponse(user, requestUser);
+        return userSerializer.entityToSignedResponse(user, requestUser);
     }
 
     public void deleteUser(long userId, String email) {
@@ -66,13 +69,13 @@ public class UserService {
             if(!user.isActiveUser()){
                 throw new BusinessLogicException(ExceptionCode.DELETED_USER);
             }
-            return UserSerializer.entityToUnsignedResponse(user);
+            return userSerializer.entityToUnsignedResponse(user);
         }
         User readUser = findUserByEmail(email);
         if(!user.isActiveUser() && !readUser.isAdmin()){
             throw new BusinessLogicException(ExceptionCode.DELETED_USER);
         }
-        return UserSerializer.entityToSignedResponse(user, readUser);
+        return userSerializer.entityToSignedResponse(user, readUser);
     }
 
     public User findUserByEmail(String email) {

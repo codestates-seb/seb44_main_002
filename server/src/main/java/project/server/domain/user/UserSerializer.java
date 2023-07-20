@@ -1,13 +1,21 @@
 package project.server.domain.user;
 
+import org.springframework.stereotype.Service;
 import project.server.domain.cocktail.utils.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
 
 import java.util.stream.Collectors;
 
+@Service
 public class UserSerializer {
 
-    public static UserDto.Response entityToUnsignedResponse(User user){
+    private final CocktailSerializer cocktailSerializer;
+
+    public UserSerializer(CocktailSerializer cocktailSerializer) {
+        this.cocktailSerializer = cocktailSerializer;
+    }
+
+    public UserDto.Response entityToUnsignedResponse(User user){
         return UserDto.Response.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())
@@ -17,10 +25,10 @@ public class UserSerializer {
                 .profileImageUrl(user.getProfileImageUrl())
                 .subscriberCount(user.getSubscriberCount())
                 .cocktails(user.getCocktails().stream()
-                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(false, cocktail))
+                        .map(cocktail -> cocktailSerializer.entityToSimpleResponse(false, cocktail))
                         .collect(Collectors.toList()))
                 .bookmarkedCocktails(user.getBookmarks().stream()
-                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(false, bookmark))
+                        .map(bookmark -> cocktailSerializer.bookmarkEntityToSimpleResponse(false, bookmark))
                         .collect(Collectors.toList()))
                 .follows(user.getFollows().stream()
                         .map(Follow::getFollowing)
@@ -29,7 +37,7 @@ public class UserSerializer {
                 .build();
     }
 
-    public static UserDto.Response entityToSignedResponse(User user, User readUser){
+    public UserDto.Response entityToSignedResponse(User user, User readUser){
         return UserDto.Response.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())
@@ -39,10 +47,10 @@ public class UserSerializer {
                 .profileImageUrl(user.getProfileImageUrl())
                 .subscriberCount(user.getSubscriberCount())
                 .cocktails(user.getCocktails().stream()
-                        .map(cocktail -> CocktailSerializer.entityToSimpleResponse(readUser.isBookmarked(cocktail.getCocktailId()), cocktail))
+                        .map(cocktail -> cocktailSerializer.entityToSimpleResponse(readUser.isBookmarked(cocktail.getCocktailId()), cocktail))
                         .collect(Collectors.toList()))
                 .bookmarkedCocktails(user.getBookmarks().stream()
-                        .map(bookmark -> CocktailSerializer.bookmarkEntityToSimpleResponse(readUser.isBookmarked(bookmark.getCocktailId()), bookmark))
+                        .map(bookmark -> cocktailSerializer.bookmarkEntityToSimpleResponse(readUser.isBookmarked(bookmark.getCocktailId()), bookmark))
                         .collect(Collectors.toList()))
                 .follows(user.getFollows().stream()
                         .map(Follow::getFollowing)
