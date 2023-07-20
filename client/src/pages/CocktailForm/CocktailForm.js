@@ -8,6 +8,8 @@ import AddIngreInput from '../../components/Input/AddIngreInput';
 import ImageUpload from '../../components/ImageUpload';
 import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
+
+import { useLogout } from '../../hook/useLogout';
 import CocktailTag from './CocktailTag';
 import { PostCocktailForm } from '../../api/CocktailFormApi';
 import HoverButton from '../../common/Buttons/HoverButton';
@@ -15,6 +17,7 @@ import HoverButton from '../../common/Buttons/HoverButton';
 import tw from 'tailwind-styled-components';
 
 export default function CocktailForm() {
+  const logout = useLogout();
   const [isLoading, setIsLoading] = useState(false);
 
   setTimeout(() => {
@@ -81,6 +84,10 @@ export default function CocktailForm() {
       PostCocktailForm(form)
         .then((json) => {
           // console.log(json);
+          if (response === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+          }
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {

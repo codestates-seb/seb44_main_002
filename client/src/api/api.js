@@ -3,6 +3,13 @@ const API_BASE = process.env.REACT_APP_BASE_URL;
 const localAccessToken = localStorage.getItem('accessToken');
 const refreshToken = localStorage.getItem('refreshToken');
 
+//사용법
+// import { useLogout } from '../../hook/useLogout';
+// const logout = useLogout();
+// if (response === 401) {
+//   alert('토큰만료로 로그아웃되었습니다.');
+//   logout();
+// }
 //리프래쉬 재발급 요청
 const fetchrefreshToken = async () => {
   try {
@@ -19,6 +26,7 @@ const fetchrefreshToken = async () => {
     }
     //재발급 성공
     if (response.ok) {
+      console.log('재발급 성공');
       localStorage.setItem(
         'accessToken',
         response.headers.get('Authorization')
@@ -33,7 +41,7 @@ const fetchrefreshToken = async () => {
 };
 
 // Fetch API 인터셉터 함수
-const fetchWithInterceptor = async (url, options) => {
+export const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {
@@ -172,7 +180,7 @@ export default {
       );
 
       if (response === 401) {
-        console.log('로그아웃해야함.');
+        console.log('로그아웃됨.');
         return 401;
       }
     } catch (error) {
@@ -196,6 +204,67 @@ export default {
       if (response === 401) {
         console.log('로그아웃해야함.');
         return 401;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  //댓글수정
+  async patchCommentApi(commentId, comment) {
+    try {
+      const response = await fetchWithInterceptor(
+        `${API_BASE}comments/${commentId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+          body: JSON.stringify({ content: comment }),
+        }
+      );
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
+      if (response === 200) {
+        return 200;
+      }
+      if (response.status === 200) {
+        return 200;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  //대댓글 수정
+  async patchRepliesApi(replyId, comment, commentdata) {
+    try {
+      const response = await fetchWithInterceptor(
+        `${API_BASE}replies/${replyId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('accessToken'),
+          },
+          body: JSON.stringify({
+            userId: commentdata.userId,
+            taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+            taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+            content: comment,
+          }),
+        }
+      );
+      if (response === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
+      if (response === 200) {
+        return 200;
+      }
+      if (response.status === 200) {
+        return 200;
       }
     } catch (error) {
       console.error(error);

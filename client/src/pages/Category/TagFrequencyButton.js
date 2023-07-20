@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function TagFrequencyButton({
@@ -9,6 +9,11 @@ export default function TagFrequencyButton({
   filterCondtion,
 }) {
   const [isClicked, setIsClicked] = useState(false);
+  const [buttonStyle, setButtonStyle] = useState({
+    size: 'w-[110px] h-[30px]',
+    fontSize: 'text-[1rem]',
+    radius: 'rounded-[30px]',
+  });
   //console.log(fitlerCondtion.frequencyTag === data.type);
   const buttonClicked = () => {
     setIsClicked(!isClicked);
@@ -17,11 +22,37 @@ export default function TagFrequencyButton({
     }
   };
 
+  const handleResize = () => {
+    const width = window.innerWidth;
+    console.log(width);
+    if (width <= 700) {
+      setButtonStyle({
+        size: 'w-[90px] h-[30px]',
+        fontSize: 'text-[0.8rem]',
+        radius: 'rounded-[30px]',
+      });
+    } else {
+      setButtonStyle({
+        size: 'w-[110px] h-[30px]',
+        fontSize: 'text-[1rem]',
+        radius: 'rounded-[30px]',
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <HoverButton
-      size="w-[110px] h-[30px]"
-      fontSize="text-[1rem]"
-      radius="rounded-[30px]"
+      size={buttonStyle.size}
+      fontSize={buttonStyle.fontSize}
+      radius={buttonStyle.radius}
       color={`${
         filterCondtion.frequencyTag === data.type
           ? 'text-[#BB40F1] bg-transparent'

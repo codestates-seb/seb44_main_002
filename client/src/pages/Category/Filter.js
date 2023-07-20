@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   CategoryFilter,
   tagFrequencyData,
@@ -13,6 +14,36 @@ import tw from 'tailwind-styled-components';
 
 export default function Filter({ setFilterCondtion, filterCondtion }) {
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 필터상태 저장
+  const [buttonStyle, setButtonStyle] = useState({
+    size: 'w-[75px] h-[30px]',
+    fontSize: 'text-[1rem]',
+    radius: 'rounded-[30px]',
+  });
+
+  const handleResize = () => {
+    const width = window.innerWidth;
+    if (width <= 700) {
+      setButtonStyle({
+        size: 'w-[60px] h-[30px]',
+        fontSize: 'text-[0.8rem]',
+        radius: 'rounded-[30px]',
+      });
+    } else {
+      setButtonStyle({
+        size: 'w-[75px] h-[30px]',
+        fontSize: 'text-[1rem]',
+        radius: 'rounded-[30px]',
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const selectMenuHandler = (idx, type) => {
     switch (type) {
@@ -107,9 +138,9 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            radius="rounded-[30px]"
-            fontSize="text-[1rem]"
-            size="w-[75px] h-[30px]"
+            radius={buttonStyle.radius}
+            fontSize={buttonStyle.fontSize}
+            size={buttonStyle.size}
             onClick={() => {
               selectMenuHandler(idx, 'tasteTag');
             }}
