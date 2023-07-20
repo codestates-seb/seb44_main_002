@@ -49,7 +49,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         console.log(imageUrl);
         setForm({ ...form, imageUrl: imageUrl.url });
         setIsValid({ ...isValid, imageUrl: true });
-        await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
+        // await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
       } else {
         // 유효성 검사 false로 변경
         alert('이미지 업로드 실패');

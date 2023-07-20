@@ -1,4 +1,4 @@
-import fetchWithInterceptor from './api';
+import { fetchWithInterceptor } from './api';
 export const PostCocktailForm = async (form) => {
   const cocktailData = await fetchWithInterceptor(
     `${process.env.REACT_APP_BASE_URL}cocktails`,
