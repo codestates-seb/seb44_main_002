@@ -59,7 +59,7 @@ export const tagTasteData = [
   },
   {
     id: 1,
-    title: '새콤',
+    title: '신맛',
     type: 'sour',
   },
   {

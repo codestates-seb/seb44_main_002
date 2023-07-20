@@ -6,7 +6,6 @@ import tw from 'tailwind-styled-components';
 import CommentValid from '../../components/Validation/CommentValidation';
 
 export default function CommentPage() {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const { state } = useLocation();
   const [isCommented, setIsCommented] = useState(state[0]);
   const commentdata = state[1];
@@ -30,6 +29,7 @@ export default function CommentPage() {
             commentdata.commentId,
             comment
           );
+
           if (response === 401) {
             alert('토큰만료로 로그아웃되었습니다.');
             logout();
