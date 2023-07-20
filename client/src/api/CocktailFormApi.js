@@ -1,12 +1,12 @@
-import { fetchWithInterceptor } from './api';
 export const PostCocktailForm = async (form) => {
-  const cocktailData = await fetchWithInterceptor(
+  const cocktailData = await fetch(
     `${process.env.REACT_APP_BASE_URL}cocktails`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('accessToken'),
+        Refresh: localStorage.getItem('refreshToken'),
       },
       body: JSON.stringify(form),
     }
@@ -20,13 +20,14 @@ export const PostCocktailForm = async (form) => {
 };
 
 export const PatchCocktailForm = async (form, params) => {
-  const cocktailData = await fetchWithInterceptor(
+  const cocktailData = await fetch(
     `${process.env.REACT_APP_BASE_URL}cocktails/${params}`,
     {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('accessToken'),
+        Refresh: localStorage.getItem('refreshToken'),
       },
       body: JSON.stringify(form),
     }
@@ -35,13 +36,14 @@ export const PatchCocktailForm = async (form, params) => {
 };
 
 export const GetCocktailForm = async (params) => {
-  const cocktailData = await fetchWithInterceptor(
+  const cocktailData = await fetch(
     `${process.env.REACT_APP_BASE_URL}cocktails/${params}`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('accessToken'),
+        Refresh: localStorage.getItem('refreshToken'),
       },
     }
   ).then((res) => res.json());
