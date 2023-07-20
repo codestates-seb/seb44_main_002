@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import ImageModal from './ImgaeModal';
-import RecipeApi from './RecipeApi';
+import RecipeApi from '../../api/RecipeApi';
 
 import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
@@ -21,7 +21,8 @@ export default function RecipeInfo({
   const deleteRecipe = async () => {
     try {
       const response = await RecipeApi.deleteCocktails(
-        cocktailDetail.cocktailId
+        cocktailDetail.cocktailId,
+        localData.accessToken
       );
     } catch (error) {
       console.log(error);
@@ -32,7 +33,8 @@ export default function RecipeInfo({
     try {
       const response = await RecipeApi.modifyRate(
         cocktailDetail.cocktailId,
-        score2
+        score2,
+        localData.accessToken
       );
       const json = await response.json();
       setTotal(json.rating);

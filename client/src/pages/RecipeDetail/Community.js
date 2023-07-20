@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import CommentValid from '../../components/Validation/CommentValidation';
-import RecipeApi from './RecipeApi';
+import RecipeApi from '../../api/RecipeApi';
 
 import tw from 'tailwind-styled-components';
 
@@ -22,9 +22,13 @@ export default function Community({
   // 댓글 등록
   const postComment = async () => {
     try {
-      const response = await RecipeApi.PostComments(cocktailDetail.cocktailId, {
-        content: comment,
-      });
+      const response = await RecipeApi.PostComments(
+        cocktailDetail.cocktailId,
+        {
+          content: comment,
+        },
+        localData.accessToken
+      );
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +42,11 @@ export default function Community({
         taggedUserName: tag.userName,
         content: comment,
       };
-      const response = await RecipeApi.PostReplys(commentId, repliInfo);
+      const response = await RecipeApi.PostReplys(
+        commentId,
+        repliInfo,
+        localData.accessToken
+      );
     } catch (error) {
       console.log(error);
     }
@@ -49,21 +57,23 @@ export default function Community({
     try {
       const response = await RecipeApi.deleteComments(
         commentId,
-        cocktailDetail.cocktailId
+        cocktailDetail.cocktailId,
+        localData.accessToken
       );
     } catch (error) {
       console.log(error);
-      location.reload();
     }
   };
 
   // 대댓글 삭제
   const deleteReply = async (replyId) => {
     try {
-      const response = await RecipeApi.deleteReplies(replyId);
+      const response = await RecipeApi.deleteReplies(
+        replyId,
+        localData.accessToken
+      );
     } catch (error) {
       console.log(error);
-      location.reload();
     }
   };
 
@@ -79,26 +89,39 @@ export default function Community({
     // 유효성 검사
     const isValid = await CommentValid(comment, setIsValid);
     if (!isValid) return;
-
+    console.log(localData);
     if (isValid) {
       if (tag.userId === '') {
         postComment();
-        location.reload();
       } else {
         postReply();
-        location.reload();
       }
     }
   };
 
+  // 대댓글을 달 댓글에 대한 정보 수정
   const changeTag = (userId, userName, commentId) => {
     setTag({ userId: userId, userName: userName });
     setCommentId(commentId);
   };
 
+  // 답변 선택시 답변 구역으로 스크롤 이동
+  const scrollToReply = () => {
+    const targetDiv = document.getElementById('reply');
+    if (targetDiv) {
+      const offset = targetDiv.offsetTop - 20;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  };
+
+  const clickReply = (userId, userName, commentId) => {
+    changeTag(userId, userName, commentId);
+    scrollToReply();
+  };
+
   return (
     <CommunityContainer>
-      <CommunityHeader>댓글을 작성해보세요!</CommunityHeader>
+      <CommunityHeader id="reply">댓글을 작성해보세요!</CommunityHeader>
       <InputContainer>
         <div className="w-[calc(100%-100px)] max-md:w-full">
           {tag.userId !== '' && (
@@ -157,7 +180,7 @@ export default function Community({
                     {ele.activeUserWritten && (
                       <CommentButton
                         onClick={() =>
-                          changeTag(ele.userId, ele.userName, ele.commentId)
+                          clickReply(ele.userId, ele.userName, ele.commentId)
                         }
                       >
                         답변하기
@@ -207,7 +230,7 @@ export default function Community({
                         {rp.activeUserWritten && (
                           <CommentButton
                             onClick={() =>
-                              changeTag(rp.userId, rp.userName, ele.commentId)
+                              clickReply(rp.userId, rp.userName, ele.commentId)
                             }
                           >
                             답변하기
