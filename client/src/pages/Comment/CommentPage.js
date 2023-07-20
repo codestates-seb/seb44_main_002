@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import api from '../../api/api';
+import { useLogout } from '../../hook/useLogout';
 import tw from 'tailwind-styled-components';
 import CommentValid from '../../components/Validation/CommentValidation';
 
@@ -13,40 +15,58 @@ export default function CommentPage() {
   const [comment, setComment] = useState(commentdata.content);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
-  //console.log(state);
-  const handleSubmit = (e) => {
+  const logout = useLogout();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isvalid = CommentValid(comment, setIsValid);
     //유효성검사가 통과되었다면
     if (isvalid) {
       //댓글 수정이라면
       if (isCommented) {
-        fetch(`${BASE_URL}comments/${commentdata.commentId}`, {
-          method: 'PATCH',
-          headers: {
-            //'ngrok-skip-browser-warning': 'true',
-            'Content-Type': 'application/json', // json fetch시
-          },
-          body: JSON.stringify({ content: comment }),
-        })
-          .then((data) => {
-            if (data.status === 200) {
-              // 응답이 성공적인 경우
-              console.log('요청이 성공했습니다.');
-              // console.log(data);
-              setErrorMsg(null);
-              navigate(`/detail/${cocktailId}`);
-              alert('수정했습니다!');
-            } else {
-              // 응답이 실패한 경우
-              console.log('요청이 실패했습니다.');
-            }
-          })
-          .catch((error) => {
-            console.log('에러', error);
-            navigate('/error');
-          });
-
+        try {
+          const response = await api.patchCommentApi(
+            commentdata.commentId,
+            comment
+          );
+          if (response === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+          }
+          if (response === 200) {
+            setErrorMsg(null);
+            navigate(`/detail/${cocktailId}`);
+            alert('수정했습니다!');
+          }
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+        // fetch(`${BASE_URL}comments/${commentdata.commentId}`, {
+        //   method: 'PATCH',
+        //   headers: {
+        //     //'ngrok-skip-browser-warning': 'true',
+        //     'Content-Type': 'application/json', // json fetch시
+        //   },
+        //   body: JSON.stringify({ content: comment }),
+        // })
+        //   .then((data) => {
+        //     if (data.status === 200) {
+        //       // 응답이 성공적인 경우
+        //       console.log('요청이 성공했습니다.');
+        //       // console.log(data);
+        //       setErrorMsg(null);
+        //       navigate(`/detail/${cocktailId}`);
+        //       alert('수정했습니다!');
+        //     } else {
+        //       // 응답이 실패한 경우
+        //       console.log('요청이 실패했습니다.');
+        //     }
+        //   })
+        //   .catch((error) => {
+        //     console.log('에러', error);
+        //     navigate('/error');
+        //   });
         //대댓글 수정이라면
       } else {
         fetch(`${BASE_URL}replies/${commentdata.replyId}`, {
