@@ -50,7 +50,8 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                 jwtTokenizer.verifySignature(refreshToken, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()));
                 String newAccessToken = authService.reissue(refreshToken);
                 response.setHeader("Authorization", newAccessToken);
-                response.sendError(218);
+                response.setIntHeader("reIssue", 3000);
+                response.sendError(3000);
             } catch (BusinessLogicException be) {
                 request.setAttribute("exception", be);
             }
