@@ -34,7 +34,7 @@ const fetchrefreshToken = async () => {
 };
 
 // Fetch API 인터셉터 함수
-const fetchWithInterceptor = async (url, options) => {
+export const fetchWithInterceptor = async (url, options) => {
   const response = await fetch(url, options);
   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
   if (response.status === 401) {

@@ -1,6 +1,6 @@
-import api from './api';
+import fetchWithInterceptor from './api';
 export const PostCocktailForm = async (form) => {
-  const cocktailData = await fetch(
+  const cocktailData = await fetchWithInterceptor(
     `${process.env.REACT_APP_BASE_URL}cocktails`,
     {
       method: 'POST',
@@ -15,7 +15,7 @@ export const PostCocktailForm = async (form) => {
 };
 
 export const PatchCocktailForm = async (form, params) => {
-  const cocktailData = await fetch(
+  const cocktailData = await fetchWithInterceptor(
     `${process.env.REACT_APP_BASE_URL}cocktails/${params}`,
     {
       method: 'PATCH',
@@ -30,7 +30,7 @@ export const PatchCocktailForm = async (form, params) => {
 };
 
 export const GetCocktailForm = async (params) => {
-  const cocktailData = await fetch(
+  const cocktailData = await fetchWithInterceptor(
     `${process.env.REACT_APP_BASE_URL}cocktails/${params}`,
     {
       method: 'GET',
