@@ -158,14 +158,26 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 218) {
-        console.log('재발급받고 엑세스 토큰담겨있음.');
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
+        if (token) {
+          console.log('재발급받고 엑세스 토큰담겨있음.');
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(url, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
 
-        localStorage.setItem(
-          'accessToken',
-          response.headers.get('Authorization')
-        );
-        localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
       return response;
@@ -192,14 +204,29 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 218) {
-        console.log('재발급받고 엑세스 토큰담겨있음.');
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
+        if (token) {
+          console.log('재발급받고 엑세스 토큰담겨있음.');
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(
+            `${API_BASE}bookmark/create/${item.cocktailId}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: response.headers.get('Authorization'),
+                Refresh: localStorage.getItem('refreshToken'),
+              },
+            }
+          );
+          return data;
+        }
 
-        localStorage.setItem(
-          'accessToken',
-          response.headers.get('Authorization')
-        );
-        localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
       return response;
@@ -226,14 +253,29 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 218) {
-        console.log('재발급받고 엑세스 토큰담겨있음.');
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
+        if (token) {
+          console.log('재발급받고 엑세스 토큰담겨있음.');
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(
+            `${API_BASE}bookmark/delete/${item.cocktailId}`,
+            {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: response.headers.get('Authorization'),
+                Refresh: localStorage.getItem('refreshToken'),
+              },
+            }
+          );
+          return data;
+        }
 
-        localStorage.setItem(
-          'accessToken',
-          response.headers.get('Authorization')
-        );
-        localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
       return response;
@@ -257,14 +299,26 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 218) {
-        console.log('재발급받고 엑세스 토큰담겨있음.');
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
+        if (token) {
+          console.log('재발급받고 엑세스 토큰담겨있음.');
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}comments/${commentId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
 
-        localStorage.setItem(
-          'accessToken',
-          response.headers.get('Authorization')
-        );
-        localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
       return response;
@@ -293,14 +347,26 @@ export default {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response.status === 218) {
-        console.log('재발급받고 엑세스 토큰담겨있음.');
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
+        if (token) {
+          console.log('재발급받고 엑세스 토큰담겨있음.');
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}replies/${replyId}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
 
-        localStorage.setItem(
-          'accessToken',
-          response.headers.get('Authorization')
-        );
-        localStorage.setItem('refreshToken', response.headers.get('Refresh'));
         return response;
       }
       return response;

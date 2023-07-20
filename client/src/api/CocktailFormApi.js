@@ -15,7 +15,7 @@ export const PostCocktailForm = async (form) => {
     console.log('로그아웃해야함.');
     return 401;
   }
-  if (cocktailData.status === 218) {
+  if (cocktailData.status === 500) {
     console.log('재발급받고 엑세스 토큰담겨있음.');
 
     localStorage.setItem(
@@ -45,7 +45,7 @@ export const PatchCocktailForm = async (form, params) => {
     console.log('로그아웃해야함.');
     return 401;
   }
-  if (cocktailData.status === 218) {
+  if (cocktailData.status === 500) {
     console.log('재발급받고 엑세스 토큰담겨있음.');
 
     localStorage.setItem(
@@ -74,7 +74,7 @@ export const GetCocktailForm = async (params) => {
     console.log('로그아웃해야함.');
     return 401;
   }
-  if (cocktailData.status === 218) {
+  if (cocktailData.status === 500) {
     console.log('재발급받고 엑세스 토큰담겨있음.');
 
     localStorage.setItem(

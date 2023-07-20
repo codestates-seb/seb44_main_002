@@ -22,7 +22,7 @@ export const RankingApi = async (isLogin) => {
     console.log('로그아웃해야함.');
     return 401;
   }
-  if (rankingData.status === 218) {
+  if (rankingData.status === 500) {
     console.log('재발급받고 엑세스 토큰담겨있음.');
 
     localStorage.setItem(

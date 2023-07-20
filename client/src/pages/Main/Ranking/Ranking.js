@@ -21,8 +21,9 @@ export default function Ranking({ error, setError }) {
         }
         return json;
       })
-      .then((data) => data.json())
+      .then((json) => json.json())
       .then((json) => {
+        console.log(json);
         if (json.bestCocktails.length === 0) {
           setError(true);
         } else {
