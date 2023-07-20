@@ -19,6 +19,7 @@ const fetchrefreshToken = async () => {
     }
     //재발급 성공
     if (response.ok) {
+      console.log('재발급 성공');
       localStorage.setItem(
         'accessToken',
         response.headers.get('Authorization')
@@ -201,4 +202,5 @@ export default {
       console.error(error);
     }
   },
+  //댓글수정
 };
