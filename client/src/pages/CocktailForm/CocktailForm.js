@@ -45,8 +45,6 @@ export default function CocktailForm() {
 
   const navigate = useNavigate();
 
-  const accessToken = localStorage.getItem('accessToken');
-
   // // 엔터 누르면 submit되는 현상 막기
   const preventFormSubmission = (e) => {
     if (e.key === 'Enter') {
