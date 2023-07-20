@@ -286,6 +286,213 @@ public class AppConfiguration implements InitializingBean {
         tequilaSour.assignUser(user);
         cocktailRepository.save(tequilaSour);
 
+        Cocktail tequilaTonic = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.TEQUILA)
+                .name("데킬라 토닉")
+                .imageUrl("https://i.namu.wiki/i/QcIOHfMaPhelJC86WNZh_QUHzQXTQMdk84mTrCetnbATTJY5act1BnMluKXlf1Kgos9DzTwyZ6p47eEiQ8Iio7_dKO-Q4NA3yIk4oEhiSrYyi21YxvCgH4KltOBdQpkPao-2X1lAuHIx0tU9fZJqJg.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬", "토닉워터"))))
+                .recipe(new Recipe(List.of("잔에 데킬라 75ml를 넣어줍니다."
+                        , "토닉워터 150ml를 넣어줍니다."
+                        , "레몬으로 가니쉬합니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_HIGH, Tag.SWEET)))
+                .rate(new Rate())
+                .build();
+        tequilaTonic.assignUser(user);
+        cocktailRepository.save(tequilaTonic);
+
+        Cocktail elToroLoco = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.TEQUILA)
+                .name("엘 토로 로코")
+                .imageUrl("https://i.namu.wiki/i/uPYueC9q9PcpTII3vpv_OkhFh1pyv1u5c_jM91003YV2gFja09-5ch2qlWw6qbwxIp1vgr83mbfSAixywPeqirqOr3OHq9y7BxUDmY2b0F82jAvTjJ5Iwm2CApfFPOJav4581JKI8Pq2jyhSK7QP2Q.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레드불"))))
+                .recipe(new Recipe(List.of("잔에 데킬라 30ml를 넣어줍니다."
+                        , "레드불 90ml를 넣어줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET)))
+                .rate(new Rate())
+                .build();
+        elToroLoco.assignUser(user);
+        cocktailRepository.save(elToroLoco);
+
+        Cocktail elDiablo = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.TEQUILA)
+                .name("엘 디아블로")
+                .imageUrl("https://i.namu.wiki/i/fpR0DZ67XJotairGyMh7xc3vDJBq_qW8nNsAFIzfyZl1bXIW3pFgxTqEqjLviQiZqrPi0vBER0M3rReSNzge_RvT8Tp6W-FzeuWY72yO-LOhqufTfCLMfeYlQxW_VM1pLQezrB70E6Nw_scT2tuKdA.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("크림 드 카시스", "라임 주스", "진저 에일"))))
+                .recipe(new Recipe(List.of("잔에 데킬라 45ml를 넣어줍니다."
+                        , "크림 드 카시스 15ml를 넣어줍니다."
+                        , "라임 주스 15ml를 넣어줍니다."
+                        , "진저에일 60~90ml 넣어줍니다."
+                        , "블랙베리로 가니쉬해 완성합니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SOUR)))
+                .rate(new Rate())
+                .build();
+        elDiablo.assignUser(user);
+        cocktailRepository.save(elDiablo);
+
+        Cocktail kahluaMilk = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("깔루아 밀크")
+                .imageUrl("https://i.namu.wiki/i/sZ5okkUwRHl0oZcNTjVIwUFkzb-N2sE8oXMOzqDK14Z50hvfE1YIe436RVAB-GYSHHu5rie5MIiKpQCAPYmOHS2vodmwHsrHglF8n9lyyGMW72nonz5TFSEKxsCg-LexxEP_TAdyZklmdkUWHMondg.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("우유", "얼음"))))
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+                        , "깔루아 30ml를 넣어줍니다."
+                        , "우유 120ml를 넣어줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+                .rate(new Rate())
+                .build();
+        kahluaMilk.assignUser(user);
+        cocktailRepository.save(kahluaMilk);
+
+        Cocktail longIslandIceTea = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("롱 아일랜드 아이스티")
+                .imageUrl("https://i.namu.wiki/i/j-o2cntSa14kSEi1uDhD-7TDqLSHGft-Pm-Xk77sf86EQqxDj95SkNmyM--imQNLXybEqt-Xdy_J27IdXW4NUbcvwVVSK1ypjgC9k3O9u0q10zPEzKFOLP2qKHK4YZ489a_fUzqGkQKCl1oGAErVeg.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("진", "화이트 럼", "보드카", "데킬라", "드카이퍼 트리플섹", "레몬 주스", "콜라", "얼음"))))
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+                        , "진 15ml를 넣어줍니다."
+                        , "화이트 럼 15ml를 넣어줍니다."
+                        , "보드카 15ml를 넣어줍니다."
+                        , "데킬라 15ml를 넣어줍니다."
+                        , "드카이퍼 트리플섹 15ml를 넣어줍니다."
+                        , "레몬 주스 45ml를 넣어줍니다."
+                        , "콜라를 잔 끝까지 채워줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+                .rate(new Rate())
+                .build();
+        longIslandIceTea.assignUser(user);
+        cocktailRepository.save(longIslandIceTea);
+
+        Cocktail AMF = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("AMF")
+                .imageUrl("https://i.pinimg.com/564x/c9/a7/47/c9a7478f472dc283c7f6468de873897a.jpg")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("진", "화이트 럼", "보드카", "데킬라", "블루 큐라소", "레몬 주스", "사이다", "얼음"))))
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+                        , "진 15ml를 넣어줍니다."
+                        , "화이트 럼 15ml를 넣어줍니다."
+                        , "보드카 15ml를 넣어줍니다."
+                        , "데킬라 15ml를 넣어줍니다."
+                        , "블루 큐라소 15ml를 넣어줍니다."
+                        , "레몬 주스 45ml를 넣어줍니다."
+                        , "사이다를 잔 끝까지 채워줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+                .rate(new Rate())
+                .build();
+        AMF.assignUser(user);
+        cocktailRepository.save(AMF);
+
+        Cocktail tokyoIceTea = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("도쿄 아이스티")
+                .imageUrl("https://live.staticflickr.com/5763/23741857192_bea7becf4b_c.jpg")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("진", "화이트 럼", "보드카", "데킬라", "드카이퍼 멜론", "레몬 주스", "사이다", "얼음"))))
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+                        , "진 15ml를 넣어줍니다."
+                        , "화이트 럼 15ml를 넣어줍니다."
+                        , "보드카 15ml를 넣어줍니다."
+                        , "데킬라 15ml를 넣어줍니다."
+                        , "드카이퍼 멜론 15ml를 넣어줍니다."
+                        , "레몬 주스 45ml를 넣어줍니다."
+                        , "사이다를 잔 끝까지 채워줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+                .rate(new Rate())
+                .build();
+        tokyoIceTea.assignUser(user);
+        cocktailRepository.save(tokyoIceTea);
+
+        Cocktail greenWidow = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("그린 위도우")
+                .imageUrl("https://i.namu.wiki/i/8-82cNyg2z1GjlHsRh9NZdbldqucakS70S9dxo14X0Jc0QaqC3fTc36sdj11cSNTlmiuBbY5_9xVT15MRIxIrUJSWK44j4UMmzEuihlsyTgQW-__mxNHWoc8Ot35mL3sJ3IP6ZbJfEtp216oXA31HA.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("오렌지 주스", "얼음"))))
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+                        , "디카이퍼 블루 큐라소 30ml를 넣어줍니다."
+                        , "오렌지 주스 45ml를 넣어줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET, Tag.BITTER)))
+                .rate(new Rate())
+                .build();
+        greenWidow.assignUser(user);
+        cocktailRepository.save(greenWidow);
+
+        Cocktail baileysMilk = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("베일리스 밀크")
+                .imageUrl("https://i.namu.wiki/i/WC9pcehWez9Z4xN2I5TYZvZDqTZcBitsMkOCg5PsLeFZG9-4nMiRGG8LcEYjW7DbWXk45IFSgi2Cx8ugNk0e_CwTacIkvPxPb33BMgt5qlz0-SYFxpuLxl4h0ZBMsO0yimurKD9CKxMsh-pMe8W3XQ.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("우유"))))
+                .recipe(new Recipe(List.of("잔에 베일리스를 1/4만큼 넣어줍니다."
+                        , "잔에 우유를 3/4만큼 넣어줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+                .rate(new Rate())
+                .build();
+        baileysMilk.assignUser(user);
+        cocktailRepository.save(baileysMilk);
+
+        Cocktail angelTip = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("엔젤 팁")
+                .imageUrl("https://i.namu.wiki/i/cNgITQDIGxW0FFDo0op0N7Cmp0zNpljdb_lYZ6wHu0SXew87pzOgATreVnHdq71gVfpg3M-iMT0wvmWwHVwri3-mYKSSp51XiIkOrkApPIjEvZX9IGRyhWcETuTSv0kTuVCtP241EO92TWQneEh3Yg.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("디카이퍼 카카오 다크", "생크림"))))
+                .recipe(new Recipe(List.of("잔에 디카이퍼 카카오 다크 22.5ml를 넣어줍니다."
+                        , "그 위에 생크림을 7.5ml 올려줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+                .rate(new Rate())
+                .build();
+        angelTip.assignUser(user);
+        cocktailRepository.save(angelTip);
+
+        Cocktail cacaoFizz = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("카카오 피즈")
+                .imageUrl("https://mblogthumb-phinf.pstatic.net/MjAxODA2MDNfMTYy/MDAxNTI4MDM0NDY1MzAy.Hn8dMvbg5PaGhQIzzKwAN0xBLPBJnPFnqrTXrN4OwQog.MOnMwI-x39d-eLUo3f3nLRqAAmCltatTH7QSFHJw2wgg.JPEG.infinitia00/20180603_2255221.jpg?type=w420")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("라임 주스", "설탕", "탄산수"))))
+                .recipe(new Recipe(List.of("잔에 디카이퍼 카카오 다크 30 ~ 45ml를 넣어줍니다."
+                        , "라임 주스 15ml를 넣어줍니다."
+                        , "설탕 1 ~ 2티스푼을 넣어줍니다."
+                        , "탄산수를 가득 채워줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+                .rate(new Rate())
+                .build();
+        cacaoFizz.assignUser(user);
+        cocktailRepository.save(cacaoFizz);
+
+        Cocktail fernandito = Cocktail.builder()
+                .category(Category.CATEGORY1)
+                .liquor(Liquor.LIQUEUR)
+                .name("페르난디토")
+                .imageUrl("https://i.namu.wiki/i/uQmNpLrTxTCcBGDSi5me1vG-9cCC6ho8nkvdIpXSIvCgT2frLZ6k0Ykm2TM8AjcSvyKTkCcjMkt2cNKesePxZ4O3SU0mrkAblM86aqCgZM-d1W5-TDWgIKGd4O3gO8xznvPi4DGUdCPQyX23wRFITg.webp")
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("콜라", "얼음"))))
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+                        , "브랑카 멘타 50ml를 넣어줍니다."
+                        , "콜라를 가득 채워줍니다.")
+                        , 0))
+                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET, Tag.BITTER)))
+                .rate(new Rate())
+                .build();
+        fernandito.assignUser(user);
+        cocktailRepository.save(fernandito);
+
 
     }
 }
