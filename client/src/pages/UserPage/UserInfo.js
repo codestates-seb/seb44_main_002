@@ -20,7 +20,10 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
 
   const deleteUser = async () => {
     try {
-      const response = await UserPageApi.deleteUser(localData.userId);
+      const response = await UserPageApi.deleteUser(
+        localData.userId,
+        localData.accessToken
+      );
     } catch (error) {
       console.log(error);
       navigate('/error');
@@ -38,7 +41,10 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
 
   const clickFollow = async () => {
     try {
-      const response = await UserPageApi.createfollow(userInfo.userId);
+      const response = await UserPageApi.createfollow(
+        userInfo.userId,
+        localData.accessToken
+      );
       location.reload();
     } catch (error) {
       console.log(error);

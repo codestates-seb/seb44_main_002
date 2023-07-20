@@ -1,15 +1,14 @@
 const API_BASE = process.env.REACT_APP_BASE_URL;
-const localAccessToken = localStorage.getItem('accessToken');
 
 export default {
   // 회원 정보 조회
-  async getUserData(userId) {
+  async getUserData(userId, accessToken) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localAccessToken,
+          Authorization: accessToken,
         },
       });
       if (response.ok) {
@@ -22,13 +21,13 @@ export default {
     }
   },
   // 회원 정보 수정
-  async modifyUser(userId, password) {
+  async modifyUser(userId, password, accessToken) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localAccessToken,
+          Authorization: accessToken,
         },
         body: JSON.stringify(password),
       });
@@ -42,13 +41,13 @@ export default {
     }
   },
   // 회원 탈퇴
-  async deleteUser(userId) {
+  async deleteUser(userId, accessToken) {
     try {
       const response = await fetch(`${API_BASE}users/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localAccessToken,
+          Authorization: accessToken,
         },
       });
       if (response.ok) {
@@ -61,13 +60,13 @@ export default {
     }
   },
   // 구독하기
-  async createfollow(userId) {
+  async createfollow(userId, accessToken) {
     try {
       const response = await fetch(`${API_BASE}follow/create/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localAccessToken,
+          Authorization: accessToken,
         },
       });
       if (response.ok) {
@@ -80,13 +79,13 @@ export default {
     }
   },
   // 구독취소
-  async cancelfollow(userId) {
+  async cancelfollow(userId, accessToken) {
     try {
       const response = await fetch(`${API_BASE}follow/cancel/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localAccessToken,
+          Authorization: accessToken,
         },
       });
       if (response.ok) {

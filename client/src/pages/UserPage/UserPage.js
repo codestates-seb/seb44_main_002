@@ -15,14 +15,20 @@ export default function UserPage() {
   const location = useLocation().pathname.split('/')[2];
 
   const [userInfo, setUserInfo] = useState(dummyData);
-  const [localData, setLocalData] = useState({ userId: '', IsAdmin: false });
+  const [localData, setLocalData] = useState({
+    userId: '',
+    IsAdmin: false,
+    accessToken: '',
+  });
 
-  const logginUser = useSelector((state) => state.userinfo);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
   const getUser = async () => {
     try {
-      const response = await UserPageApi.getUserData(location);
+      const response = await UserPageApi.getUserData(
+        location,
+        localData.accessToken
+      );
       const json = await response.json();
       setUserInfo(json);
     } catch (error) {
@@ -35,7 +41,12 @@ export default function UserPage() {
     getUser();
     const local_userId = parseInt(localStorage.getItem('userId'));
     const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
-    setLocalData({ userId: local_userId, IsAdmin: local_IsAdmin });
+    const local_accessToken = localStorage.getItem('accessToken');
+    setLocalData({
+      userId: local_userId,
+      IsAdmin: local_IsAdmin,
+      accessToken: local_accessToken,
+    });
   }, [location]);
 
   const BackgroundImg = () => {

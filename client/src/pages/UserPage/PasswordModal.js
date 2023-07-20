@@ -37,9 +37,13 @@ export default function PasswordModal({ localData }) {
   };
   const modifyPassword = async () => {
     try {
-      const response = await UserPageApi.modifyUser(localData.userId, {
-        password: form.password,
-      });
+      const response = await UserPageApi.modifyUser(
+        localData.userId,
+        {
+          password: form.password,
+        },
+        localData.accessToken
+      );
     } catch (error) {
       console.log(error);
     }
