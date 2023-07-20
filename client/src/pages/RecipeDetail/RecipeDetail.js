@@ -21,7 +21,6 @@ export default function RecipeDetail() {
   const [localData, setLocalData] = useState({
     userId: '',
     IsAdmin: false,
-    accessToken: '',
   });
 
   const isLogin = useSelector((state) => state.isLogin.isLogin);
@@ -59,10 +58,7 @@ export default function RecipeDetail() {
       if (isBookmarked) {
         // 북마크 해제
         try {
-          const response = await RecipeApi.deleteBookmark(
-            cocktail.cocktailId,
-            localData.accessToken
-          );
+          const response = await RecipeApi.deleteBookmark(cocktail.cocktailId);
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -70,10 +66,7 @@ export default function RecipeDetail() {
       } else {
         // 북마크 설정
         try {
-          const response = await RecipeApi.postBookmark(
-            cocktail.cocktailId,
-            localData.accessToken
-          );
+          const response = await RecipeApi.postBookmark(cocktail.cocktailId);
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -84,10 +77,7 @@ export default function RecipeDetail() {
 
   const getCocktail = async () => {
     try {
-      const response = await RecipeApi.getCocktailData(
-        location_id,
-        localData.accessToken
-      );
+      const response = await RecipeApi.getCocktailData(location_id);
       const json = await response.json();
       setCocktail(json);
       setIsBookmarked(json.bookmarked);
@@ -107,16 +97,13 @@ export default function RecipeDetail() {
   };
 
   useEffect(() => {
-    getCocktail();
     const local_userId = parseInt(localStorage.getItem('userId'));
     const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
-    const local_accessToken = localStorage.getItem('accessToken');
     setLocalData({
       userId: local_userId,
       IsAdmin: local_IsAdmin,
-      accessToken: local_accessToken,
     });
-
+    getCocktail();
     reAnimate();
   }, [location_id]);
 
