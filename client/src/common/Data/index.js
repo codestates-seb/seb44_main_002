@@ -25,6 +25,11 @@ export const CategoryFilter = [
     title: 'vodka N whiskey',
     type: 'category_three',
   },
+  {
+    id: 4,
+    title: 'etc',
+    type: 'category_four',
+  },
 ];
 export const tagFrequencyData = [
   {
