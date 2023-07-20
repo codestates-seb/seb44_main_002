@@ -10,12 +10,21 @@ export const PostCocktailForm = async (form) => {
       },
       body: JSON.stringify(form),
     }
-  ).then((res) => {
-    if (res === 401) {
-      return 401;
-    }
-    res.json();
-  });
+  );
+  if (cocktailData.status === 401) {
+    console.log('로그아웃해야함.');
+    return 401;
+  }
+  if (cocktailData.status === 218) {
+    console.log('재발급받고 엑세스 토큰담겨있음.');
+
+    localStorage.setItem(
+      'accessToken',
+      cocktailData.headers.get('Authorization')
+    );
+    localStorage.setItem('refreshToken', cocktailData.headers.get('Refresh'));
+    return cocktailData;
+  }
   return cocktailData;
 };
 
@@ -31,7 +40,21 @@ export const PatchCocktailForm = async (form, params) => {
       },
       body: JSON.stringify(form),
     }
-  ).then((res) => res.json());
+  );
+  if (cocktailData.status === 401) {
+    console.log('로그아웃해야함.');
+    return 401;
+  }
+  if (cocktailData.status === 218) {
+    console.log('재발급받고 엑세스 토큰담겨있음.');
+
+    localStorage.setItem(
+      'accessToken',
+      cocktailData.headers.get('Authorization')
+    );
+    localStorage.setItem('refreshToken', cocktailData.headers.get('Refresh'));
+    return cocktailData;
+  }
   return cocktailData;
 };
 
@@ -46,6 +69,20 @@ export const GetCocktailForm = async (params) => {
         Refresh: localStorage.getItem('refreshToken'),
       },
     }
-  ).then((res) => res.json());
+  );
+  if (cocktailData.status === 401) {
+    console.log('로그아웃해야함.');
+    return 401;
+  }
+  if (cocktailData.status === 218) {
+    console.log('재발급받고 엑세스 토큰담겨있음.');
+
+    localStorage.setItem(
+      'accessToken',
+      cocktailData.headers.get('Authorization')
+    );
+    localStorage.setItem('refreshToken', cocktailData.headers.get('Refresh'));
+    return cocktailData;
+  }
   return cocktailData;
 };
