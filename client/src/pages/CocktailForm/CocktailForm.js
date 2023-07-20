@@ -5,14 +5,12 @@ import CustomInput from '../../components/Input/CustomInput';
 import SelectBaseInput from '../../components/Input/SelectBaseInput';
 import CocktailRecipeInput from '../../components/Input/CocktailRecipeInput';
 import AddIngreInput from '../../components/Input/AddIngreInput';
-
-import HoverButton from '../../common/Buttons/HoverButton';
-
 import ImageUpload from '../../components/ImageUpload';
-import CocktailTag from './CocktailTag';
 import Loading from '../../components/Loading';
 import useCocktailFormValid from '../../components/Validation/CocktailFormValidation';
+import CocktailTag from './CocktailTag';
 import { PostCocktailForm } from '../../api/CocktailFormApi';
+import HoverButton from '../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
 
@@ -44,8 +42,6 @@ export default function CocktailForm() {
   });
 
   const navigate = useNavigate();
-
-  const accessToken = localStorage.getItem('accessToken');
 
   // // 엔터 누르면 submit되는 현상 막기
   const preventFormSubmission = (e) => {
