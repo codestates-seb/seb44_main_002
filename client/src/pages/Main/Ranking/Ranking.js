@@ -1,17 +1,27 @@
 import { useState, useEffect } from 'react';
 import RankingCard from './RankingCard';
 import { useSelector } from 'react-redux';
-
+import { useLogout } from '../../../hook/useLogout';
 import tw from 'tailwind-styled-components';
 import { RankingApi } from '../../../api/RankingApi';
 
 export default function Ranking({ error, setError }) {
   const [data, setData] = useState(null);
   const isLogin = useSelector((state) => state.isLogin.isLogin);
-
+  const logout = useLogout();
   useEffect(() => {
     // rankingApi fetch
     RankingApi(isLogin)
+      .then((json) => {
+        // console.log(json);
+        if (json === 401) {
+          alert('토큰만료로 로그아웃되었습니다.');
+          logout();
+          return;
+        }
+        return json;
+      })
+      .then((data) => data.json())
       .then((json) => {
         if (json.bestCocktails.length === 0) {
           setError(true);
