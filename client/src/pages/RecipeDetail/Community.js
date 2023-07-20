@@ -83,10 +83,10 @@ export default function Community({
     if (isValid) {
       if (tag.userId === '') {
         postComment();
-        location.reload();
+        // location.reload();
       } else {
         postReply();
-        location.reload();
+        // location.reload();
       }
     }
   };

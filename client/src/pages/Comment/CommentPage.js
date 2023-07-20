@@ -124,11 +124,11 @@ export default function CommentPage() {
           <InputTextArea
             placeholder="댓글을 입력하세요."
             onChange={(e) => setComment(e.target.value)}
-            // className={
-            //   !isValid
-            //     ? 'border-error border-[1px] w-[400px] h-[200px] mb-[2rem] text-white '
-            //     : 'border border-solid border-gray-200 w-[400px] h-[200px] mb-[2rem] text-white'
-            // }
+            className={
+              !isValid
+                ? 'border-error border-[1px] w-[400px] h-[200px] mb-[2rem] text-white '
+                : 'border border-solid border-gray-200 w-[400px] h-[200px] mb-[2rem] text-white'
+            }
             value={comment}
           />
           {!isValid && (
@@ -159,11 +159,7 @@ const InputTextArea = tw.textarea`
 h-24 
 w-full
 bg-transparent 
-${
-  !isValid
-    ? 'border-error border-[1px] w-[400px] h-[200px] mb-[2rem] text-white '
-    : 'border border-solid border-gray-200 w-[400px] h-[200px] mb-[2rem] text-white'
-}
+
 `;
 const InputButton = tw.button`
 h-8 
