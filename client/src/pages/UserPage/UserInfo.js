@@ -54,7 +54,10 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
 
   const cancelSubsctibe = async () => {
     try {
-      const response = await UserPageApi.cancelfollow(userInfo.userId);
+      const response = await UserPageApi.cancelfollow(
+        userInfo.userId,
+        localData.accessToken
+      );
       location.reload();
     } catch (error) {
       console.log(error);
