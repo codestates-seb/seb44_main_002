@@ -30,6 +30,7 @@ export default function SelectBaseInput({
           <option value="tequila">데낄라</option>
           <option value="soju">소주</option>
           <option value="beer">맥주</option>
+          <option value="makgeolli">막걸리</option>
           <option value="wine">와인</option>
           <option value="etc">기타 등등</option>
         </select>
