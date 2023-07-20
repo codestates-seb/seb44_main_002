@@ -6,7 +6,6 @@ import tw from 'tailwind-styled-components';
 import CommentValid from '../../components/Validation/CommentValidation';
 
 export default function CommentPage() {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const { state } = useLocation();
   const [isCommented, setIsCommented] = useState(state[0]);
   const commentdata = state[1];
