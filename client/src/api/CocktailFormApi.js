@@ -10,7 +10,12 @@ export const PostCocktailForm = async (form) => {
       },
       body: JSON.stringify(form),
     }
-  ).then((res) => res.json());
+  ).then((res) => {
+    if (res === 401) {
+      return 401;
+    }
+    res.json();
+  });
   return cocktailData;
 };
 
