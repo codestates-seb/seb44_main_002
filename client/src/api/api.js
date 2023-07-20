@@ -231,27 +231,29 @@ export default {
     }
   },
   //대댓글 수정
-  async patchCommentApi(commentId, comment) {
+  async patchRepliesApi(replyId, comment, commentdata) {
     try {
       const response = await fetchWithInterceptor(
-        `${API_BASE}comments/${commentId}`,
+        `${API_BASE}replies/${replyId}`,
         {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
             Authorization: localStorage.getItem('accessToken'),
           },
-          body: JSON.stringify({ content: comment }),
+          body: JSON.stringify({
+            userId: commentdata.userId,
+            taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+            taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+            content: comment,
+          }),
         }
       );
       if (response === 401) {
         console.log('로그아웃해야함.');
         return 401;
       }
-      if (response === 200) {
-        return 200;
-      }
-      if (response.status === 200) {
+      if (response === 200 || response.status === 200) {
         return 200;
       }
     } catch (error) {

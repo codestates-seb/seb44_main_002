@@ -44,36 +44,55 @@ export default function CommentPage() {
         }
         //대댓글 수정이라면
       } else {
-        fetch(`${BASE_URL}replies/${commentdata.replyId}`, {
-          method: 'PATCH',
-          headers: {
-            //'ngrok-skip-browser-warning': 'true',
-            'Content-Type': 'application/json', // json fetch시
-          },
-          body: JSON.stringify({
-            userId: commentdata.userId,
-            taggedUserId: commentdata.taggedUserInfo.taggedUserId,
-            taggedUserName: commentdata.taggedUserInfo.taggedUserName,
-            content: comment,
-          }),
-        })
-          .then((data) => {
-            if (data.status === 200) {
-              // 응답이 성공적인 경우
-              console.log('요청이 성공했습니다.');
-              // console.log(data);
-              setErrorMsg(null);
-              navigate(`/detail/${cocktailId}`);
-              alert('수정했습니다!');
-            } else {
-              // 응답이 실패한 경우
-              console.log('요청이 실패했습니다.');
-            }
-          })
-          .catch((error) => {
-            console.log('에러', error);
-            navigate('/error');
-          });
+        try {
+          const response = await api.patchCommentApi(
+            commentdata.replyId,
+            comment,
+            commentdata
+          );
+          if (response === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+          }
+          if (response === 200) {
+            setErrorMsg(null);
+            navigate(`/detail/${cocktailId}`);
+            alert('수정했습니다!');
+          }
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+        //   fetch(`${BASE_URL}replies/${commentdata.replyId}`, {
+        //     method: 'PATCH',
+        //     headers: {
+        //       //'ngrok-skip-browser-warning': 'true',
+        //       'Content-Type': 'application/json', // json fetch시
+        //     },
+        //     body: JSON.stringify({
+        //       userId: commentdata.userId,
+        //       taggedUserId: commentdata.taggedUserInfo.taggedUserId,
+        //       taggedUserName: commentdata.taggedUserInfo.taggedUserName,
+        //       content: comment,
+        //     }),
+        //   })
+        //     .then((data) => {
+        //       if (data.status === 200) {
+        //         // 응답이 성공적인 경우
+        //         console.log('요청이 성공했습니다.');
+        //         // console.log(data);
+        //         setErrorMsg(null);
+        //         navigate(`/detail/${cocktailId}`);
+        //         alert('수정했습니다!');
+        //       } else {
+        //         // 응답이 실패한 경우
+        //         console.log('요청이 실패했습니다.');
+        //       }
+        //     })
+        //     .catch((error) => {
+        //       console.log('에러', error);
+        //       navigate('/error');
+        //     });
       }
     } else {
       console.log('유효성검사에 걸렸습니다.');
