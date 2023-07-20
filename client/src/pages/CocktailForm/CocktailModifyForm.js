@@ -12,10 +12,12 @@ import { divisionTags, transformLiquor } from './TransformData';
 import { PatchCocktailForm, GetCocktailForm } from '../../api/CocktailFormApi';
 import CocktailTag from './CocktailTag';
 import HoverButton from '../../common/Buttons/HoverButton';
+import { useLogout } from '../../hook/useLogout';
 
 import tw from 'tailwind-styled-components';
 
 export default function CocktailModifyForm() {
+  const logout = useLogout();
   // 로딩화면
   const [isLoading, setIsLoading] = useState(false);
 
@@ -65,6 +67,10 @@ export default function CocktailModifyForm() {
     // cocktailform get 요청 api 분리
     GetCocktailForm(params.id)
       .then((json) => {
+        if (response === 401) {
+          alert('토큰만료로 로그아웃되었습니다.');
+          logout();
+        }
         // console.log(json);
         const transformedTags = divisionTags(json.tags);
         const transformedLiquor = transformLiquor(json.liquor);
