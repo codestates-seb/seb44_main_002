@@ -99,14 +99,29 @@ export default function Community({
     }
   };
 
+  // 대댓글을 달 댓글에 대한 정보 수정
   const changeTag = (userId, userName, commentId) => {
     setTag({ userId: userId, userName: userName });
     setCommentId(commentId);
   };
 
+  // 답변 선택시 답변 구역으로 스크롤 이동
+  const scrollToReply = () => {
+    const targetDiv = document.getElementById('reply');
+    if (targetDiv) {
+      const offset = targetDiv.offsetTop - 20;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  };
+
+  const clickReply = (userId, userName, commentId) => {
+    changeTag(userId, userName, commentId);
+    scrollToReply();
+  };
+
   return (
     <CommunityContainer>
-      <CommunityHeader>댓글을 작성해보세요!</CommunityHeader>
+      <CommunityHeader id="reply">댓글을 작성해보세요!</CommunityHeader>
       <InputContainer>
         <div className="w-[calc(100%-100px)] max-md:w-full">
           {tag.userId !== '' && (
@@ -165,7 +180,7 @@ export default function Community({
                     {ele.activeUserWritten && (
                       <CommentButton
                         onClick={() =>
-                          changeTag(ele.userId, ele.userName, ele.commentId)
+                          clickReply(ele.userId, ele.userName, ele.commentId)
                         }
                       >
                         답변하기
@@ -215,7 +230,7 @@ export default function Community({
                         {rp.activeUserWritten && (
                           <CommentButton
                             onClick={() =>
-                              changeTag(rp.userId, rp.userName, ele.commentId)
+                              clickReply(rp.userId, rp.userName, ele.commentId)
                             }
                           >
                             답변하기
