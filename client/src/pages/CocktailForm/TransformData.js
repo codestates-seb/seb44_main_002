@@ -38,6 +38,11 @@ export const transformLiquor = (liquor) => {
     보드카: 'vodka',
     데낄라: 'tequila',
     진: 'gin',
+    소주: 'soju',
+    와인: 'wine',
+    맥주: 'beer',
+    막걸리: 'makgeolli',
+    기타: 'etc',
   };
 
   const transformedLiquor = liquorMapping[liquor] || liquor;
