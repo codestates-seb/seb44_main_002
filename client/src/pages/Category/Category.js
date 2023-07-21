@@ -39,6 +39,7 @@ export default function Category() {
   });
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
+  const [totlaPage, setTotalPage] = useState(0);
 
   useEffect(() => {
     const fetchCocktails = async () => {
@@ -57,6 +58,7 @@ export default function Category() {
         console.log('성공');
         setCocktailData(data.data);
         setErrormsg(null);
+        setTotalPage(data.pageInfo.totalPages);
         if (data.length === 0) {
           setErrormsg(
             '! 데이터 요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요'
@@ -148,7 +150,10 @@ export default function Category() {
                         setCurrentPage={setCurrentPage}
                         pageInfo={obj}
                       /> */}
-                      {[1, 2, 3].map((i, idx) => (
+                      {Array.from(
+                        { length: totlaPage },
+                        (_, index) => index + 1
+                      ).map((i, idx) => (
                         <HoverButton
                           size="w-[20px] h-[30px]"
                           key={idx}
