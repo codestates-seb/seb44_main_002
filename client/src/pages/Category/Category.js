@@ -5,10 +5,12 @@ import { CategoryFilter, sortTypeData } from '../../common/Data';
 import { useLogout } from '../../hook/useLogout';
 import api from '../../api/api';
 import Card from '../../components/Card/Card';
+import SkeletonCard from '../../components/Card/SkeletonCard';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
 import useFilterurl from '../../components/FIlterUrl/Filterurl';
 import tw from 'tailwind-styled-components';
+import Pagination2 from '../../components/Pagination/Pagination2';
 
 // 페이지네이션 추가
 export default function Category() {
@@ -16,7 +18,7 @@ export default function Category() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const logout = useLogout();
   //리덕스 임시 저장
   const isLogin = useSelector((state) => state.isLogin.isLogin);
@@ -39,9 +41,19 @@ export default function Category() {
   });
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
-  const [totlaPage, setTotalPage] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const useSkeleton = () => {
+    setIsLoaded(false);
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 500);
+  };
 
   useEffect(() => {
+    useSkeleton();
     const fetchCocktails = async () => {
       const url = useFilterurl(BASE_URL, currentPage, filterCondtion);
 
@@ -80,6 +92,10 @@ export default function Category() {
       totalPages: 5,
     });
   }, [filterCondtion, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [filterCondtion]);
 
   return (
     <DivContainer>
@@ -122,20 +138,26 @@ export default function Category() {
           <Section>
             {/* 필터 */}
             <Filter
+              id="filter"
               setFilterCondtion={setFilterCondtion}
               filterCondtion={filterCondtion}
+              setCurrentPage={setCurrentPage}
             />
             {/* 필터에 따라 출력되는 데이터 */}
             <CardContainer>
-              {cocktailData.map((item, index) => (
-                <Card
-                  item={item}
-                  className="pr-4"
-                  key={index + 1}
-                  data={cocktailData}
-                  setData={setCocktailData}
-                />
-              ))}
+              {cocktailData.map((item, index) =>
+                isLoaded ? (
+                  <Card
+                    item={item}
+                    className="pr-4"
+                    key={index + 1}
+                    data={cocktailData}
+                    setData={setCocktailData}
+                  />
+                ) : (
+                  <SkeletonCard key={index + 1} />
+                )
+              )}
             </CardContainer>
             {/* 에러메시지 */}
             {errormsg && <ErrorMessage>{errormsg}</ErrorMessage>}
@@ -145,12 +167,12 @@ export default function Category() {
                 <>
                   {obj.totalCount > 16 && (
                     <>
-                      {/* <Pagination
+                      <Pagination2
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        pageInfo={obj}
-                      /> */}
-                      {Array.from(
+                        totalPage={totalPage}
+                      />
+                      {/* {Array.from(
                         { length: totlaPage },
                         (_, index) => index + 1
                       ).map((i, idx) => (
@@ -173,7 +195,7 @@ export default function Category() {
                         >
                           {i}
                         </HoverButton>
-                      ))}
+                      ))} */}
                     </>
                   )}
                 </>
@@ -228,5 +250,5 @@ const ErrorMessage = tw.p`
 text-error mb-4`;
 
 const PaginationContainer = tw.div`
-flex justify-start mb-[100px] gap-2
+flex justify-center mb-[100px] gap-2
 `;
