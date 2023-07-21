@@ -1,5 +1,6 @@
 package project.server.domain.bookmark.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.bookmark.entity.Bookmark;
@@ -10,6 +11,7 @@ import project.server.domain.user.service.UserService;
 
 @Service
 @Transactional
+@Slf4j
 public class BookmarkService {
 
     private final CocktailReadService cocktailReadService;
@@ -29,14 +31,14 @@ public class BookmarkService {
     public void createBookmark(String email, long cocktailId) {
         User user = userService.findUserByEmail(email);
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
-
         bookmarkCreateService.create(user, cocktail);
+        log.info("# userId : {}, cocktailId : {} 북마크 등록 성공", user.getUserId(), cocktailId);
     }
 
     public void deleteBookmark(String email, long cocktailId){
         User user = userService.findUserByEmail(email);
         Bookmark bookmark = bookmarkReadService.findBookmarkByUserIdAndCocktailId(user.getUserId(), cocktailId);
-
         bookmarkDeleteService.delete(user, bookmark);
+        log.info("# userId : {}, cocktailId : {} 북마크 삭제 성공", user.getUserId(), cocktailId);
     }
 }
