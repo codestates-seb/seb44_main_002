@@ -57,6 +57,7 @@ public class CocktailService {
         Cocktail cocktail = cocktailDeserializer.postDtoToEntity(dto);
         Cocktail savedCocktail = cocktailCreateService.create(user, cocktail);
         savedCocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
+        log.info("# cocktailName : {} 등록 완료", savedCocktail.getName());
         return cocktailSerializer.entityToSignedUserResponse(user, savedCocktail, BOOKMARK_DEFAULT, user.getRate(savedCocktail.getCocktailId()));
     }
 
