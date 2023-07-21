@@ -1,3 +1,4 @@
+//칵테일 등록
 export const PostCocktailForm = async (form) => {
   const cocktailData = await fetch(
     `${process.env.REACT_APP_BASE_URL}cocktails`,
@@ -40,7 +41,7 @@ export const PostCocktailForm = async (form) => {
   }
   return cocktailData;
 };
-
+//칵테일 수정
 export const PatchCocktailForm = async (form, params) => {
   const cocktailData = await fetch(
     `${process.env.REACT_APP_BASE_URL}cocktails/${params}`,
@@ -86,7 +87,7 @@ export const PatchCocktailForm = async (form, params) => {
   }
   return cocktailData;
 };
-
+//칵테일 수정시 정보조회
 export const GetCocktailForm = async (params) => {
   const cocktailData = await fetch(
     `${process.env.REACT_APP_BASE_URL}cocktails/${params}`,
