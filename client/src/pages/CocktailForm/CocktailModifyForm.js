@@ -67,10 +67,14 @@ export default function CocktailModifyForm() {
     // cocktailform get 요청 api 분리
     GetCocktailForm(params.id)
       .then((json) => {
-        if (response === 401) {
+        if (json === 401) {
           alert('토큰만료로 로그아웃되었습니다.');
           logout();
+          return;
         }
+      })
+      .then((json) => json.json())
+      .then((json) => {
         // console.log(json);
         const transformedTags = divisionTags(json.tags);
         const transformedLiquor = transformLiquor(json.liquor);
