@@ -1,5 +1,6 @@
 package project.server.domain.user.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class UserService {
 
     public static final boolean DELETED_USER = false;
@@ -42,6 +44,7 @@ public class UserService {
         user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
+        log.info("# userName : {}, UserService#createUser 성공", user.getName());
         return userSerializer.entityToUnsignedResponse(savedUser);
     }
 
@@ -70,14 +73,18 @@ public class UserService {
         User user = findUserByUserId(userId);
         if(unsigned(email)){
             if(!user.isActiveUser() || user.isAdmin()){
+                log.info("# UserService#getUser 실패");
                 throw new BusinessLogicException(ExceptionCode.DELETED_USER);
             }
+            log.info("# userId : {} , UserService#getUser 성공", user.getUserId());
             return userSerializer.entityToUnsignedResponse(user);
         }
         User readUser = findUserByEmail(email);
         if((!user.isActiveUser() && !readUser.isAdmin()) || (!readUser.isAdmin() && user.isAdmin())){
+            log.info("# UserService#getUser 실패");
             throw new BusinessLogicException(ExceptionCode.DELETED_USER);
         }
+        log.info("# userId : {} , UserService#getUser 성공", user.getUserId());
         return userSerializer.entityToSignedResponse(user, readUser);
     }
 

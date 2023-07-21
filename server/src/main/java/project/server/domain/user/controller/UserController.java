@@ -36,8 +36,10 @@ public class UserController {
     @GetMapping("/{user-id}")
     public ResponseEntity getUser(Authentication authentication,
                                   @PathVariable("user-id") @Positive long userId) {
+        log.info("# 유저 조회");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
         UserDto.Response response = userService.getUser(email, userId);
+        log.info("# 유저 조회 완료");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
