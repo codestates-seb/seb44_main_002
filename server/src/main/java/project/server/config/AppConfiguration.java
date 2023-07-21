@@ -1222,7 +1222,7 @@ public class AppConfiguration implements InitializingBean {
                 .liquor(Liquor.MAKGEOLLI)
                 .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "우유", "꿀"))))
                 .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
-                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2018/09/20/734a1e2f55b6806113760e15cb7b59811.jpg")
+                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%B7+%E1%84%86%E1%85%A1%E1%86%A8%E1%84%80%E1%85%A5%E1%86%AF%E1%84%85%E1%85%B5.jpeg")
                 .rate(new Rate())
                 .build();
         cocktail15.assignUser(user);
@@ -1235,7 +1235,7 @@ public class AppConfiguration implements InitializingBean {
                 .liquor(Liquor.BEER)
                 .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("아이스가이 피치"))))
                 .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
-                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2018/09/20/734a1e2f55b6806113760e15cb7b59811.jpg")
+                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A8%E1%84%80%E1%85%A5+%E1%84%91%E1%85%B5%E1%84%8E%E1%85%B5%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5.jpeg")
                 .rate(new Rate())
                 .build();
         cocktail16.assignUser(user);
