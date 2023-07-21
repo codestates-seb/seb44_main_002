@@ -2,6 +2,7 @@ package project.server.auth.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import project.server.auth.jwt.JwtTokenizer;
 import project.server.auth.redis.RedisService;
+import project.server.auth.service.AuthService;
 import project.server.auth.utils.CustomAuthorityUtils;
+import project.server.exception.BusinessLogicException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,11 +26,13 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final RedisService redisService;
+    private final AuthService authService;
 
-    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, RedisService redisService) {
+    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, RedisService redisService, AuthService authService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.redisService = redisService;
+        this.authService = authService;
     }
 
     @Override
@@ -41,7 +46,15 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         } catch (SignatureException se) {
             request.setAttribute("exception", se);
         } catch (ExpiredJwtException ee) {
-            request.setAttribute("exception", ee);
+            String refreshToken = request.getHeader("Refresh");
+            try {
+                jwtTokenizer.verifySignature(refreshToken, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()));
+                String newAccessToken = authService.reissue(refreshToken);
+                response.setHeader("Authorization", newAccessToken);
+                response.sendError(3000);
+            } catch (BusinessLogicException be) {
+                request.setAttribute("exception", be);
+            }
         } catch (Exception e) {
             request.setAttribute("exception", e);
         }

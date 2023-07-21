@@ -15,6 +15,11 @@ public class LiquorMapper {
         liquorMap.put("tequila", Liquor.TEQUILA);
         liquorMap.put("liqueur", Liquor.LIQUEUR);
         liquorMap.put("jin", Liquor.JIN);
+        liquorMap.put("soju", Liquor.SOJU);
+        liquorMap.put("beer", Liquor.BEER);
+        liquorMap.put("wine", Liquor.WINE);
+        liquorMap.put("makgeolli", Liquor.MAKGEOLLI);
+        liquorMap.put("etc", Liquor.ETC);
     }
 
     public static Liquor map(String key){

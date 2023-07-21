@@ -45,7 +45,7 @@ public class Cocktail {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "cocktail")
+    @OneToMany
     private List<Comment> comments = new ArrayList<>();
 
     @Embedded
@@ -94,12 +94,12 @@ public class Cocktail {
         viewCount++;
     }
 
-    public void modify(CocktailDto.Patch patch) {
+    public void modify(CocktailDto.Patch patch, List<Tag> tags) {
         this.name = patch.getName();
         this.imageUrl = patch.getImageUrl();
         this.ingredients = new Ingredients(patch.getIngredients());
         this.recipe = new Recipe(patch.getRecipe());
-        this.tags = new Tags(patch.getTags());
+        this.tags = new Tags(tags);
         this.modifiedAt = LocalDateTime.now();
     }
 
@@ -119,7 +119,15 @@ public class Cocktail {
         this.user = user;
     }
 
-    public void addDegree(Tag degree) {
-        tags.add(degree);
+    public long getUserId() {
+        return user.getUserId();
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
     }
 }

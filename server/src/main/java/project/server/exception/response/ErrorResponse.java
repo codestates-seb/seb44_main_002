@@ -21,6 +21,4 @@ public class ErrorResponse {
     public static ErrorResponse of(HttpStatus httpStatus) {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
-
-
 }

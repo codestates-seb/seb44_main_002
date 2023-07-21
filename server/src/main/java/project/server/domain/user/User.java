@@ -3,10 +3,14 @@ package project.server.domain.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.follow.entity.Follow;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +27,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    @Email
     @Column(nullable = false)
     private String email;
 
@@ -33,15 +38,15 @@ public class User {
 
     private int age;
 
-    private long subscriberCount;
+    private long subscriberCount = 0;
 
     private String profileImageUrl;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Cocktail> cocktails;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Cocktail> cocktails = new HashSet<>();
 
-    @Embedded
-    private BookmarkedCocktails bookmarkedCocktails = new BookmarkedCocktails();
+    @OneToMany
+    private Set<Bookmark> bookmarks = new HashSet<>();
 
     @Embedded
     private RatedCocktails ratedCocktails = new RatedCocktails();
@@ -49,35 +54,25 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    public UserDto.Response entityToResponse() {
-        return UserDto.Response.builder()
-                .userId(userId)
-                .email(email)
-                .name(name)
-                .gender(gender)
-                .age(age)
-                .profileImageUrl(profileImageUrl)
-                .subscriberCount(subscriberCount)
-                .build();
-    }
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<Follow> follows = new HashSet<>();
+
+    private boolean isActiveUser = true;
 
     public boolean isAlreadyRated(long cocktailId) {
         return ratedCocktails.containCocktail(cocktailId);
     }
 
-    public boolean isBookmarked(long cocktailId) {
-        return bookmarkedCocktails.containCocktail(cocktailId);
+    public boolean isBookmarked(long cocktailId){
+        for(Bookmark bookmark : bookmarks){
+            if(bookmark.getCocktailId() == cocktailId){
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void cancelBookmark(long cocktailId) {
-        bookmarkedCocktails.remove(cocktailId);
-    }
-
-    public void bookmark(long cocktailId) {
-        bookmarkedCocktails.add(cocktailId);
-    }
-
-    public int getOldRate(long cocktailId) {
+    public int getRate(long cocktailId) {
         return ratedCocktails.findValue(cocktailId);
     }
 
@@ -85,14 +80,51 @@ public class User {
         ratedCocktails.put(cocktailId, value);
     }
 
-    public boolean hasAuthority(Cocktail cocktail) {
+    public boolean hasAuthority(long userId) {
         if(isAdmin()){
             return true;
         }
-        return cocktails.contains(cocktail);
+        return isActiveUser && this.userId == userId;
     }
 
     public boolean isAdmin() {
         return roles.contains("ADMIN");
+    }
+
+    public void bookmark(Bookmark bookmark) {
+        bookmarks.add(bookmark);
+    }
+
+    public void cancelBookmark(Bookmark bookmark) {
+        bookmarks.remove(bookmark);
+    }
+
+    public void write(Cocktail cocktail) {
+        cocktails.add(cocktail);
+    }
+
+    public void addFollow(Follow follow) {
+        follows.add(follow);
+    }
+
+    public void cancelFollow(Follow follow) {
+        follows.remove(follow);
+    }
+
+    public boolean following(User following) {
+        for(Follow follow : follows){
+            if(follow.contains(following.getUserId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addSubscriberCount() {
+        subscriberCount++;
+    }
+
+    public void subtractSubscriberCount() {
+        subscriberCount--;
     }
 }
