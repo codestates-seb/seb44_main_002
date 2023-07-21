@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TagButton from '../../common/Buttons/TagButton';
-import ClickButton from '../../common/Buttons/ClickButton';
+import FlavorButton from '../../common/Buttons/FlavorButton';
 
 export default function CocktailTag({ form, setForm, isValid }) {
   const handleAlcoholClick = (selectedAlcohol) => {
@@ -8,6 +8,10 @@ export default function CocktailTag({ form, setForm, isValid }) {
       ...prevform,
       degree: prevform.degree === selectedAlcohol ? '' : selectedAlcohol,
     }));
+  };
+
+  const isAlcoholSelected = (selectedAlcohol) => {
+    return form.degree === selectedAlcohol;
   };
 
   const handleFlavorClick = (selectedFlavor) => {
@@ -30,10 +34,7 @@ export default function CocktailTag({ form, setForm, isValid }) {
     });
   };
 
-  const isAlcoholSelected = (selectedAlcohol) => {
-    return form.degree === selectedAlcohol;
-  };
-
+  // 특정 flavor tag가 form.flavor 배열에 존재하는지 확인하는 함수
   const isFlavorSelected = (selectedFlavor) => {
     return form.flavor.some((flavorObj) => flavorObj.tag === selectedFlavor);
   };
@@ -68,24 +69,24 @@ export default function CocktailTag({ form, setForm, isValid }) {
         </TagButton>
       </div>
       <div className="flex h-[45px] w-full justify-around">
-        <ClickButton
+        <FlavorButton
           onClick={() => handleFlavorClick('sweet')}
-          selected={isFlavorSelected('sweet')}
+          isSelected={isFlavorSelected('sweet')}
         >
           # 단맛
-        </ClickButton>
-        <ClickButton
+        </FlavorButton>
+        <FlavorButton
           onClick={() => handleFlavorClick('sour')}
-          selected={isFlavorSelected('sour')}
+          isSelected={isFlavorSelected('sour')}
         >
           # 신맛
-        </ClickButton>
-        <ClickButton
+        </FlavorButton>
+        <FlavorButton
           onClick={() => handleFlavorClick('bitter')}
-          selected={isFlavorSelected('bitter')}
+          isSelected={isFlavorSelected('bitter')}
         >
           # 쓴맛
-        </ClickButton>
+        </FlavorButton>
       </div>
       <div className="h-8">
         <p
