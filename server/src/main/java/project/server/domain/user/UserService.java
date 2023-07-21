@@ -66,13 +66,13 @@ public class UserService {
     public UserDto.Response getUser(String email, long userId) {
         User user = findUserByUserId(userId);
         if(unsigned(email)){
-            if(!user.isActiveUser()){
+            if(!user.isActiveUser() || user.isAdmin()){
                 throw new BusinessLogicException(ExceptionCode.DELETED_USER);
             }
             return userSerializer.entityToUnsignedResponse(user);
         }
         User readUser = findUserByEmail(email);
-        if(!user.isActiveUser() && !readUser.isAdmin()){
+        if((!user.isActiveUser() && !readUser.isAdmin()) || (!readUser.isAdmin() && user.isAdmin())){
             throw new BusinessLogicException(ExceptionCode.DELETED_USER);
         }
         return userSerializer.entityToSignedResponse(user, readUser);
