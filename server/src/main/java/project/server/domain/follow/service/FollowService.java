@@ -1,5 +1,6 @@
 package project.server.domain.follow.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.follow.entity.Follow;
@@ -9,6 +10,7 @@ import project.server.global.exception.BusinessLogicException;
 import project.server.global.exception.ExceptionCode;
 
 @Service
+@Slf4j
 public class FollowService {
 
     private final UserService userService;
@@ -29,6 +31,7 @@ public class FollowService {
         User following = userService.findUserByUserId(followingUserId);
         verifyFollowTarget(follower, following);
         followCreateService.createFollow(follower, following);
+        log.info("# From now, userId : {} starts following userId : {}", follower.getUserId(), followingUserId);
     }
 
     @Transactional
@@ -37,6 +40,7 @@ public class FollowService {
         Follow follow = followReadService.findFollowByFollowerIdAndFollowingId(follower.getUserId(), followingUserId);
         User following = userService.findUserByUserId(followingUserId);
         followDeleteService.cancelFollow(follower, follow, following);
+        log.info("# From now, userId : {} is not following userId : {}", follower.getUserId(), followingUserId);
     }
 
     private void verifyFollowTarget(User follower, User following) {

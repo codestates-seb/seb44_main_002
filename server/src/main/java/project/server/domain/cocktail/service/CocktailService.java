@@ -56,8 +56,8 @@ public class CocktailService {
         User user = userService.findUserByEmail(email);
         Cocktail cocktail = cocktailDeserializer.postDtoToEntity(dto);
         Cocktail savedCocktail = cocktailCreateService.create(user, cocktail);
+        log.info("# userId : {}, cocktailId : {}, cocktailName : {} 등록 성공", user.getUserId(), savedCocktail.getCocktailId(), savedCocktail.getName());
         savedCocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
-        log.info("# cocktailName : {} 등록 완료", savedCocktail.getName());
         return cocktailSerializer.entityToSignedUserResponse(user, savedCocktail, BOOKMARK_DEFAULT, user.getRate(savedCocktail.getCocktailId()));
     }
 
@@ -66,11 +66,11 @@ public class CocktailService {
         cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
         if (unsigned(email)) {
-            log.info("# cocktailId : {} 조회 완료", cocktailId);
+            log.info("# cocktailId : {} 조회 성공", cocktailId);
             return cocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
         }
         User user = userService.findUserByEmail(email);
-        log.info("# cocktailId : {} 조회 완료", cocktailId);
+        log.info("# userId : {}, cocktailId : {} 조회 성공", user.getUserId(), cocktailId);
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
@@ -80,7 +80,7 @@ public class CocktailService {
         if (isNotSelectCategoryAndTag(category, tag)) {
             Page<Cocktail> cocktailPage = cocktailReadService.readAllCocktails(pageable);
             List<Cocktail> cocktails = cocktailPage.getContent();
-            log.info("# 칵테일 전체 목록 조회");
+            log.info("# 칵테일 전체 목록 성공");
             return createCocktailsSimpleMultiResponseDtos(email, cocktails, cocktailPage);
         }
         if (isNotSelectCategory(category)) {
@@ -97,8 +97,8 @@ public class CocktailService {
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         verifyUser(user, cocktail);
         cocktailUpdateService.modify(cocktail, patch);
+        log.info("# cocktailId : {} 칵테일 수정 성공", cocktailId);
         cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
-        log.info("# cocktailId : {} 칵테일 수정 완료", cocktailId);
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
@@ -107,7 +107,7 @@ public class CocktailService {
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         verifyUser(user, cocktail);
         cocktailDeleteService.delete(cocktail);
-        log.info("# cocktailId : {} 칵테일 삭제 완료", cocktailId);
+        log.info("# cocktailId : {} 칵테일 삭제 성공", cocktailId);
     }
 
     public RateDto.Response rateCocktail(String email, long cocktailId, int value) {
@@ -126,7 +126,7 @@ public class CocktailService {
             return cocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
         }
         User user = userService.findUserByEmail(email);
-        log.info("# 무작위 칵테일 조회 완료");
+        log.info("# 무작위 칵테일 조회 성공");
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktail.getCocktailId()), user.getRate(cocktail.getCocktailId()));
     }
 
@@ -137,7 +137,7 @@ public class CocktailService {
     private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
         cocktail.rate(value);
         user.putRatedCocktail(cocktailId, value);
-        log.info("# cocktailId : {}, userId : {} 별점 등록 완료 value : {}", cocktail, user.getUserId(), value);
+        log.info("# cocktailId : {}, userId : {} 별점 등록 성공 value : {}", cocktail, user.getUserId(), value);
         return new RateDto.Response(cocktail.getRatedScore());
     }
 
@@ -145,7 +145,7 @@ public class CocktailService {
         int oldValue = user.getRate(cocktailId);
         cocktail.reRate(oldValue, value);
         user.putRatedCocktail(cocktailId, value);
-        log.info("# cocktailId : {}, userId : {} 별점 재등록 완료 value : {}", cocktail, user.getUserId(), value);
+        log.info("# cocktailId : {}, userId : {} 별점 재등록 성공 value : {}", cocktail, user.getUserId(), value);
         return new RateDto.Response(cocktail.getRatedScore());
     }
 

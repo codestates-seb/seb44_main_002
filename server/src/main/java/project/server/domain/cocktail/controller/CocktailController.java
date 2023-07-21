@@ -40,7 +40,7 @@ public class CocktailController {
     @GetMapping("/{cocktail-id}")
     public ResponseEntity getCocktail(Authentication authentication,
                                       @PathVariable("cocktail-id") long cocktailId) {
-        log.info("# 칵테일 조회");
+        log.info("# cocktailId : {} 칵테일 조회", cocktailId);
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
         CocktailDto.Response response = cocktailService.readCocktail(email, cocktailId);
         log.info("# 칵테일 조회 완료");
@@ -64,7 +64,7 @@ public class CocktailController {
     public ResponseEntity patchCocktail(Authentication authentication,
                                         @PathVariable("cocktail-id") long cocktailId,
                                         @RequestBody CocktailDto.Patch patch) {
-        log.info("# 칵테일 수정");
+        log.info("# cocktailId : {} 칵테일 수정", cocktailId);
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         CocktailDto.Response response = cocktailService.updateCocktail(email, cocktailId, patch);
         log.info("# 칵테일 수정 완료");
@@ -74,7 +74,7 @@ public class CocktailController {
     @DeleteMapping("/{cocktail-id}")
     public ResponseEntity deleteCocktail(Authentication authentication,
                                          @PathVariable("cocktail-id") long cocktailId) {
-        log.info("# 칵테일 삭제");
+        log.info("# cocktailId : {} 칵테일 삭제", cocktailId);
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         cocktailService.removeCocktail(email, cocktailId);
         log.info("# 칵테일 삭제 완료");
@@ -85,7 +85,7 @@ public class CocktailController {
     public ResponseEntity rateCocktail(Authentication authentication,
                                        @PathVariable("cocktail-id") long cocktailId,
                                        @RequestParam("value") int value) {
-        log.info("# 칵테일 별점 등록");
+        log.info("# cocktailId : {} 칵테일 별점 등록", cocktailId);
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         RateDto.Response response = cocktailService.rateCocktail(email, cocktailId, value);
         log.info("# 칵테일 별점 등록 완료");
