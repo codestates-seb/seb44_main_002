@@ -28,7 +28,6 @@ public class AppConfiguration implements InitializingBean {
     private final CocktailRepository cocktailRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
     public void afterPropertiesSet() throws Exception {
         init();
     }
@@ -37,6 +36,7 @@ public class AppConfiguration implements InitializingBean {
         createTestUsers();
         createCocktails();
     }
+
 
     public void createTestUsers() {
         User admin = new User();
@@ -492,7 +492,5 @@ public class AppConfiguration implements InitializingBean {
                 .build();
         fernandito.assignUser(user);
         cocktailRepository.save(fernandito);
-
-
     }
 }
