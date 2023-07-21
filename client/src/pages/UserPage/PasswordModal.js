@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hook/useLogout';
 
 import UserPageApi from '../../api/UserPageApi';
 import CustomInput from '../../components/Input/CustomInput';
@@ -22,6 +23,7 @@ const style = {
   borderRadius: 5,
 };
 export default function PasswordModal({ localData }) {
+  const logout = useLogout();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ password: '', checkPassword: '' });
   const [isValid, setIsValid] = useState({
@@ -40,6 +42,11 @@ export default function PasswordModal({ localData }) {
       const response = await UserPageApi.modifyUser(localData.userId, {
         password: form.password,
       });
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
