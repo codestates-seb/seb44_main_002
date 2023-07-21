@@ -539,7 +539,7 @@ public class AppConfiguration implements InitializingBean {
                 .recipe(new Recipe(List.of("잔에 레몬즙 20ml를 넣어줍니다."
                         , "드카이퍼 트리플섹 20ml를 넣어줍니다.", "설탕물(1:1 비율) 5ml를 넣어줍니다.", "계란 흰자를 넣어줍니다.", "거품이 날정도로 휘저어줍니다.", "얼음을 넣어줍니다."), 0))
                 .category(Category.CATEGORY2)
-                .liquor(Liquor.RUM)
+                .liquor(Liquor.JIN)
                 .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬즙", "드카이퍼 트리플섹", "설탕물", "계란흰자"))))
                 .tags(new Tags(List.of(Tag.SWEET, Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
                 .imageUrl("https://i.namu.wiki/i/Uftdve-CTJ02Vl4rx9dKxXpM8ZcFfB6JYyeqt7fVCoQg5ITfMzVvX63tPvEUeHbKrWOd9RSozFIqXNa4smqkl6pmEDcMxxTOF7t-8HL0XQ-bXngbLPkYW0CabG5jaJKSemb0LD_5iwTXiQv9n1EMdA.webp")
