@@ -35,6 +35,7 @@ public class SecurityConfiguration {
     private final RedisService redisService;
     private final AuthService authService;
 
+
     public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, DetailsService detailsService, RedisService redisService
             , AuthService authService) {
         this.jwtTokenizer = jwtTokenizer;

@@ -12,8 +12,8 @@ import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.utils.CocktailDeserializer;
 import project.server.domain.cocktail.utils.CocktailSerializer;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
 
 import java.util.List;
 

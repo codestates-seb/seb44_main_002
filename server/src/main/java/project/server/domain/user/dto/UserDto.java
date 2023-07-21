@@ -1,10 +1,11 @@
-package project.server.domain.user;
+package project.server.domain.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.follow.embed.Following;
+import project.server.domain.user.entity.User;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@ import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.comment.entity.Comment;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

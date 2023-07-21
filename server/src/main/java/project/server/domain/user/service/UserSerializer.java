@@ -1,8 +1,10 @@
-package project.server.domain.user;
+package project.server.domain.user.service;
 
 import org.springframework.stereotype.Service;
 import project.server.domain.cocktail.utils.CocktailSerializer;
 import project.server.domain.follow.entity.Follow;
+import project.server.domain.user.dto.UserDto;
+import project.server.domain.user.entity.User;
 
 import java.util.stream.Collectors;
 

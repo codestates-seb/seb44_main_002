@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.service.CocktailReadService;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
 
 @Service
 @Transactional

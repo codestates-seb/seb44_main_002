@@ -13,8 +13,8 @@ import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.repository.CocktailRepository;
-import project.server.domain.user.User;
-import project.server.domain.user.UserRepository;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.repository.UserRepository;
 
 import java.util.LinkedHashSet;
 import java.util.List;

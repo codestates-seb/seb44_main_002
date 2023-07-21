@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.reply.service.ReplyService;
-import project.server.domain.user.AuthManager;
+import project.server.auth.service.AuthManager;
 import project.server.utils.UnsignedPermission;
 
 import javax.validation.Valid;

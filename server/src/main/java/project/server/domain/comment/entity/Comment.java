@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.reply.entity.Reply;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

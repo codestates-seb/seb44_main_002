@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.server.domain.recommend.service.RecommendService;
 import project.server.domain.recommend.dto.RecommendDto;
-import project.server.domain.user.AuthManager;
+import project.server.auth.service.AuthManager;
 import project.server.utils.UnsignedPermission;
 
 @RestController

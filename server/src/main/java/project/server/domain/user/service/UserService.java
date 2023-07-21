@@ -1,10 +1,13 @@
-package project.server.domain.user;
+package project.server.domain.user.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.auth.utils.CustomAuthorityUtils;
+import project.server.domain.user.dto.UserDto;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.repository.UserRepository;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 

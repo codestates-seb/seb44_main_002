@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import project.server.auth.utils.CustomAuthorityUtils;
-import project.server.domain.user.User;
-import project.server.domain.user.UserRepository;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.repository.UserRepository;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 
