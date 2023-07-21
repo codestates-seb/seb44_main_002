@@ -42,8 +42,10 @@ public class ReplyService {
         return replySerializer.entityToResponse(savedReply);
     }
 
-    public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
+    public ReplyDto.Response updateReply(String email, Long replyId, ReplyDto.Patch patch) {
+        User user = userService.findUserByEmail(email);
         Reply reply = findReplyById(replyId);
+        verifyUser(user, reply);
         reply.setContent(patch.getContent());
         return replySerializer.entityToResponse(reply);
     }
@@ -58,6 +60,12 @@ public class ReplyService {
         Comment comment = commentService.findCommentById(reply.getCommentId());
         comment.deleteReply(reply);
         replyRepository.delete(reply);
-    }    
+    }
+
+    private void verifyUser(User user, Reply reply) {
+        if(!user.hasAuthority(reply.getUserId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+    }
 }
 

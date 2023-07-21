@@ -22,13 +22,9 @@ export default function Community({
   // 댓글 등록
   const postComment = async () => {
     try {
-      const response = await RecipeApi.PostComments(
-        cocktailDetail.cocktailId,
-        {
-          content: comment,
-        },
-        localData.accessToken
-      );
+      const response = await RecipeApi.PostComments(cocktailDetail.cocktailId, {
+        content: comment,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -42,11 +38,7 @@ export default function Community({
         taggedUserName: tag.userName,
         content: comment,
       };
-      const response = await RecipeApi.PostReplys(
-        commentId,
-        repliInfo,
-        localData.accessToken
-      );
+      const response = await RecipeApi.PostReplys(commentId, repliInfo);
     } catch (error) {
       console.log(error);
     }
@@ -57,8 +49,7 @@ export default function Community({
     try {
       const response = await RecipeApi.deleteComments(
         commentId,
-        cocktailDetail.cocktailId,
-        localData.accessToken
+        cocktailDetail.cocktailId
       );
     } catch (error) {
       console.log(error);
@@ -68,10 +59,7 @@ export default function Community({
   // 대댓글 삭제
   const deleteReply = async (replyId) => {
     try {
-      const response = await RecipeApi.deleteReplies(
-        replyId,
-        localData.accessToken
-      );
+      const response = await RecipeApi.deleteReplies(replyId);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +77,7 @@ export default function Community({
     // 유효성 검사
     const isValid = await CommentValid(comment, setIsValid);
     if (!isValid) return;
-    console.log(localData);
+
     if (isValid) {
       if (tag.userId === '') {
         postComment();

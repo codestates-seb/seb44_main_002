@@ -21,8 +21,7 @@ export default function RecipeInfo({
   const deleteRecipe = async () => {
     try {
       const response = await RecipeApi.deleteCocktails(
-        cocktailDetail.cocktailId,
-        localData.accessToken
+        cocktailDetail.cocktailId
       );
     } catch (error) {
       console.log(error);
@@ -33,8 +32,7 @@ export default function RecipeInfo({
     try {
       const response = await RecipeApi.modifyRate(
         cocktailDetail.cocktailId,
-        score2,
-        localData.accessToken
+        score2
       );
       const json = await response.json();
       setTotal(json.rating);
