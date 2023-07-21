@@ -1,6 +1,7 @@
 package project.server.auth.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -9,6 +10,8 @@ import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import project.server.exception.BusinessLogicException;
+import project.server.exception.ExceptionCode;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -73,10 +76,14 @@ public class JwtTokenizer {
     public void verifySignature(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
-        Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jws);
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(jws);
+        } catch (ExpiredJwtException ex) {
+            throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED);
+        }
     }
 
     public Date getTokenExpiration(int expirationMinutes) {
@@ -94,6 +101,5 @@ public class JwtTokenizer {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 }
 

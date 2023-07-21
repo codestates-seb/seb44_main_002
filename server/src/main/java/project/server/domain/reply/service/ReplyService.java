@@ -3,6 +3,7 @@ package project.server.domain.reply.service;
 import org.springframework.stereotype.Service;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.service.CommentService;
+import project.server.domain.reply.ReplySerializer;
 import project.server.domain.reply.repository.ReplyRepository;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.reply.entity.Reply;
@@ -17,32 +18,36 @@ import javax.transaction.Transactional;
 @Transactional
 public class ReplyService {
     private final ReplyRepository replyRepository;
+    private final ReplySerializer replySerializer;
     private final CommentService commentService;
     private final UserService userService;
 
     public ReplyService(ReplyRepository replyRepository,
-                        CommentService commentService,
+                        ReplySerializer replySerializer, CommentService commentService,
                         UserService userService) {
         this.replyRepository = replyRepository;
+        this.replySerializer = replySerializer;
         this.commentService = commentService;
         this.userService = userService;
     }
 
-    public ReplyDto.Response createReply(long commentId, ReplyDto.Post post) {
+    public ReplyDto.Response createReply(String email, long commentId, ReplyDto.Post post) {
+        User user = userService.findUserByEmail(email);
         Comment comment = commentService.findCommentById(commentId);
-        User user = userService.findUser(post.getUserId());
         Reply reply = post.postToEntity();
-        reply.setComment(comment);
+        reply.setCommentId(commentId);
         reply.setUser(user);
         Reply savedReply = replyRepository.save(reply);
-        return savedReply.entityToResponse();
+        comment.addReply(savedReply);
+        return replySerializer.entityToResponse(savedReply);
     }
 
-
-    public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
+    public ReplyDto.Response updateReply(String email, Long replyId, ReplyDto.Patch patch) {
+        User user = userService.findUserByEmail(email);
         Reply reply = findReplyById(replyId);
+        verifyUser(user, reply);
         reply.setContent(patch.getContent());
-        return reply.entityToResponse();
+        return replySerializer.entityToResponse(reply);
     }
 
     public Reply findReplyById(long replyId) {
@@ -52,7 +57,15 @@ public class ReplyService {
 
     public void deleteReply(long replyId) {
         Reply reply = findReplyById(replyId);
+        Comment comment = commentService.findCommentById(reply.getCommentId());
+        comment.deleteReply(reply);
         replyRepository.delete(reply);
     }
+
+    private void verifyUser(User user, Reply reply) {
+        if(!user.hasAuthority(reply.getUserId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+    }
 }
-//
+

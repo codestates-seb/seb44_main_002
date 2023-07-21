@@ -34,7 +34,7 @@ public class DetailsService implements UserDetailsService {
         return new CustomUserDetails(findUser);
     }
 
-    private final class CustomUserDetails extends User implements UserDetails {
+    public final class CustomUserDetails extends User implements UserDetails {
         CustomUserDetails(User user) {
             setUserId(user.getUserId());
             setEmail(user.getEmail());
@@ -43,6 +43,7 @@ public class DetailsService implements UserDetailsService {
             setAge(user.getAge());
             setGender(user.getGender());
             setRoles(user.getRoles());
+            setActiveUser(user.isActiveUser());
         }
 
         @Override

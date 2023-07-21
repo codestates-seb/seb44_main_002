@@ -2,9 +2,12 @@ package project.server.domain.reply.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.reply.service.ReplyService;
+import project.server.domain.user.AuthManager;
+import project.server.utils.UnsignedPermission;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -13,33 +16,33 @@ import javax.validation.constraints.Positive;
 @RequestMapping("/replies")
 public class ReplyController {
     private final ReplyService replyService;
+    private final AuthManager authManager;
 
-    public ReplyController (ReplyService replyService) {
+    public ReplyController(ReplyService replyService, AuthManager authManager) {
         this.replyService = replyService;
+        this.authManager = authManager;
     }
 
     @PostMapping("/{comment-id}")
-    public ResponseEntity postReply(@PathVariable ("comment-id") @Positive Long commentId,
+    public ResponseEntity postReply(Authentication authentication,
+                                    @PathVariable("comment-id") @Positive Long commentId,
                                     @Valid @RequestBody ReplyDto.Post post) {
-        ReplyDto.Response response = replyService.createReply(commentId, post);
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        ReplyDto.Response response = replyService.createReply(email, commentId, post);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-//
+
     @PatchMapping("/{reply-id}")
-    public ResponseEntity patchReply(@PathVariable("reply-id") @Positive Long replyId,
+    public ResponseEntity patchReply(Authentication authentication,
+                                     @PathVariable("reply-id") @Positive Long replyId,
                                      @Valid @RequestBody ReplyDto.Patch patch) {
-        ReplyDto.Response response = replyService.updateReply(replyId, patch);
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        ReplyDto.Response response = replyService.updateReply(email, replyId, patch);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-//    @GetMapping("/{reply-id}")
-//    public ResponseEntity getReply(@PathVariable("comment-id") @Positive Long replyId) {
-//        ReplyDto.Response response = replyService.readReply(replyId);
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
-
     @DeleteMapping("/{reply-id}")
-    public ResponseEntity deleteReply(@PathVariable("comment-id") @Positive Long replyId) {
+    public ResponseEntity deleteReply(@PathVariable("reply-id") @Positive Long replyId) {
         replyService.deleteReply(replyId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
