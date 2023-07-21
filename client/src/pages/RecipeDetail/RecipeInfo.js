@@ -149,7 +149,7 @@ export default function RecipeInfo({
         <UserContainer>
           <WriterInfo>
             {cocktailDetail.activeUserWritten ? (
-              cocktailDetail.userId === 4 ? (
+              cocktailDetail.userId === 1 ? (
                 <FlexContainer>
                   <PiUserCircleFill size="24px" />
                   <NameP>관리자</NameP>
