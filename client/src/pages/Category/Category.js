@@ -224,8 +224,9 @@ const Main = tw.main`
 w-[55rem] 
 max-[990px]:w-[40rem] 
 max-[700px]:w-[30rem] 
-max-[500px]:w-[20rem]`;
-
+max-[500px]:w-[20rem]
+animate-fadeInDown1
+`;
 const PostButtonContainer = tw.div`
 flex justify-end pb-5
 `;
