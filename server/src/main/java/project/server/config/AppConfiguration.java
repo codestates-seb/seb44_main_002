@@ -1032,5 +1032,213 @@ public class AppConfiguration implements InitializingBean {
                 .build();
         highBall.assignUser(user);
         cocktailRepository.save(highBall);
+
+        Cocktail cocktail01 = Cocktail.builder()
+                .name("레몬 사와")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 45ml를 넣어줍니다.", "레몬즙(레몬주스) 45ml, 시럽 20ml 를 넣어줍니다.", "탄산수로 잔을 채워줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "레몬즙(레몬주스)", "시럽", "탄산수"))))
+                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2019/02/07/707c556637e71fafd00b1f7cccb218771.jpg")
+                .rate(new Rate())
+                .build();
+        cocktail01.assignUser(user);
+        cocktailRepository.save(cocktail01);
+
+        Cocktail cocktail02 = Cocktail.builder()
+                .name("백세주 조선하이볼")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "백세주를 2잔(소주잔 기준) 넣어줍니다.", "토닉워터를 2잔(소주잔 기준) 넣어줍니다.", "레몬즙 3T 을 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "레몬즙", "토닉워터"))))
+                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2020/12/04/7f0458f2b9ce35df3e61aa7c4d1aec271.jpg")
+                .rate(new Rate())
+                .build();
+        cocktail02.assignUser(user);
+        cocktailRepository.save(cocktail02);
+
+        Cocktail cocktail03 = Cocktail.builder()
+                .name("달고나 우유 칵테일")
+                .recipe(new Recipe(List.of("볼에 인스턴트 커피 6개, 설탕 3T, 물 3T를 넣고 거품기로 휘핑해줍니다.", "잔에 얼음을 넣어줍니다.", "잔에 소주 1잔(소주잔 기준), 우유 200ml를 넣습니다.", "과정 1에서 휘핑 낸 커피를 올려줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("우유", "인스턴트 커피", "설탕", "물", "얼음"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2020/07/27/d55c8cdc9d17fb55b7ad6bb3b76260da1.jpg")
+                .rate(new Rate())
+                .build();
+        cocktail03.assignUser(user);
+        cocktailRepository.save(cocktail03);
+
+        Cocktail cocktail04 = Cocktail.builder()
+                .name("깔라만시 칵테일")
+                .recipe(new Recipe(List.of("컵에 얼음을 넣어줍니다.", "깔라만시 1팩을 붓는다.", "소주 2잔(소주잔 기준) 을 넣어줍니다.", "탄산수로 잔을 채워줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("깔라만시", "탄산수", "얼음"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnWHh-E7vS-vR30Il8XKElaUus1AOHWVGmiA&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail04.assignUser(user);
+        cocktailRepository.save(cocktail04);
+
+        Cocktail cocktail05 = Cocktail.builder()
+                .name("솜사탕 칵테일")
+                .recipe(new Recipe(List.of("컵에 얼음을 넣어줍니다.", "소주 한잔(소주잔 기준)을 넣어줍니다.", "레몬즙(레몬주스) 45ml, 시럽 20ml 를 넣어줍니다.", "탄산수로 잔을 채워줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "레몬즙(레몬주스)", "시럽", "탄산수"))))
+                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmuN468T5jGFqRd6kRqqmBVWX5-SXb1NftEw&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail05.assignUser(user);
+        cocktailRepository.save(cocktail05);
+
+        Cocktail cocktail06 = Cocktail.builder()
+                .name("초코에몽 칵테일")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "초코에몽 120ml를 넣어줍니다.", "소주 180ml를 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("초코에몽", "얼음"))))
+                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAAkstDD5wZ4IJDr_JkKWghweIY1gTBn5ZRA&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail06.assignUser(user);
+        cocktailRepository.save(cocktail06);
+
+        Cocktail cocktail07 = Cocktail.builder()
+                .name("레디큐 칵테일")
+                .recipe(new Recipe(List.of("소주 1잔(소주잔 기준)과 밀키스를 얼려주세요.", "얼려놓은 술을 잔에 넣어주세요.", "레디큐를 넣어주세요."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레디큐", "밀키스", "얼음"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvCUMW3xth6TdauFYH5GoXJstK1PGGWe5Sw&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail07.assignUser(user);
+        cocktailRepository.save(cocktail07);
+
+        Cocktail cocktail08 = Cocktail.builder()
+                .name("포도주스 칵테일")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 1잔(소주잔 기준)을 넣어줍니다.", "포조두스 2잔(소주잔 기준)을 넣어줍니다.", "핫식스 3잔(소주잔 기준)을 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "포도주스", "핫식스"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNgdiKqLh6JY59knynhAsnsCFQ2RyM2zV9xA&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail08.assignUser(user);
+        cocktailRepository.save(cocktail08);
+
+        Cocktail cocktail09 = Cocktail.builder()
+                .name("데미소다 칵테일")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "데미소다 3잔(소주잔 기준)을 넣어줍니다.", "핫식스 2잔(소주잔 기준)을 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("데미소다", "핫식스", "얼음"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbMBM6fUXZmQYtNnAP76W-2jVJeI2H0_KKzi435X8cJXupYaapc3KrzMsgujkFzmTJOUo&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail09.assignUser(user);
+        cocktailRepository.save(cocktail09);
+
+        Cocktail cocktail10 = Cocktail.builder()
+                .name("요구르트 칵테일")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 2잔(소주잔 기준)을 넣어줍니다", "요구르트 4잔(소주잔 기준)을 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "요구르트"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnYyeotpPdeEyS-2M9J8xZDyFJnHX6AMgkpLL_CKyrUIx8c879ObM-gayJFWvIExIHu9w&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail10.assignUser(user);
+        cocktailRepository.save(cocktail10);
+
+        Cocktail cocktail11 = Cocktail.builder()
+                .name("메로나 칵테일")
+                .recipe(new Recipe(List.of("잔에 메로나를 넣어주세요.", "소주 2잔(소주잔 기준)을 넣어줍니다.", "사이다 3잔(소주잔 기준)을 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("메로나", "사이다"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsZEOzJpmj78oIZbXqZw3y819LAoEW7icFwA&usqp=CAU")
+                .rate(new Rate())
+                .build();
+        cocktail11.assignUser(user);
+        cocktailRepository.save(cocktail11);
+
+        Cocktail cocktail12 = Cocktail.builder()
+                .name("레몬 사와")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 1잔(소주잔 기준)을 넣어줍니다.","핫식스 2잔(소주잔 기준)을 넣어줍니다.", "파워에이드 2잔(소주잔 기준)을 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.SOJU)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "파워에이드", "핫식스"))))
+                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("data:image/jpeg;base64,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")
+                .rate(new Rate())
+                .build();
+        cocktail12.assignUser(user);
+        cocktailRepository.save(cocktail12);
+
+        Cocktail cocktail13 = Cocktail.builder()
+                .name("칼리모쵸")
+                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", " 레드와인 60ml을 넣어줍니다.","콜라 60ml를 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.WINE)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("콜라", "얼음"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2019/12/21/bccd4a60e0e7bab3a958a599f037c3ef1.jpg")
+                .rate(new Rate())
+                .build();
+        cocktail13.assignUser(user);
+        cocktailRepository.save(cocktail13);
+
+        Cocktail cocktail14 = Cocktail.builder()
+                .name("스프리처")
+                .recipe(new Recipe(List.of("레몬 1/2를 슬라이스로 잘라 줍니다.", "잔에 레몬을 넣어줍니다.", "탄산수 240ml를 넣어줍니다.", "화이트 와인 120ml를 넣어줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.WINE)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬", "탄산수"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2019/12/21/aa74528d83a29c304177a65d99582e161.jpg")
+                .rate(new Rate())
+                .build();
+        cocktail14.assignUser(user);
+        cocktailRepository.save(cocktail14);
+
+        Cocktail cocktail15 = Cocktail.builder()
+                .name("크림 막걸리")
+                .recipe(new Recipe(List.of("믹서기에 얼음을 넣어주세요.", "믹서기에 막걸리 115ml, 우유 85ml, 꿀 1.5T 을 넣고 갈아주세요.", "잔에 담아주세요."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.MAKGEOLLI)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "우유", "꿀"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2018/09/20/734a1e2f55b6806113760e15cb7b59811.jpg")
+                .rate(new Rate())
+                .build();
+        cocktail15.assignUser(user);
+        cocktailRepository.save(cocktail15);
+
+        Cocktail cocktail16 = Cocktail.builder()
+                .name("예거피치가이")
+                .recipe(new Recipe(List.of("잔에 반 정도 아이스가이 피치를 넣어줍니다.", "예거 라들러 피치를 채워줍니다."), 0))
+                .category(Category.CATEGORY4)
+                .liquor(Liquor.BEER)
+                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("아이스가이 피치"))))
+                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2018/09/20/734a1e2f55b6806113760e15cb7b59811.jpg")
+                .rate(new Rate())
+                .build();
+        cocktail16.assignUser(user);
+        cocktailRepository.save(cocktail16);
     }
 }
