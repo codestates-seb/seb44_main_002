@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useLogout } from '../../hook/useLogout';
 
 import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
@@ -13,6 +14,7 @@ import tw from 'tailwind-styled-components';
 export default function UserPage() {
   const navigate = useNavigate();
   const location = useLocation().pathname.split('/')[2];
+  const logout = useLogout();
 
   const [userInfo, setUserInfo] = useState(dummyData);
   const [localData, setLocalData] = useState({
@@ -25,6 +27,11 @@ export default function UserPage() {
   const getUser = async () => {
     try {
       const response = await UserPageApi.getUserData(location);
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
       const json = await response.json();
       setUserInfo(json);
     } catch (error) {
