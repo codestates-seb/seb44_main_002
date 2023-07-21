@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useLogout } from '../../hook/useLogout';
 
 import PasswordModal from './PasswordModal';
 import { logout } from '../../redux/slice/isLoginSlice';
@@ -11,6 +12,7 @@ import tw from 'tailwind-styled-components';
 export default function UserInfo({ userInfo, isLogin, localData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const logout = useLogout();
 
   const [buttontext, setButtonText] = useState('구독 중');
 
@@ -21,6 +23,11 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
   const deleteUser = async () => {
     try {
       const response = await UserPageApi.deleteUser(localData.userId);
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
       navigate('/error');
@@ -39,6 +46,11 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
   const clickFollow = async () => {
     try {
       const response = await UserPageApi.createfollow(userInfo.userId);
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
       location.reload();
     } catch (error) {
       console.log(error);
@@ -49,6 +61,11 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
   const cancelSubsctibe = async () => {
     try {
       const response = await UserPageApi.cancelfollow(userInfo.userId);
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
       location.reload();
     } catch (error) {
       console.log(error);
@@ -61,7 +78,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
       <InfoContainer>
         <UserImg
           src={`/images/user/${
-            userInfo.userId === 4
+            userInfo.userId === 1
               ? 'user_admin.png'
               : userInfo.gender === 'male'
               ? 'user_boy.png'
@@ -77,7 +94,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
             {isLogin &&
-              userInfo.userId !== 4 &&
+              userInfo.userId !== 1 &&
               userInfo.userId !== localData.userId &&
               (userInfo.subscribed ? (
                 <TitleButton
@@ -105,7 +122,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
             {isLogin &&
-              userInfo.userId !== 4 &&
+              userInfo.userId !== 1 &&
               userInfo.userId !== localData.userId &&
               (userInfo.subscribed ? (
                 <InfoComponent>
