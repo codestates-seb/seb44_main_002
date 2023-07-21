@@ -10,7 +10,7 @@ import './Swiper.css';
 
 SwiperCore.use([Navigation, Pagination]);
 
-export default function Subscribe({ userInfo }) {
+export default function Subscribe({ userInfo, localData }) {
   const [follows, setFollows] = useState([]);
 
   const cancleFollow = async (id) => {
@@ -69,20 +69,22 @@ export default function Subscribe({ userInfo }) {
                       />
                       <UserName id="name">{user.followingUserName}</UserName>
                     </Link>
-                    <CloseP
-                      id="close"
-                      role="presentation"
-                      onClick={(event) =>
-                        deleteSubscriber(
-                          event,
-                          user.followingUserId,
-                          user.followingUserName
-                        )
-                      }
-                      onKeyDown={() => {}}
-                    >
-                      x
-                    </CloseP>
+                    {userInfo.userId === localData.userId && (
+                      <CloseP
+                        id="close"
+                        role="presentation"
+                        onClick={(event) =>
+                          deleteSubscriber(
+                            event,
+                            user.followingUserId,
+                            user.followingUserName
+                          )
+                        }
+                        onKeyDown={() => {}}
+                      >
+                        x
+                      </CloseP>
+                    )}
                   </div>
                 </SwiperSlide>
               );
