@@ -61,7 +61,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
       <InfoContainer>
         <UserImg
           src={`/images/user/${
-            userInfo.userId === 4
+            userInfo.userId === 1
               ? 'user_admin.png'
               : userInfo.gender === 'male'
               ? 'user_boy.png'
@@ -77,7 +77,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
             {isLogin &&
-              userInfo.userId !== 4 &&
+              userInfo.userId !== 1 &&
               userInfo.userId !== localData.userId &&
               (userInfo.subscribed ? (
                 <TitleButton
@@ -105,7 +105,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
             {isLogin &&
-              userInfo.userId !== 4 &&
+              userInfo.userId !== 1 &&
               userInfo.userId !== localData.userId &&
               (userInfo.subscribed ? (
                 <InfoComponent>
