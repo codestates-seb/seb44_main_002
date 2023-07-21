@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.cocktail.dto.CocktailDto;
-import project.server.domain.user.AuthManager;
+import project.server.auth.service.AuthManager;
 import project.server.dto.MultiResponseDto;
 import project.server.utils.UnsignedPermission;
 

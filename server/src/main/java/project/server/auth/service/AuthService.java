@@ -5,8 +5,8 @@ import io.jsonwebtoken.Jws;
 import org.springframework.stereotype.Service;
 import project.server.auth.jwt.JwtTokenizer;
 import project.server.auth.redis.RedisService;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 

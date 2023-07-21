@@ -1,4 +1,4 @@
-package project.server.domain.user;
+package project.server.auth.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

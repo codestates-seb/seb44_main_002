@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import project.server.auth.dto.SignInDto;
 import project.server.auth.jwt.JwtTokenizer;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 

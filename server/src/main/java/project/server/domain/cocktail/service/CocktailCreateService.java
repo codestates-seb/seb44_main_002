@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.repository.CocktailRepository;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 @Service
 public class CocktailCreateService {

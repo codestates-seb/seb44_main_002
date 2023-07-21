@@ -1,4 +1,4 @@
-package project.server.domain.user;
+package project.server.domain.user.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,6 +6,7 @@ import lombok.Setter;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.follow.entity.Follow;
+import project.server.domain.user.RatedCocktails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

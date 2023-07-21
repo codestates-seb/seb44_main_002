@@ -1,4 +1,4 @@
-package project.server.domain.user;
+package project.server.domain.user.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.server.auth.service.AuthManager;
+import project.server.domain.user.dto.UserDto;
+import project.server.domain.user.service.UserService;
 import project.server.utils.UnsignedPermission;
 
 import javax.validation.Valid;

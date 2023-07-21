@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.bookmark.repository.BookmarkRepository;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 

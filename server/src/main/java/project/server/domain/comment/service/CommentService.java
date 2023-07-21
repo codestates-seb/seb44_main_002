@@ -8,8 +8,8 @@ import project.server.domain.comment.CommentSerializer;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.repository.CommentRepository;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
 import project.server.exception.BusinessLogicException;
 import project.server.exception.ExceptionCode;
 

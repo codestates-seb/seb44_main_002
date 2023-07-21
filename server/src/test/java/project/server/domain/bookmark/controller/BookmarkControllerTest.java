@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import project.server.domain.bookmark.service.BookmarkService;
-import project.server.domain.user.AuthManager;
+import project.server.auth.service.AuthManager;
 
 @SpringBootTest
 @AutoConfigureMockMvc
