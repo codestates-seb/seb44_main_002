@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
+import { useLogout } from '../../hook/useLogout';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
@@ -15,6 +16,7 @@ import tw from 'tailwind-styled-components';
 export default function RecipeDetail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const logout = useLogout();
 
   const [cocktail, setCocktail] = useState(cocktailDetail);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -59,6 +61,11 @@ export default function RecipeDetail() {
         // 북마크 해제
         try {
           const response = await RecipeApi.deleteBookmark(cocktail.cocktailId);
+          if (response === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+            return;
+          }
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -67,6 +74,11 @@ export default function RecipeDetail() {
         // 북마크 설정
         try {
           const response = await RecipeApi.postBookmark(cocktail.cocktailId);
+          if (response === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+            return;
+          }
         } catch (error) {
           console.log(error);
           navigate('/error');
@@ -78,6 +90,11 @@ export default function RecipeDetail() {
   const getCocktail = async () => {
     try {
       const response = await RecipeApi.getCocktailData(location_id);
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
       const json = await response.json();
       setCocktail(json);
       setIsBookmarked(json.bookmarked);
