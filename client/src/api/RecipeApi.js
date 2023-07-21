@@ -206,6 +206,33 @@ export default {
       if (response.ok) {
         location.reload();
         return response;
+      }
+      if (response.status === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
+        if (token) {
+          console.log('재발급받고 엑세스 토큰담겨있음.');
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}comments/${cocktailId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+            body: JSON.stringify(commentInfo),
+          });
+          return data;
+        }
+
+        return response;
       } else {
         console.log('error');
       }
