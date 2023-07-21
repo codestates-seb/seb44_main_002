@@ -15,9 +15,9 @@ import project.server.domain.cocktail.utils.CocktailDeserializer;
 import project.server.domain.cocktail.utils.CocktailSerializer;
 import project.server.domain.user.entity.User;
 import project.server.domain.user.service.UserService;
-import project.server.dto.MultiResponseDto;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.global.dto.MultiResponseDto;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 import java.util.*;
 import java.util.stream.Collectors;

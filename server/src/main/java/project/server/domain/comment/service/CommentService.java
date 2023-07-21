@@ -10,8 +10,8 @@ import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.repository.CommentRepository;
 import project.server.domain.user.entity.User;
 import project.server.domain.user.service.UserService;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 @Service
 public class CommentService {

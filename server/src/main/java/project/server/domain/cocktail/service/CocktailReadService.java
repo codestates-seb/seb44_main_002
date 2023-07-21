@@ -9,8 +9,8 @@ import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.repository.CocktailRepository;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 import java.util.List;
 

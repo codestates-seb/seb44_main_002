@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.bookmark.repository.BookmarkRepository;
 import project.server.domain.user.entity.User;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 @Service
 public class BookmarkDeleteService {
