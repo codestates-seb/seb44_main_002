@@ -84,14 +84,11 @@ public class CocktailService {
             return createCocktailsSimpleMultiResponseDtos(email, cocktails, cocktailPage);
         }
         if (isNotSelectCategory(category)) {
-            log.info("# {} 태그를 적용한 칵테일 목록", tag);
             return filterByTagCocktailsSimpleResponse(email, tag, pageable);
         }
         if (isNotSelectTag(tag)) {
-            log.info("# {} 카테고리를 적용한 칵테일 목록", category);
             return filterByCategoryCocktailsSimpleResponse(email, category, pageable);
         }
-        log.info("# {} 태그 및 {} 카테고리를 적용한 칵테일 목록", tag, category);
         return filterByTagsAndCategoryCocktails(email, category, tag, pageable);
     }
 
@@ -101,6 +98,7 @@ public class CocktailService {
         verifyUser(user, cocktail);
         cocktailUpdateService.modify(cocktail, patch);
         cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+        log.info("# cocktailId : {} 칵테일 수정 완료", cocktailId);
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
@@ -109,6 +107,7 @@ public class CocktailService {
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         verifyUser(user, cocktail);
         cocktailDeleteService.delete(cocktail);
+        log.info("# cocktailId : {} 칵테일 삭제 완료", cocktailId);
     }
 
     public RateDto.Response rateCocktail(String email, long cocktailId, int value) {
@@ -127,6 +126,7 @@ public class CocktailService {
             return cocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
         }
         User user = userService.findUserByEmail(email);
+        log.info("# 무작위 칵테일 조회 완료");
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktail.getCocktailId()), user.getRate(cocktail.getCocktailId()));
     }
 
@@ -137,6 +137,7 @@ public class CocktailService {
     private RateDto.Response calculateCocktailsRate(long cocktailId, int value, User user, Cocktail cocktail) {
         cocktail.rate(value);
         user.putRatedCocktail(cocktailId, value);
+        log.info("# cocktailId : {}, userId : {} 별점 등록 완료 value : {}", cocktail, user.getUserId(), value);
         return new RateDto.Response(cocktail.getRatedScore());
     }
 
@@ -144,6 +145,7 @@ public class CocktailService {
         int oldValue = user.getRate(cocktailId);
         cocktail.reRate(oldValue, value);
         user.putRatedCocktail(cocktailId, value);
+        log.info("# cocktailId : {}, userId : {} 별점 재등록 완료 value : {}", cocktail, user.getUserId(), value);
         return new RateDto.Response(cocktail.getRatedScore());
     }
 
@@ -181,6 +183,7 @@ public class CocktailService {
     private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagCocktailsSimpleResponse(String email, String tag, Pageable pageable) {
         List<Tag> tags = createTagList(tag);
         Page<Cocktail> cocktailPage = cocktailReadService.readFilteredByTagsCocktails(tags, pageable);
+        log.info("# {} 태그를 적용한 칵테일 목록 조회", tag);
         return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktailPage);
     }
 
@@ -195,6 +198,7 @@ public class CocktailService {
         Category selectedCategory = CategoryMapper.map(category);
         Page<Cocktail> cocktailPage = cocktailReadService.readFilteredByCategoryCocktails(selectedCategory, pageable);
         List<Cocktail> cocktails = cocktailPage.getContent();
+        log.info("# {} 카테고리를 적용한 칵테일 목록 조회", category);
         return createCocktailsSimpleMultiResponseDtos(email, cocktails, cocktailPage);
     }
 
@@ -202,10 +206,10 @@ public class CocktailService {
         List<Tag> tags = createTagList(tag);
         Category selectedCategory = CategoryMapper.map(category);
         Page<Cocktail> cocktailPage = cocktailReadService.readFilterByCategoryAndTagsCocktails(selectedCategory, tags, pageable);
+        log.info("# {} 태그 및 {} 카테고리를 적용한 칵테일 목록", tag, category);
         return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktailPage);
     }
 
-    // tags 때문에 아래랑 겹침 메모장 보고 수정 필요
     private MultiResponseDto<CocktailDto.SimpleResponse> createCocktailsSimpleMultiResponseDtos(String email, List<Cocktail> cocktails, Page<Cocktail> cocktailPage) {
         if (unsigned(email)) {
             List<CocktailDto.SimpleResponse> responses = cocktails.stream()
