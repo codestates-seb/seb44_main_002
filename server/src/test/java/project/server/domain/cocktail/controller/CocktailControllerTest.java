@@ -12,15 +12,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
-import project.server.auth.service.AuthManager;
+import project.server.global.auth.service.AuthManager;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.service.CocktailService;
-import project.server.dto.MultiResponseDto;
-import project.server.utils.UnsignedPermission;
+import project.server.global.dto.MultiResponseDto;
+import project.server.global.utils.UnsignedPermission;
 
 import java.util.ArrayList;
 import java.util.List;

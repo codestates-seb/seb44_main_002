@@ -4,8 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import project.server.domain.bookmark.service.BookmarkService;
-import project.server.auth.service.AuthManager;
-import project.server.utils.UnsignedPermission;
+import project.server.global.auth.service.AuthManager;
+import project.server.global.utils.UnsignedPermission;
 
 @RestController
 @RequestMapping("/bookmark")

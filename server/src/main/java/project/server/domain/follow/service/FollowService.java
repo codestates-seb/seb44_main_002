@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.follow.entity.Follow;
 import project.server.domain.user.entity.User;
 import project.server.domain.user.service.UserService;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 @Service
 public class FollowService {

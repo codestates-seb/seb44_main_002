@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.service.CocktailService;
 import project.server.domain.cocktail.dto.CocktailDto;
-import project.server.auth.service.AuthManager;
-import project.server.dto.MultiResponseDto;
-import project.server.utils.UnsignedPermission;
+import project.server.global.auth.service.AuthManager;
+import project.server.global.dto.MultiResponseDto;
+import project.server.global.utils.UnsignedPermission;
 
 @RestController
 @RequestMapping("/cocktails")
