@@ -31,6 +31,7 @@ module.exports = {
         fadeInRight2: 'fadeInRight2 1s both',
         fadeInUp1: 'fadeInsUp1 1s both',
         fadeInDown1: 'fadeInDown1 1s both',
+        skeleton: 'skeleton 2s infinite ease-in-out',
       },
       keyframes: {
         fadeInLeft1: {
@@ -52,6 +53,11 @@ module.exports = {
         fadeInUp1: {
           from: { opacity: '0', transform: 'translateY(-1%)' },
           to: { opacity: '1', transform: 'translateY(0%)' },
+        },
+        skeleton: {
+          '0%': { backgroundColor: 'rgba(165, 165, 165, 0.1)' },
+          '50%': { backgroundColor: 'rgba(165, 165, 165, 0.3)' },
+          '100%': { backgroundColor: 'rgba(165, 165, 165, 0.1)' },
         },
       },
     },

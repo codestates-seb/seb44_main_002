@@ -71,7 +71,7 @@ export default function UserPage() {
             isLogin={isLogin}
             localData={localData}
           />
-          <Subscribe userInfo={userInfo} />
+          <Subscribe userInfo={userInfo} localData={localData} />
           <UserRecipe userInfo={userInfo} localData={localData} />
           <UserBookmarked userInfo={userInfo} />
         </Container>
