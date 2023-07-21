@@ -67,11 +67,17 @@ export default function CocktailModifyForm() {
     // cocktailform get 요청 api 분리
     GetCocktailForm(params.id)
       .then((json) => {
-        if (response === 401) {
+        // console.log(json);
+        if (json === 401) {
           alert('토큰만료로 로그아웃되었습니다.');
           logout();
+          return;
         }
-        // console.log(json);
+        return json;
+      })
+      .then((json) => json.json())
+      .then((json) => {
+        console.log(json);
         const transformedTags = divisionTags(json.tags);
         const transformedLiquor = transformLiquor(json.liquor);
         setForm({
@@ -125,6 +131,15 @@ export default function CocktailModifyForm() {
     if (allValid) {
       // cocktailform patch 요청 api 분리
       PatchCocktailForm(form, params.id)
+        .then((json) => {
+          if (json === 401) {
+            alert('토큰만료로 로그아웃되었습니다.');
+            logout();
+            return;
+          }
+          return json;
+        })
+        .then((json) => json.json())
         .then((json) => {
           // console.log(json);
           navigate(`/success/${json.cocktailId}`);

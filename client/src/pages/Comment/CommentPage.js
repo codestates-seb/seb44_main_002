@@ -58,6 +58,8 @@ export default function CommentPage() {
           if (response === 401) {
             alert('토큰만료로 로그아웃되었습니다.');
             logout();
+            navigate(`/detail/${cocktailId}`);
+            return;
           }
 
           setErrorMsg(null);

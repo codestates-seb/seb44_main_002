@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hook/useLogout';
 
 import ImageModal from './ImgaeModal';
 import RecipeApi from '../../api/RecipeApi';
@@ -14,6 +15,7 @@ export default function RecipeInfo({
   localData,
 }) {
   const navigate = useNavigate();
+  const logout = useLogout();
 
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
@@ -23,6 +25,11 @@ export default function RecipeInfo({
       const response = await RecipeApi.deleteCocktails(
         cocktailDetail.cocktailId
       );
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -34,6 +41,11 @@ export default function RecipeInfo({
         cocktailDetail.cocktailId,
         score2
       );
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
       const json = await response.json();
       setTotal(json.rating);
     } catch (error) {

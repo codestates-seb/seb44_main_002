@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hook/useLogout';
 
 import CommentValid from '../../components/Validation/CommentValidation';
 import RecipeApi from '../../api/RecipeApi';
@@ -13,6 +14,7 @@ export default function Community({
   localData,
 }) {
   const navigate = useNavigate();
+  const logout = useLogout();
 
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
@@ -25,6 +27,11 @@ export default function Community({
       const response = await RecipeApi.PostComments(cocktailDetail.cocktailId, {
         content: comment,
       });
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +46,11 @@ export default function Community({
         content: comment,
       };
       const response = await RecipeApi.PostReplys(commentId, repliInfo);
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -51,6 +63,11 @@ export default function Community({
         commentId,
         cocktailDetail.cocktailId
       );
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +77,11 @@ export default function Community({
   const deleteReply = async (replyId) => {
     try {
       const response = await RecipeApi.deleteReplies(replyId);
+      if (response === 401) {
+        alert('토큰만료로 로그아웃되었습니다.');
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
