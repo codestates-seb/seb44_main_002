@@ -38,12 +38,13 @@ export default function Advice({ error }) {
             공유해보세요!
           </p>
           <p className="text-lg font-normal text-gray-200 max-[884px]:mb-4">
-            해당 페이지에 대한 상세설명
+            함께 즐기는 즐거움을 느껴보세요!
           </p>
           <HoverButton
             onClick={registrationHandler}
-            size="w-40 h-[42px]"
+            size="w-40 h-[50px]"
             fontSize="text-lg"
+            borderColor="border-pointPurple-100"
           >
             등록하러가기
           </HoverButton>
