@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/slice/isLoginSlice';
+import { useLogout } from '../../hook/useLogout';
+import Swal from 'sweetalert2';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -13,6 +14,14 @@ import HoverButton from '../../common/Buttons/HoverButton';
 
 export default function Hamburger() {
   const [position, setPosition] = useState(0);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
+  //리덕스툴킷
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const dispatch = useDispatch();
+  const handleLogOut = useLogout();
 
   // 스크롤 이벤트
   const onScroll = () => {
@@ -25,14 +34,6 @@ export default function Hamburger() {
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const navigate = useNavigate();
-
-  //리덕스툴킷
-  const isLogin = useSelector((state) => state.isLogin.isLogin);
-  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -121,8 +122,28 @@ export default function Hamburger() {
           <MenuItem onClick={() => openPage('/category')}>
             <HoverButton>Category</HoverButton>
           </MenuItem>
-          {/* 로그아웃 dispatch를 바로 보내고있습니다 alert가 한번 더 뜨게 해야됩니다 */}
-          <MenuItem onClick={() => dispatch(logout())}>
+
+          <MenuItem
+            onClick={() =>
+              Swal.fire({
+                title: '정말로 로그아웃하시겠습니까?',
+                text: '정말로 로그아웃하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+                confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+                cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+                confirmButtonText: '로그아웃하기', // confirm 버튼 텍스트 지정
+                cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+                reverseButtons: true, // 버튼 순서 거꾸로
+              }).then((result) => {
+                // 만약 Promise리턴을 받으면,
+                if (result.isConfirmed) {
+                  // 만약 모달창에서 confirm 버튼을 눌렀다면
+                  handleLogOut();
+                }
+              })
+            }
+          >
             <HoverButton>Logout</HoverButton>
           </MenuItem>
         </Menu>

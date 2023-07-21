@@ -33,9 +33,11 @@ public class ReplyController {
     }
 
     @PatchMapping("/{reply-id}")
-    public ResponseEntity patchReply(@PathVariable("reply-id") @Positive Long replyId,
+    public ResponseEntity patchReply(Authentication authentication,
+                                     @PathVariable("reply-id") @Positive Long replyId,
                                      @Valid @RequestBody ReplyDto.Patch patch) {
-        ReplyDto.Response response = replyService.updateReply(replyId, patch);
+        String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
+        ReplyDto.Response response = replyService.updateReply(email, replyId, patch);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

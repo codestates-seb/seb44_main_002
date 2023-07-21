@@ -56,9 +56,19 @@ public class CocktailReadService {
 
     @Transactional(readOnly = true)
     public Cocktail readRandomCocktail() {
-        long count = cocktailRepository.count();
-        Cocktail cocktail = cocktailRepository.findAll().get((int) (Math.random() * count));
+        List<Cocktail>cocktails = cocktailRepository.findAll();
+        int index = getIndex(cocktails);
+        Cocktail cocktail = cocktails.get(index);
         cocktail.assignRecommends(readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         return cocktail;
+    }
+
+    private int getIndex(List<Cocktail> cocktails) {
+        int size = cocktails.size();
+        int index = (int) (Math.random() * size);
+        if(index == size){
+            index--;
+        }
+        return index;
     }
 }

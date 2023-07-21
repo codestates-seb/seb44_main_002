@@ -2,7 +2,6 @@ package project.server.auth.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,6 +50,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                 jwtTokenizer.verifySignature(refreshToken, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()));
                 String newAccessToken = authService.reissue(refreshToken);
                 response.setHeader("Authorization", newAccessToken);
+                response.setIntHeader("reIssue", 3000);
                 response.sendError(3000);
             } catch (BusinessLogicException be) {
                 request.setAttribute("exception", be);

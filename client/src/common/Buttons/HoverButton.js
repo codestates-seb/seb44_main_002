@@ -23,6 +23,7 @@ export default function HoverButton({
   size = 'w-[93px] h-[36px]',
   fontSize = 'text-md',
   radius = 'rounded-lg',
+  disabled = false,
   children,
 }) {
   return (
@@ -35,6 +36,7 @@ export default function HoverButton({
       fontSize={fontSize}
       radius={radius}
       borderColor={borderColor}
+      disabled={disabled}
     >
       {children}
     </Button>

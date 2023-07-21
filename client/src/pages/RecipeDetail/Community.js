@@ -1,36 +1,120 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import CommentValid from '../../components/Validation/CommentValidation';
+import RecipeApi from '../../api/RecipeApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function Community({ cocktailDetail }) {
-  const [tag, setTag] = useState('');
+export default function Community({
+  cocktailDetail,
+  getTime,
+  isLogin,
+  localData,
+}) {
+  const navigate = useNavigate();
+
+  const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
+  const [commentId, setCommentId] = useState(0);
   const [isValid, setIsValid] = useState(true);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    CommentValid(comment, setIsValid);
+  // 댓글 등록
+  const postComment = async () => {
+    try {
+      const response = await RecipeApi.PostComments(cocktailDetail.cocktailId, {
+        content: comment,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const deleteAnswer = () => {};
-
-  const changeTag = (userId, username) => {
-    // 본인 태그 방지
-    if (userId !== 1) {
-      setTag(username);
+  // 대댓글 등록
+  const postReply = async () => {
+    try {
+      const repliInfo = {
+        taggedUserId: tag.userId,
+        taggedUserName: tag.userName,
+        content: comment,
+      };
+      const response = await RecipeApi.PostReplys(commentId, repliInfo);
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  // 댓글 삭제
+  const deleteComment = async (commentId) => {
+    try {
+      const response = await RecipeApi.deleteComments(
+        commentId,
+        cocktailDetail.cocktailId
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 대댓글 삭제
+  const deleteReply = async (replyId) => {
+    try {
+      const response = await RecipeApi.deleteReplies(replyId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 댓글, 대댓글 작성
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!isLogin) {
+      alert('로그인 후 이용해주세요');
+      return;
+    }
+
+    // 유효성 검사
+    const isValid = await CommentValid(comment, setIsValid);
+    if (!isValid) return;
+
+    if (isValid) {
+      if (tag.userId === '') {
+        postComment();
+      } else {
+        postReply();
+      }
+    }
+  };
+
+  // 대댓글을 달 댓글에 대한 정보 수정
+  const changeTag = (userId, userName, commentId) => {
+    setTag({ userId: userId, userName: userName });
+    setCommentId(commentId);
+  };
+
+  // 답변 선택시 답변 구역으로 스크롤 이동
+  const scrollToReply = () => {
+    const targetDiv = document.getElementById('reply');
+    if (targetDiv) {
+      const offset = targetDiv.offsetTop - 20;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  };
+
+  const clickReply = (userId, userName, commentId) => {
+    changeTag(userId, userName, commentId);
+    scrollToReply();
   };
 
   return (
     <CommunityContainer>
-      <CommunityHeader>댓글을 작성해보세요!</CommunityHeader>
+      <CommunityHeader id="reply">댓글을 작성해보세요!</CommunityHeader>
       <InputContainer>
         <div className="w-[calc(100%-100px)] max-md:w-full">
-          {tag !== '' && (
-            <TagP onClick={() => setTag('')}>
-              {`@${tag}`}
+          {tag.userId !== '' && (
+            <TagP onClick={() => setTag({ userId: '', userName: '' })}>
+              {`@${tag.userName}`}
               <span className="ml-3">x</span>
             </TagP>
           )}
@@ -52,46 +136,94 @@ export default function Community({ cocktailDetail }) {
           return (
             <>
               <CommentContainer key={ele.userId}>
-                <CommentWriter>{ele.name}</CommentWriter>
+                {ele.activeUserWritten ? (
+                  <Link to={`/userpage/${ele.userId}`}>
+                    <CommentWriter>{ele.userName}</CommentWriter>
+                  </Link>
+                ) : (
+                  <CommentWriter>탈퇴한 유저</CommentWriter>
+                )}
                 <CommentContent>{ele.content}</CommentContent>
                 <CommentAndButton>
-                  <CommentDate>{ele.date}</CommentDate>
+                  <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
-                    {ele.userId === 3 && (
+                    {(localData.IsAdmin || ele.userId === localData.userId) && (
                       <>
-                        <CommentButton>삭제하기</CommentButton>
-                        <CommentButton>수정하기</CommentButton>
+                        <CommentButton
+                          onClick={() => deleteComment(ele.commentId)}
+                        >
+                          삭제하기
+                        </CommentButton>
+                        <CommentButton
+                          onClick={() =>
+                            navigate('/comment', {
+                              state: [true, ele, cocktailDetail.cocktailId],
+                            })
+                          }
+                        >
+                          수정하기
+                        </CommentButton>
                       </>
                     )}
-                    <CommentButton
-                      onClick={() => changeTag(ele.userId, ele.name)}
-                    >
-                      답변하기
-                    </CommentButton>
+                    {ele.activeUserWritten && (
+                      <CommentButton
+                        onClick={() =>
+                          clickReply(ele.userId, ele.userName, ele.commentId)
+                        }
+                      >
+                        답변하기
+                      </CommentButton>
+                    )}
                   </ButtonContainer>
                 </CommentAndButton>
               </CommentContainer>
               {ele.replies.map((rp) => {
                 return (
                   <ReplyContainer key={rp.userId}>
-                    <CommentWriter>{rp.name}</CommentWriter>
+                    {rp.activeUserWritten ? (
+                      <Link to={`/userpage/${rp.userId}`}>
+                        <CommentWriter>{rp.userName}</CommentWriter>
+                      </Link>
+                    ) : (
+                      <CommentWriter>탈퇴한 유저</CommentWriter>
+                    )}
                     <CommentContent>
-                      {'@' + rp.taggedUserName + ' ' + rp.content}
+                      {'@' +
+                        rp.taggedUserInfo.taggedUserName +
+                        ' ' +
+                        rp.content}
                     </CommentContent>
                     <CommentAndButton>
-                      <CommentDate>{rp.date}</CommentDate>
+                      <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
-                        {rp.userId === 3 && (
+                        {(localData.IsAdmin ||
+                          rp.userId === localData.userId) && (
                           <>
-                            <CommentButton>삭제하기</CommentButton>
-                            <CommentButton>수정하기</CommentButton>
+                            <CommentButton
+                              onClick={() => deleteReply(rp.replyId)}
+                            >
+                              삭제하기
+                            </CommentButton>
+                            <CommentButton
+                              onClick={() =>
+                                navigate('/comment', {
+                                  state: [false, rp, cocktailDetail.cocktailId],
+                                })
+                              }
+                            >
+                              수정하기
+                            </CommentButton>
                           </>
                         )}
-                        <CommentButton
-                          onClick={() => changeTag(rp.userId, rp.name)}
-                        >
-                          답변하기
-                        </CommentButton>
+                        {rp.activeUserWritten && (
+                          <CommentButton
+                            onClick={() =>
+                              clickReply(rp.userId, rp.userName, ele.commentId)
+                            }
+                          >
+                            답변하기
+                          </CommentButton>
+                        )}
                       </ButtonContainer>
                     </CommentAndButton>
                   </ReplyContainer>
@@ -167,17 +299,22 @@ max-md:flex-col
 max-md:items-start
 `;
 const CommentWriter = tw.p`
+inline-block
 text-gray-200 
 text-xs
 `;
 const CommentContent = tw.p`
+w-[calc(100%-215px)]
 text-gray-100
 text-sm
+max-md:w-full
 `;
 const CommentDate = tw.p`
+w-[calc(100%-215px)]
 mt-1.5
 text-gray-200 
 text-xs
+max-md:w-full
 `;
 const CommentAndButton = tw.div`
 flex 
