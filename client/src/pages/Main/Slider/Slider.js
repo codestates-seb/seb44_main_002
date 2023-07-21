@@ -66,10 +66,13 @@ export default function Slider() {
             alt="sample"
           />
           <SliderCustomText3>
-            <p className="flex justify-start mb-4 ">안녕하세요</p>
-            <p className="flex justify-start mb-8 ">
-              <span className="mr-2 text-pointPurple-100">편한</span>
-              <span>사이트입니다</span>
+            <p className="flex justify-start mb-6 ">안녕하세요.</p>
+            <p className="flex justify-start mb-6 ">
+              <span className="mr-2">편의점칵테일 레시피 사이트</span>
+            </p>
+            <p className="flex justify-start mb-8">
+              <span className="text-pointPurple-100">편한</span>
+              <span>입니다.</span>
             </p>
             <p className="flex justify-start text-lg ">
               편의점 한잔이라는 뜻을 가지고 있습니다
@@ -163,7 +166,7 @@ const SliderCustomText = tw.div`
   max-[768px]:text-4xl 
   max-[768px]:order-2
   animate-fadeInRight2
-  font-bold
+
   max-[768px]:pl-2
 `;
 
@@ -177,19 +180,21 @@ const SliderCustomText2 = tw.div`
   max-[768px]:text-4xl 
   max-[768px]:order-2
   animate-fadeInRight2
-  font-bold
+
   max-[768px]:pr-2
 `;
 
 const SliderCustomText3 = tw.div`
   text-white
   pl-16
+  leading-snug
   max-[768px]:pl-2
   animate-fadeInRight2
   absolute
   left-24
-  text-7xl
-  font-bold
+  text-6xl
+  whitespace-nowrap 
+
   max-[768px]:text-center
   max-[768px]:text-4xl
   max-[768px]:left-12
