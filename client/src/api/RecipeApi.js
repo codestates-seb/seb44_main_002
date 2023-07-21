@@ -1,4 +1,3 @@
-import fetchWithInterceptor from './api';
 const API_BASE = process.env.REACT_APP_BASE_URL;
 
 export default {
@@ -13,7 +12,33 @@ export default {
           Refresh: localStorage.getItem('refreshToken'),
         },
       });
+      if (response.status === 401) {
+        console.log('로그아웃해야함.');
+        return 401;
+      }
       if (response.ok) {
+        return response;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        console.log(token);
+        if (token) {
+          console.log('재발급받고 엑세스 토큰담겨있음.');
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}cocktails/${cocktailId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
+
         return response;
       } else {
         console.log('error');
