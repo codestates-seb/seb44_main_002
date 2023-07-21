@@ -1040,7 +1040,7 @@ public class AppConfiguration implements InitializingBean {
                 .liquor(Liquor.SOJU)
                 .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "레몬즙(레몬주스)", "시럽", "탄산수"))))
                 .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
-                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2019/02/07/707c556637e71fafd00b1f7cccb218771.jpg")
+                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A6%E1%84%86%E1%85%A9%E1%86%AB+%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AA.jpeg")
                 .rate(new Rate())
                 .build();
         cocktail01.assignUser(user);
@@ -1177,13 +1177,13 @@ public class AppConfiguration implements InitializingBean {
         cocktailRepository.save(cocktail11);
 
         Cocktail cocktail12 = Cocktail.builder()
-                .name("레몬 사와")
+                .name("에너지주")
                 .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 1잔(소주잔 기준)을 넣어줍니다.","핫식스 2잔(소주잔 기준)을 넣어줍니다.", "파워에이드 2잔(소주잔 기준)을 넣어줍니다."), 0))
                 .category(Category.CATEGORY4)
                 .liquor(Liquor.SOJU)
                 .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "파워에이드", "핫식스"))))
                 .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
-                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A6%E1%84%86%E1%85%A9%E1%86%AB+%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AA.jpeg")
+                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A6%E1%84%82%E1%85%A5%E1%84%8C%E1%85%B5+%E1%84%8C%E1%85%AE.jpeg")
                 .rate(new Rate())
                 .build();
         cocktail12.assignUser(user);
