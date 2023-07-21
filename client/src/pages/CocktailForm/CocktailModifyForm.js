@@ -137,6 +137,10 @@ export default function CocktailModifyForm() {
             logout();
             return;
           }
+          return json;
+        })
+        .then((json) => json.json())
+        .then((json) => {
           // console.log(json);
           navigate(`/success/${json.cocktailId}`);
         })
