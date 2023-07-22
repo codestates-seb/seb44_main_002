@@ -4,10 +4,14 @@
 
 <div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132247597164273705/image.png" alt="logo" /></div>
 </br>
+
 ## 🔗 배포주소 : [편한](https://release--comfortablecocktail.netlify.app/)
+
+</br>
+
 ## 개요
 
-저희의 웹서비스 ,편한은 칵테일 레시피 정보를 제공하는 웹사이트입니다.<br/>
+저희의 웹서비스, 편한은 칵테일 레시피 정보를 제공하는 웹사이트입니다.<br/>
 사용자들만의 레시피를 등록할 수 있으며 더 나은 사용자 경험을 위해 다양한 기능을 제공합니다.
 
 ### 테스트 계정
@@ -59,7 +63,7 @@ password:
   <img src="https://user-images.githubusercontent.com/52682603/138834243-fb74d81e-e90d-4c6a-8793-05df588f59ab.png" width=15%>
   <img src="https://www.svgrepo.com/show/374118/tailwind.svg" width=15%>
   <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567749614/noticon/zgdaxpaif5ojeduonygb.png" width=15%>
-  <img src="https://velopert.com/wp-content/uploads/2017/01/vertical@2x.png" width=15%>
+  <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132250723443294229/image_3.png" width=15%>
   <img src="https://v4.mui.com/static/logo.png" width=15%>
 </p>
 
