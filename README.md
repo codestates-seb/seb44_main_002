@@ -2,10 +2,9 @@
 
 ### 지친 직장인들의 오아시스, 편의점에서 한잔 어떠세요? 편한
 
-<div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132246787453878272/3.png" alt="logo" /></div>
-
-[배포링크 바로가기]("https://release--comfortablecocktail.netlify.app/")
-
+<div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132247597164273705/image.png" alt="logo" /></div>
+</br>
+## 🔗 배포주소 : [편한](https://release--comfortablecocktail.netlify.app/)
 ## 개요
 
 저희의 웹서비스 ,편한은 칵테일 레시피 정보를 제공하는 웹사이트입니다.<br/>
