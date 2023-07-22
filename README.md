@@ -2,7 +2,14 @@
 
 ### 지친 직장인들의 오아시스, 편의점에서 한잔 어떠세요? 편한
 
-[배포링크 바로가기]()
+<div align="center"><img src="https://cdn.discordapp.com/attachments/1122708826450317404/1132239007351324672/2.png" alt="logo" /></div>
+
+[배포링크 바로가기]("https://release--comfortablecocktail.netlify.app/")
+
+## 개요
+
+저희의 웹서비스 ,편한은 칵테일 레시피 정보를 제공하는 웹사이트입니다.<br/>
+사용자들만의 레시피를 등록할 수 있으며 더 나은 사용자 경험을 위해 다양한 기능을 제공합니다.
 
 ### 테스트 계정
 
@@ -12,22 +19,23 @@ password:
 <br />
 <br />
 
-<div align="center"><img src="http://res.heraldm.com/content/image/2015/03/12/20150312001242_0.jpg" alt="logo" /></div>
-
 <br />
 
 ## 👨‍👩‍👧‍👦 팀원 소개
 
 #### Frontend
-|황찬우 (FE 팀장)|이은희 (FE 팀원)|김민재 (FE 팀원)|
-| :-: | :-: | :-: |
+
+|                                                                                      황찬우 (FE 팀장)                                                                                       |                                            이은희 (FE 팀원)                                             |                                             김민재 (FE 팀원)                                             |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="https://images-ext-1.discordapp.net/external/kQhSS4IkcxGfV-3wNzTUXgmrU4C46M82rsWScdIZ0s4/%3Fv%3D4/https/avatars.githubusercontent.com/u/49116370?width=924&height=924" width=150> | <img src="https://avatars.githubusercontent.com/u/82435813?v=4"  alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/88226519?v=4"  alt="beucol" width="150" height="150" > |
-|[@HChanWoo](https://github.com/HChanWoo)|[@joywhy](https://github.com/joywhy)|[@crowcrow07](https://github.com/crowcrow07)|
+|                                                                          [@HChanWoo](https://github.com/HChanWoo)                                                                           |                                  [@joywhy](https://github.com/joywhy)                                   |                               [@crowcrow07](https://github.com/crowcrow07)                               |
+
 #### Backend
-|노재경 (BE 부팀장)|박태양 (BE 팀원)|김수민 (BE 팀원)|
-| :-: | :-: | :-: |
+
+|                                           노재경 (BE 부팀장)                                           |                                             박태양 (BE 팀원)                                             |                                             김수민 (BE 팀원)                                             |
+| :----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="https://avatars.githubusercontent.com/u/85445649?v=4" alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/124670911?v=4"  alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/109536532?v=4"  alt="beucol" width="150" height="150"> |
-|[@jkroh1995](https://github.com/jkroh1995)|[@park-tae-yang](https://github.com/park-tae-yang)|[@soomni95](https://github.com/soomni95)|
+|                               [@jkroh1995](https://github.com/jkroh1995)                               |                            [@park-tae-yang](https://github.com/park-tae-yang)                            |                                 [@soomni95](https://github.com/soomni95)                                 |
 
 <br />
 
@@ -50,10 +58,10 @@ password:
 
 <p>
   <img src="https://user-images.githubusercontent.com/52682603/138834243-fb74d81e-e90d-4c6a-8793-05df588f59ab.png" width=15%>
-  <img src="" width=15%>
+  <img src="https://www.svgrepo.com/show/374118/tailwind.svg" width=15%>
   <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567749614/noticon/zgdaxpaif5ojeduonygb.png" width=15%>
-  <img src="" width=15%>
-  <img src="" width=15%>
+  <img src="https://velopert.com/wp-content/uploads/2017/01/vertical@2x.png" width=15%>
+  <img src="https://v4.mui.com/static/logo.png" width=15%>
 </p>
 
 ### Back-end
@@ -72,6 +80,70 @@ password:
 ## 🔌 Infrastructures
 
 <img src="">
+
+<details>
+<summary>메인 페이지</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>카테고리 페이지</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>상세 페이지</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>유저 페이지</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>로그인 모달</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>회원가입 페이지</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>헤더</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>푸터</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary></summary>
+<div markdown="1">
+
+안녕
+
+</div>
+<summary>메인 페이지</summary>
+<div markdown="1">
+
+안녕
+
+</div>
+
+</details>
 
 ## Git-Convention
 
