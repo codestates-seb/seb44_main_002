@@ -1,5 +1,6 @@
 package project.server.global.image;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Positive;
 
 @RestController
+@Slf4j
 public class ImageController {
 
     private final ImageService imageService;
@@ -28,7 +30,9 @@ public class ImageController {
 
     @PostMapping("/upload/cocktails")
     public ResponseEntity cocktailProfileImageUpload(@RequestParam("file") MultipartFile file) {
+        log.info("# 이미지 등록");
         ImageDto.Response response = imageService.uploadCocktailImage(file);
+        log.info("# 이미지 등록 완료");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
