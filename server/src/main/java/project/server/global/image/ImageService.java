@@ -73,6 +73,7 @@ public class ImageService {
     public ImageDto.Response uploadCocktailImage(MultipartFile file) {
         if (file.isEmpty()) {
             // 파일이 없는 경우 처리
+            log.info("# 이미지 파일이 없음");
             throw new BusinessLogicException(ExceptionCode.IMAGE_UPLOAD_EXCEPTION);
         }
 
@@ -95,6 +96,7 @@ public class ImageService {
 
         } catch (IOException e) {
             // 업로드 중 에러 발생 시 처리
+            log.info("# 이미지 업로드 중 에러 발생");
             throw new BusinessLogicException(ExceptionCode.IMAGE_UPLOAD_EXCEPTION);
         }
     }
