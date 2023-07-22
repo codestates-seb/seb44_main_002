@@ -59,22 +59,24 @@ export default function Slider() {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
         {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
-        <SwiperSlide className="relative swiper-slide">
+        <SwiperSlide className="relative flex max-[520px]:items-center max-[520px]:justify-center swiper-slide">
           <img
             className="absolute object-cover w-full h-full"
             src="images/swiper/슬라이더샘플3.png"
             alt="sample"
           />
           <SliderCustomText3>
-            <p className="flex justify-start mb-6 ">안녕하세요.</p>
-            <p className="flex justify-start mb-6 ">
-              <span className="mr-2">편의점칵테일 레시피 사이트</span>
+            <p className="flex justify-start mb-6 max-[520px]:justify-center">
+              안녕하세요
             </p>
-            <p className="flex justify-start mb-8">
+            <p className="flex justify-start mb-6 ">
+              <span className="mr-2">편의점 칵테일 레시피 사이트</span>
+            </p>
+            <p className="flex justify-start mb-8 max-[520px]:justify-center">
               <span className="text-pointPurple-100">편한</span>
               <span>입니다.</span>
             </p>
-            <p className="flex justify-start text-lg ">
+            <p className="flex text-gray-200 justify-start text-lg max-[520px]:text-base max-[520px]:justify-center">
               편의점 한잔이라는 뜻을 가지고 있습니다
             </p>
           </SliderCustomText3>
@@ -84,7 +86,7 @@ export default function Slider() {
           <SliderCustomText>
             <p>
               <span className="text-pointPurple-100">오늘</span>
-              <span>은,</span>
+              <span>은</span>
             </p>
             <p>안먹고 자면</p>
             <p>아쉽잖아.</p>
@@ -103,7 +105,7 @@ export default function Slider() {
           <SliderCustomText2>
             <p>
               <span className="text-pointPurple-100">댓글</span>
-              <span>로,</span>
+              <span>로</span>
             </p>
             <p>다양한 유저와</p>
             <p>소통해보세요!</p>
@@ -134,7 +136,7 @@ export default function Slider() {
           <SliderCustomText>
             <p>
               <span className="text-pointPurple-100">이중필터</span>
-              <span>로,</span>
+              <span>로</span>
             </p>
             <p>원하는 레시피를</p>
             <p>쉽게 찾아보세요!</p>
@@ -176,28 +178,28 @@ const SliderCustomText2 = tw.div`
   text-6xl 
   leading-snug
   whitespace-nowrap 
-  max-[768px]:text-center 
-  max-[768px]:text-4xl 
-  max-[768px]:order-2
+  
   animate-fadeInRight2
 
   max-[768px]:pr-2
+  max-[768px]:text-center 
+  max-[768px]:text-4xl 
+  max-[768px]:order-2
 `;
 
 const SliderCustomText3 = tw.div`
   text-white
-  pl-16
+  pl-44
   leading-snug
-  max-[768px]:pl-2
   animate-fadeInRight2
-  absolute
-  left-24
-  text-6xl
-  whitespace-nowrap 
+  text-5xl
 
   max-[768px]:text-center
   max-[768px]:text-4xl
-  max-[768px]:left-12
+  max-[768px]:pl-12
+
+  max-[520px]:pl-0
+  max-[520px]:text-2xl
 `;
 
 const SliderCustomImg = tw.img`
