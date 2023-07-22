@@ -2,7 +2,7 @@
 
 ### 지친 직장인들의 오아시스, 편의점에서 한잔 어떠세요? 편한
 
-<div align="center"><img src="https://cdn.discordapp.com/attachments/1122708826450317404/1132239007351324672/2.png" alt="logo" /></div>
+<div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132246787453878272/3.png" alt="logo" /></div>
 
 [배포링크 바로가기]("https://release--comfortablecocktail.netlify.app/")
 
