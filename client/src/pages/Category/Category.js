@@ -120,7 +120,7 @@ export default function Category() {
               radius="rounded-[30px]"
               color="text-[#BB40F1] bg-transparent"
               fontSize="max-[990px]:text-sm max-[700px]:text-xs max-[500px]:text-[10px]"
-              borderColor="border-[#BB40F1]"
+              borderColor="border-[#BB40F1] "
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
               onClick={() =>
                 isLogin
