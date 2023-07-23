@@ -39,7 +39,7 @@ export default function Advice({ error }) {
             공유해보세요!
           </p>
           <p className="text-lg font-normal text-gray-200 max-[884px]:mb-4">
-            함께 즐기는 즐거움을 느껴보세요!
+            작성한 레시피는 유저페이지에서 확인가능해요!
           </p>
           <HoverButton
             onClick={registrationHandler}
