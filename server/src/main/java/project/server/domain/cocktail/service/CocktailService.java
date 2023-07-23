@@ -74,7 +74,7 @@ public class CocktailService {
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
-    public MultiResponseDto readFilteredCocktails(String email, String category, String tag, int page, String sortValue) {
+    public MultiResponseDto readFilteredCocktails(String email, String category, String tag, String sortValue) {
         Sort sort = setSort(sortValue);
         if (isNotSelectCategoryAndTag(category, tag)) {
             List<Cocktail> cocktails = cocktailReadService.readAllCocktails(sort);
