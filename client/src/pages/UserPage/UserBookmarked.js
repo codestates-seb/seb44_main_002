@@ -1,14 +1,25 @@
+import { Link } from 'react-router-dom';
+
 import Card from '../../components/Card/Card';
 
 import tw from 'tailwind-styled-components';
 
-export default function UserBookmarked({ userInfo }) {
+export default function UserBookmarked({ userInfo, localData }) {
   return (
     <Container>
       <Title>북마크 된 레시피</Title>
       <Bookmark>
         {userInfo.bookmarkedCocktails.length === 0 ? (
-          <p className="text-white mx-auto">북마크 된 레시피가 없습니다.</p>
+          <div className="text-white mx-auto text-center">
+            <p>북마크 된 레시피가 없습니다.</p>
+            {userInfo.userId === localData.userId && (
+              <Link to={'/category'}>
+                <p className="mt-2 hover:text-pointPurple-100">
+                  레시피 구경가기 ➤
+                </p>
+              </Link>
+            )}
+          </div>
         ) : (
           userInfo.bookmarkedCocktails.map((ele) => {
             return (

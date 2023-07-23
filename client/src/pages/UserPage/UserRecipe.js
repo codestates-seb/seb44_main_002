@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import OwnRecipeCard from '../../components/Card/OwnRecipeCard';
 
 import tw from 'tailwind-styled-components';
@@ -11,7 +12,16 @@ export default function UserRecipe({ userInfo, localData }) {
       </Title>
       <Bookmark>
         {userInfo.cocktails.length === 0 ? (
-          <p className="text-white mx-auto">작성한 레시피가 없습니다.</p>
+          <div className="text-white text-center mx-auto">
+            <p>작성한 레시피가 없습니다.</p>
+            {userInfo.userId === localData.userId && (
+              <Link to={'/category'}>
+                <p className="mt-2 hover:text-pointPurple-100">
+                  레시피 작성하러 가기 ➤
+                </p>
+              </Link>
+            )}
+          </div>
         ) : (
           userInfo.cocktails.map((ele) => {
             return (

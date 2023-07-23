@@ -73,7 +73,7 @@ export default function UserPage() {
           />
           <Subscribe userInfo={userInfo} localData={localData} />
           <UserRecipe userInfo={userInfo} localData={localData} />
-          <UserBookmarked userInfo={userInfo} />
+          <UserBookmarked userInfo={userInfo} localData={localData} />
         </Container>
       </OuterContainer>
     </Background>
