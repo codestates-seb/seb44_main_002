@@ -1,14 +1,32 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { open } from '../../../redux/slice/isModalSlice';
+
 import HoverButton from '../../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
 
-export default function Advice() {
+export default function Advice({ error }) {
+  const navigate = useNavigate();
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+  const dispatch = useDispatch();
+
+  const registrationHandler = () => {
+    if (isLogin) {
+      // 로그인
+      navigate('/cocktail');
+    } else {
+      // 로그아웃
+      dispatch(open());
+    }
+  };
+
   return (
     <AdviceContainer>
       <ImgContainer>
         <img
-          className="w-[90%] h-[full] object-contain"
-          src="images/mainPromotion.png"
+          className="w-[90%] h-[full] object-contain max-w-[1000px]"
+          src={error ? 'images/errorPromotion.png' : 'images/mainPromotion.png'}
           alt="advice"
         />
       </ImgContainer>
@@ -22,7 +40,11 @@ export default function Advice() {
           <p className="text-lg font-normal text-gray-200 max-[884px]:mb-4">
             해당 페이지에 대한 상세설명
           </p>
-          <HoverButton size="w-40 h-[42px]" fontSize="text-lg">
+          <HoverButton
+            onClick={registrationHandler}
+            size="w-40 h-[42px]"
+            fontSize="text-lg"
+          >
             등록하러가기
           </HoverButton>
         </TextSection>

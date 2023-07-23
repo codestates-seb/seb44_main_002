@@ -7,9 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import project.server.domain.reply.TaggedUserInfo;
-import project.server.domain.reply.dto.ReplyDto;
-import project.server.domain.user.User;
-import project.server.domain.comment.entity.Comment;
+import project.server.domain.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,9 +23,8 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long replyId;
 
-    private long userId;
-
-    private String userName;
+    @ManyToOne
+    private User user;
 
     private long commentId;
 
@@ -44,15 +41,15 @@ public class Reply {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-    public ReplyDto.Response entityToResponse() {
-        return ReplyDto.Response.builder()
-                .replyId(replyId)
-                .userId(userId)
-                .userName(userName)
-                .taggedUserInfo(taggedUserInfo)
-                .content(content)
-                .createdAt(createdAt)
-                .modifiedAt(modifiedAt)
-                .build();
+    public long getUserId() {
+        return user.getUserId();
+    }
+
+    public String getUserName() {
+        return user.getName();
+    }
+
+    public boolean isActiveUserWritten() {
+        return user.isActiveUser();
     }
 }

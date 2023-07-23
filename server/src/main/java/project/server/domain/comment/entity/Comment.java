@@ -5,15 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.reply.entity.Reply;
+import project.server.domain.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity(name = "comments")
 @Getter
@@ -24,15 +22,12 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
     @ManyToOne
-    @JoinColumn(name = "cocktail_id")
-    private Cocktail cocktail;
-
-    private long userId;
-
-    private String userName;
+    private User user;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -45,24 +40,23 @@ public class Comment {
     @OneToMany(cascade = CascadeType.ALL)
     List<Reply> replies = new ArrayList<>();
 
-    public CommentDto.Response entityToResponse() {
-        return CommentDto.Response.builder()
-                .commentId(commentId)
-                .userId(userId)
-                .userName(userName)
-                .content(content)
-                .createdAt(createdAt)
-                .replies(replies.stream()
-                        .map(Reply::entityToResponse)
-                        .collect(Collectors.toList()))
-                .build();
-    }
-
     public void addReply(Reply reply) {
         replies.add(reply);
     }
 
     public void deleteReply(Reply reply) {
         replies.remove(reply);
+    }
+
+    public long getUserId() {
+        return user.getUserId();
+    }
+
+    public String getUserName() {
+        return user.getName();
+    }
+
+    public boolean isActiveUserWritten() {
+        return user.isActiveUser();
     }
 }

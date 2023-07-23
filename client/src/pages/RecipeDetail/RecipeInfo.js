@@ -1,89 +1,170 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import tw from 'tailwind-styled-components';
+import ImageModal from './ImgaeModal';
+import RecipeApi from '../../api/RecipeApi';
 
-import { BsArrowRightShort } from 'react-icons/bs';
-import { MdIosShare } from 'react-icons/md';
+import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
 
-export default function RecipeInfo({ cocktailDetail }) {
+export default function RecipeInfo({
+  cocktailDetail,
+  getTime,
+  isLogin,
+  localData,
+}) {
   const navigate = useNavigate();
-  const [score, setScore] = useState(0);
-  const urlCu = encodeURI(
-    `https://pocketcu.co.kr/search/stock/product/main?searchWord=${cocktailDetail.liquor}`
-  );
 
-  const copyToClipBoard = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('현재 주소가 클립보드에 복사되었습니다.');
+  const [score, setScore] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const deleteRecipe = async () => {
+    try {
+      const response = await RecipeApi.deleteCocktails(
+        cocktailDetail.cocktailId
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const modifyScore = async (score2) => {
+    try {
+      const response = await RecipeApi.modifyRate(
+        cocktailDetail.cocktailId,
+        score2
+      );
+      const json = await response.json();
+      setTotal(json.rating);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const changeScore = (idx) => {
     // 로그인 여부 확인
-    setScore(idx);
+    if (localData.userId === cocktailDetail.userId) {
+      alert('자신이 작성한 레시피는 평가할 수 없습니다.');
+      return;
+    }
+    if (isLogin) {
+      setScore(idx + 1);
+      modifyScore(idx + 1);
+    } else {
+      alert('로그인 후 이용가능합니다.');
+    }
   };
   const deletePost = () => {
     // 삭제
-    navigate('/category');
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      alert('삭제되었습니다.');
+      deleteRecipe();
+      navigate('/category');
+    }
+  };
+
+  const copyToClipBoard = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert('현재 주소가 클립보드에 복사되었습니다.');
+      })
+      .catch((error) => {
+        console.error('클립보드 복사에 실패했습니다:', error);
+      });
+  };
+
+  const encodingUrl = (liquor) => {
+    const baseurl =
+      'https://pocketcu.co.kr/search/stock/product/main?searchWord=';
+    return encodeURI(baseurl + liquor);
   };
 
   const DrawStar = () => {
     const repetitions = 5;
-    const star = process.env.PUBLIC_URL + '/images/star.png';
-    const selectedStar = process.env.PUBLIC_URL + '/images/star_selected.png';
+    const star = process.env.PUBLIC_URL + '/images/star.webp';
+    const selectedStar = process.env.PUBLIC_URL + '/images/star_selected.webp';
     return (
       <DrawStarContainer>
+        <StarP>자신이 부여한 평점</StarP>
         <FlexContainer>
           {Array.from({ length: repetitions }, (_, index) => (
             <StarIcon
               key={index}
-              src={index - 1 < score ? selectedStar : star}
+              src={index < score ? selectedStar : star}
               onClick={() => changeScore(index)}
               alt="star"
             />
           ))}
         </FlexContainer>
-        <StarAverage>{`평균 : ${cocktailDetail.rating}`}</StarAverage>
       </DrawStarContainer>
     );
   };
 
+  useEffect(() => {
+    setScore(cocktailDetail.userRate);
+  }, [cocktailDetail]);
+
   return (
     <InfoContainer>
-      <InfoImage
-        src="https://2bob.co.kr/data/recipe/20210707095408-69BNH.jpg"
-        alt="와인사진"
-      />
+      <ImageModal imageUrl={cocktailDetail.imageUrl} />
       <InfoRightContainer>
         <StarCotiner>
-          <DrawStar num={1} />
-          {cocktailDetail.userId === 1 && (
-            <ModifyContainer>
-              <Link to={`/modifyPost/${cocktailDetail.cocktailId}`}>
-                <ModifyP>수정하기</ModifyP>
-              </Link>
-              <Separator>|</Separator>
-              <ModifyP onClick={deletePost}>삭제하기</ModifyP>
-            </ModifyContainer>
-          )}
+          <DrawStar />
+          <ModifyContainer>
+            {(localData.IsAdmin ||
+              cocktailDetail.userId === localData.userId) && (
+              <>
+                <Link to={`/cocktail/${cocktailDetail.cocktailId}`}>
+                  <ModifyP>수정하기</ModifyP>
+                </Link>
+                <Separator></Separator>
+                <ModifyP onClick={deletePost}>삭제하기</ModifyP>
+                <Separator></Separator>
+              </>
+            )}
+            <button onClick={copyToClipBoard}>
+              <ModifyP>주소복사</ModifyP>
+            </button>
+          </ModifyContainer>
         </StarCotiner>
         <TitleContainer>
-          <InfoTitle>체리주</InfoTitle>
-          <ShareContainer onClick={copyToClipBoard}>
-            <p>공유하기</p>
-            <MdIosShare />
-          </ShareContainer>
+          <InfoTitle>{cocktailDetail.name}</InfoTitle>
+          <StarAverage>{`별점 평균 : ${
+            total === 0 ? cocktailDetail.rating : total
+          }`}</StarAverage>
         </TitleContainer>
         <UserContainer>
-          <FlexWrapContainer>
-            <FlexContainer>
-              <PiUserCircleFill size="24px" />
-              <NameP>{cocktailDetail.name}</NameP>
-            </FlexContainer>
-            <p className="mt-1 text-[10px]">{cocktailDetail.createdAt}</p>
-          </FlexWrapContainer>
-          <LinkToCU href={urlCu} target="_blank">
-            <LinkToCUP>편의점 앱으로 이동</LinkToCUP> <BsArrowRightShort />
+          <WriterInfo>
+            {cocktailDetail.activeUserWritten ? (
+              cocktailDetail.userId === 4 ? (
+                <FlexContainer>
+                  <PiUserCircleFill size="24px" />
+                  <NameP>관리자</NameP>
+                </FlexContainer>
+              ) : (
+                <Link to={`/userpage/${cocktailDetail.userId}`}>
+                  <FlexContainer>
+                    <PiUserCircleFill size="24px" />
+                    <NameP>{cocktailDetail.userName}</NameP>
+                  </FlexContainer>
+                </Link>
+              )
+            ) : (
+              <FlexContainer>
+                <PiUserCircleFill size="24px" />
+                <NameP>탈퇴한 유저입니다.</NameP>
+              </FlexContainer>
+            )}
+            <p className="mt-1 text-[10px]">
+              {getTime(cocktailDetail.createdAt)}
+            </p>
+          </WriterInfo>
+          <LinkToCU href={encodingUrl(cocktailDetail.liquor)} target="_blank">
+            <img
+              src={process.env.PUBLIC_URL + '/images/btn_cu.webp'}
+              alt="편의점 앱으로 이동"
+            />
           </LinkToCU>
         </UserContainer>
         <RecipeContiner>
@@ -92,7 +173,7 @@ export default function RecipeInfo({ cocktailDetail }) {
             <RecipeHr />
           </RecipeHeader>
           <RecipeList>
-            {cocktailDetail.Ingredients.map((ele) => {
+            {cocktailDetail.ingredients.map((ele) => {
               return (
                 <RecipeEle key={ele.ingredient}>{ele.ingredient}</RecipeEle>
               );
@@ -126,23 +207,27 @@ max-md:mt-4
 `;
 const StarCotiner = tw.section`
 flex
+flex-wrap-reverse
 justify-between
 text-xl
-max-lg:flex-col
+max-lg:flex-col-reverse
 `;
 const StarIcon = tw.img`
 mr-1
 cursor-pointer
 `;
 const DrawStarContainer = tw.div`
-flex 
-items-end 
-max-lg:flex-col 
+flex
+flex-col
 max-lg:items-start 
-max-md:flex-row
+`;
+const StarP = tw.p`
+mb-1
+text-gray-300 
+text-xs
 `;
 const StarAverage = tw.p`
-ml-4 
+ml-1
 text-yellow-400 
 text-xs
 max-lg:ml-0
@@ -151,16 +236,23 @@ max-md:ml-2
 `;
 const ModifyContainer = tw.div`
 flex
-text-gray-300 
+flex-wrap
+items-start
+text-white
 text-xs
-max-lg:mt-2
+max-lg:mb-2
+max-lg:justify-end
 `;
 const ModifyP = tw.p`
+ml-2
 cursor-pointer
-hover:text-white
+hover:text-pointPurple-100
 `;
-const Separator = tw.p`
-mx-2
+const Separator = tw.div`
+ml-2
+h-4
+border-r-[1px]
+border-white
 `;
 const TitleContainer = tw.div`
 flex 
@@ -205,6 +297,10 @@ ml-0.5
 mr-2.5 
 text-sm
 `;
+const WriterInfo = tw(FlexWrapContainer)`
+mb-2
+mr-2
+`;
 const LinkToCU = tw.a`
 flex
 items-center
@@ -240,7 +336,7 @@ w-[calc(100%-30px)]
 const RecipeList = tw.div`
 text-[#b3b3b3]
 h-[calc(20rem-185px)]
-overflow-y-scroll
+overflow-y-auto
 scrollbar
 `;
 const RecipeEle = tw.p`

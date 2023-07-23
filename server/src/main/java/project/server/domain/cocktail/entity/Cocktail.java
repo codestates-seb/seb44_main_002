@@ -10,17 +10,14 @@ import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.rate.Rate;
 import project.server.domain.cocktail.embed.recipe.Recipe;
 import project.server.domain.cocktail.embed.tag.Tag;
-import project.server.domain.cocktail.embed.tag.TagDto;
-import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.comment.entity.Comment;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity(name = "cocktails")
 @Getter
@@ -48,7 +45,7 @@ public class Cocktail {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "cocktail")
+    @OneToMany
     private List<Comment> comments = new ArrayList<>();
 
     @Embedded
@@ -120,5 +117,17 @@ public class Cocktail {
 
     public void assignUser(User user) {
         this.user = user;
+    }
+
+    public long getUserId() {
+        return user.getUserId();
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
     }
 }

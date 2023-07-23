@@ -23,7 +23,12 @@ export const CategoryFilter = [
   {
     id: 3,
     title: 'vodka N whiskey',
-    type: 'cateory_three',
+    type: 'category_three',
+  },
+  {
+    id: 4,
+    title: 'etc',
+    type: 'category_four',
   },
 ];
 export const tagFrequencyData = [
@@ -54,7 +59,7 @@ export const tagTasteData = [
   },
   {
     id: 1,
-    title: '새콤',
+    title: '신맛',
     type: 'sour',
   },
   {

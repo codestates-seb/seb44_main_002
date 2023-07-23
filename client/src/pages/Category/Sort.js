@@ -1,4 +1,4 @@
-export default function Sort({ fitlerCondtion, selectMenuHandler }) {
+export default function Sort({ filterCondtion, selectMenuHandler }) {
   return (
     <button
       onClick={(e) => {
@@ -7,13 +7,13 @@ export default function Sort({ fitlerCondtion, selectMenuHandler }) {
       }}
       className="flex font-bold items-center"
     >
-      {fitlerCondtion.descendingOrder ? (
-        <div className="flex ">
+      {filterCondtion.descendingOrder ? (
+        <div className="flex mr-1 ">
           <img src="/images/arrow/arrowDownOn.png" alt="내림차순" />
           <img src="/images/arrow/arrowUpOff.png" alt="올림차순 비활성화" />
         </div>
       ) : (
-        <div className="flex">
+        <div className="flex mr-1">
           <img src="/images/arrow/arrowDownOff.png" alt="내림차순 비활성화" />
           <img src="/images/arrow/arrowUpOn.png" alt="내림차순" />
         </div>

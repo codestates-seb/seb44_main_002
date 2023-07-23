@@ -1,24 +1,111 @@
 import { useState, useEffect } from 'react';
-
-import tw from 'tailwind-styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBookmark } from '../../redux/slice/userInfoSlice';
 
 import RecipeInfo from './RecipeInfo';
 import Process from './Process';
 import Community from './Community';
 import Recommend from './Recommend';
 import BookmarkBtn from '../../components/BookmarkButton/BookmarkBtn';
-export default function RecipeDetail() {
-  // const [cocktail, setCocktail] = useState({});
-  const [isBookmarked, setIsBookmarked] = useState(cocktailDetail.isBookmarked);
+import RecipeApi from '../../api/RecipeApi';
 
-  const setBookmark = () => {
-    // 로그인 조건 추가 예정
-    setIsBookmarked(!isBookmarked);
+import tw from 'tailwind-styled-components';
+
+export default function RecipeDetail() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [cocktail, setCocktail] = useState(cocktailDetail);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [localData, setLocalData] = useState({
+    userId: '',
+    IsAdmin: false,
+  });
+
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+
+  const location_id = useLocation().pathname.split('/')[2];
+
+  // 시간 출력 함수
+  const getTime = (createdTime) => {
+    if (createdTime === undefined) {
+      return 0;
+    }
+    const currentTime = new Date();
+    const targetTime = new Date(createdTime);
+    currentTime.setHours(currentTime.getHours() - 9); // 세계 표준시를 한국 시간과 오차
+    const minutesDifference = Math.floor(
+      (currentTime.getTime() - targetTime.getTime()) / (1000 * 60)
+    );
+
+    if (isNaN(minutesDifference)) {
+      return 0;
+    }
+    if (minutesDifference < 1) {
+      return 'now';
+    } else if (minutesDifference < 60) {
+      return `${minutesDifference} min ago`;
+    } else if (minutesDifference < 1440) {
+      return `${Math.floor(minutesDifference / 60)} hours ago`;
+    }
+    return `${Math.floor(minutesDifference / 1440)} days ago`;
+  };
+
+  const setBookmark = async () => {
+    // 비로그인시 설정 불가
+    if (localData.userId) {
+      if (isBookmarked) {
+        // 북마크 해제
+        try {
+          const response = await RecipeApi.deleteBookmark(cocktail.cocktailId);
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      } else {
+        // 북마크 설정
+        try {
+          const response = await RecipeApi.postBookmark(cocktail.cocktailId);
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
+        }
+      }
+    }
+  };
+
+  const getCocktail = async () => {
+    try {
+      const response = await RecipeApi.getCocktailData(location_id);
+      const json = await response.json();
+      setCocktail(json);
+      setIsBookmarked(json.bookmarked);
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
+  };
+
+  const reAnimate = () => {
+    // detail 페이지에서 단순히 id만 바뀔 경우에도 애니메이션 효과 부여
+    const container = document.querySelector('#container');
+    container.classList.remove('animate-fadeInDown1');
+    setTimeout(() => {
+      container.classList.add('animate-fadeInDown1');
+    }, 10);
   };
 
   useEffect(() => {
-    // 데이터 가져올 구문 추가 예정
-  }, []);
+    const local_userId = parseInt(localStorage.getItem('userId'));
+    const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
+    setLocalData({
+      userId: local_userId,
+      IsAdmin: local_IsAdmin,
+    });
+    getCocktail();
+    reAnimate();
+  }, [location_id]);
 
   const BackgroundImg = () => {
     return (
@@ -28,7 +115,6 @@ export default function RecipeDetail() {
           alt="음표"
           className="absolute top-0 right-[-400px] pointer-events-none"
         />
-        {/* 배경 왕별 */}
         <img
           src="/images/background/star-dynamic-gradient.png"
           alt="별"
@@ -37,53 +123,53 @@ export default function RecipeDetail() {
       </>
     );
   };
-  const DrawBookmark = () => {
-    const bookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOff.png';
-    const selectedMookmark =
-      process.env.PUBLIC_URL + '/images/bookmark/bookmarkOn.png';
+  const DrawBookmark = ({ cocktail }) => {
     const item = {
-      cocktailId: cocktailDetail.cocktailId,
-      name: cocktailDetail.name,
-      imageUrl: cocktailDetail.imageUrl,
-      isBookmarked: cocktailDetail.isBookmarked,
+      cocktailId: cocktail.cocktailId,
+      name: cocktail.name,
+      imageUrl: cocktail.imageUrl,
+      userRate: cocktail.userRate,
+      viewCount: cocktail.viewCount,
+      bookmarked: cocktail.bookmarked,
     };
+    const handleBookmarkClick = async (cocktailId) => {
+      const id = cocktailId;
 
+      dispatch(updateBookmark({ id, item }));
+      setBookmark();
+    };
     return (
-      // <BookmarkIcon onClick={setBookmark}>
-      //   <img
-      //     width={50}
-      //     src={isBookmarked ? selectedMookmark : bookmark}
-      //     alt="bookmark"
-      //   />
-      // </BookmarkIcon>
-      // <div
-      //   className="absolute
-      // top-0 right-14
-      // cursor-pointer"
-      // >
-      //   <BookmarkButton item={item} />
-      // </div>
-      //북마크 적용--이은희
       <BookmarkBtn
-        onClick={setBookmark}
-        isBookmarked={isBookmarked}
+        onClick={() => handleBookmarkClick(cocktail.cocktailId)}
+        bookmarked={isBookmarked}
+        setbookmarked={setIsBookmarked}
         absolute="true"
         top="top-0"
         right="right-14"
       />
     );
   };
+
   return (
     <>
       <Background>
         <BackgroundImg />
-        <Container>
-          <DrawBookmark />
-          <RecipeInfo cocktailDetail={cocktailDetail} />
-          <Process cocktailDetail={cocktailDetail} />
-          <Community cocktailDetail={cocktailDetail} />
-          <Recommend cocktailDetail={cocktailDetail.recommends} />
+        <Container id="container">
+          <DrawBookmark cocktail={cocktail} />
+          <RecipeInfo
+            cocktailDetail={cocktail}
+            getTime={getTime}
+            isLogin={isLogin}
+            localData={localData}
+          />
+          <Process cocktailDetail={cocktail} />
+          <Community
+            cocktailDetail={cocktail}
+            getTime={getTime}
+            isLogin={isLogin}
+            localData={localData}
+          />
+          <Recommend cocktailDetail={cocktail.recommends} />
         </Container>
       </Background>
     </>
@@ -110,6 +196,7 @@ max-w-6xl
 bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
+animate-fadeInDown1
 `;
 const BookmarkIcon = tw.div`
 absolute
@@ -119,94 +206,52 @@ cursor-pointer
 
 const cocktailDetail = {
   cocktailId: 1,
+  adminWritten: false,
   userId: 1,
-  name: 'Admin',
-  imageUrl: 'sample image url',
+  userName: '',
+  name: '',
+  imageUrl: '',
+  activeUserWritten: true,
   liquor: '럼',
   viewCount: 1,
-  createdAt: '2000-00-00',
-  modifiedAt: '2000-00-00',
-  Ingredients: [
+  createdAt: '2023-07-02T01:01:01',
+  modifiedAt: '2023-07-02T01:01:01',
+  ingredients: [
     {
-      ingredient: 'Light rum',
-    },
-    {
-      ingredient: 'Lime',
-    },
-    {
-      ingredient: 'Sugar',
-    },
-    {
-      ingredient: 'Mint',
-    },
-    {
-      ingredient: 'Soda water',
-    },
-    {
-      ingredient: 'Tonic water',
-    },
-    {
-      ingredient: 'Lemon water',
-    },
-    {
-      ingredient: 'Lime water',
+      ingredient: '',
     },
   ],
-  recipe: [
-    `Pour the rum and top with soda water.`,
-    'Pour the rum and top with soda water.with soda water.',
-    'Pour the rum and top with soda water.Pour the rum and top with soda water.',
-    'Pour the rum and top with soda water.',
-    'Pour he rum and top with soda water. with soda water with soda water',
-    'Pour the rum and top with soda water.',
-  ],
+  recipe: [{ process: `` }],
   tags: [
     {
-      tag: 'value',
+      tag: '',
     },
   ],
   rating: 4.5,
   comments: [
     {
+      commentId: 1,
       userId: 2,
-      name: 'kim',
-      content:
-        '깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!깔끔하고 맛있네요!',
-      date: '2023-02-16',
+      userName: '',
+      content: '',
+      activeUserWritten: true,
+      createdAt: '2023-07-02T01:01:01',
+      modifiedAt: '2023-07-02T01:01:01',
       replies: [
         {
+          replyId: 1,
           userId: 3,
-          name: 'chan',
-          content: '저도 그렇게 생각합니다!',
-          taggedUserId: 2,
-          taggedUserName: 'kim',
-          date: '2023-02-16',
-        },
-      ],
-    },
-    {
-      userId: 3,
-      name: 'chan',
-      content:
-        '그놈은 멋있었다...백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.백엔드는 멋있었다.',
-      date: '2023-02-16',
-      replies: [
-        {
-          userId: 4,
-          name: 'jae',
-          content: '백엔드는 멋있다.',
-          taggedUserId: 3,
-          taggedUserName: 'chan',
-          date: '2023-02-16',
-        },
-        {
-          userId: 3,
-          name: 'euni',
-          content:
-            '이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면 이제 아셨습니까. 휴면',
-          taggedUserId: 4,
-          taggedUserName: 'jae',
-          date: '2023-02-16',
+          userName: '',
+          content: '',
+          activeUserWritten: true,
+          taggedUserInfo: [
+            {
+              taggedUserId: 1,
+              taggedUserName: '',
+            },
+          ],
+          createdAt: '2023-07-02T01:01:01',
+          modifiedAt: '2023-07-02T01:01:01',
         },
       ],
     },
@@ -215,22 +260,10 @@ const cocktailDetail = {
     //category idx 와 userinfo 리덕스 데이터와 겹쳐서 cocktailId와 isBookmarked  달리 수정했습니다.
     {
       cocktailId: 7,
-      name: '라떼 밀크주',
+      name: '',
       imageUrl: 'https://2bob.co.kr/data/recipe/20210707094952-WOE78.jpg',
       isBookmarked: false,
     },
-    {
-      cocktailId: 8,
-      name: '논알콜 청포도 모히토',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706172910-2B1WD.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 9,
-      name: '시트러스 주스',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
-      isBookmarked: false,
-    },
   ],
-  isBookmarked: true,
+  bookmarked: false,
 };

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   CategoryFilter,
   tagFrequencyData,
@@ -9,49 +10,80 @@ import TagFrequencyButton from './TagFrequencyButton';
 import ClickButton from '../../common/Buttons/ClickButton';
 import Sort from './Sort';
 import SortConditionButton from './SortConditionButton';
-export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
+import tw from 'tailwind-styled-components';
+
+export default function Filter({ setFilterCondtion, filterCondtion }) {
   //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 필터상태 저장
+  const [buttonStyle, setButtonStyle] = useState({
+    size: 'w-[75px] h-[30px]',
+    fontSize: 'text-[1rem]',
+    radius: 'rounded-[30px]',
+  });
+
+  const handleResize = () => {
+    const width = window.innerWidth;
+    if (width <= 700) {
+      setButtonStyle({
+        size: 'w-[60px] h-[30px]',
+        fontSize: 'text-[0.8rem]',
+        radius: 'rounded-[30px]',
+      });
+    } else {
+      setButtonStyle({
+        size: 'w-[75px] h-[30px]',
+        fontSize: 'text-[1rem]',
+        radius: 'rounded-[30px]',
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const selectMenuHandler = (idx, type) => {
     switch (type) {
       case 'category':
-        setfitlerCondtion({
-          ...fitlerCondtion,
+        setFilterCondtion({
+          ...filterCondtion,
           category: CategoryFilter[idx].type,
         });
         break;
       case 'frequencyTag':
-        setfitlerCondtion({
-          ...fitlerCondtion,
+        setFilterCondtion({
+          ...filterCondtion,
           frequencyTag: tagFrequencyData[idx].type,
         });
         break;
       case 'tasteTag': {
         //그전에 눌렀던걸 또 눌렀다면 취소
-        if (fitlerCondtion.tasteTag.length === 0) {
-          const ClickedTag = fitlerCondtion.tasteTag;
+        if (filterCondtion.tasteTag.length === 0) {
+          const ClickedTag = filterCondtion.tasteTag;
           const tag = tagTasteData[idx].type;
           ClickedTag.push(tag);
 
-          setfitlerCondtion({ ...fitlerCondtion, tasteTag: ClickedTag });
+          setFilterCondtion({ ...filterCondtion, tasteTag: ClickedTag });
           break;
         }
 
-        const alreadyClickedTag = [...fitlerCondtion.tasteTag];
+        const alreadyClickedTag = [...filterCondtion.tasteTag];
         const Tag = tagTasteData[idx].type;
 
-        if (fitlerCondtion.tasteTag.indexOf(Tag) >= 0) {
+        if (filterCondtion.tasteTag.indexOf(Tag) >= 0) {
           //이미클릭된태그를 지울때
-          //  console.log('제거해야할때');
-          const newclickedList = fitlerCondtion.tasteTag.filter((number) => {
+          const newclickedList = filterCondtion.tasteTag.filter((number) => {
             return number !== tagTasteData[idx].type;
           });
-          setfitlerCondtion({ ...fitlerCondtion, tasteTag: newclickedList });
+          setFilterCondtion({ ...filterCondtion, tasteTag: newclickedList });
         } else {
           //태그를 추가할때
           alreadyClickedTag.push(tagTasteData[idx].type);
-
-          setfitlerCondtion({
-            ...fitlerCondtion,
+          setFilterCondtion({
+            ...filterCondtion,
             tasteTag: [...alreadyClickedTag],
           });
         }
@@ -59,14 +91,14 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
         break;
       }
       case 'descendingOrder':
-        setfitlerCondtion({
-          ...fitlerCondtion,
-          descendingOrder: !fitlerCondtion.descendingOrder,
+        setFilterCondtion({
+          ...filterCondtion,
+          descendingOrder: !filterCondtion.descendingOrder,
         });
         break;
       case 'sortType':
-        setfitlerCondtion({
-          ...fitlerCondtion,
+        setFilterCondtion({
+          ...filterCondtion,
           sortType: sortTypeData[idx].type,
         });
         break;
@@ -78,20 +110,18 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
   return (
     <div className="w-[100%] ">
       {/* 카테고리 */}
-      <div className="flex border-b-2 border-solid border-white ">
+      <CategoryContainer>
         {CategoryFilter.map((data, idx) => (
           <CategoryBtn
             key={data.id}
             data={data}
             idx={idx}
-            fitlerCondtion={fitlerCondtion}
+            filterCondtion={filterCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
-      </div>
-
+      </CategoryContainer>
       {/* 태그 */}
-      {/* max-[700px]: border-2 border-solid border-red-50 */}
       <div className="flex pt-10 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0">
         {/* 도수별 태그 */}
         {tagFrequencyData.map((data, idx) => (
@@ -99,7 +129,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            fitlerCondtion={fitlerCondtion}
+            filterCondtion={filterCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -108,9 +138,9 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            radius="rounded-[30px]"
-            fontSize="text-[1rem]"
-            size="w-[75px] h-[30px]"
+            radius={buttonStyle.radius}
+            fontSize={buttonStyle.fontSize}
+            size={buttonStyle.size}
             onClick={() => {
               selectMenuHandler(idx, 'tasteTag');
             }}
@@ -120,9 +150,9 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
         ))}
       </div>
       {/* sortFilter */}
-      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center mr-2 gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3">
+      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center  gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3 mb-5">
         <Sort
-          fitlerCondtion={fitlerCondtion}
+          filterCondtion={filterCondtion}
           selectMenuHandler={selectMenuHandler}
         />
 
@@ -131,7 +161,7 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
             key={data.id}
             data={data}
             idx={idx}
-            fitlerCondtion={fitlerCondtion}
+            filterCondtion={filterCondtion}
             selectMenuHandler={selectMenuHandler}
           />
         ))}
@@ -139,3 +169,10 @@ export default function Filter({ fitlerCondtion, setfitlerCondtion }) {
     </div>
   );
 }
+
+const CategoryContainer = tw.div`
+flex border-b-2 border-solid border-white 
+`;
+const TagContainer = tw.div`
+flex border-b-2 border-solid border-white 
+`;

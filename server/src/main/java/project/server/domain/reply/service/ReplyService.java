@@ -3,13 +3,14 @@ package project.server.domain.reply.service;
 import org.springframework.stereotype.Service;
 import project.server.domain.comment.entity.Comment;
 import project.server.domain.comment.service.CommentService;
+import project.server.domain.reply.ReplySerializer;
 import project.server.domain.reply.repository.ReplyRepository;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.reply.entity.Reply;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 import javax.transaction.Transactional;
 
@@ -17,13 +18,15 @@ import javax.transaction.Transactional;
 @Transactional
 public class ReplyService {
     private final ReplyRepository replyRepository;
+    private final ReplySerializer replySerializer;
     private final CommentService commentService;
     private final UserService userService;
 
     public ReplyService(ReplyRepository replyRepository,
-                        CommentService commentService,
+                        ReplySerializer replySerializer, CommentService commentService,
                         UserService userService) {
         this.replyRepository = replyRepository;
+        this.replySerializer = replySerializer;
         this.commentService = commentService;
         this.userService = userService;
     }
@@ -33,17 +36,18 @@ public class ReplyService {
         Comment comment = commentService.findCommentById(commentId);
         Reply reply = post.postToEntity();
         reply.setCommentId(commentId);
-        reply.setUserName(user.getName());
-        reply.setUserId(user.getUserId());
+        reply.setUser(user);
         Reply savedReply = replyRepository.save(reply);
         comment.addReply(savedReply);
-        return savedReply.entityToResponse();
+        return replySerializer.entityToResponse(savedReply);
     }
 
-    public ReplyDto.Response updateReply(Long replyId, ReplyDto.Patch patch) {
+    public ReplyDto.Response updateReply(String email, Long replyId, ReplyDto.Patch patch) {
+        User user = userService.findUserByEmail(email);
         Reply reply = findReplyById(replyId);
+        verifyUser(user, reply);
         reply.setContent(patch.getContent());
-        return reply.entityToResponse();
+        return replySerializer.entityToResponse(reply);
     }
 
     public Reply findReplyById(long replyId) {
@@ -56,6 +60,12 @@ public class ReplyService {
         Comment comment = commentService.findCommentById(reply.getCommentId());
         comment.deleteReply(reply);
         replyRepository.delete(reply);
-    }    
+    }
+
+    private void verifyUser(User user, Reply reply) {
+        if(!user.hasAuthority(reply.getUserId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+    }
 }
 

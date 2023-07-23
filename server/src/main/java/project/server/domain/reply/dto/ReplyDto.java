@@ -3,6 +3,7 @@ package project.server.domain.reply.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import project.server.domain.reply.TaggedUserInfo;
 import project.server.domain.reply.entity.Reply;
 
@@ -37,9 +38,11 @@ public class ReplyDto {
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private boolean isActiveUserWritten;
     }
 
     @Getter
+    @Setter
     public static class Patch {
         private long replyId;
         private TaggedUserInfo taggedUserInfo;

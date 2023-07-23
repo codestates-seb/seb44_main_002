@@ -6,12 +6,11 @@
 
 ### 테스트 계정
 
-id:
+id: ㄴㅇㄹㅁㄹㅇ
 <br />
 password:
 <br />
 <br />
-
 <div align="center"><img src="http://res.heraldm.com/content/image/2015/03/12/20150312001242_0.jpg" alt="logo" /></div>
 
 <br />

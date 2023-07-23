@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.server.domain.follow.embed.Follower;
 import project.server.domain.follow.embed.Following;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 import javax.persistence.*;
 
@@ -31,5 +31,9 @@ public class Follow {
         this.following = new Following(following.getUserId(),
                 following.getName(),
                 following.getProfileImageUrl());
+    }
+
+    public boolean contains(long userId) {
+        return following.getFollowingUserId() == userId;
     }
 }

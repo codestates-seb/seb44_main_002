@@ -1,20 +1,47 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
 import UserRecipe from './UserRecipe';
+import UserBookmarked from './UserBookmarked';
+import UserPageApi from '../../api/UserPageApi';
 
 import tw from 'tailwind-styled-components';
-import UserBookmarked from './UserBookmarked';
 
 export default function UserPage() {
-  const [userInfo, setUserInfo] = useState(dummyData);
+  const navigate = useNavigate();
   const location = useLocation().pathname.split('/')[2];
 
+  const [userInfo, setUserInfo] = useState(dummyData);
+  const [localData, setLocalData] = useState({
+    userId: '',
+    IsAdmin: false,
+  });
+
+  const isLogin = useSelector((state) => state.isLogin.isLogin);
+
+  const getUser = async () => {
+    try {
+      const response = await UserPageApi.getUserData(location);
+      const json = await response.json();
+      setUserInfo(json);
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
+  };
+
   useEffect(() => {
-    // 칵테일 정보 fetch 추가예정
-  }, []);
+    getUser();
+    const local_userId = parseInt(localStorage.getItem('userId'));
+    const local_IsAdmin = JSON.parse(localStorage.getItem('IsAdmin'));
+    setLocalData({
+      userId: local_userId,
+      IsAdmin: local_IsAdmin,
+    });
+  }, [location]);
 
   const BackgroundImg = () => {
     return (
@@ -32,10 +59,14 @@ export default function UserPage() {
       <BackgroundImg />
       <OuterContainer>
         <Container>
-          <UserInfo userInfo={userInfo} />
+          <UserInfo
+            userInfo={userInfo}
+            isLogin={isLogin}
+            localData={localData}
+          />
           <Subscribe userInfo={userInfo} />
+          <UserRecipe userInfo={userInfo} localData={localData} />
           <UserBookmarked userInfo={userInfo} />
-          <UserRecipe userInfo={userInfo} />
         </Container>
       </OuterContainer>
     </Background>
@@ -62,6 +93,7 @@ const Container = tw.main`
 w-full
 max-w-6xl
 mx-auto
+animate-fadeInDown1
 `;
 const NoteImg = tw.img`
 absolute 
@@ -83,8 +115,9 @@ const dummyData = {
   gender: '여',
   age: 20,
   email: 'kim@example.com',
-  subscribedCount: 1200,
-  bookmarked: [
+  subscriberCount: 1200,
+  cocktails: [],
+  bookmarkedCocktails: [
     {
       cocktailId: 1,
       name: '라떼 밀크주',
@@ -132,6 +165,13 @@ const dummyData = {
       boardId: 2,
       title: 'title2',
       content: 'content2',
+    },
+  ],
+  follows: [
+    {
+      followingUserId: 2,
+      followingUserName: 'test2',
+      followingUserProfileImageUrl: 'url',
     },
   ],
   subscribe: [
@@ -190,4 +230,5 @@ const dummyData = {
         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
     },
   ],
+  subscribed: false,
 };

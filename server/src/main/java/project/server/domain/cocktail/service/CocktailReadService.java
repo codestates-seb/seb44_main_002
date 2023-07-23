@@ -9,8 +9,8 @@ import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.repository.CocktailRepository;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 import java.util.List;
 
@@ -56,9 +56,19 @@ public class CocktailReadService {
 
     @Transactional(readOnly = true)
     public Cocktail readRandomCocktail() {
-        long count = cocktailRepository.count();
-        Cocktail cocktail = cocktailRepository.findAll().get((int) (Math.random() * count));
+        List<Cocktail>cocktails = cocktailRepository.findAll();
+        int index = getIndex(cocktails);
+        Cocktail cocktail = cocktails.get(index);
         cocktail.assignRecommends(readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         return cocktail;
+    }
+
+    private int getIndex(List<Cocktail> cocktails) {
+        int size = cocktails.size();
+        int index = (int) (Math.random() * size);
+        if(index == size){
+            index--;
+        }
+        return index;
     }
 }

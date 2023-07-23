@@ -1,16 +1,20 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/slice/isLoginSlice';
 import { useNavigate } from 'react-router-dom';
-import { userinfoLogin } from '../../redux/slice/userInfoSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../../redux/slice/isLoginSlice';
+import { open, close } from '../../redux/slice/isModalSlice';
+import { userinfoLogin, userinfoGet } from '../../redux/slice/userInfoSlice';
+
+import HoverButton from '../../common/Buttons/HoverButton';
+import CustomInput from '../Input/CustomInput';
+import useLoginValid from '../Validation/LoginValidation';
+import api from '../../api/api';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import HoverButton from '../../common/Buttons/HoverButton';
 import tw from 'tailwind-styled-components';
-import useLoginValid from '../Validation/LoginValidation';
-import CustomInput from '../Input/CustomInput';
 
 const style = {
   position: 'absolute',
@@ -27,9 +31,10 @@ const style = {
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export default function HeaderModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const isModal = useSelector((state) => state.isModal.isModal);
+
+  const handleOpen = () => dispatch(open());
+  const handleClose = () => dispatch(close());
 
   // 유효성검사 state
   const [isValid, setIsValid] = useState({
@@ -41,136 +46,68 @@ export default function HeaderModal() {
     email: '',
     password: '',
   });
-
+  const [errorMSG, setErrorMSG] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // 사용자 이름및 사용자 정보 조회 함수
-  // 유저 정보 조회할때 토근으로 조회 권한 여부
   const handleUserInfo = async (memberId) => {
-    fetch(`${BASE_URL}users/${memberId}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true',
-      },
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        if (data.status === 200) {
-          console.log(data);
-          // {
-          //     “name” : “kim”,
-          //     “profileImageUrl” : “sample image url”
-          //     “gender” : “example”,
-          //     “age” : 20,
-          //     “email” : “kim@example.com”,
-          //     “subscribedCount” : 0,
-          //     “bookmarked” : [
-          //         {
-          //             “cocktailId” : 1,
-          //             “name” : “sample cocktail”,
-          //             “imageUrl” : “sample image url”,
-          //             “isBookmarked” : “true”
-          //         },
-          //         {
-          //             “cocktailId” : 2,
-          //             “name” : “sample cocktail”,
-          //             “isBookmarked” : “true”
-          //         }
-          //     ],
-          //     “boards” : [
-          //         {
-          //             “boardId” : 1,
-          //             “title” : “title1”,
-          //             “content” : “content1”
-          //         },
-          //         {
-          //             “boardId” : 2,
-          //             “title” : “title2”,
-          //             “content” : “content2”
-          //         },
-          //     ],
-          //     “subscribe” : [
-          //         {
-          //             “userId” : 1,
-          //             “name” : “kim”,
-          //             “profileImageUrl” : “sample image url”
-          //         },
-          //         {
-          //             “userId” : 2,
-          //             “name” : “park”,
-          //             “profileImageUrl” : “sample image url”
-          //         },
-          //     ],
-          // }
+    try {
+      const response = await api.getUserinfoApi(memberId);
+      console.log('동작');
 
-          // dispatch(
-          //   userinfoGet({
-          //     displayName: data.displayName,
-          //     location: data.location,
-          //     profileContent: data.profileContent,
-          //     profileImage: data.profileImage,
-          //     profileTitle: data.profileTitle,
-          //   })
-          // );
-        } else {
-          console.log('요청이 실패했습니다.');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        navigate('/error');
-      });
+      const data = await response.json();
+      dispatch(userinfoGet(data));
+      localStorage.setItem('name', data.name);
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
   };
   // 로그인 버튼 클릭시 실행되는 함수
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 유효성 검사 로직
-    useLoginValid(form, setIsValid);
+    const { email, password } = useLoginValid(form);
+    setIsValid({
+      email,
+      password,
+    });
 
-    fetch(`${BASE_URL}auth/signin`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        // 'ngrok-skip-browser-warning': 'true',
-      },
-      body: JSON.stringify(form),
-    })
-      .then((data) => {
-        if (data.status === 200) {
-          localStorage.setItem(
-            'accessToken',
-            data.headers.get('Authorization')
-          );
-          localStorage.setItem('UserId', data.headers.get('UserId'));
-          //localStorage.setItem('refreshToken', data.headers.get.Refesh);
-          // Refresh accessToken 만료
-          //UserId
-          //Name
-
+    if (email && password) {
+      //분리된 api 연결
+      try {
+        const response = await api.loginApi(form);
+        //성공
+        if (response.status === 200) {
+          //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
           dispatch(
             userinfoLogin({
-              UserId: data.headers.get('UserId'),
-              accessToken: data.headers.get('Authorization'),
+              userId: response.headers.get('userId'),
+              accessToken: response.headers.get('Authorization'),
+              IsAdmin: response.headers.get('IsAdmin'),
             })
           );
-
           //사용자 정보 조회
-          // handleUserInfo(data.headers.get('UserId'));
+          handleUserInfo(response.headers.get('userId'));
           // 전역상태관리 로그인으로 변경
-          dispatch(login(() => login()));
+          dispatch(login());
+          handleClose();
           navigate('/');
         } else {
-          console.log('요청이 실패했습니다.');
+          // 응답 실패
+          if (response === 401) {
+            setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
+          }
         }
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
+        handleClose();
         navigate('/error');
-      });
+      }
+    } else {
+      console.log('유효성 검사 작동');
+    }
   };
 
   return (
@@ -181,7 +118,7 @@ export default function HeaderModal() {
         </Button>
       </HoverButton>
       <Modal
-        open={open}
+        open={isModal}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -209,6 +146,7 @@ export default function HeaderModal() {
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 text={'비밀번호를 확인해주세요'}
               />
+              {errorMSG && <p className="text-error text-[13px]">{errorMSG}</p>}
               <div className="flex justify-center">
                 <HoverButton type="submit">로그인</HoverButton>
               </div>

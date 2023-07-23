@@ -55,6 +55,7 @@ public class CocktailDto {
         private final List<CocktailDto.SimpleResponse> recommends;
         private final boolean isBookmarked;
         private final int userRate;
+        private final boolean isActiveUserWritten;
     }
 
     @Getter

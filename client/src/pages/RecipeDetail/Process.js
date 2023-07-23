@@ -22,7 +22,7 @@ export default function Process({ cocktailDetail }) {
             ) : (
               <ProcessNum>{idx + 1}</ProcessNum>
             )}
-            <p>{ele}</p>
+            <p>{ele.process}</p>
           </ProcessP>
         );
       })}

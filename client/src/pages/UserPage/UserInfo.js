@@ -1,17 +1,58 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import PasswordModal from './PasswordModal';
+import { logout } from '../../redux/slice/isLoginSlice';
+import UserPageApi from '../../api/UserPageApi';
 
 import tw from 'tailwind-styled-components';
 
-export default function UserInfo({ userInfo }) {
+export default function UserInfo({ userInfo, isLogin, localData }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [buttontext, setButtonText] = useState('구독 중');
+
   const convertNum = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  const deleteUser = () => {
+  const deleteUser = async () => {
+    try {
+      const response = await UserPageApi.deleteUser(localData.userId);
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
+  };
+  const clickDelete = () => {
     if (window.confirm('정말로 탈퇴하시겠습니까?')) {
       alert('삭제되었습니다.');
+      deleteUser();
+      dispatch(logout());
+      localStorage.clear();
       navigate('/');
+    }
+  };
+
+  const clickFollow = async () => {
+    try {
+      const response = await UserPageApi.createfollow(userInfo.userId);
+      location.reload();
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
+  };
+
+  const cancelSubsctibe = async () => {
+    try {
+      const response = await UserPageApi.cancelfollow(userInfo.userId);
+      location.reload();
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
     }
   };
 
@@ -20,22 +61,39 @@ export default function UserInfo({ userInfo }) {
       <InfoContainer>
         <UserImg
           src={`/images/user/${
-            userInfo.gender === '남' ? 'user_boy.png' : 'user_girl.png'
+            userInfo.userId === 4
+              ? 'user_admin.png'
+              : userInfo.gender === 'male'
+              ? 'user_boy.png'
+              : 'user_girl.png'
           }`}
           alt="user img"
         />
         <UserContainer>
           <FlexContainer>
-            {userInfo.userId === 1 ? (
+            {userInfo.userId === localData.userId ? (
               <p>{`안녕하세요. ${userInfo.name}님.`}</p>
             ) : (
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
-            {userInfo.userId !== 1 && <TitleButton>구독하기</TitleButton>}
+            {isLogin &&
+              userInfo.userId !== 4 &&
+              userInfo.userId !== localData.userId &&
+              (userInfo.subscribed ? (
+                <TitleButton
+                  onMouseOver={() => setButtonText('구독 취소')}
+                  onMouseOut={() => setButtonText('구독 중')}
+                  onClick={cancelSubsctibe}
+                >
+                  {buttontext}
+                </TitleButton>
+              ) : (
+                <TitleButton onClick={clickFollow}>구독하기</TitleButton>
+              ))}
           </FlexContainer>
           <InnerInfo>
             <InfoComponent>
-              <UpInfoP>{convertNum(userInfo.subscribedCount)}</UpInfoP>
+              <UpInfoP>{convertNum(userInfo.subscriberCount)}</UpInfoP>
               <DownInfoP>구독자수</DownInfoP>
             </InfoComponent>
             <InfoComponent>
@@ -46,20 +104,33 @@ export default function UserInfo({ userInfo }) {
               <UpInfoP>{userInfo.email.split('@')[0]}</UpInfoP>
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
-            {userInfo.userId !== 1 && (
-              <InfoComponent>
-                <SubscribeButton>구독하기</SubscribeButton>
-              </InfoComponent>
-            )}
+            {isLogin &&
+              userInfo.userId !== 4 &&
+              userInfo.userId !== localData.userId &&
+              (userInfo.subscribed ? (
+                <InfoComponent>
+                  <SubscribeButton
+                    onMouseOver={() => setButtonText('구독 취소')}
+                    onMouseOut={() => setButtonText('구독 중')}
+                    onClick={cancelSubsctibe}
+                  >
+                    {buttontext}
+                  </SubscribeButton>
+                </InfoComponent>
+              ) : (
+                <InfoComponent>
+                  <SubscribeButton onClick={clickFollow}>
+                    구독하기
+                  </SubscribeButton>
+                </InfoComponent>
+              ))}
           </InnerInfo>
         </UserContainer>
       </InfoContainer>
-      {userInfo.userId === 1 && (
+      {userInfo.userId === localData.userId && (
         <ButtonContainer>
-          <Link to={`/`}>
-            <Button>수정하기</Button>
-          </Link>
-          <Button onClick={deleteUser}>탈퇴하기</Button>
+          <PasswordModal localData={localData} />
+          <Button onClick={clickDelete}>탈퇴하기</Button>
         </ButtonContainer>
       )}
     </Container>
@@ -132,8 +203,12 @@ max-sm:px-4
 max-sm:py-1
 `;
 const SubscribeButton = tw(Button)`
+px-0
+w-20
 max-sm:hidden
 `;
 const TitleButton = tw(Button)`
+w-16
 sm:hidden
+max-sm:px-0
 `;
