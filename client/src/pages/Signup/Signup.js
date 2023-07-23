@@ -5,6 +5,7 @@ import HoverButton from '../../common/Buttons/HoverButton';
 import CustomInput from '../../components/Input/CustomInput';
 import UseSignupValid from '../../components/Validation/SignupValidation';
 import GenderRadioInput from '../../components/Input/GenderRadioInput';
+import ProfileUpload from './ProfileUpload';
 
 import tw from 'tailwind-styled-components';
 import { ALERT_MESSAGE, PATH } from '../../constants/constants';
@@ -30,6 +31,7 @@ export default function Signup() {
     confirmPassword: '',
     gender: '',
     age: '',
+    profileImageUrl: '',
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -131,6 +133,7 @@ export default function Signup() {
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
+                <ProfileUpload form={form} setForm={setForm} />
                 <CustomInput
                   labelName="이메일"
                   type="email"
