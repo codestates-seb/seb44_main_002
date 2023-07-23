@@ -51,23 +51,23 @@ export default function HeaderModal() {
   const handleOpen = () => dispatch(open());
   const handleClose = () => dispatch(close());
 
-  const handleNaviModal = () => {
+  const handleNaviModal = (userid) => {
     Swal.fire({
       title: '마이페이지로 이동하시겠습니까?',
       text: '마이페이지로 이동하시겠습니까?',
       icon: 'question',
       showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-      confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
-      cancelButtonColor: '#FF1AE8', // cancel 버튼 색깔 지정
-      confirmButtonText: '마이페이지로이동', // confirm 버튼 텍스트 지정
-      cancelButtonText: '아니요', // cancel 버튼 텍스트 지정
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#FF1AE8',
+      confirmButtonText: '마이페이지로이동',
+      cancelButtonText: '아니요',
       reverseButtons: true, // 버튼 순서 거꾸로
     }).then((result) => {
-      // 만약 Promise리턴을 받으면,
+      // 마이페이지로이동
       if (result.isConfirmed) {
-        // 만약 모달창에서 confirm 버튼을 눌렀다면
-        navigate(PATH.USER_PAGE);
+        navigate(`${PATH.USER_PAGE}${userid}`);
       } else {
+        window.location.reload();
       }
     });
   };

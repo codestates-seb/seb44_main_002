@@ -62,12 +62,6 @@ function App() {
     </div>
   );
 }
-// DETAIL_PAGE: '/detail/:id',
-//   USER_PAGE: '/userpage/:id',
-
-//   MODIFY_PAGE: '/cocktail/:id',
-
-//   SUCCESS_PAGE: '/success/:id',
 const Routing = () => {
   return (
     <Suspense fallback={<Loading />}>
