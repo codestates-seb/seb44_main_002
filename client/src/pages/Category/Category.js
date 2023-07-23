@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CategoryFilter, sortTypeData } from '../../common/Data';
 import { useLogout } from '../../hook/useLogout';
 import api from '../../api/api';
@@ -18,7 +18,6 @@ export default function Category() {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const logout = useLogout();
   //리덕스 임시 저장
   const isLogin = useSelector((state) => state.isLogin.isLogin);
@@ -34,15 +33,12 @@ export default function Category() {
   //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
   const [cocktailData, setCocktailData] = useState([]);
-  // console.log(cocktailData);
-  const [obj, setObj] = useState({
-    totalCount: 200,
-    totalPages: 5,
+  const [dataInfo, setDataInfo] = useState({
+    totalCount: 0,
+    totalPages: 0,
   });
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
-  const [totalPage, setTotalPage] = useState(0);
-
   const [isLoaded, setIsLoaded] = useState(false);
 
   const useSkeleton = () => {
@@ -66,11 +62,13 @@ export default function Category() {
         }
 
         const data = await response.json();
-        console.log(data);
-        console.log('성공');
+
         setCocktailData(data.data);
         setErrormsg(null);
-        setTotalPage(data.pageInfo.totalPages);
+        setDataInfo({
+          totalCount: data.pageInfo.totalElements,
+          totalPages: data.pageInfo.totalPages,
+        });
         if (data.length === 0) {
           setErrormsg(
             '! 데이터 요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요'
@@ -79,7 +77,6 @@ export default function Category() {
         return data;
       } catch (error) {
         console.error('Error:', error);
-        // navigate('/error');
         setErrormsg(
           '! 데이터 요청에 실패했습니다. API가 열려있는 지 확인해보세요.'
         );
@@ -87,12 +84,9 @@ export default function Category() {
     };
 
     fetchCocktails();
-    setObj({
-      totalCount: 200,
-      totalPages: 5,
-    });
   }, [filterCondtion, currentPage]);
 
+  // 필터 변경하면 현재 페이지를 다시 1로 변경합니다.
   useEffect(() => {
     setCurrentPage(0);
   }, [filterCondtion]);
@@ -163,39 +157,15 @@ export default function Category() {
             {errormsg && <ErrorMessage>{errormsg}</ErrorMessage>}
             {/* 페이지네이션 */}
             <PaginationContainer>
-              {obj && (
+              {dataInfo && (
                 <>
-                  {obj.totalCount > 16 && (
+                  {dataInfo.totalCount > 16 && (
                     <>
                       <Pagination2
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        totalPage={totalPage}
+                        totalPage={dataInfo.totalCount}
                       />
-                      {/* {Array.from(
-                        { length: totlaPage },
-                        (_, index) => index + 1
-                      ).map((i, idx) => (
-                        <HoverButton
-                          size="w-[20px] h-[30px]"
-                          key={idx}
-                          color={`${
-                            currentPage === idx
-                              ? 'text-[#BB40F1] bg-transparent'
-                              : 'text-[#7B7B7B] bg-transparent'
-                          }`}
-                          borderColor={`${
-                            currentPage === idx
-                              ? 'border-[#BB40F1]'
-                              : 'border-[#7B7B7B]'
-                          }`}
-                          onClick={() => {
-                            setCurrentPage(idx);
-                          }}
-                        >
-                          {i}
-                        </HoverButton>
-                      ))} */}
                     </>
                   )}
                 </>
@@ -211,15 +181,15 @@ const DivContainer = tw.div`overflow-hidden`;
 
 const Container = tw.div`
 relative
- bg-gradient-to-r 
- from-gradi-to 
- to-gradi-from
-  w-screen
-   h-100% 
-   pt-[10rem]
-    flex 
-    justify-center 
-     `;
+bg-gradient-to-r 
+from-gradi-to 
+to-gradi-from
+w-screen
+h-100% 
+pt-[10rem]
+flex 
+justify-center 
+`;
 const Main = tw.main`
 w-[55rem] 
 max-[990px]:w-[40rem] 
