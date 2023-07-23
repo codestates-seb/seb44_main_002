@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useLogout } from '../../hook/useLogout';
 
 import PasswordModal from './PasswordModal';
-import { logout } from '../../redux/slice/isLoginSlice';
 import UserPageApi from '../../api/UserPageApi';
 
 import tw from 'tailwind-styled-components';

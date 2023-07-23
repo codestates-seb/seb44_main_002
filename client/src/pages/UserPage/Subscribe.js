@@ -47,7 +47,7 @@ export default function Subscribe({ userInfo, localData }) {
         ) : (
           <Swiper
             spaceBetween={30} //좌우측
-            slidesPerView={1}
+            slidesPerView={1} // 한 화면에 나오는 슬라이드 수
             slidesPerGroup={1} // 한 화면에 나오는 슬라이드 넘어가는 수
             loop={userInfo.follows.length >= 5 ? true : false}
             navigation={true}
