@@ -141,19 +141,24 @@ export default function Category() {
             />
             {/* 필터에 따라 출력되는 데이터 */}
             <CardContainer>
-              {cocktailData.map((item, index) =>
-                isLoaded ? (
-                  <Card
-                    item={item}
-                    className="pr-4"
-                    key={index + 1}
-                    data={cocktailData}
-                    setData={setCocktailData}
-                  />
-                ) : (
-                  <SkeletonCard key={index + 1} />
+              {cocktailData
+                .slice(
+                  currentPage * TOTAL_PAGE.COCKTAIL_PER_PAGE,
+                  (currentPage + 1) * TOTAL_PAGE.COCKTAIL_PER_PAGE
                 )
-              )}
+                .map((item, index) =>
+                  isLoaded ? (
+                    <Card
+                      item={item}
+                      className="pr-4"
+                      key={index + 1}
+                      data={cocktailData}
+                      setData={setCocktailData}
+                    />
+                  ) : (
+                    <SkeletonCard key={index + 1} />
+                  )
+                )}
             </CardContainer>
             {/* 에러메시지 */}
             {errormsg && <ErrorMessage>{errormsg}</ErrorMessage>}
@@ -166,7 +171,7 @@ export default function Category() {
                       <Pagination2
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        totalPage={dataInfo.totalCount}
+                        totalPage={dataInfo.totalPages}
                       />
                     </>
                   )}
