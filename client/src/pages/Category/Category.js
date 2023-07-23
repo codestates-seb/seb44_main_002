@@ -41,7 +41,6 @@ export default function Category() {
     totalCount: 0,
     totalPages: 0,
   });
-  //console.log(dataInfo);
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -96,7 +95,6 @@ export default function Category() {
     <DivContainer>
       <Container>
         {/* 배경 음표 */}
-        {/* <BackgroundImg /> */}
         <img
           src="/images/background/music-dynamic-gradient.png"
           alt="음표"
@@ -205,7 +203,7 @@ max-[500px]:w-[20rem]
 animate-fadeInDown1
 `;
 const PostButtonContainer = tw.div`
-flex justify-end pb-5
+flex justify-end pb-5 mb-[20px]
 `;
 
 const Section = tw.section`

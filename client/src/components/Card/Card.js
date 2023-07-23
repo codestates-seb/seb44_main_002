@@ -118,7 +118,7 @@ w-[11.25rem]
   rounded-tl-2xl 
   rounded-br-2xl  
   bg-black 
-bg-opacity-50
+bg-opacity-20
   box-border
   ${(props) => (props.ishovering ? `hidden` : ``)}
 `;

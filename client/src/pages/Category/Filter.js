@@ -135,21 +135,26 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
             />
           ))}
         </TagFrequencyContainer>
-        {tagTasteData.map((data, idx) => (
-          <ClickButton
-            key={data.id}
-            data={data}
-            idx={idx}
-            radius={buttonStyle.radius}
-            fontSize={buttonStyle.fontSize}
-            size={buttonStyle.size}
-            onClick={() => {
-              selectMenuHandler(idx, 'tasteTag');
-            }}
-          >
-            # {data.title}
-          </ClickButton>
-        ))}
+        <TagTasteContainer>
+          <p className="text-[#B3B3B3] text-[13px] mb-1">이중선택해보세요!</p>
+          <div className="flex flex-row gap-3">
+            {tagTasteData.map((data, idx) => (
+              <ClickButton
+                key={data.id}
+                data={data}
+                idx={idx}
+                radius={buttonStyle.radius}
+                fontSize={buttonStyle.fontSize}
+                size={buttonStyle.size}
+                onClick={() => {
+                  selectMenuHandler(idx, 'tasteTag');
+                }}
+              >
+                # {data.title}
+              </ClickButton>
+            ))}
+          </div>
+        </TagTasteContainer>
       </TagContainer>
       {/* sortFilter */}
       <SortContainer>
@@ -176,10 +181,12 @@ const CategoryContainer = tw.div`
 flex border-b-2 border-solid border-white 
 `;
 const TagContainer = tw.div`
-flex pt-10 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0
+flex pt-4 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0  
 `;
 const TagFrequencyContainer = tw.div`
-flex flex-row gap-3  border border-solid border-white p-[1rem] `;
+flex flex-row gap-3  border border-dashed border-gray-500 p-[1rem] pt-6 rounded-md `;
+const TagTasteContainer = tw.div`
+  `;
 const SortContainer = tw.div`
 flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center  gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3 mb-5
 `;
