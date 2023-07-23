@@ -1,9 +1,8 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useEffect, Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from './redux/slice/isLoginSlice';
-import { userinfoLogin, userinfoGet } from './redux/slice/userInfoSlice';
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer';
@@ -24,13 +23,15 @@ const SuccessPage = lazy(() => import('./pages/Success/SuccessPage'));
 import './App.css';
 import Loading from './components/Loading';
 
+import { PATH } from './constants/constants';
+
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const userinfoUserid = useSelector((state) => state.userinfo.userid);
-  const isSignUp = location.pathname.includes('/signup');
-  const isCommented = location.pathname.includes('/comment');
+  const isSignUp = location.pathname.includes(PATH.SIGNUP_PAGE);
+  const isCommented = location.pathname.includes(PATH.COMMENT_PAGE);
   const RightPaths = [
     'category',
     'detail',
@@ -40,18 +41,14 @@ function App() {
     'comment',
   ];
   const isRightPath =
-    location.pathname === '/' ||
-    RightPaths.some((path) => location.pathname.split('/')[1] === path);
+    location.pathname === PATH.MAIN_PAGE ||
+    RightPaths.some(
+      (path) => location.pathname.split(PATH.MAIN_PAGE)[1] === path
+    );
 
   // refresh token이 있을 경우 access token 주기적으로 재발급
   useEffect(() => {
     const isToken = localStorage.getItem('accessToken');
-    // const timer = setInterval(() => {
-    //   if (document.hasFocus()) getAccessToken();
-    // }, 1800000);
-    // return () => {
-    //   clearInterval(timer);
-    // };
     if (isToken && !userinfoUserid) {
       dispatch(login());
     }
@@ -70,16 +67,16 @@ const Routing = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/category" element={<Category />} />
-        <Route path="/detail/:id" element={<RecipeDetail />} />
-        <Route path="/userpage/:id" element={<UserPage />} />
-        <Route path="/cocktail" element={<CocktailForm />} />
-        <Route path="/cocktail/:id" element={<CocktailModifyForm />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/comment" element={<CommentPage />} />
-        <Route path="/success/:id" element={<SuccessPage />} />
-        <Route path="*" element={<LostPage />} />
+        <Route path={PATH.MAIN_PAGE} element={<Main />} />
+        <Route path={PATH.CATEGORY_PAGE} element={<Category />} />
+        <Route path={PATH.DETAIL_PAGE} element={<RecipeDetail />} />
+        <Route path={PATH.USER_PAGE} element={<UserPage />} />
+        <Route path={PATH.COCKTAIL_PAGE} element={<CocktailForm />} />
+        <Route path={PATH.MODIFY_PAGE} element={<CocktailModifyForm />} />
+        <Route path={PATH.SIGNUP_PAGE} element={<Signup />} />
+        <Route path={PATH.COMMENT_PAGE} element={<CommentPage />} />
+        <Route path={PATH.SUCCESS_PAGE} element={<SuccessPage />} />
+        <Route path={PATH.NOT_FOUND} element={<LostPage />} />
       </Routes>
     </Suspense>
   );
