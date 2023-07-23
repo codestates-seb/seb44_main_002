@@ -69,7 +69,7 @@ export default function Slider() {
   };
 
   return (
-    <div className="swiper-container">
+    <div id="main" className="swiper-container">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -87,7 +87,10 @@ export default function Slider() {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
         {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
-        <SwiperSlide className="relative flex max-[520px]:items-center max-[520px]:justify-center swiper-slide">
+        <SwiperSlide
+          id="main"
+          className="relative flex max-[520px]:items-center max-[520px]:justify-center swiper-slide"
+        >
           <img
             className="absolute object-cover w-full h-full"
             src="images/swiper/슬라이더샘플3.png"
@@ -204,7 +207,7 @@ export default function Slider() {
           <SliderCustomImg src="images/swiper/filter.png" alt="filter" />
         </SwiperSlide>
 
-        <div className="autoplay-progress" slot="container-end">
+        <div id="main" className="autoplay-progress" slot="container-end">
           <svg viewBox="0 0 48 48" ref={progressCircle}>
             <circle cx="24" cy="24" r="20"></circle>
           </svg>
