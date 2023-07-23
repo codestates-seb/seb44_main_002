@@ -51,22 +51,26 @@ public class UserService {
     public UserDto.Response updateUser(UserDto.Patch dto, long userId, String email) {
         User requestUser = findUserByEmail(email);
         if(!requestUser.hasAuthority(userId)){
+            log.info("# UserService#updateUser 유저 수정 권한 없음");
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
         User user = findUserByUserId(userId);
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
+        log.info("# userId : {} #UserService#updateUser 유저 수정 성공", userId);
         return userSerializer.entityToSignedResponse(user, requestUser);
     }
 
     public void deleteUser(long userId, String email) {
         User requestUser = findUserByEmail(email);
         if(!requestUser.hasAuthority(userId)){
+            log.info("# UserService#deleteUser 유저 삭제 권한 없음");
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
         User user = findUserByUserId(userId);
         user.setActiveUser(DELETED_USER);
         user.setEmail("");
+        log.info("# userId : {} #UserService#deleteUser 유저 삭제 성공",userId);
     }
 
     public UserDto.Response getUser(String email, long userId) {
@@ -94,7 +98,10 @@ public class UserService {
 
     public void verifyExistsEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+        if (user.isPresent()) {
+            log.info("# inputEmail : {} UserService#verifyExistsEmail 유저 메일 중복 가입 실패", email);
+            throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
+        }
     }
 
     public User findUserByUserId(long userId){
