@@ -2,11 +2,11 @@
 @import '~swiper/css/pagination';
 @import '~swiper/css/navigation';
 
-.swiper-container {
+#main .swiper-container {
   height: 100vh;
 }
 
-.swiper-slide {
+#main .swiper-slide {
   text-align: center;
   font-size: 18px;
   /* background: #fff; */
@@ -18,14 +18,14 @@
   color: white;
 }
 
-.swiper-slide img {
+#main .swiper-slide img {
   display: block;
   /* width: 100%;
   height: 100%;
   object-fit: cover; */
 }
 
-.autoplay-progress {
+#main .autoplay-progress {
   position: absolute;
   right: 16px;
   bottom: 16px;
@@ -39,7 +39,7 @@
   color: white;
 }
 
-.autoplay-progress svg {
+#main .autoplay-progress svg {
   --progress: 0;
   position: absolute;
   left: 0;
