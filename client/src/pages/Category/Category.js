@@ -54,6 +54,7 @@ export default function Category() {
   };
 
   useEffect(() => {
+    setCurrentPage(0);
     useSkeleton();
     const fetchCocktails = async () => {
       const url = useFilterurl(BASE_URL, currentPage, filterCondtion);
@@ -85,12 +86,12 @@ export default function Category() {
     };
 
     fetchCocktails();
-  }, [filterCondtion, currentPage]);
+  }, [filterCondtion]);
 
   // 필터 변경하면 현재 페이지를 다시 1로 변경합니다.
   useEffect(() => {
-    setCurrentPage(0);
-  }, [filterCondtion]);
+    useSkeleton();
+  }, [currentPage]);
 
   return (
     <DivContainer>
@@ -166,7 +167,7 @@ export default function Category() {
             <PaginationContainer>
               {dataInfo && (
                 <>
-                  {dataInfo.totalCount > 16 && (
+                  {dataInfo.totalCount > TOTAL_PAGE.COCKTAIL_PER_PAGE && (
                     <>
                       <Pagination2
                         currentPage={currentPage}
