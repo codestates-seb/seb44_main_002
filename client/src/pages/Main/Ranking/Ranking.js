@@ -7,6 +7,10 @@ import { RankingApi } from '../../../api/RankingApi';
 import { ALERT_MESSAGE } from '../../../constants/constants';
 
 export default function Ranking({ error, setError }) {
+  const name = localStorage.getItem('name');
+  const age = localStorage.getItem('age');
+  const ageRange = Math.floor(age / 10) * 10;
+  console.log(ageRange);
   const [data, setData] = useState({
     bestCocktails: null,
     recommendedCocktails: null,
@@ -49,7 +53,8 @@ export default function Ranking({ error, setError }) {
 
   return (
     <Container className={isLogin ? 'h-[700px]' : 'h-[500px]'}>
-      <Title>가장 핫한 레시피글만 모아봤어요!</Title>
+      {/* 가장 핫한 레시피글만 모아봤어요!  */}
+      <Title>많은 분들이 저장한 칵테일 레시피에요!</Title>
       <ItemContainer className="mb-2">
         {data.bestCocktails &&
           data.bestCocktails.map((item, index) => (
@@ -61,8 +66,9 @@ export default function Ranking({ error, setError }) {
           </div>
         )}
       </ItemContainer>
+      {/* 내 동년배들은 이런거 좋아한다더라! */}
       <Title className={`${!isLogin && 'hidden'} mt-16`}>
-        내 동년배들은 이런거 좋아한다더라!
+        {`${name}님과 같은 ${ageRange}대 남성/여성 분들이 많이 저장한 칵테일 리시피에요!`}
       </Title>
       <ItemContainer className={`${!isLogin && 'hidden'}`}>
         {data.recommendedCocktails &&
