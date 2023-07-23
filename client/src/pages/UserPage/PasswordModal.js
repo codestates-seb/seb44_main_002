@@ -5,10 +5,10 @@ import { useLogout } from '../../hook/useLogout';
 import UserPageApi from '../../api/UserPageApi';
 import CustomInput from '../../components/Input/CustomInput';
 import modifyPasswordValid from '../../components/Validation/ModifyPwdValidation';
-
-import { Modal, Box } from '@mui/material';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
+import { Modal, Box } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -43,7 +43,7 @@ export default function PasswordModal({ localData }) {
         password: form.password,
       });
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -52,7 +52,6 @@ export default function PasswordModal({ localData }) {
     }
   };
   const onSubmit = () => {
-    console.log(form);
     const { password, checkPassword } = modifyPasswordValid(
       form.password,
       form.checkPassword
@@ -60,7 +59,7 @@ export default function PasswordModal({ localData }) {
     setIsValid({ password: password, checkPassword: checkPassword });
     if (password === true && checkPassword === true) {
       modifyPassword();
-      alert('비밀번호가 정상적으로 변경되었습니다.');
+      alert(ALERT_MESSAGE.PASSWORD_MODIFY);
       handleClose();
     }
   };

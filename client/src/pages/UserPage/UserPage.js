@@ -8,6 +8,7 @@ import Subscribe from './Subscribe';
 import UserRecipe from './UserRecipe';
 import UserBookmarked from './UserBookmarked';
 import UserPageApi from '../../api/UserPageApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 
@@ -28,14 +29,13 @@ export default function UserPage() {
     try {
       const response = await UserPageApi.getUserData(location);
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
       const json = await response.json();
       setUserInfo(json);
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };

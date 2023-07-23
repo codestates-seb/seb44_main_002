@@ -23,6 +23,7 @@ export const ALERT_MESSAGE = Object.freeze({
   WELCOME: '환영합니다!',
   DELETE: '삭제되었습니다.',
   MODIFY: '수정되었습니다.',
+  WITHDRAW: '탈퇴되었습니다.',
   PASSWORD_MODIFY: '비밀번호가 정상적으로 변경되었습니다.',
   IMG_FAILED: '이미지 업로드 실패!',
   BIG_IMG: '파일 크기는 1mb 이하여야 합니다.',
@@ -32,6 +33,7 @@ export const ALERT_MESSAGE = Object.freeze({
   ERROR: '서버와의 통신 중 에러가 발생했습니다',
   RATE_OWN_RECIPE: '자신이 작성한 레시피는 평가할 수 없습니다.',
   DOUBLE_CHECK_DELETE: '정말로 삭제하시겠습니까?',
+  DOUBLE_CHECK_WITHDRAW: '정말로 탈퇴하시겠습니까?',
 });
 
 export const TIME = Object.freeze({

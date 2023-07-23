@@ -1,3 +1,5 @@
+import { ALERT_MESSAGE } from '../constants/constants';
+
 const API_BASE = process.env.REACT_APP_BASE_URL;
 
 export default {
@@ -38,7 +40,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -83,7 +85,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -123,10 +125,9 @@ export default {
           });
           return data;
         }
-
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -166,10 +167,9 @@ export default {
           });
           return data;
         }
-
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -209,10 +209,9 @@ export default {
           });
           return data;
         }
-
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
