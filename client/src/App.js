@@ -62,20 +62,28 @@ function App() {
     </div>
   );
 }
+// DETAIL_PAGE: '/detail/:id',
+//   USER_PAGE: '/userpage/:id',
 
+//   MODIFY_PAGE: '/cocktail/:id',
+
+//   SUCCESS_PAGE: '/success/:id',
 const Routing = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path={PATH.MAIN_PAGE} element={<Main />} />
         <Route path={PATH.CATEGORY_PAGE} element={<Category />} />
-        <Route path={PATH.DETAIL_PAGE} element={<RecipeDetail />} />
-        <Route path={PATH.USER_PAGE} element={<UserPage />} />
+        <Route path={`${PATH.DETAIL_PAGE}:id`} element={<RecipeDetail />} />
+        <Route path={`${PATH.USER_PAGE}:id`} element={<UserPage />} />
         <Route path={PATH.COCKTAIL_PAGE} element={<CocktailForm />} />
-        <Route path={PATH.MODIFY_PAGE} element={<CocktailModifyForm />} />
+        <Route
+          path={`${PATH.MODIFY_PAGE}:id`}
+          element={<CocktailModifyForm />}
+        />
         <Route path={PATH.SIGNUP_PAGE} element={<Signup />} />
         <Route path={PATH.COMMENT_PAGE} element={<CommentPage />} />
-        <Route path={PATH.SUCCESS_PAGE} element={<SuccessPage />} />
+        <Route path={`${PATH.SUCCESS_PAGE}:id`} element={<SuccessPage />} />
         <Route path={PATH.NOT_FOUND} element={<LostPage />} />
       </Routes>
     </Suspense>
