@@ -15,6 +15,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import tw from 'tailwind-styled-components';
+import Swal from 'sweetalert2';
 
 import { PATH } from '../../constants/constants';
 
@@ -30,13 +31,10 @@ const style = {
   p: 4,
   borderRadius: 5,
 };
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 export default function HeaderModal() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isModal = useSelector((state) => state.isModal.isModal);
-
-  const handleOpen = () => dispatch(open());
-  const handleClose = () => dispatch(close());
 
   // 유효성검사 state
   const [isValid, setIsValid] = useState({
@@ -49,8 +47,30 @@ export default function HeaderModal() {
     password: '',
   });
   const [errorMSG, setErrorMSG] = useState(null);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const handleOpen = () => dispatch(open());
+  const handleClose = () => dispatch(close());
+
+  const handleNaviModal = () => {
+    Swal.fire({
+      title: '마이페이지로 이동하시겠습니까?',
+      text: '마이페이지로 이동하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+      confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+      cancelButtonColor: '#FF1AE8', // cancel 버튼 색깔 지정
+      confirmButtonText: '마이페이지로이동', // confirm 버튼 텍스트 지정
+      cancelButtonText: '아니요', // cancel 버튼 텍스트 지정
+      reverseButtons: true, // 버튼 순서 거꾸로
+    }).then((result) => {
+      // 만약 Promise리턴을 받으면,
+      if (result.isConfirmed) {
+        // 만약 모달창에서 confirm 버튼을 눌렀다면
+        navigate(PATH.USER_PAGE);
+      } else {
+      }
+    });
+  };
 
   // 사용자 이름및 사용자 정보 조회 함수
   const handleUserInfo = async (memberId) => {
@@ -95,7 +115,7 @@ export default function HeaderModal() {
           // 전역상태관리 로그인으로 변경
           dispatch(login());
           handleClose();
-          navigate(PATH.MAIN_PAGE);
+          handleNaviModal(response.headers.get('userId'));
         } else {
           // 응답 실패
           if (response === 401) {

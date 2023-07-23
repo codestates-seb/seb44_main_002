@@ -46,7 +46,7 @@ function App() {
       (path) => location.pathname.split(PATH.MAIN_PAGE)[1] === path
     );
 
-  // refresh token이 있을 경우 access token 주기적으로 재발급
+  // 로그인상태유지
   useEffect(() => {
     const isToken = localStorage.getItem('accessToken');
     if (isToken && !userinfoUserid) {
