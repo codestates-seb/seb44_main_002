@@ -3,24 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { CategoryFilter, sortTypeData } from '../../common/Data';
 import { useLogout } from '../../hook/useLogout';
-import api from '../../api/api';
+import useFilterurl from '../../components/FIlterUrl/Filterurl';
+
 import Card from '../../components/Card/Card';
 import SkeletonCard from '../../components/Card/SkeletonCard';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
-import useFilterurl from '../../components/FIlterUrl/Filterurl';
-import tw from 'tailwind-styled-components';
 import Pagination2 from '../../components/Pagination/Pagination2';
+
+import tw from 'tailwind-styled-components';
+import api from '../../api/api';
+import { PATH, ALERT_MESSAGE } from '../../constants/constants';
 
 // 페이지네이션 추가
 export default function Category() {
-  //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const navigate = useNavigate();
   const logout = useLogout();
+
   //리덕스 임시 저장
   const isLogin = useSelector((state) => state.isLogin.isLogin);
+
   //선택된 카테고리조건 (카테고리&태그&정렬)
   const [filterCondtion, setFilterCondtion] = useState({
     category: CategoryFilter[0].type,
@@ -56,13 +60,11 @@ export default function Category() {
       try {
         const response = await api.getfilter(url);
         if (response === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(`${ALERT_MESSAGE.TOKEN_OVER}`);
           logout();
           return;
         }
-
         const data = await response.json();
-
         setCocktailData(data.data);
         setErrormsg(null);
         setDataInfo({
@@ -70,16 +72,12 @@ export default function Category() {
           totalPages: data.pageInfo.totalPages,
         });
         if (data.length === 0) {
-          setErrormsg(
-            '! 데이터 요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요'
-          );
+          setErrormsg(`${ALERT_MESSAGE.SUCCESS_NULL}`);
         }
         return data;
       } catch (error) {
         console.error('Error:', error);
-        setErrormsg(
-          '! 데이터 요청에 실패했습니다. API가 열려있는 지 확인해보세요.'
-        );
+        setErrormsg(`${ALERT_MESSAGE.ERROR}`);
       }
     };
 
@@ -95,6 +93,7 @@ export default function Category() {
     <DivContainer>
       <Container>
         {/* 배경 음표 */}
+        {/* <BackgroundImg /> */}
         <img
           src="/images/background/music-dynamic-gradient.png"
           alt="음표"
