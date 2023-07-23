@@ -40,7 +40,7 @@ export default function ImageModal({ imageUrl }) {
 
 const InfoImage = tw.img`
 w-[260px]
-h-[355px]
+h-[370px]
 object-cover
 rounded-2xl
 cursor-pointer
