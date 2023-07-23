@@ -52,7 +52,7 @@ export default function Pagination2({
                 key={idx}
                 onClick={() => {
                   scrollToTop();
-                  setCurrentPage(idx);
+                  setCurrentPage(page);
                 }}
                 currentPage={currentPage}
                 idx={idx}

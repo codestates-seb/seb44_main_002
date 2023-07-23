@@ -54,6 +54,7 @@ export default function Category() {
   };
 
   useEffect(() => {
+    setCurrentPage(0);
     useSkeleton();
     const fetchCocktails = async () => {
       const url = useFilterurl(BASE_URL, currentPage, filterCondtion);
@@ -85,12 +86,12 @@ export default function Category() {
     };
 
     fetchCocktails();
-  }, [filterCondtion, currentPage]);
+  }, [filterCondtion]);
 
   // 필터 변경하면 현재 페이지를 다시 1로 변경합니다.
   useEffect(() => {
-    setCurrentPage(0);
-  }, [filterCondtion]);
+    useSkeleton();
+  }, [currentPage]);
 
   return (
     <DivContainer>
@@ -141,19 +142,24 @@ export default function Category() {
             />
             {/* 필터에 따라 출력되는 데이터 */}
             <CardContainer>
-              {cocktailData.map((item, index) =>
-                isLoaded ? (
-                  <Card
-                    item={item}
-                    className="pr-4"
-                    key={index + 1}
-                    data={cocktailData}
-                    setData={setCocktailData}
-                  />
-                ) : (
-                  <SkeletonCard key={index + 1} />
+              {cocktailData
+                .slice(
+                  currentPage * TOTAL_PAGE.COCKTAIL_PER_PAGE,
+                  (currentPage + 1) * TOTAL_PAGE.COCKTAIL_PER_PAGE
                 )
-              )}
+                .map((item, index) =>
+                  isLoaded ? (
+                    <Card
+                      item={item}
+                      className="pr-4"
+                      key={index + 1}
+                      data={cocktailData}
+                      setData={setCocktailData}
+                    />
+                  ) : (
+                    <SkeletonCard key={index + 1} />
+                  )
+                )}
             </CardContainer>
             {/* 에러메시지 */}
             {errormsg && <ErrorMessage>{errormsg}</ErrorMessage>}
@@ -161,12 +167,12 @@ export default function Category() {
             <PaginationContainer>
               {dataInfo && (
                 <>
-                  {dataInfo.totalCount > 16 && (
+                  {dataInfo.totalCount > TOTAL_PAGE.COCKTAIL_PER_PAGE && (
                     <>
                       <Pagination2
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        totalPage={dataInfo.totalCount}
+                        totalPage={dataInfo.totalPages}
                       />
                     </>
                   )}
