@@ -43,3 +43,7 @@ export const TIME = Object.freeze({
   MILLISECONDS_TO_MINUTES: 60000,
   TIME_DIFFERENCE: 9,
 });
+
+export const TOTAL_PAGE = Object.freeze({
+  COCKTAIL_PER_PAGE: 12,
+});

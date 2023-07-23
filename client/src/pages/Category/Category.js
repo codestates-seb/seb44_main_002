@@ -13,7 +13,7 @@ import Pagination2 from '../../components/Pagination/Pagination2';
 
 import tw from 'tailwind-styled-components';
 import api from '../../api/api';
-import { PATH, ALERT_MESSAGE } from '../../constants/constants';
+import { PATH, ALERT_MESSAGE, TOTAL_PAGE } from '../../constants/constants';
 
 // 페이지네이션 추가
 export default function Category() {
@@ -41,6 +41,7 @@ export default function Category() {
     totalCount: 0,
     totalPages: 0,
   });
+  //console.log(dataInfo);
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -65,11 +66,13 @@ export default function Category() {
           return;
         }
         const data = await response.json();
+        //console.log(data.data);
         setCocktailData(data.data);
         setErrormsg(null);
+        const dataAmount = data.data.length;
         setDataInfo({
-          totalCount: data.pageInfo.totalElements,
-          totalPages: data.pageInfo.totalPages,
+          totalCount: dataAmount,
+          totalPages: Math.ceil(dataAmount / TOTAL_PAGE.COCKTAIL_PER_PAGE),
         });
         if (data.length === 0) {
           setErrormsg(`${ALERT_MESSAGE.SUCCESS_NULL}`);
