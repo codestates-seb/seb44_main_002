@@ -4,6 +4,7 @@ import { useLogout } from '../../hook/useLogout';
 
 import CommentValid from '../../components/Validation/CommentValidation';
 import RecipeApi from '../../api/RecipeApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 
@@ -28,7 +29,7 @@ export default function Community({
         content: comment,
       });
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -47,7 +48,7 @@ export default function Community({
       };
       const response = await RecipeApi.PostReplys(commentId, repliInfo);
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -64,7 +65,7 @@ export default function Community({
         cocktailDetail.cocktailId
       );
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -78,7 +79,7 @@ export default function Community({
     try {
       const response = await RecipeApi.deleteReplies(replyId);
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -92,7 +93,7 @@ export default function Community({
     e.preventDefault();
 
     if (!isLogin) {
-      alert('로그인 후 이용해주세요');
+      alert(ALERT_MESSAGE.LOGIN_FIRST);
       return;
     }
 

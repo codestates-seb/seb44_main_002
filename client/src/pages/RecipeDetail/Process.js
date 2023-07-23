@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { ALERT_MESSAGE } from '../../constants/constants';
+
 import tw from 'tailwind-styled-components';
 
 export default function Process({ cocktailDetail }) {
@@ -13,10 +15,10 @@ export default function Process({ cocktailDetail }) {
     navigator.clipboard
       .writeText(formattedRecipe)
       .then(() => {
-        alert('레시피가 클립보드에 복사되었습니다.');
+        alert(ALERT_MESSAGE.RECIPE_CLIPBOARD);
       })
       .catch((error) => {
-        console.error('클립보드 복사에 실패했습니다:', error);
+        console.error(error);
       });
   };
 
