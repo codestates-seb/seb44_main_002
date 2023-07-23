@@ -208,10 +208,6 @@ const InfoContainer = tw.section`
 flex
 max-md:flex-col
 `;
-const InfoImage = tw.img`
-w-80
-rounded-[0.625rem]
-`;
 const InfoRightContainer = tw.section`
 ml-8
 w-full
@@ -287,23 +283,6 @@ text-3xl
 text-gray-100
 font-bold
 `;
-const ShareContainer = tw.div`
-flex 
-h-6 
-ml-4 
-px-2 
-py-1 
-text-xs 
-text-gray-200 
-items-center 
-bg-gray-300 
-rounded-full
-cursor-pointer
-hover:text-gray-300
-hover:bg-white
-max-lg:ml-0
-max-lg:mt-2
-`;
 const NameP = tw.p`
 mt-0.5
 ml-0.5 
@@ -321,9 +300,6 @@ justify-end
 text-gray-300
 hover:text-pointPurple-100
 text-xs
-`;
-const LinkToCUP = tw.p`
-cursor-pointer
 `;
 const RecipeContiner = tw.div`
 mt-5

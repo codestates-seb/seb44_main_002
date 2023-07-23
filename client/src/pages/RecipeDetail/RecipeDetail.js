@@ -220,11 +220,6 @@ max-sm:w-[90vw]
 max-sm:px-10
 max-sm:pb-2
 `;
-const BookmarkIcon = tw.div`
-absolute
-top-0 right-14
-cursor-pointer
-`;
 
 const cocktailDetail = {
   cocktailId: 1,
@@ -240,16 +235,10 @@ const cocktailDetail = {
   modifiedAt: '2023-07-02T01:01:01',
   ingredients: [
     {
-      ingredient: '마늘',
-    },
-    {
-      ingredient: '양파',
-    },
-    {
-      ingredient: '토마토',
+      ingredient: '',
     },
   ],
-  recipe: [{ process: `섞는다` }, { process: `마신다` }, { process: `완성` }],
+  recipe: [{ process: `` }],
   tags: [
     {
       tag: '',
