@@ -43,4 +43,15 @@ public class Tags {
     private TagDto.Response createResponseDto(String tag) {
         return new TagDto.Response(tag);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Tags inputTags;
+        if(obj instanceof Tags){
+            inputTags = (Tags) obj;
+        }else{
+            return false;
+        }
+        return containsAll(inputTags.getTags());
+    }
 }

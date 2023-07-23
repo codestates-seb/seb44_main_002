@@ -51,11 +51,10 @@ public class CocktailController {
     public ResponseEntity getFilteredCocktails(Authentication authentication,
                                                @RequestParam(value = "category", required = false) String category,
                                                @RequestParam(value = "tag", required = false) String tag,
-                                               @RequestParam(value = "page", defaultValue = "1") int page,
                                                @RequestParam(value = "sort", defaultValue = "most_viewed") String sort) {
         log.info("# 칵테일 검색");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get());
-        MultiResponseDto responses = cocktailService.readFilteredCocktails(email, category, tag, page, sort);
+        MultiResponseDto responses = cocktailService.readFilteredCocktails(email, category, tag, sort);
         log.info("# 칵테일 검색 완료");
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }

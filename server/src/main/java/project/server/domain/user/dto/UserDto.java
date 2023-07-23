@@ -19,6 +19,7 @@ public class UserDto {
         private String name;
         private String gender;
         private int age;
+        private String profileImageUrl;
 
         public User postToEntity() {
             User user = new User();
@@ -27,6 +28,7 @@ public class UserDto {
             user.setName(name);
             user.setGender(gender);
             user.setAge(age);
+            user.setProfileImageUrl(profileImageUrl);
 
             return user;
         }
