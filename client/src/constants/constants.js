@@ -1,0 +1,32 @@
+export const PATH = Object.freeze({
+  MAIN_PAGE: '/',
+  CATEGORY_PAGE: '/category',
+  DETAIL_PAGE: '/detail/:id',
+  USER_PAGE: '/userpage/:id',
+  COCKTAIL_PAGE: '/cocktail',
+  MODIFY_PAGE: '/cocktail/:id',
+  SIGNUP_PAGE: '/signup',
+  COMMENT_PAGE: '/comment',
+  SUCCESS_PAGE: '/success/:id',
+  NOT_FOUND: '*',
+});
+
+export const HEADER_TITLE = Object.freeze({
+  HOME: 'HOME',
+  CATEGORY: 'CATEGORY',
+  RECOMMEND: '추천',
+  MYPAGE: 'MYPAGE',
+});
+
+export const ALERT_MESSAGE = Object.freeze({
+  TOKEN_OVER: '토큰만료로 로그아웃되었습니다.',
+  WELCOME: '환영합니다!',
+  DELETE: '삭제되었습니다.',
+  MODIFY: '수정되었습니다.',
+  PASSWORD_MODIFY: '비밀번호가 정상적으로 변경되었습니다.',
+  IMG_FAILED: '이미지 업로드 실패!',
+  BIG_IMG: '파일 크기는 1mb 이하여야 합니다.',
+  LOGIN_FIRST: '로그인 후 진행해주세요.',
+  PATH_CLIPBOARD: '현재 주소가 클립보드에 복사되었습니다.',
+  RECIPE_CLIPBOARD: '레시피가 클립보드에 복사되었습니다.',
+});

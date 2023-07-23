@@ -16,6 +16,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import tw from 'tailwind-styled-components';
 
+import { PATH } from '../../constants/constants';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -93,7 +95,7 @@ export default function HeaderModal() {
           // 전역상태관리 로그인으로 변경
           dispatch(login());
           handleClose();
-          navigate('/');
+          navigate(PATH.MAIN_PAGE);
         } else {
           // 응답 실패
           if (response === 401) {
@@ -153,9 +155,9 @@ export default function HeaderModal() {
             </form>
             <div className="flex-[1] flex items-end">
               <button
-                className="items-end text-gray-300 font-bold"
+                className="items-end font-bold text-gray-300"
                 onClick={() => {
-                  navigate('/signup');
+                  navigate(PATH.SIGNUP_PAGE);
                   handleClose();
                 }}
               >

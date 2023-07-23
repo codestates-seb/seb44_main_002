@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLogout } from '../../../hook/useLogout';
 import tw from 'tailwind-styled-components';
 import { RankingApi } from '../../../api/RankingApi';
+import { ALERT_MESSAGE } from '../../../constants/constants';
 
 export default function Ranking({ error, setError }) {
   const [data, setData] = useState({
@@ -18,7 +19,7 @@ export default function Ranking({ error, setError }) {
     RankingApi(isLogin)
       .then((json) => {
         if (json === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(ALERT_MESSAGE.TOKEN_OVER);
           logout();
           return;
         }
