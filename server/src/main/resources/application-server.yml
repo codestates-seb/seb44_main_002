@@ -10,11 +10,8 @@ spring:
     port: ${redis_port}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   datasource:
