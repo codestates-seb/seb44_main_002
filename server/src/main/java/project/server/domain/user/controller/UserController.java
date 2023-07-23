@@ -29,7 +29,9 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity postUser(@Valid @RequestBody UserDto.Post requestBody) {
+        log.info(" 회원 가입");
         UserDto.Response response = userService.createUser(requestBody);
+        log.info(" 회원 가입 완료");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -47,16 +49,20 @@ public class UserController {
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
                                     @Valid @RequestBody UserDto.Patch requestBody,
                                     Authentication authentication) {
+        log.info("# 유저 수정");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         UserDto.Response response = userService.updateUser(requestBody, userId, email);
+        log.info("# 유저 수정 완료");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{user-id}")
     public ResponseEntity deleteUser(Authentication authentication,
                                      @PathVariable("user-id") @Positive long userId) {
+        log.info("# 유저 삭제");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         userService.deleteUser(userId,email);
+        log.info("# 유저 삭제 완료");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
