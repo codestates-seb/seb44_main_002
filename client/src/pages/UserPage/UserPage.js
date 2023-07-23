@@ -16,7 +16,7 @@ export default function UserPage() {
   const location = useLocation().pathname.split('/')[2];
   const logout = useLogout();
 
-  const [userInfo, setUserInfo] = useState(dummyData);
+  const [userInfo, setUserInfo] = useState(resetData);
   const [localData, setLocalData] = useState({
     userId: '',
     IsAdmin: false,
@@ -116,7 +116,7 @@ right-[900px]
 pointer-events-none
 `;
 
-const dummyData = {
+const resetData = {
   userId: 3,
   name: '',
   profileImageUrl: 'sample image url',
@@ -126,27 +126,27 @@ const dummyData = {
   subscriberCount: 0,
   cocktails: [],
   bookmarkedCocktails: [
-    //   cocktailId: 6,
-    //   name: '시트러스 주스',
-    //   imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
-    //   isBookmarked: true,
-    // },
+    {
+      cocktailId: 6,
+      name: '',
+      imageUrl: '',
+      isBookmarked: true,
+    },
   ],
   boards: [
-    // {
-    //   boardId: 1,
-    //   title: 'title1',
-    //   content: 'content1',
-    // },
+    {
+      boardId: 1,
+      title: '',
+      content: '',
+    },
   ],
   follows: [],
   subscribe: [
-    // {
-    //   userId: 1,
-    //   name: 'park1',
-    //   profileImageUrl:
-    //     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    // },
+    {
+      userId: 1,
+      name: '',
+      profileImageUrl: '',
+    },
   ],
   subscribed: false,
 };
