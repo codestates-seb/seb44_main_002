@@ -74,6 +74,7 @@ password:
   <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/da115908-0c19-41cc-8d22-e71918a1da1e" width=120 height=120>
   <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/d31dc30c-9ded-4360-b363-03d8bd55f671" width=120 height=120>
   <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/14b474b4-2c8f-4c32-8bbe-b327e308981f" width=120 height=120>
+  <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/8aeec6a6-c8db-47e1-b73f-abe8a8ffdd95" width=120 height=120>
   <br>
   <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/8837451f-90a1-43ac-b825-4ad42b169256" width=120 height=120>
   <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/a218b5ec-428d-4b80-bd96-71a10685a92d" width=120 height=120>
