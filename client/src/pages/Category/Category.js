@@ -67,7 +67,6 @@ export default function Category() {
           return;
         }
         const data = await response.json();
-        //console.log(data.data);
         setCocktailData(data.data);
         setErrormsg(null);
         const dataAmount = data.data.length;

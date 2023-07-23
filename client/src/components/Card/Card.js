@@ -44,7 +44,7 @@ export default function Card({ item }) {
       try {
         const response = await api.deletebookmarkApi(item);
         if (response === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(`${ALERT_MESSAGE.TOKEN_OVER}`);
           logout();
         }
       } catch (error) {
@@ -65,7 +65,7 @@ export default function Card({ item }) {
         <CocktailImg
           src={item.imageUrl}
           alt="칵테일 사진"
-          onClick={() => navigate(`/detail/${item.cocktailId}`)}
+          onClick={() => navigate(`${PATH.DETAIL_PAGE}${item.cocktailId}`)}
         />
         {/* 투명한 검은 박스 */}
         <Hoverocktail ishovering={hoveredIndex === item.cocktailId} />

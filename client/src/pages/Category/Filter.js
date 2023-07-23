@@ -122,17 +122,19 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
         ))}
       </CategoryContainer>
       {/* 태그 */}
-      <div className="flex pt-10 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0">
+      <TagContainer>
         {/* 도수별 태그 */}
-        {tagFrequencyData.map((data, idx) => (
-          <TagFrequencyButton
-            key={data.id}
-            data={data}
-            idx={idx}
-            filterCondtion={filterCondtion}
-            selectMenuHandler={selectMenuHandler}
-          />
-        ))}
+        <TagFrequencyContainer>
+          {tagFrequencyData.map((data, idx) => (
+            <TagFrequencyButton
+              key={data.id}
+              data={data}
+              idx={idx}
+              filterCondtion={filterCondtion}
+              selectMenuHandler={selectMenuHandler}
+            />
+          ))}
+        </TagFrequencyContainer>
         {tagTasteData.map((data, idx) => (
           <ClickButton
             key={data.id}
@@ -148,9 +150,9 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
             # {data.title}
           </ClickButton>
         ))}
-      </div>
+      </TagContainer>
       {/* sortFilter */}
-      <div className="flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center  gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3 mb-5">
+      <SortContainer>
         <Sort
           filterCondtion={filterCondtion}
           selectMenuHandler={selectMenuHandler}
@@ -165,7 +167,7 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
             selectMenuHandler={selectMenuHandler}
           />
         ))}
-      </div>
+      </SortContainer>
     </div>
   );
 }
@@ -174,5 +176,10 @@ const CategoryContainer = tw.div`
 flex border-b-2 border-solid border-white 
 `;
 const TagContainer = tw.div`
-flex border-b-2 border-solid border-white 
+flex pt-10 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0
+`;
+const TagFrequencyContainer = tw.div`
+flex flex-row gap-3  border border-solid border-white p-[1rem] `;
+const SortContainer = tw.div`
+flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center  gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3 mb-5
 `;
