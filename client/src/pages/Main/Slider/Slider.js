@@ -148,7 +148,7 @@ export default function Slider() {
           <SliderCustomImg src="images/swiper/chat.png" alt="chat" />
           <SliderCustomText2>
             <p>
-              <span className="text-pointPurple-100">댓글</span>
+              <span className="text-pointPurple-100">대댓글</span>
               <span>로</span>
             </p>
             <p>다양한 유저와</p>

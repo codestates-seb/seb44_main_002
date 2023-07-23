@@ -34,7 +34,7 @@ export const ALERT_MESSAGE = Object.freeze({
   RATE_OWN_RECIPE: '자신이 작성한 레시피는 평가할 수 없습니다.',
   DOUBLE_CHECK_DELETE: '정말로 삭제하시겠습니까?',
   DOUBLE_CHECK_WITHDRAW: '정말로 탈퇴하시겠습니까?',
-  SUCCESS_NULL: '요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요',
+  SUCCESS_NULL: '데이터를 불러오는데 실패하였습니다. 잠시 후 다시 시도해주세요',
 });
 
 export const TIME = Object.freeze({
