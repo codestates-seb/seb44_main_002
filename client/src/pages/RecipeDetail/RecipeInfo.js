@@ -307,13 +307,13 @@ mt-5
 pb-4
 text-xs
 border-b-[1px]
-border-[#7b7b7b]/50
+border-gray-300/50
 max-md:pb-0
 `;
 const RecipeHeader = tw.div`
 flex
 mb-2.5
-text-[#7b7b7b]
+text-gray-300
 font-bold
 items-center
 `;
@@ -321,11 +321,11 @@ const RecipeHr = tw.hr`
 ml-2 
 border-1 
 border-solid 
-border-[#7b7b7b]/50
+border-gray-300/50
 w-[calc(100%-31px)]
 `;
 const RecipeList = tw.div`
-text-[#b3b3b3]
+text-gray-200
 h-[calc(20rem-185px)]
 overflow-y-auto
 scrollbar
@@ -333,5 +333,6 @@ max-md:h-full
 `;
 const RecipeEle = tw.p`
 mb-2.5
+text-sm
 hover:text-pointPurple-100
 `;
