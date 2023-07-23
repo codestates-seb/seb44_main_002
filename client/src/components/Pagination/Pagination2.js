@@ -16,11 +16,11 @@ export default function Pagination2({
   };
 
   const updatePageList = () => {
-    const firstPage = Math.floor(currentPage / 5);
+    const firstPage = Math.floor(currentPage / 5) * 5;
     const endPage =
-      firstPage + 5 < totalPage - 1 ? firstPage + 5 : totalPage - 1;
+      firstPage + 4 < totalPage - 1 ? firstPage + 4 : totalPage - 1;
     const array = Array.from({ length: endPage - firstPage + 1 }, (_, idx) => {
-      return idx;
+      return idx + firstPage;
     });
     console.log(array, firstPage, endPage, totalPage);
     return array;
@@ -32,7 +32,7 @@ export default function Pagination2({
 
   useEffect(() => {
     setPaginationList(() => updatePageList());
-  }, [totalPage]);
+  }, [totalPage, currentPage]);
 
   return (
     <>
@@ -101,7 +101,7 @@ h-[25px]
 border-[1px] 
 rounded-lg mr-2
 ${(props) =>
-  props.currentPage === props.idx
+  props.currentPage % 5 === props.idx
     ? 'text-[#BB40F1] bg-transparent border-[#BB40F1]'
     : 'text-[#7B7B7B] bg-transparent border-[#7B7B7B]'}
 `;

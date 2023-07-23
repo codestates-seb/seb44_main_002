@@ -106,6 +106,7 @@ w-[11.25rem]
   bg-black 
 bg-opacity-50
   box-border
+  object-cover
 `;
 const Hoverocktail = tw.div`
 absolute  top-0 right-0
