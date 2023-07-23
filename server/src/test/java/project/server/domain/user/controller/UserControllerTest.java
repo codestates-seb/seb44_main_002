@@ -16,13 +16,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import project.server.domain.user.UserController;
-import project.server.domain.user.UserDto;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
+import project.server.domain.user.dto.UserDto;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -47,16 +45,16 @@ public class UserControllerTest {
     @Autowired
     private Gson gson;
 
-    @BeforeAll
-    void createUser(){
-        UserDto.Post post = new UserDto.Post();
-        post.setName("1");
-        post.setPassword("1234");
-        post.setAge(30);
-        post.setGender("mail");
-        post.setEmail("11@11.com");
-        userService.createUser(post);
-    }
+//    @BeforeAll
+//    void createUser(){
+//        UserDto.Post post = new UserDto.Post();
+//        post.setName("1");
+//        post.setPassword("1234");
+//        post.setAge(30);
+//        post.setGender("mail");
+//        post.setEmail("11@11.com");
+//        userService.createUser(post);
+//    }
 
     @Test
     public void testPostUser() throws Exception {
@@ -103,20 +101,14 @@ public class UserControllerTest {
     public void testPatchUser() throws Exception {
         //give
         UserDto.Patch requestBody = new UserDto.Patch();
-        requestBody.setUserId(1L);
         requestBody.setPassword("patchpassword");
 
-        User updatedUser = new User();
-        updatedUser.setUserId(1L);
-        updatedUser.setEmail("pxodid2000@gmail.com");
-        updatedUser.setPassword("patchpassword");
-        updatedUser.setName("태양");
-        updatedUser.setGender("male");
-        updatedUser.setAge(24);
+        UserDto.Response updatedUser = UserDto.Response.builder()
+                .build();
 
         String content = gson.toJson(requestBody);
 
-        when(userService.updateUser(any(UserDto.Patch.class), anyLong(), any(Authentication.class))).thenReturn(updatedUser);
+        when(userService.updateUser(any(UserDto.Patch.class), anyLong(), anyString())).thenReturn(updatedUser);
 
         //when
         ResultActions result =
@@ -142,7 +134,7 @@ public class UserControllerTest {
         user.setGender("male");
         user.setAge(24);
 
-        when(userService.findUser(anyLong())).thenReturn(user);
+        when(userService.findUserByUserId(anyLong())).thenReturn(user);
 
         //when
         ResultActions result =
@@ -157,6 +149,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testDeleteUser() throws Exception {
         // Perform the request and validate the response
         ResultActions result =
