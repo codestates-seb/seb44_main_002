@@ -4,6 +4,7 @@ import { useLogout } from '../../hook/useLogout';
 
 import ImageModal from './ImgaeModal';
 import RecipeApi from '../../api/RecipeApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
@@ -26,7 +27,7 @@ export default function RecipeInfo({
         cocktailDetail.cocktailId
       );
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -42,7 +43,7 @@ export default function RecipeInfo({
         score2
       );
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -56,20 +57,20 @@ export default function RecipeInfo({
   const changeScore = (idx) => {
     // 로그인 여부 확인
     if (localData.userId === cocktailDetail.userId) {
-      alert('자신이 작성한 레시피는 평가할 수 없습니다.');
+      alert(ALERT_MESSAGE.RATE_OWN_RECIPE);
       return;
     }
     if (isLogin) {
       setScore(idx + 1);
       modifyScore(idx + 1);
     } else {
-      alert('로그인 후 이용가능합니다.');
+      alert(ALERT_MESSAGE.LOGIN_FIRST);
     }
   };
   const deletePost = () => {
     // 삭제
-    if (window.confirm('정말로 삭제하시겠습니까?')) {
-      alert('삭제되었습니다.');
+    if (window.confirm(ALERT_MESSAGE.DOUBLE_CHECK_DELETE)) {
+      alert(ALERT_MESSAGE.DELETE);
       deleteRecipe();
       navigate('/category');
     }
@@ -79,10 +80,10 @@ export default function RecipeInfo({
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        alert('현재 주소가 클립보드에 복사되었습니다.');
+        alert(ALERT_MESSAGE.PATH_CLIPBOARD);
       })
       .catch((error) => {
-        console.error('클립보드 복사에 실패했습니다:', error);
+        console.error(error);
       });
   };
 

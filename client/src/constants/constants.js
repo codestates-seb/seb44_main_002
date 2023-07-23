@@ -29,4 +29,14 @@ export const ALERT_MESSAGE = Object.freeze({
   LOGIN_FIRST: '로그인 후 진행해주세요.',
   PATH_CLIPBOARD: '현재 주소가 클립보드에 복사되었습니다.',
   RECIPE_CLIPBOARD: '레시피가 클립보드에 복사되었습니다.',
+  ERROR: '서버와의 통신 중 에러가 발생했습니다',
+  RATE_OWN_RECIPE: '자신이 작성한 레시피는 평가할 수 없습니다.',
+  DOUBLE_CHECK_DELETE: '정말로 삭제하시겠습니까?',
+});
+
+export const TIME = Object.freeze({
+  MINUTES_IN_AN_HOUR: 60,
+  MINUTES_IN_A_DAY: 1440,
+  MILLISECONDS_TO_MINUTES: 60000,
+  TIME_DIFFERENCE: 9,
 });
