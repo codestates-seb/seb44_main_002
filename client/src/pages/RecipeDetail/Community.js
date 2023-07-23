@@ -169,7 +169,7 @@ export default function Community({
                 )}
                 <CommentContent>{ele.content}</CommentContent>
                 <CommentAndButton>
-                  <CommentDate>{getTime(ele.modifiedAt)}</CommentDate>
+                  <CommentDate>{getTime(ele.createdAt)}</CommentDate>
                   <ButtonContainer>
                     {(localData.IsAdmin || ele.userId === localData.userId) && (
                       <>
@@ -218,7 +218,7 @@ export default function Community({
                         rp.content}
                     </CommentContent>
                     <CommentAndButton>
-                      <CommentDate>{getTime(rp.modifiedAt)}</CommentDate>
+                      <CommentDate>{getTime(rp.createdAt)}</CommentDate>
                       <ButtonContainer>
                         {(localData.IsAdmin ||
                           rp.userId === localData.userId) && (

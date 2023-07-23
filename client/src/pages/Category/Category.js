@@ -41,7 +41,6 @@ export default function Category() {
     totalCount: 0,
     totalPages: 0,
   });
-  //console.log(dataInfo);
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -67,7 +66,6 @@ export default function Category() {
           return;
         }
         const data = await response.json();
-        //console.log(data.data);
         setCocktailData(data.data);
         setErrormsg(null);
         const dataAmount = data.data.length;
@@ -97,7 +95,6 @@ export default function Category() {
     <DivContainer>
       <Container>
         {/* 배경 음표 */}
-        {/* <BackgroundImg /> */}
         <img
           src="/images/background/music-dynamic-gradient.png"
           alt="음표"
@@ -120,12 +117,12 @@ export default function Category() {
               radius="rounded-[30px]"
               color="text-[#BB40F1] bg-transparent"
               fontSize="max-[990px]:text-sm max-[700px]:text-xs max-[500px]:text-[10px]"
-              borderColor="border-[#BB40F1]"
+              borderColor="border-[#BB40F1] "
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
               onClick={() =>
                 isLogin
-                  ? navigate('/cocktail')
-                  : alert('로그인 후 진행해 주세요.')
+                  ? navigate(`${PATH.COCKTAIL_PAGE}`)
+                  : alert(`${ALERT_MESSAGE.LOGIN_FIRST}`)
               }
             >
               나만의 레시피 등록하기
@@ -206,7 +203,7 @@ max-[500px]:w-[20rem]
 animate-fadeInDown1
 `;
 const PostButtonContainer = tw.div`
-flex justify-end pb-5
+flex justify-end pb-5 mb-[20px]
 `;
 
 const Section = tw.section`
