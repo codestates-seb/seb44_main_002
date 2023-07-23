@@ -1,3 +1,5 @@
+import { ALERT_MESSAGE } from '../constants/constants';
+
 const API_BASE = process.env.REACT_APP_BASE_URL;
 
 export default {
@@ -16,14 +18,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -41,7 +40,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -62,14 +61,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -87,7 +83,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -108,14 +104,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -133,7 +126,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -157,14 +150,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -185,7 +175,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -208,14 +198,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -234,7 +221,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -257,14 +244,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -283,7 +267,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -308,14 +292,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -336,7 +317,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -357,14 +338,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -382,7 +360,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -404,14 +382,11 @@ export default {
         return response;
       }
       if (response.status === 401) {
-        console.log('로그아웃해야함.');
         return 401;
       }
       if (response.status === 500) {
         const token = response.headers.get('Authorization');
-        console.log(token);
         if (token) {
-          console.log('재발급받고 엑세스 토큰담겨있음.');
           localStorage.setItem(
             'accessToken',
             response.headers.get('Authorization')
@@ -429,7 +404,7 @@ export default {
 
         return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);

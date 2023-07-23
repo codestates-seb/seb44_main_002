@@ -5,6 +5,7 @@ import { open } from '../../../redux/slice/isModalSlice';
 import HoverButton from '../../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
+import { PATH } from '../../../constants/constants';
 
 export default function Advice({ error }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Advice({ error }) {
   const registrationHandler = () => {
     if (isLogin) {
       // 로그인
-      navigate('/cocktail');
+      navigate(PATH.COCKTAIL_PAGE);
     } else {
       // 로그아웃
       dispatch(open());

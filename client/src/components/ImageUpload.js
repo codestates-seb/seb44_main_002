@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { ALERT_MESSAGE } from '../constants/constants';
 
 const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   const [imageSrc, setImageSrc] = useState(form.imageUrl);
@@ -14,7 +15,7 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
     }
 
     if (file.size > 1 * 1024 * 1024) {
-      alert('파일 크기는 1MB 이하여야 합니다.');
+      alert(ALERT_MESSAGE.BIG_IMG);
       setImageSrc(null);
       inputRef.current.value = '';
       return; // 파일 크기가 제한을 초과한 경우 처리 중단
@@ -44,20 +45,18 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
 
       if (response.ok) {
         // 유효성 검사 true로 변경
-        console.log('이미지 업로드 성공');
         const imageUrl = await response.json();
         console.log(imageUrl);
         setForm({ ...form, imageUrl: imageUrl.url });
         setIsValid({ ...isValid, imageUrl: true });
-        // await submitData(imageUrl); // 이미지 URL을 포함하여 데이터 제출 함수 호출
       } else {
         // 유효성 검사 false로 변경
-        alert('이미지 업로드 실패');
+        alert(ALERT_MESSAGE.IMG_FAILED);
         setForm({ ...form, imageUrl: '' });
         setIsValid({ ...isValid, imageUrl: false });
         setImageSrc(null);
         inputRef.current.value = '';
-        console.log('이미지 업로드 실패');
+
         // 업로드 실패 시 에러 처리
       }
     } catch (error) {

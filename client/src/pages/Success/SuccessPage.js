@@ -5,6 +5,7 @@ import HoverButton from '../../common/Buttons/HoverButton';
 
 import './SuccessPage.css';
 import Loading from '../../components/Loading';
+import { PATH } from '../../constants/constants';
 
 export default function SuccessPage() {
   const navigate = useNavigate();
@@ -45,8 +46,8 @@ export default function SuccessPage() {
                 className="w-[60px] h-[80px] cursor-pointer max-[768px]:w-[50px] max-[768px]:h-[70px]"
                 src="/images/logo.webp"
                 alt="img"
-                onClick={() => navigate('/')}
-                onKeyDown={() => navigate('/')}
+                onClick={() => navigate(PATH.MAIN_PAGE)}
+                onKeyDown={() => navigate(PATH.MAIN_PAGE)}
               />
             </div>
             <div className="flex flex-col flex-[2] justify-around items-center">
@@ -65,7 +66,7 @@ export default function SuccessPage() {
                 size="h-[60px] w-[100px]"
                 color="white"
                 fontSize="text-2xl"
-                onClick={() => navigate('/category')}
+                onClick={() => navigate(PATH.CATEGORY_PAGE)}
               >
                 목록으로
               </HoverButton>

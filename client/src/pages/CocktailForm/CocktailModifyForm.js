@@ -15,6 +15,7 @@ import HoverButton from '../../common/Buttons/HoverButton';
 import { useLogout } from '../../hook/useLogout';
 
 import tw from 'tailwind-styled-components';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 export default function CocktailModifyForm() {
   const logout = useLogout();
@@ -67,9 +68,8 @@ export default function CocktailModifyForm() {
     // cocktailform get 요청 api 분리
     GetCocktailForm(params.id)
       .then((json) => {
-        // console.log(json);
         if (json === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(ALERT_MESSAGE.TOKEN_OVER);
           logout();
           return;
         }
@@ -89,7 +89,6 @@ export default function CocktailModifyForm() {
             process: item.process,
           })),
           degree: transformedTags.degree,
-          // 컴포넌트 설계 미스
           flavor: transformedTags.flavor,
           ingredients: json.ingredients.map((item) => ({
             ingredient: item.ingredient,
@@ -101,7 +100,6 @@ export default function CocktailModifyForm() {
   }, []);
 
   const submitHandler = (e) => {
-    // console.log(form);
     e.preventDefault();
     const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
@@ -133,7 +131,7 @@ export default function CocktailModifyForm() {
       PatchCocktailForm(form, params.id)
         .then((json) => {
           if (json === 401) {
-            alert('토큰만료로 로그아웃되었습니다.');
+            alert(ALERT_MESSAGE.TOKEN_OVER);
             logout();
             return;
           }
@@ -141,14 +139,11 @@ export default function CocktailModifyForm() {
         })
         .then((json) => json.json())
         .then((json) => {
-          // console.log(json);
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
           console.log(error);
         });
-    } else {
-      console.log('유효성 검사 작동');
     }
   };
 
