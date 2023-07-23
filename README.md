@@ -1,20 +1,20 @@
-## 🍻 Intro
+# 🍻 Intro
 
-### 지친 직장인들의 오아시스, 편의점에서 한잔 어떠세요? 편한
+## 지친 직장인들의 오아시스, 편의점에서 한잔 어떠세요? 편한
 
 <div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132247597164273705/image.png" alt="logo" /></div>
 </br>
 
-## 🔗 배포주소 : [편한](https://release--comfortablecocktail.netlify.app/)
+# 🔗 배포주소 : [편한](https://release--comfortablecocktail.netlify.app/)
 
 </br>
 
-## 개요
+# 개요
 
 저희의 웹서비스, 편한은 칵테일 레시피 정보를 제공하는 웹사이트입니다.<br/>
 사용자들만의 레시피를 등록할 수 있으며 더 나은 사용자 경험을 위해 다양한 기능을 제공합니다.
 
-### 테스트 계정
+## 테스트 계정
 
 id:
 <br />
@@ -24,16 +24,16 @@ password:
 
 <br />
 
-## 👨‍👩‍👧‍👦 팀원 소개
+# 👨‍👩‍👧‍👦 팀원 소개
 
-#### Frontend
+### Frontend
 
 |                                                                                      황찬우 (FE 팀장)                                                                                       |                                            이은희 (FE 팀원)                                             |                                             김민재 (FE 팀원)                                             |
 | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="https://images-ext-1.discordapp.net/external/kQhSS4IkcxGfV-3wNzTUXgmrU4C46M82rsWScdIZ0s4/%3Fv%3D4/https/avatars.githubusercontent.com/u/49116370?width=924&height=924" width=150> | <img src="https://avatars.githubusercontent.com/u/82435813?v=4"  alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/88226519?v=4"  alt="beucol" width="150" height="150" > |
 |                                                                          [@HChanWoo](https://github.com/HChanWoo)                                                                           |                                  [@joywhy](https://github.com/joywhy)                                   |                               [@crowcrow07](https://github.com/crowcrow07)                               |
 
-#### Backend
+### Backend
 
 |                                           노재경 (BE 부팀장)                                           |                                             박태양 (BE 팀원)                                             |                                             김수민 (BE 팀원)                                             |
 | :----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
@@ -42,7 +42,7 @@ password:
 
 <br />
 
-## 🚀 Demo
+# 🚀 Demo
 
 | 기능1                                     | 기능2                                     | 기능3                                     |
 | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
@@ -55,9 +55,9 @@ password:
 </br>
 </br>
 
-## ⚡️ Skills
+# ⚡️ Skills
 
-### Front-end
+## Front-end
 
 <p>
   <img src="https://user-images.githubusercontent.com/52682603/138834243-fb74d81e-e90d-4c6a-8793-05df588f59ab.png" width=15%>
@@ -67,7 +67,7 @@ password:
   <img src="https://v4.mui.com/static/logo.png" width=15%>
 </p>
 
-### Back-end
+## Back-end
 
 <p>
   <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/cb7b8b7e-aade-46a2-8260-b970ba54e8b3" width=120 height=120>
@@ -89,7 +89,7 @@ password:
 
 <br />
 
-## 🔌 Infrastructures
+# 🔌 Infrastructures
 
 <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/0270597f-284c-4afa-bcef-935f2c3b5495" width=120 height=120>
 <img src="https://github.com/codestates-seb/seb44_main_002/assets/85445649/5746d413-29bd-4fe3-8fc2-8380c6362821" width=120 height=120>
@@ -161,7 +161,7 @@ password:
 
 </details>
 
-## Git-Convention
+# Git-Convention
 
 | 기능 이름 | 기능 설명                                                                          |
 | --------- | ---------------------------------------------------------------------------------- |
