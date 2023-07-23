@@ -55,24 +55,24 @@
   transform: rotate(-90deg);
 }
 
-.swiper-button-prev,
-.swiper-button-next {
+#main .swiper-button-prev,
+#main .swiper-button-next {
   color: white;
 }
 
-.swiper-button-prev::after,
-.swiper-button-next::after {
+#main .swiper-button-prev::after,
+#main .swiper-button-next::after {
   font-size: 40px !important;
 }
 
 @media (max-width: 768px) {
-  .swiper-button-prev::after,
-  .swiper-button-next::after {
+  #main .swiper-button-prev::after,
+  #main .swiper-button-next::after {
     font-size: 20px !important;
   }
 }
 
-.swiper-pagination-bullet {
+#main .swiper-pagination-bullet {
   background-color: white;
 }
 
