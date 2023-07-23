@@ -164,11 +164,13 @@ pt-8
 const InnerInfo = tw.div`
 flex 
 mt-6
+max-sm:flex-wrap
 `;
 const InfoComponent = tw.div`
 text-center 
 mr-10
 max-sm:mr-6
+max-sm:mb-6
 `;
 const UpInfoP = tw.p`
 text-5xl

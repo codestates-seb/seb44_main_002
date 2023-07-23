@@ -47,12 +47,13 @@ export default function Subscribe({ userInfo, localData }) {
         ) : (
           <Swiper
             spaceBetween={30} //좌우측
-            slidesPerView={2}
-            slidesPerGroup={2} // 한 화면에 나오는 슬라이드 넘어가는 수
+            slidesPerView={1}
+            slidesPerGroup={1} // 한 화면에 나오는 슬라이드 넘어가는 수
             loop={userInfo.follows.length >= 5 ? true : false}
             navigation={true}
             className="mySwiper"
             breakpoints={{
+              400: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 30 },
               550: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 50 },
               950: { slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 50 },
               1200: { slidesPerView: 5, slidesPerGroup: 5, spaceBetween: 55 },
@@ -105,9 +106,11 @@ const Container = tw.div`
 text-white
 mt-32
 mx-12
+max-sm:mt-16
 `;
 const Title = tw.p`
 text-2xl
+max-sm:text-base
 `;
 const UserName = tw.p`
 text-center
@@ -122,4 +125,5 @@ hover:text-pointPurple-100
 `;
 const SliderContainer = tw.div`
 mt-12
+max-sm:mt-8
 `;

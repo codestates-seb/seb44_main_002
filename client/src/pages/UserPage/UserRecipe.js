@@ -35,12 +35,14 @@ mx-12
 const Title = tw.p`
 text-white
 text-2xl
+max-sm:text-base
 `;
 const Bookmark = tw.div`
 flex
 flex-wrap
 mt-12
 max-md:justify-around
+max-sm:mt-8
 `;
 const CardContainer = tw.div`
 mb-12
