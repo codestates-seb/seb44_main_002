@@ -51,7 +51,7 @@ public class AppConfiguration implements InitializingBean {
 
         User jk = new User();
         jk.setName("JKROH");
-        jk.setEmail("shworud1995@naver.com");
+        jk.setEmail("shworud29@gmail.com");
         jk.setPassword(passwordEncoder.encode("worudWkd12"));
         jk.setGender("male");
         jk.setAge(29);
