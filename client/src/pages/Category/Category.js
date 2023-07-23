@@ -124,8 +124,8 @@ export default function Category() {
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
               onClick={() =>
                 isLogin
-                  ? navigate('/cocktail')
-                  : alert('로그인 후 진행해 주세요.')
+                  ? navigate(`${PATH.COCKTAIL_PAGE}`)
+                  : alert(`${ALERT_MESSAGE.LOGIN_FIRST}`)
               }
             >
               나만의 레시피 등록하기
