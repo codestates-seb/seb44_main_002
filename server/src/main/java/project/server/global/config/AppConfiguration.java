@@ -52,7 +52,7 @@ public class AppConfiguration implements InitializingBean {
         User jk = new User();
         jk.setName("JKROH");
         jk.setEmail("shworud1995@naver.com");
-        jk.setPassword(passwordEncoder.encode("qlthzp37!@"));
+        jk.setPassword(passwordEncoder.encode("worudWkd12"));
         jk.setGender("male");
         jk.setAge(29);
         jk.setRoles(List.of("USER"));
@@ -120,8 +120,9 @@ public class AppConfiguration implements InitializingBean {
         User user4 = userRepository.findById(4L).get();
         User user5 = userRepository.findById(5L).get();
         User user6 = userRepository.findById(6L).get();
+        User user7 = userRepository.findById(7L).get();
 
-        List<User> users = new ArrayList<>(List.of(user1, user2, user3, user4, user5, user6));
+        List<User> users = new ArrayList<>(List.of(user1, user2, user1, user3, user1, user4, user1, user5, user1, user6, user1, user7));
 
         User choosenUser;
 
