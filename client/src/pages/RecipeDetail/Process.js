@@ -25,6 +25,16 @@ export default function Process({ cocktailDetail }) {
   return (
     <>
       <ProcessContainer>
+        <div className="text-white flex justify-end mt-4 text-sm">
+          <p className="text-error">{`# ${cocktailDetail.liquor}`}</p>
+          {cocktailDetail.tags.map((ele, idx) => {
+            return (
+              <p className="ml-3" key={ele + idx}>
+                {ele.tag}
+              </p>
+            );
+          })}
+        </div>
         <ProcessHeader>
           <p>제조과정</p>
           <ProcessHr />
@@ -58,7 +68,6 @@ export default function Process({ cocktailDetail }) {
   );
 }
 const ProcessContainer = tw.div`
-mt-14
 pb-4
 text-gray-300
 text-xs
@@ -68,6 +77,7 @@ border-gray-300/50
 const ProcessHeader = tw.div`
 flex
 items-center
+mt-14
 `;
 const ProcessHr = tw.hr`
 ml-2 
