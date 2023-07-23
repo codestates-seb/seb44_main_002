@@ -32,13 +32,13 @@ public class BookmarkService {
         User user = userService.findUserByEmail(email);
         Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
         bookmarkCreateService.create(user, cocktail);
-        log.info("# userId : {}, cocktailId : {} 북마크 등록 성공", user.getUserId(), cocktailId);
+        log.info("# userId : {}, cocktailId : {} BookmarkService#createBookmark 성공", user.getUserId(), cocktailId);
     }
 
     public void deleteBookmark(String email, long cocktailId){
         User user = userService.findUserByEmail(email);
         Bookmark bookmark = bookmarkReadService.findBookmarkByUserIdAndCocktailId(user.getUserId(), cocktailId);
         bookmarkDeleteService.delete(user, bookmark);
-        log.info("# userId : {}, cocktailId : {} 북마크 삭제 성공", user.getUserId(), cocktailId);
+        log.info("# userId : {}, cocktailId : {} BookmarkService#deleteBookmark 성공", user.getUserId(), cocktailId);
     }
 }

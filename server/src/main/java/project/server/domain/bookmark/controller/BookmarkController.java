@@ -25,20 +25,20 @@ public class BookmarkController {
     @PostMapping("/create/{cocktail-id}")
     public ResponseEntity postBookmark(Authentication authentication,
                                        @PathVariable("cocktail-id") long cocktailId) {
-        log.info("# 북마크 등록");
+        log.info("# BookmarkController#postBookmark 실행");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         bookmarkService.createBookmark(email, cocktailId);
-        log.info("# 북마크 등록 완료");
+        log.info("# BookmarkController#postBookmark 완료");
         return ResponseEntity.accepted().build();
     }
 
     @DeleteMapping("/delete/{cocktail-id}")
     public ResponseEntity deleteBookmark(Authentication authentication,
                                          @PathVariable("cocktail-id") long cocktailId){
-        log.info("# 북마크 삭제");
+        log.info("# BookmarkController#deleteBookmark 실행");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         bookmarkService.deleteBookmark(email, cocktailId);
-        log.info("# 북마크 삭제 완료");
+        log.info("# BookmarkController#deleteBookmark 완료");
         return ResponseEntity.noContent().build();
     }
 }

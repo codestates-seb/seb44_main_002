@@ -31,7 +31,7 @@ public class FollowService {
         User following = userService.findUserByUserId(followingUserId);
         verifyFollowTarget(follower, following);
         followCreateService.createFollow(follower, following);
-        log.info("# From now, userId : {} starts following userId : {}", follower.getUserId(), followingUserId);
+        log.info("# followerUserId : {}, followingUserId : {} FollowService#createFollow 성공", follower.getUserId(), followingUserId);
     }
 
     @Transactional
@@ -40,7 +40,7 @@ public class FollowService {
         Follow follow = followReadService.findFollowByFollowerIdAndFollowingId(follower.getUserId(), followingUserId);
         User following = userService.findUserByUserId(followingUserId);
         followDeleteService.cancelFollow(follower, follow, following);
-        log.info("# From now, userId : {} is not following userId : {}", follower.getUserId(), followingUserId);
+        log.info("# followerUserId : {}, followingUserId : {} FollowService#deleteFollow 성공", follower.getUserId(), followingUserId);
     }
 
     private void verifyFollowTarget(User follower, User following) {
