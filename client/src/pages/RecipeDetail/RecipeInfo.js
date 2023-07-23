@@ -149,7 +149,7 @@ export default function RecipeInfo({
         <UserContainer>
           <WriterInfo>
             {cocktailDetail.activeUserWritten ? (
-              cocktailDetail.userId === 4 ? (
+              cocktailDetail.userId === 1 ? (
                 <FlexContainer>
                   <PiUserCircleFill size="24px" />
                   <NameP>관리자</NameP>
@@ -169,13 +169,14 @@ export default function RecipeInfo({
               </FlexContainer>
             )}
             <p className="mt-1 text-[10px]">
-              {getTime(cocktailDetail.createdAt)}
+              {getTime(cocktailDetail.modifiedAt)}
             </p>
           </WriterInfo>
           <LinkToCU href={encodingUrl(cocktailDetail.liquor)} target="_blank">
             <img
               src={process.env.PUBLIC_URL + '/images/btn_cu.webp'}
               alt="편의점 앱으로 이동"
+              width={'160px'}
             />
           </LinkToCU>
         </UserContainer>
@@ -330,6 +331,7 @@ pb-4
 text-xs
 border-b-[1px]
 border-[#7b7b7b]/50
+max-md:pb-0
 `;
 const RecipeHeader = tw.div`
 flex
@@ -343,14 +345,16 @@ ml-2
 border-1 
 border-solid 
 border-[#7b7b7b]/50
-w-[calc(100%-30px)]
+w-[calc(100%-31px)]
 `;
 const RecipeList = tw.div`
 text-[#b3b3b3]
 h-[calc(20rem-185px)]
 overflow-y-auto
 scrollbar
+max-md:h-full
 `;
 const RecipeEle = tw.p`
 mb-2.5
+hover:text-pointPurple-100
 `;

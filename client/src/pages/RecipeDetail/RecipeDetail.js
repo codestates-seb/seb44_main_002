@@ -202,6 +202,8 @@ px-12
 py-52
 w-full
 overflow-hidden
+max-sm:px-0
+max-sm:py-28
 `;
 const Container = tw.main`
 relative
@@ -214,6 +216,9 @@ bg-[#000000]/40
 rounded-ss-[3.125rem]
 rounded-ee-[3.125rem]
 animate-fadeInDown1
+max-sm:w-[90vw]
+max-sm:px-10
+max-sm:pb-2
 `;
 const BookmarkIcon = tw.div`
 absolute
@@ -226,7 +231,7 @@ const cocktailDetail = {
   adminWritten: false,
   userId: 1,
   userName: '',
-  name: '',
+  name: '체리주',
   imageUrl: '',
   activeUserWritten: true,
   liquor: '럼',
@@ -235,10 +240,16 @@ const cocktailDetail = {
   modifiedAt: '2023-07-02T01:01:01',
   ingredients: [
     {
-      ingredient: '',
+      ingredient: '마늘',
+    },
+    {
+      ingredient: '양파',
+    },
+    {
+      ingredient: '토마토',
     },
   ],
-  recipe: [{ process: `` }],
+  recipe: [{ process: `섞는다` }, { process: `마신다` }, { process: `완성` }],
   tags: [
     {
       tag: '',

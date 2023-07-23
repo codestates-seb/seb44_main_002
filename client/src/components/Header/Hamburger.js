@@ -17,6 +17,7 @@ export default function Hamburger() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const userid = localStorage.getItem('userId');
 
   //리덕스툴킷
   const isLogin = useSelector((state) => state.isLogin.isLogin);
@@ -116,7 +117,7 @@ export default function Hamburger() {
             },
           }}
         >
-          <MenuItem onClick={() => openPage('/userpage/:id')}>
+          <MenuItem onClick={() => openPage(`/userpage/${userid}`)}>
             <HoverButton>Mypage</HoverButton>
           </MenuItem>
           <MenuItem onClick={() => openPage('/category')}>

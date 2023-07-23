@@ -4,6 +4,18 @@ import tw from 'tailwind-styled-components';
 
 export default function Process({ cocktailDetail }) {
   const [hoveredIndex, setHoveredIndex] = useState(-1);
+
+  const clickCopy = () => {
+    navigator.clipboard
+      .writeText(cocktailDetail.recipe.map((step) => step.process).join(' > '))
+      .then(() => {
+        alert('레시피가 클립보드에 복사되었습니다.');
+      })
+      .catch((error) => {
+        console.error('클립보드 복사에 실패했습니다:', error);
+      });
+  };
+
   return (
     <ProcessContainer>
       <ProcessHeader>
@@ -26,6 +38,14 @@ export default function Process({ cocktailDetail }) {
           </ProcessP>
         );
       })}
+      <div className="text-right">
+        <button
+          className="mt-2 text-right cursor-pointer hover:text-white"
+          onClick={clickCopy}
+        >
+          제조과정 복사
+        </button>
+      </div>
     </ProcessContainer>
   );
 }

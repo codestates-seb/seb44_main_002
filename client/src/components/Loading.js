@@ -4,7 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 export default function Loading() {
   return (
     <LoadingDiv>
-      <div className="text-4xl text-gray-200">칵테일 불러오는중...</div>
+      <div className="text-4xl text-gray-200">화면 그리는중...</div>
       <div className="flex">
         <LoadingImg src="/images/loading/loading.svg" delay="0s" />
         <LoadingImg src="/images/loading/loading2.svg" delay="0.2s" />

@@ -44,7 +44,7 @@ const Item = tw.div`flex flex-col justify-center items-center w-[170px] max-[884
 ) => (props.isHover ? `text-pointPurple-100` : `text-gray-300`)}`;
 const ImageContainer = tw.div`flex-[3] relative cursor-pointer rounded-full w-full max-[884px]:rounded-2xl max-[884px]:w-[80%] max-[884px]:drop-shadow-lg max-[884px]:w-[300px] max-[884px]:min-h-[260px] `;
 const Image = tw.img`h-full w-full object-cover max-[884px]:min-h-[260px]`;
-const ItemText = tw.div`flex flex-[1] items-center w-full font-bold max-[884px]:text-2xl max-[884px]:w-[80%]`;
+const ItemText = tw.div`flex flex-[1] items-center w-full font-bold max-[884px]:text-2xl`;
 const RankingNumber = tw.div`absolute font-black text-7xl top-[100px] max-[884px]:hidden ${(
   props
 ) => (props.isHover ? `text-pointPurple-100` : `text-[#1A344A]`)}`;
