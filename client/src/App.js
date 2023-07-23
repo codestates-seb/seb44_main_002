@@ -46,7 +46,7 @@ function App() {
       (path) => location.pathname.split(PATH.MAIN_PAGE)[1] === path
     );
 
-  // refresh token이 있을 경우 access token 주기적으로 재발급
+  // 로그인상태유지
   useEffect(() => {
     const isToken = localStorage.getItem('accessToken');
     if (isToken && !userinfoUserid) {
@@ -62,20 +62,22 @@ function App() {
     </div>
   );
 }
-
 const Routing = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path={PATH.MAIN_PAGE} element={<Main />} />
         <Route path={PATH.CATEGORY_PAGE} element={<Category />} />
-        <Route path={PATH.DETAIL_PAGE} element={<RecipeDetail />} />
-        <Route path={PATH.USER_PAGE} element={<UserPage />} />
+        <Route path={`${PATH.DETAIL_PAGE}:id`} element={<RecipeDetail />} />
+        <Route path={`${PATH.USER_PAGE}:id`} element={<UserPage />} />
         <Route path={PATH.COCKTAIL_PAGE} element={<CocktailForm />} />
-        <Route path={PATH.MODIFY_PAGE} element={<CocktailModifyForm />} />
+        <Route
+          path={`${PATH.MODIFY_PAGE}:id`}
+          element={<CocktailModifyForm />}
+        />
         <Route path={PATH.SIGNUP_PAGE} element={<Signup />} />
         <Route path={PATH.COMMENT_PAGE} element={<CommentPage />} />
-        <Route path={PATH.SUCCESS_PAGE} element={<SuccessPage />} />
+        <Route path={`${PATH.SUCCESS_PAGE}:id`} element={<SuccessPage />} />
         <Route path={PATH.NOT_FOUND} element={<LostPage />} />
       </Routes>
     </Suspense>

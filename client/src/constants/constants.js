@@ -1,13 +1,13 @@
 export const PATH = Object.freeze({
   MAIN_PAGE: '/',
   CATEGORY_PAGE: '/category',
-  DETAIL_PAGE: '/detail/:id',
-  USER_PAGE: '/userpage/:id',
+  DETAIL_PAGE: '/detail/',
+  USER_PAGE: '/userpage/',
   COCKTAIL_PAGE: '/cocktail',
-  MODIFY_PAGE: '/cocktail/:id',
+  MODIFY_PAGE: '/cocktail/',
   SIGNUP_PAGE: '/signup',
   COMMENT_PAGE: '/comment',
-  SUCCESS_PAGE: '/success/:id',
+  SUCCESS_PAGE: '/success/',
   NOT_FOUND: '*',
 });
 
