@@ -3,13 +3,10 @@ package project.server.global.image;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.constraints.Positive;
 
 @RestController
 @Slf4j
@@ -21,10 +18,9 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping("/upload/users/{user-id}")
-    public ResponseEntity userProfileImageUpload(@RequestParam("file") MultipartFile file,
-                                   @PathVariable("user-id") @Positive long userId) {
-        ImageDto.Response response = imageService.uploadUserProfileImage(file, userId);
+    @PostMapping("/upload/users")
+    public ResponseEntity userProfileImageUpload(@RequestParam("file") MultipartFile file) {
+        ImageDto.Response response = imageService.uploadUserProfileImage(file);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
