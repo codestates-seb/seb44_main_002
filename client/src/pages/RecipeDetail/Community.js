@@ -124,6 +124,7 @@ export default function Community({
     }
   };
 
+  // 태그할 유저 정보 수정
   const clickReply = (userId, userName, commentId) => {
     changeTag(userId, userName, commentId);
     scrollToReply();
