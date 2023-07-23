@@ -15,6 +15,7 @@ import { PostCocktailForm } from '../../api/CocktailFormApi';
 import HoverButton from '../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 export default function CocktailForm() {
   const logout = useLogout();
@@ -85,7 +86,7 @@ export default function CocktailForm() {
         .then((json) => {
           // console.log(json);
           if (json === 401) {
-            alert('토큰만료로 로그아웃되었습니다.');
+            alert(ALERT_MESSAGE.TOKEN_OVER);
             logout();
             return;
           }

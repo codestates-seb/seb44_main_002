@@ -10,6 +10,7 @@ import Community from './Community';
 import Recommend from './Recommend';
 import BookmarkBtn from '../../components/BookmarkButton/BookmarkBtn';
 import RecipeApi from '../../api/RecipeApi';
+import { TIME, ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 
@@ -36,9 +37,10 @@ export default function RecipeDetail() {
     }
     const currentTime = new Date();
     const targetTime = new Date(createdTime);
-    currentTime.setHours(currentTime.getHours() - 9); // 세계 표준시를 한국 시간과 오차
+    currentTime.setHours(currentTime.getHours() - TIME.TIME_DIFFERENCE); // 세계 표준시를 한국 시간과 오차
     const minutesDifference = Math.floor(
-      (currentTime.getTime() - targetTime.getTime()) / (1000 * 60)
+      (currentTime.getTime() - targetTime.getTime()) /
+        TIME.MILLISECONDS_TO_MINUTES
     );
 
     if (isNaN(minutesDifference)) {
@@ -46,12 +48,14 @@ export default function RecipeDetail() {
     }
     if (minutesDifference < 1) {
       return 'now';
-    } else if (minutesDifference < 60) {
+    } else if (minutesDifference < TIME.MINUTES_IN_AN_HOUR) {
       return `${minutesDifference} min ago`;
-    } else if (minutesDifference < 1440) {
-      return `${Math.floor(minutesDifference / 60)} hours ago`;
+    } else if (minutesDifference < TIME.MINUTES_IN_A_DAY) {
+      return `${Math.floor(
+        minutesDifference / TIME.MINUTES_IN_AN_HOUR
+      )} hours ago`;
     }
-    return `${Math.floor(minutesDifference / 1440)} days ago`;
+    return `${Math.floor(minutesDifference / TIME.MINUTES_IN_A_DAY)} days ago`;
   };
 
   const setBookmark = async () => {
@@ -62,12 +66,11 @@ export default function RecipeDetail() {
         try {
           const response = await RecipeApi.deleteBookmark(cocktail.cocktailId);
           if (response === 401) {
-            alert('토큰만료로 로그아웃되었습니다.');
+            alert(ALERT_MESSAGE.TOKEN_OVER);
             logout();
             return;
           }
         } catch (error) {
-          console.log(error);
           navigate('/error');
         }
       } else {
@@ -75,12 +78,11 @@ export default function RecipeDetail() {
         try {
           const response = await RecipeApi.postBookmark(cocktail.cocktailId);
           if (response === 401) {
-            alert('토큰만료로 로그아웃되었습니다.');
+            alert(ALERT_MESSAGE.TOKEN_OVER);
             logout();
             return;
           }
         } catch (error) {
-          console.log(error);
           navigate('/error');
         }
       }
@@ -91,7 +93,7 @@ export default function RecipeDetail() {
     try {
       const response = await RecipeApi.getCocktailData(location_id);
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
@@ -99,7 +101,6 @@ export default function RecipeDetail() {
       setCocktail(json);
       setIsBookmarked(json.bookmarked);
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
@@ -220,11 +221,6 @@ max-sm:w-[90vw]
 max-sm:px-10
 max-sm:pb-2
 `;
-const BookmarkIcon = tw.div`
-absolute
-top-0 right-14
-cursor-pointer
-`;
 
 const cocktailDetail = {
   cocktailId: 1,
@@ -240,16 +236,10 @@ const cocktailDetail = {
   modifiedAt: '2023-07-02T01:01:01',
   ingredients: [
     {
-      ingredient: '마늘',
-    },
-    {
-      ingredient: '양파',
-    },
-    {
-      ingredient: '토마토',
+      ingredient: '',
     },
   ],
-  recipe: [{ process: `섞는다` }, { process: `마신다` }, { process: `완성` }],
+  recipe: [{ process: `` }],
   tags: [
     {
       tag: '',
