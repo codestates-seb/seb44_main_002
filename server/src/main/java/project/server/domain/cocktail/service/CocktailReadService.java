@@ -1,7 +1,5 @@
 package project.server.domain.cocktail.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
@@ -35,23 +33,23 @@ public class CocktailReadService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readAllCocktails(Pageable pageable) {
-        return cocktailRepository.findAll(pageable);
+    public List<Cocktail> readAllCocktails() {
+        return cocktailRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readFilteredByTagsCocktails(List<Tag> tags, Pageable pageable) {
-        return cocktailRepository.findDistinctByTagsTagsIn(tags, pageable);
+    public List<Cocktail> readFilteredByTagsCocktails(List<Tag> tags) {
+        return cocktailRepository.findDistinctByTagsTagsIn(tags);
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readFilteredByCategoryCocktails(Category selectedCategory, Pageable pageable) {
-        return cocktailRepository.findByCategory(selectedCategory, pageable);
+    public List<Cocktail> readFilteredByCategoryCocktails(Category selectedCategory) {
+        return cocktailRepository.findByCategory(selectedCategory);
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readFilterByCategoryAndTagsCocktails(Category selectedCategory, List<Tag> tags, Pageable pageable) {
-        return cocktailRepository.findDistinctByCategoryAndTagsTagsIn(selectedCategory, tags, pageable);
+    public List<Cocktail> readFilterByCategoryAndTagsCocktails(Category selectedCategory, List<Tag> tags) {
+        return cocktailRepository.findDistinctByCategoryAndTagsTagsIn(selectedCategory, tags);
     }
 
     @Transactional(readOnly = true)

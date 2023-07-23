@@ -42,10 +42,10 @@ public class AppConfiguration implements InitializingBean {
     public void createTestUsers() {
         User admin = new User();
         admin.setName("admin");
-        admin.setEmail("shworud29@gmail.com");
-        admin.setPassword(passwordEncoder.encode("test1234"));
+        admin.setEmail("admin@ezcocktail.com");
+        admin.setPassword(passwordEncoder.encode("adminPassword44"));
         admin.setGender("male");
-        admin.setAge(29);
+        admin.setAge(27);
         admin.setRoles(List.of("USER", "ADMIN"));
         userRepository.save(admin);
 
@@ -102,6 +102,15 @@ public class AppConfiguration implements InitializingBean {
         eh.setAge(25);
         eh.setRoles(List.of("USER"));
         userRepository.save(eh);
+
+        User test = new User();
+        test.setName("test");
+        test.setEmail("test@test.com");
+        test.setPassword(passwordEncoder.encode("test1234"));
+        test.setGender("male");
+        test.setAge(25);
+        test.setRoles(List.of("USER"));
+        userRepository.save(eh);
     }
 
     public void createCocktails() {
@@ -110,8 +119,9 @@ public class AppConfiguration implements InitializingBean {
         User user3 = userRepository.findById(3L).get();
         User user4 = userRepository.findById(4L).get();
         User user5 = userRepository.findById(5L).get();
+        User user6 = userRepository.findById(6L).get();
 
-        List<User> users = new ArrayList<>(List.of(user1, user2, user3, user4, user5));
+        List<User> users = new ArrayList<>(List.of(user1, user2, user3, user4, user5, user6));
 
         User choosenUser;
 

@@ -76,20 +76,18 @@ public class CocktailService {
 
     public MultiResponseDto readFilteredCocktails(String email, String category, String tag, int page, String sortValue) {
         Sort sort = setSort(sortValue);
-        Pageable pageable = PageRequest.ofSize(DEFAULT_SIZE).withPage(page - 1).withSort(sort);
         if (isNotSelectCategoryAndTag(category, tag)) {
-            Page<Cocktail> cocktailPage = cocktailReadService.readAllCocktails(pageable);
-            List<Cocktail> cocktails = cocktailPage.getContent();
+            List<Cocktail> cocktails = cocktailReadService.readAllCocktails();
             log.info("# 칵테일 전체 목록 성공");
-            return createCocktailsSimpleMultiResponseDtos(email, cocktails, cocktailPage);
+            return createCocktailsSimpleMultiResponseDtos(email, cocktails);
         }
         if (isNotSelectCategory(category)) {
-            return filterByTagCocktailsSimpleResponse(email, tag, pageable);
+            return filterByTagCocktailsSimpleResponse(email, tag);
         }
         if (isNotSelectTag(tag)) {
-            return filterByCategoryCocktailsSimpleResponse(email, category, pageable);
+            return filterByCategoryCocktailsSimpleResponse(email, category);
         }
-        return filterByTagsAndCategoryCocktails(email, category, tag, pageable);
+        return filterByTagsAndCategoryCocktails(email, category, tag);
     }
 
     public CocktailDto.Response updateCocktail(String email, long cocktailId, CocktailDto.Patch patch) {
@@ -180,48 +178,47 @@ public class CocktailService {
         }
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagCocktailsSimpleResponse(String email, String tag, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagCocktailsSimpleResponse(String email, String tag) {
         List<Tag> tags = createTagList(tag);
-        Page<Cocktail> cocktailPage = cocktailReadService.readFilteredByTagsCocktails(tags, pageable);
+        List<Cocktail> cocktails = cocktailReadService.readFilteredByTagsCocktails(tags);
         log.info("# {} 태그를 적용한 칵테일 목록 조회", tag);
-        return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktailPage);
+        return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktails);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> createFilteredByTagCockatilsMultiResponseDto(String email, List<Tag> tags, Page<Cocktail> cocktailPage) {
-        List<Cocktail> filteredCocktails = cocktailPage.get()
+    private MultiResponseDto<CocktailDto.SimpleResponse> createFilteredByTagCockatilsMultiResponseDto(String email, List<Tag> tags, List<Cocktail> cocktails) {
+        List<Cocktail> filteredCocktails = cocktails.stream()
                 .filter(cocktail -> cocktail.containsAll(tags))
                 .collect(Collectors.toList());
-        return createCocktailsSimpleMultiResponseDtos(email, filteredCocktails, cocktailPage);
+        return createCocktailsSimpleMultiResponseDtos(email, filteredCocktails);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> filterByCategoryCocktailsSimpleResponse(String email, String category, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> filterByCategoryCocktailsSimpleResponse(String email, String category) {
         Category selectedCategory = CategoryMapper.map(category);
-        Page<Cocktail> cocktailPage = cocktailReadService.readFilteredByCategoryCocktails(selectedCategory, pageable);
-        List<Cocktail> cocktails = cocktailPage.getContent();
+        List<Cocktail> cocktails = cocktailReadService.readFilteredByCategoryCocktails(selectedCategory);
         log.info("# {} 카테고리를 적용한 칵테일 목록 조회", category);
-        return createCocktailsSimpleMultiResponseDtos(email, cocktails, cocktailPage);
+        return createCocktailsSimpleMultiResponseDtos(email, cocktails);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagsAndCategoryCocktails(String email, String category, String tag, Pageable pageable) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagsAndCategoryCocktails(String email, String category, String tag) {
         List<Tag> tags = createTagList(tag);
         Category selectedCategory = CategoryMapper.map(category);
-        Page<Cocktail> cocktailPage = cocktailReadService.readFilterByCategoryAndTagsCocktails(selectedCategory, tags, pageable);
+        List<Cocktail> cocktailPage = cocktailReadService.readFilterByCategoryAndTagsCocktails(selectedCategory, tags);
         log.info("# {} 태그 및 {} 카테고리를 적용한 칵테일 목록", tag, category);
         return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktailPage);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> createCocktailsSimpleMultiResponseDtos(String email, List<Cocktail> cocktails, Page<Cocktail> cocktailPage) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> createCocktailsSimpleMultiResponseDtos(String email, List<Cocktail> cocktails) {
         if (unsigned(email)) {
             List<CocktailDto.SimpleResponse> responses = cocktails.stream()
                     .map(cocktail -> cocktailSerializer.entityToSimpleResponse(BOOKMARK_DEFAULT, cocktail))
                     .collect(Collectors.toList());
-            return new MultiResponseDto<>(responses, cocktailPage);
+            return new MultiResponseDto<>(responses);
         }
         User user = userService.findUserByEmail(email);
         List<CocktailDto.SimpleResponse> responses = cocktails.stream()
                 .map(cocktail -> cocktailSerializer.entityToSimpleResponse(user.isBookmarked(cocktail.getCocktailId()), cocktail))
                 .collect(Collectors.toList());
-        return new MultiResponseDto<>(responses, cocktailPage);
+        return new MultiResponseDto<>(responses);
     }
 
     private boolean isNotSelectTag(String tag) {
