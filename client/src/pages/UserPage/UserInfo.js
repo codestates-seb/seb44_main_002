@@ -5,6 +5,7 @@ import { useLogout } from '../../hook/useLogout';
 
 import PasswordModal from './PasswordModal';
 import UserPageApi from '../../api/UserPageApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 
@@ -23,18 +24,17 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
     try {
       const response = await UserPageApi.deleteUser(localData.userId);
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
   const clickDelete = () => {
-    if (window.confirm('정말로 탈퇴하시겠습니까?')) {
-      alert('삭제되었습니다.');
+    if (window.confirm(ALERT_MESSAGE.DOUBLE_CHECK_WITHDRAW)) {
+      alert(ALERT_MESSAGE.WITHDRAW);
       deleteUser();
       dispatch(logout());
       localStorage.clear();
@@ -46,13 +46,12 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
     try {
       const response = await UserPageApi.createfollow(userInfo.userId);
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
       location.reload();
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
@@ -61,13 +60,12 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
     try {
       const response = await UserPageApi.cancelfollow(userInfo.userId);
       if (response === 401) {
-        alert('토큰만료로 로그아웃되었습니다.');
+        alert(ALERT_MESSAGE.TOKEN_OVER);
         logout();
         return;
       }
       location.reload();
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
