@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.follow.repository.FollowRepository;
 import project.server.domain.follow.entity.Follow;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 @Service
 public class FollowCreateService {

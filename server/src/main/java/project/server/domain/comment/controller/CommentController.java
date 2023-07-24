@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.service.CommentService;
-import project.server.domain.user.AuthManager;
-import project.server.utils.UnsignedPermission;
+import project.server.global.auth.service.AuthManager;
+import project.server.global.utils.UnsignedPermission;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;

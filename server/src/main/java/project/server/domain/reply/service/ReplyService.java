@@ -7,10 +7,10 @@ import project.server.domain.reply.ReplySerializer;
 import project.server.domain.reply.repository.ReplyRepository;
 import project.server.domain.reply.dto.ReplyDto;
 import project.server.domain.reply.entity.Reply;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 import javax.transaction.Transactional;
 

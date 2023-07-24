@@ -1,7 +1,6 @@
 package project.server.domain.cocktail.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.embed.category.Category;
@@ -9,8 +8,8 @@ import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.cocktail.repository.CocktailRepository;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 import java.util.List;
 
@@ -35,23 +34,23 @@ public class CocktailReadService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readAllCocktails(Pageable pageable) {
-        return cocktailRepository.findAll(pageable);
+    public List<Cocktail> readAllCocktails(Sort sort) {
+        return cocktailRepository.findAll(sort);
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readFilteredByTagsCocktails(List<Tag> tags, Pageable pageable) {
-        return cocktailRepository.findDistinctByTagsTagsIn(tags, pageable);
+    public List<Cocktail> readFilteredByTagsCocktails(List<Tag> tags, Sort sort) {
+        return cocktailRepository.findDistinctByTagsTagsIn(tags, sort);
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readFilteredByCategoryCocktails(Category selectedCategory, Pageable pageable) {
-        return cocktailRepository.findByCategory(selectedCategory, pageable);
+    public List<Cocktail> readFilteredByCategoryCocktails(Category selectedCategory, Sort sort) {
+        return cocktailRepository.findByCategory(selectedCategory, sort);
     }
 
     @Transactional(readOnly = true)
-    public Page<Cocktail> readFilterByCategoryAndTagsCocktails(Category selectedCategory, List<Tag> tags, Pageable pageable) {
-        return cocktailRepository.findDistinctByCategoryAndTagsTagsIn(selectedCategory, tags, pageable);
+    public List<Cocktail> readFilterByCategoryAndTagsCocktails(Category selectedCategory, List<Tag> tags, Sort sort) {
+        return cocktailRepository.findDistinctByCategoryAndTagsTagsIn(selectedCategory, tags, sort);
     }
 
     @Transactional(readOnly = true)

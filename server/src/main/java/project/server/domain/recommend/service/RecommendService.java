@@ -1,14 +1,16 @@
 package project.server.domain.recommend.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import project.server.domain.recommend.dto.RecommendDto;
 import project.server.domain.recommend.entity.Recommend;
-import project.server.domain.user.User;
-import project.server.domain.user.UserService;
+import project.server.domain.user.entity.User;
+import project.server.domain.user.service.UserService;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class RecommendService {
 
     private final RecommendReadService recommendReadService;
@@ -22,6 +24,7 @@ public class RecommendService {
 
     public RecommendDto.UnsignedResponse readRecommendCocktailsForUnsignedUser() {
         List<Recommend> bestCocktails =  recommendReadService.readBestCocktails();
+        log.info("# RecommendService#readRecommendCocktailsForUnsignedUser 성공");
         return new RecommendDto.UnsignedResponse(bestCocktails);
     }
 
@@ -29,6 +32,7 @@ public class RecommendService {
         User user = userService.findUserByEmail(email);
         List<Recommend> bestCocktails = recommendReadService.readBestCocktails();
         List<Recommend> recommends = recommendReadService.readRecommendCocktails(user);
+        log.info("# userId : {}, userAge : {}, userGender : {} RecommendService#readRecommendCocktailsForSignedUser 성공", user.getUserId(), user.getAge(), user.getGender());
         return new RecommendDto.SignedResponse(bestCocktails, recommends);
     }
 }

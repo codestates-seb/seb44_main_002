@@ -5,7 +5,7 @@ import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.CommentSerializer;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 import java.util.stream.Collectors;
 
