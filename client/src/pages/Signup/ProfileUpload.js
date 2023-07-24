@@ -35,7 +35,7 @@ const ProfileUpload = ({ form, setForm }) => {
     formData.append('file', file);
 
     try {
-      console.log(formData);
+      // console.log(formData);
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}upload/users`,
         {
@@ -47,7 +47,7 @@ const ProfileUpload = ({ form, setForm }) => {
       if (response.ok) {
         // 유효성 검사 true로 변경
         const imageUrl = await response.json();
-        console.log(imageUrl);
+        // console.log(imageUrl);
         setForm({ ...form, profileImageUrl: imageUrl.url });
       } else {
         // 유효성 검사 false로 변경
