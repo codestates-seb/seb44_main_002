@@ -80,9 +80,10 @@ export default function HeaderModal() {
 
       const data = await response.json();
       dispatch(userinfoGet(data));
-      console.log(data);
+      // console.log(data);
       localStorage.setItem('name', data.name);
       localStorage.setItem('age', data.age);
+      localStorage.setItem('gender', data.gender);
     } catch (error) {
       console.log(error);
       navigate('/error');

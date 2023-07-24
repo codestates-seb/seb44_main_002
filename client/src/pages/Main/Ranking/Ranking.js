@@ -10,7 +10,9 @@ export default function Ranking({ error, setError }) {
   const name = localStorage.getItem('name');
   const age = localStorage.getItem('age');
   const ageRange = Math.floor(age / 10) * 10;
-  console.log(ageRange);
+  const gender = localStorage.getItem('gender');
+
+  //console.log(ageRange);
   const [data, setData] = useState({
     bestCocktails: null,
     recommendedCocktails: null,
@@ -68,7 +70,9 @@ export default function Ranking({ error, setError }) {
       </ItemContainer>
       {/* 내 동년배들은 이런거 좋아한다더라! */}
       <Title className={`${!isLogin && 'hidden'} mt-16`}>
-        {`${name}님과 같은 ${ageRange}대 남성/여성 분들이 많이 저장한 칵테일 리시피에요!`}
+        {`${name}님과 같은 ${ageRange}대 ${
+          gender === 'female' ? '여성' : '남성'
+        }분들이 많이 저장한 칵테일 레시피에요!`}
       </Title>
       <ItemContainer className={`${!isLogin && 'hidden'}`}>
         {data.recommendedCocktails &&
