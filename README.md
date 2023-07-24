@@ -5,7 +5,7 @@
 <div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132247597164273705/image.png" alt="logo" /></div>
 </br>
 
-# 🔗 배포주소 : <a href="https://release--comfortablecocktail.netlify.app/" target="_blank">편한</a>
+# 🔗 배포주소 : <a href="https://main--comfortablecocktail.netlify.app/" target="_blank">편한</a>
 
 <br />
 
