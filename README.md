@@ -16,19 +16,18 @@
 # 개요
 
 저희의 웹서비스, 편한은 칵테일 레시피 정보를 제공하는 웹사이트입니다.<br/>
-사용자들만의 레시피를 등록할 수 있으며 더 나은 사용자 경험을 위해 다양한 기능을 제공합니다.
+자신이 직접 레시피를 등록하여 다른 사용자들과 레시피를 공유할 수 있습니다. <br/>
+사용자의 나이와 성별을 기반으로 북마크한 칵테일의 태그와 관련도가 높은 칵테일을 추천해드립니다.
 
 <br />
 
 ## 테스트 계정
 
-id: test@test.com
-<br />
-password: test1234
-<br />
-<br />
-
-<br />
+- id: test@test.com
+  <br />
+- password: test1234
+  <br />
+  <br />
 
 # 👨‍👩‍👧‍👦 팀원 소개
 
@@ -50,15 +49,17 @@ password: test1234
 
 # 🚀 Demo
 
-| 메인페이지                                                                                                                                                 | 카테고리페이지                                                                                                                                             | 상세페이지                                                                                                                                                 |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847111961067570/image.png" width="300px" height="300px">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847305117143130/image.png" width="300px" height="300px">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847471719100597/image.png" width="300px" height="300px">                          |
-| 칵테일등록페이지                                                                                                                                           | 마이페이지                                                                                                                                                 | 댓글                                                                                                                                                       |
-| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851756108370020/image.png" width="300px" height="300px">                          | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132848688683823194/image.png?width=2162&height=1364" width="300px" height="300px"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132847585447661649/image.png?width=2160&height=1364" width="300px" height="300px"> |
-| 회원가입페이지                                                                                                                                             | 칵테일 등록 성공페이지                                                                                                                                     | 페이지네이션                                                                                                                                               |
-| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132853485210181702/image.png" width="300px" height="300px">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851946647199754/image.png" width="300px" height="300px">                          | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132853842791370802/image.png?width=2158&height=1364" width="300px" height="300px"> |
-| 로그인                                                                                                                                                     | 랭킹페이지                                                                                                                                                 | 댓글 수정페이지                                                                                                                                            |
-| <img src="https://media.discordapp.net/attachments/1122692656875708549/1132855793457319936/image.png?width=2158&height=1364" width="300px" height="300px"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132857014951890994/image.png?width=2160&height=1364" width="300px" height="300px"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132857569048809573/image.png?width=2180&height=1361" width="300px" height="300px"> |
+## 🔗 프로젝트 상세정보 : <a href="https://www.miricanvas.com/v/129jktf" target="_blank">PPT</a>
+
+| 메인페이지                                                                                                                                               | 카테고리페이지                                                                                                                                           | 상세페이지                                                                                                                                               |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847111961067570/image.png" width="100%" height="100%">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847305117143130/image.png" width="100%" height="100%">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847471719100597/image.png" width="100%" height="100%">                          |
+| 칵테일등록페이지                                                                                                                                         | 마이페이지                                                                                                                                               | 댓글                                                                                                                                                     |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851756108370020/image.png" width="100%" height="100%">                          | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132848688683823194/image.png?width=2162&height=1364" width="100%" height="100%"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132847585447661649/image.png?width=2160&height=1364" width="100%" height="100%"> |
+| 회원가입페이지                                                                                                                                           | 칵테일 등록 성공페이지                                                                                                                                   | 페이지네이션                                                                                                                                             |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132853485210181702/image.png" width="100%" height="100%">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851946647199754/image.png" width="100%" height="100%">                          | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132853842791370802/image.png?width=2158&height=1364" width="100%" height="100%"> |
+| 로그인                                                                                                                                                   | 랭킹페이지                                                                                                                                               | 댓글 수정페이지                                                                                                                                          |
+| <img src="https://media.discordapp.net/attachments/1122692656875708549/1132855793457319936/image.png?width=2158&height=1364" width="100%" height="100%"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132857014951890994/image.png?width=2160&height=1364" width="100%" height="100%"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132857569048809573/image.png?width=2180&height=1361" width="100%" height="100%"> |
 
 </br>
 </br>
