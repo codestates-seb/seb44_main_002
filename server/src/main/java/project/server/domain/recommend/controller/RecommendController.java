@@ -27,18 +27,18 @@ public class RecommendController {
 
     @GetMapping("/unsigned")
     public ResponseEntity getRecommendCocktailsForUnsignedUsers(){
-        log.info("# 비로그인 사용자용 추천 칵테일 목록 조회");
+        log.info("# RecommendController#getRecommendCocktailsForUnsignedUsers 실행");
         RecommendDto.UnsignedResponse response = recommendService.readRecommendCocktailsForUnsignedUser();
-        log.info("# 비로그인 사용자용 추천 칵테일 목록 조회 완료");
+        log.info("# RecommendController#getRecommendCocktailsForUnsignedUsers 완료");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/signed")
     public ResponseEntity getRecommendCocktailsForSignedUsers(Authentication authentication){
-        log.info("# 로그인 사용자용 추천 칵테일 목록 조회");
+        log.info("# RecommendController#getRecommendCocktailsForSignedUsers 실행");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         RecommendDto.SignedResponse response = recommendService.readRecommendCocktailsForSignedUser(email);
-        log.info("# 로그인 사용자용 추천 칵테일 목록 조회 완료");
+        log.info("# RecommendController#getRecommendCocktailsForSignedUsers 완료");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -24,7 +24,7 @@ public class RecommendService {
 
     public RecommendDto.UnsignedResponse readRecommendCocktailsForUnsignedUser() {
         List<Recommend> bestCocktails =  recommendReadService.readBestCocktails();
-        log.info("# 비로그인 사용자용 추천 칵테일 조회 성공");
+        log.info("# RecommendService#readRecommendCocktailsForUnsignedUser 성공");
         return new RecommendDto.UnsignedResponse(bestCocktails);
     }
 
@@ -32,7 +32,7 @@ public class RecommendService {
         User user = userService.findUserByEmail(email);
         List<Recommend> bestCocktails = recommendReadService.readBestCocktails();
         List<Recommend> recommends = recommendReadService.readRecommendCocktails(user);
-        log.info("# userId : {}, userAge : {}, userGender : {} 추천 칵테일 조회 성공", user.getUserId(), user.getAge(), user.getGender());
+        log.info("# userId : {}, userAge : {}, userGender : {} RecommendService#readRecommendCocktailsForSignedUser 성공", user.getUserId(), user.getAge(), user.getGender());
         return new RecommendDto.SignedResponse(bestCocktails, recommends);
     }
 }

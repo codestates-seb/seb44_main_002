@@ -139,7 +139,7 @@ class CocktailControllerTest {
         when(authManager.getEmailFromAuthentication(authentication, false))
                 .thenReturn("test@example.com");
 
-        when(cocktailService.readFilteredCocktails(authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get()), null, null, 1, null))
+        when(cocktailService.readFilteredCocktails(authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get()), null, null, null))
                 .thenReturn(fakeResponse);
 
         mockMvc.perform(

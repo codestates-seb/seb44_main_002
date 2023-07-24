@@ -12,6 +12,8 @@ import java.util.List;
 
 public class UserDto {
 
+    private static final String USER_DEFAULT_PROFILE_IMAGE_URL = "https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg";
+
     @Getter
     @Setter
     public static class Post {
@@ -30,6 +32,9 @@ public class UserDto {
             user.setGender(gender);
             user.setAge(age);
             user.setProfileImageUrl(profileImageUrl);
+            if (profileImageUrl.equals("")) {
+                user.setProfileImageUrl(USER_DEFAULT_PROFILE_IMAGE_URL);
+            }
 
             return user;
         }

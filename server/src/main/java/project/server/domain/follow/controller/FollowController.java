@@ -24,20 +24,20 @@ public class FollowController {
     @PostMapping("create/{user-id}")
     public ResponseEntity postFollow(Authentication authentication,
                                      @PathVariable("user-id") long userId){
-        log.info("# 사용자 구독 등록");
+        log.info("# FollowController#postFollow 실행");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         followService.createFollow(email, userId);
-        log.info("# 사용자 구독 등록 완료");
+        log.info("# FollowController#postFollow 완료");
         return ResponseEntity.accepted().build();
     }
 
     @DeleteMapping("cancel/{user-id}")
     public ResponseEntity deleteFollow(Authentication authentication,
                                        @PathVariable("user-id") long userId){
-        log.info("# 사용자 구독 취소");
+        log.info("# FollowController#deleteFollow 실행");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
         followService.removeFollow(email, userId);
-        log.info("# 사용자 구독 취소 완료");
+        log.info("# FollowController#deleteFollow 완료");
         return ResponseEntity.noContent().build();
     }
 }
