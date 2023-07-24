@@ -5,11 +5,11 @@
 <div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132247597164273705/image.png" alt="logo" /></div>
 </br>
 
-# 🔗 배포주소 : [편한](https://release--comfortablecocktail.netlify.app/){: target="\_blank"}
+# 🔗 배포주소 : <a href="https://release--comfortablecocktail.netlify.app/" target="_blank">편한</a>
 
 <br />
 
-# 🔗 서비스 메뉴얼 : [노션링크](https://www.notion.so/codestates/f2e8b86baa8d4c98b6983cf804c3e494?p=7f5a71d107924179bbaf5ee57f1774c5&pm=s){: target="\_blank"}
+# 🔗 서비스 메뉴얼 : <a href="https://www.notion.so/codestates/f2e8b86baa8d4c98b6983cf804c3e494?p=7f5a71d107924179bbaf5ee57f1774c5&pm=s" target="_blank">노션링크</a>
 
 </br>
 
