@@ -16,11 +16,6 @@ public class Recipe {
     @Column(name = "recipe")
     private List<String> recipe;
 
-    //더미 데이터용. 삭제 필요
-    public Recipe(List<String>recipe, int count){
-        this.recipe = recipe;
-    }
-
     public Recipe(List<RecipeDto.Post> recipe) {
         this.recipe = recipe.stream()
                 .map(RecipeDto.Post::getProcess)
