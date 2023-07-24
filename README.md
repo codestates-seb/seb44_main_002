@@ -9,7 +9,7 @@
 
 <br />
 
-# 🔗 서비스 메뉴얼 : <a href="https://www.notion.so/codestates/f2e8b86baa8d4c98b6983cf804c3e494?p=7f5a71d107924179bbaf5ee57f1774c5&pm=s" target="_blank">노션링크</a>
+# 🔗 서비스 메뉴얼 : <a href="https://www.notion.so/984855e488254f5b968080ac588d9231" target="_blank">노션링크</a>
 
 </br>
 
