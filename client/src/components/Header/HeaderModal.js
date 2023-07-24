@@ -127,8 +127,6 @@ export default function HeaderModal() {
         handleClose();
         navigate('/error');
       }
-    } else {
-      console.log('유효성 검사 작동');
     }
   };
 
