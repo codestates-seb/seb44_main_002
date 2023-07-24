@@ -35,38 +35,72 @@
 //    }
 //
 //    private void init() {
-//        patchTestUsers();
+//        createTestUsers();
+//        createCocktails();
 //    }
 //
-//    public void patchTestUsers() {
-//        userRepository.delete(userRepository.findById(8L).get());
-//
-//        User admin = userRepository.findById(1L).get();
-//        admin.setProfileImageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg");
+//    public void createTestUsers() {
+//        User admin = new User();
+//        admin.setName("admin");
+//        admin.setEmail("admin@ezcocktail.com");
+//        admin.setPassword(passwordEncoder.encode("adminPassword44"));
+//        admin.setGender("male");
+//        admin.setAge(27);
+//        admin.setRoles(List.of("USER", "ADMIN"));
 //        userRepository.save(admin);
 //
-//        User jk = userRepository.findById(2L).get();
-//        jk.setProfileImageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg");
+//        User jk = new User();
+//        jk.setName("JKROH");
+//        jk.setEmail("shworud1995@naver.com");
+//        jk.setPassword(passwordEncoder.encode("qlthzp37!@"));
+//        jk.setGender("male");
+//        jk.setAge(29);
+//        jk.setRoles(List.of("USER"));
 //        userRepository.save(jk);
 //
-//        User mj = userRepository.findById(3L).get();
-//        mj.setProfileImageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg");
+//        User mj = new User();
+//        mj.setName("까악이");
+//        mj.setEmail("skathd3402@gmail.com");
+//        mj.setPassword(passwordEncoder.encode("test1234"));
+//        mj.setGender("male");
+//        mj.setAge(26);
+//        mj.setRoles(List.of("USER"));
 //        userRepository.save(mj);
 //
-//        User cw = userRepository.findById(4L).get();
-//        cw.setProfileImageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg");
+//        User cw = new User();
+//        cw.setName("차누");
+//        cw.setEmail("cksdn1st@naver.com");
+//        cw.setPassword(passwordEncoder.encode("cksdn12st"));
+//        cw.setGender("male");
+//        cw.setAge(27);
+//        cw.setRoles(List.of("USER"));
 //        userRepository.save(cw);
 //
-//        User ty = userRepository.findById(5L).get();
-//        ty.setProfileImageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg");
+//        User ty = new User();
+//        ty.setName("박태양");
+//        ty.setEmail("pxodid2000@gmail.com");
+//        ty.setPassword(passwordEncoder.encode("password1"));
+//        ty.setGender("male");
+//        ty.setAge(24);
+//        ty.setRoles(List.of("USER"));
 //        userRepository.save(ty);
 //
-//        User sm = userRepository.findById(6L).get();
-//        sm.setProfileImageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg");
+//        User sm = new User();
+//        sm.setName("숨니");
+//        sm.setEmail("rlatnals0507@gmail.com");
+//        sm.setPassword(passwordEncoder.encode("soomni95"));
+//        sm.setGender("female");
+//        sm.setAge(28);
+//        sm.setRoles(List.of("USER"));
 //        userRepository.save(sm);
 //
-//        User eh = userRepository.findById(7L).get();
-//        eh.setProfileImageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.jpeg");
+//        User eh = new User();
+//        eh.setName("이은희");
+//        eh.setEmail("leh9111@naver.com");
+//        eh.setPassword(passwordEncoder.encode("qwaszxopklnm1"));
+//        eh.setGender("female");
+//        eh.setAge(25);
+//        eh.setRoles(List.of("USER"));
 //        userRepository.save(eh);
 //
 //        User test = new User();
@@ -76,7 +110,7 @@
 //        test.setGender("male");
 //        test.setAge(25);
 //        test.setRoles(List.of("USER"));
-//        userRepository.save(test);
+//        userRepository.save(eh);
 //    }
 //
 //    public void createCocktails() {
@@ -86,9 +120,8 @@
 //        User user4 = userRepository.findById(4L).get();
 //        User user5 = userRepository.findById(5L).get();
 //        User user6 = userRepository.findById(6L).get();
-//        User user7 = userRepository.findById(7L).get();
 //
-//        List<User> users = new ArrayList<>(List.of(user1, user2, user1, user3, user1, user4, user1, user5, user1, user6, user1, user7));
+//        List<User> users = new ArrayList<>(List.of(user1, user2, user3, user4, user5, user6));
 //
 //        User choosenUser;
 //
@@ -111,6 +144,1308 @@
 //        choosenUser = selectRandomUser(users);
 //        paloma.assignUser(choosenUser);
 //        cocktailRepository.save(paloma);
+//
+//        Cocktail sunRise = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("데킬라 선라이즈")
+//                .imageUrl("https://i.namu.wiki/i/TyR-oMsaDXeXInesGADzIpj1XfR6h-SfUxULAbHUDZ335tnoJVCS2wUJsyzaBoW09iSZsg72g8hj-sZAQvdL82UTGon_gJ5-gTCGY-fhrf6oy5PX0bCYlY2_iK7S8Q_4X9k4EvQi2WaxgrU76RfUFQ.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("그레나딘 시럽", "오렌지 주스", "오렌지", "얼음"))))
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+//                        , "데킬라 45ml를 넣어줍니다."
+//                        , "그레나딘 시럽 15ml를 넣어줍니다."
+//                        , "오렌지 주스를 잔에 가득 채웁니다."
+//                        , "가니시를 오렌지 웨지로 마무리합니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET, Tag.SOUR)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        sunRise.assignUser(choosenUser);
+//        cocktailRepository.save(sunRise);
+//
+//        Cocktail margarita = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("마가리타")
+//                .imageUrl("https://i.namu.wiki/i/DjJugO-e7RC2oGwUHLEEGWzndTJ-5VLs_S6smpj0cAORFwp1554jysWWk2hA59ZP3ErhEVxHWT8Wr2tx0v6W3ym1jb4D9MhOGC2fx_nVmI84WGYQmdxK15BMQVmH_XHe1R7DXd1FH1Ys9cPN4HsFMQ.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("라임즙", "드카이퍼 프리플섹", "심플시럽", "소금", "라임", "얼음"))))
+//                .recipe(new Recipe(List.of("쉐이크에 얼음을 넣습니다."
+//                        , "드카이퍼 트리플섹 20ml를 넣어줍니다."
+//                        , "라임즙 20ml를 넣어줍니다."
+//                        , "심플시럽 1대쉬를 넣습니다."
+//                        , "데킬라 50ml를 넣고 흔들어 차갑게 만듭니다."
+//                        , "소금을 리밍합니다."
+//                        , "잔에 차갑게 만든 술을 담고, 가니시는 라임웨지로 마무리합니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        margarita.assignUser(choosenUser);
+//        cocktailRepository.save(margarita);
+//
+//        Cocktail graveYard = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("그레이브 야드")
+//                .imageUrl("https://i0.wp.com/haileydaily.com/wp-content/uploads/2023/07/%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8-%EC%BB%A4%ED%94%BC.png?resize=300%2C300&ssl=1")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("보드카", "진", "럼", "버번 위스키", "트리플 섹", "스타우드", "라거"))))
+//                .recipe(new Recipe(List.of("잔에 보드카 30ml를 넣어줍니다."
+//                        , "진 30ml를 넣어줍니다."
+//                        , "럼 30ml를 넣어줍니다."
+//                        , "데킬라 30ml를 넣어줍니다."
+//                        , "버번 위스키 30ml를 넣어줍니다."
+//                        , "스카치 위스키 30ml를 넣어줍니다."
+//                        , "트리플 섹 30ml를 넣어줍니다."
+//                        , "잔의 남은 양은 스타우드와 라거를 반반 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        graveYard.assignUser(choosenUser);
+//        cocktailRepository.save(graveYard);
+//
+//        Cocktail sunBurn = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("선 번")
+//                .imageUrl("https://i.namu.wiki/i/8jnd30WadGNm1eN7oEhK0uys1T23b2-BmEm8uilqQtsAz4OszpLWYjjlJ_V6G3vQIwyxtZ-b80fnutHNHGIA4xndgAjc6a2PPJw5xrsXjkUIM1uVLOUIPDAUl2CpAPsxH1c-NzxFHz3BICwrsVOD7A.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("크랜베리", "트리플 섹", "크렌베리 주스"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 37.5ml를 넣어줍니다."
+//                        , "트리플 섹 30ml를 넣어줍니다."
+//                        , "크렌베리 주스 90ml를 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        sunBurn.assignUser(choosenUser);
+//        cocktailRepository.save(sunBurn);
+//
+//        Cocktail strawHat = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("스트로우 햇")
+//                .imageUrl("https://i.namu.wiki/i/vmsKa9c7hX-nEsbXYU0X1yyeF5Q1TvF1tVLRA3gjWKXOYjCkhpPiYq9Z9mCDS7eiPoZw-7Cx9SLVpWC-AbxXUWNmVNQFnw845dI_GKmU3GA2RbP0oDhtwUL_KbUDmmzWM7v2N3C9fwG09FwRjRWTrA.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("토마토 주스", "타바스코", "굴소스", "소금", "후추"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 45ml를 넣어줍니다."
+//                        , "토마토 주스 90ml를 넣어줍니다."
+//                        , "타바스코 1티스푼을 넣어줍니다."
+//                        , "굴소스 1티스푼을 넣어줍니다."
+//                        , "소금 1꼬집을 넣어줍니다."
+//                        , "후추 1꼬집을 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        strawHat.assignUser(choosenUser);
+//        cocktailRepository.save(strawHat);
+//
+//        Cocktail desertWater = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("데저트 워터")
+//                .imageUrl("https://i.namu.wiki/i/sl7rVU7XXidm546PnuBrQbICaaf5M7jRV83v4y2E0aLd3ynG06uWpHRRWCYxQMSdpIAv8HMrZ7bjUp6t1kDq1fEYXL1b6PH47qDpn4DIBxNoMaLOmyn27dz5IR5O5gy6TZY30mBRcWuHRxQk4aroMQ.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("타바스코"))))
+//                .recipe(new Recipe(List.of("타바스코 소스를 먼저 잔에 넣어줍니다."
+//                        , "데킬라를 그 위에 플로팅합니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        desertWater.assignUser(choosenUser);
+//        cocktailRepository.save(desertWater);
+//
+//        Cocktail matador = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("마타도르")
+//                .imageUrl("https://i.namu.wiki/i/t-h2B7S-hLm8q67IgXwCfW55XaABphvg2fndSlOoM1aoCw3Nv90hy4aiNvL8hfI-UBpszdkk_IDI6UYHw6gF8melgEjidUfr6ST6UQDEKZ5aA55CTaVQ_h5kqOwj3MmShVybm_Y53vBxOB42NuFYdg.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("파인애플", "체리", "얼음", "파인애플 주스", "레몬 주스"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 30ml를 넣어줍니다."
+//                        , "파인애플 주스 45ml를 넣어줍니다."
+//                        , "레몬 주스 15ml를 넣어주고 잘 섞어줍니다."
+//                        , "파인애플 조각과 체리를 칵테일 핀에 꽂아 가니쉬합니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_HIGH, Tag.SOUR)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        matador.assignUser(choosenUser);
+//        cocktailRepository.save(matador);
+//
+//        Cocktail mexicola = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("멕시콜라")
+//                .imageUrl("https://i.namu.wiki/i/-WfiyhJDTK_6XAikIhI5EJ5Ymfy6bb5fjwnBdMpMTTDZRByctqyMHWBrssxq8PtW3hOaThF6kPE9T979EgA4R0gMpy7gPjAoNpzznAdHzi_GHEiEn3wpB8uaDBVWj2DeVMOLYt3A_iUPg5Qq9PhnXw.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("콜라", "라임 주스"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 45ml를 넣어줍니다."
+//                        , "콜라 135ml를 넣어줍니다."
+//                        , "라임 주스 15ml를 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SOUR, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        mexicola.assignUser(choosenUser);
+//        cocktailRepository.save(mexicola);
+//
+//        Cocktail jarana = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("자라나")
+//                .imageUrl("https://i.namu.wiki/i/fmR0-nUaMorMun574cnFZwUMmVTYfBoDFhbbH14K8A5ASP_dFweSiHg8bPYaf4y2g8XjQrBAVAnM3EnlgOBLOx-9BjRsYDklHPwXRKNKdvtT_PEjtf4V_1Ba8ZLoJuUfcRQa7BGKGyBbyGS-XqJAdQ.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("파인애플 주스", "설탕"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 45ml를 넣어줍니다."
+//                        , "파인애플 주스 120ml를 넣어줍니다."
+//                        , "설탕 2티스푼을 넣어주고 살짝 섞어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SOUR, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        jarana.assignUser(choosenUser);
+//        cocktailRepository.save(jarana);
+//
+//        Cocktail chimayo = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("치마요")
+//                .imageUrl("https://i.namu.wiki/i/5vyUEOzbtHAYRnYjik94kjHJjZ37GgGfBdX1YryZ6F0qAiRlLEG_1LizZ8pPfvCK2xSSSW4MMVahw6GceZtlIBEeDw9ldy0yGqna_YYjSdnKM52RnAJZcnmltLhzYxwV1GaNfq8eNIiZKcY_76II-w.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("사과", "사과주", "레몬 주스", "크림 드 카시스"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 45ml를 넣어줍니다."
+//                        , "사과주 30ml를 넣어줍니다."
+//                        , "레몬 주스 7.5ml를 넣어줍니다."
+//                        , "크림 드 카시스 7.5ml를 넣어줍니다."
+//                        , "사과로 가니쉬를 해 완성합니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_HIGH, Tag.SOUR)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        chimayo.assignUser(choosenUser);
+//        cocktailRepository.save(chimayo);
+//
+//        Cocktail tequilaSour = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("데킬라 사워")
+//                .imageUrl("https://i.namu.wiki/i/VD4GmyM4xTPeikO8I9i7l51IRijQmRMGfVskFBht1fvPJoyCbj67TOVI471fWq5O5nVz5RnqKU0KLCVZdJ01fRHBDC-ofSBjgxxCbjt0dacw5lfSF2TLSgEvGRJqavrgOs-HdNCVt-a6OYbBZjpgcA.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬 주스", "설탕"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 15ml를 넣어줍니다."
+//                        , "레몬 주스 15ml를 넣어줍니다."
+//                        , "설탕 1티스푼을 넣고 잘 섞어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SOUR, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        tequilaSour.assignUser(choosenUser);
+//        cocktailRepository.save(tequilaSour);
+//
+//        Cocktail tequilaTonic = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("데킬라 토닉")
+//                .imageUrl("https://i.namu.wiki/i/QcIOHfMaPhelJC86WNZh_QUHzQXTQMdk84mTrCetnbATTJY5act1BnMluKXlf1Kgos9DzTwyZ6p47eEiQ8Iio7_dKO-Q4NA3yIk4oEhiSrYyi21YxvCgH4KltOBdQpkPao-2X1lAuHIx0tU9fZJqJg.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬", "토닉워터"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 75ml를 넣어줍니다."
+//                        , "토닉워터 150ml를 넣어줍니다."
+//                        , "레몬으로 가니쉬합니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_HIGH, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        tequilaTonic.assignUser(choosenUser);
+//        cocktailRepository.save(tequilaTonic);
+//
+//        Cocktail elToroLoco = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("엘 토로 로코")
+//                .imageUrl("https://i.namu.wiki/i/uPYueC9q9PcpTII3vpv_OkhFh1pyv1u5c_jM91003YV2gFja09-5ch2qlWw6qbwxIp1vgr83mbfSAixywPeqirqOr3OHq9y7BxUDmY2b0F82jAvTjJ5Iwm2CApfFPOJav4581JKI8Pq2jyhSK7QP2Q.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레드불"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 30ml를 넣어줍니다."
+//                        , "레드불 90ml를 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        elToroLoco.assignUser(choosenUser);
+//        cocktailRepository.save(elToroLoco);
+//
+//        Cocktail elDiablo = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.TEQUILA)
+//                .name("엘 디아블로")
+//                .imageUrl("https://i.namu.wiki/i/fpR0DZ67XJotairGyMh7xc3vDJBq_qW8nNsAFIzfyZl1bXIW3pFgxTqEqjLviQiZqrPi0vBER0M3rReSNzge_RvT8Tp6W-FzeuWY72yO-LOhqufTfCLMfeYlQxW_VM1pLQezrB70E6Nw_scT2tuKdA.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("크림 드 카시스", "라임 주스", "진저 에일"))))
+//                .recipe(new Recipe(List.of("잔에 데킬라 45ml를 넣어줍니다."
+//                        , "크림 드 카시스 15ml를 넣어줍니다."
+//                        , "라임 주스 15ml를 넣어줍니다."
+//                        , "진저에일 60~90ml 넣어줍니다."
+//                        , "블랙베리로 가니쉬해 완성합니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SOUR)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        elDiablo.assignUser(choosenUser);
+//        cocktailRepository.save(elDiablo);
+//
+//        Cocktail kahluaMilk = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("깔루아 밀크")
+//                .imageUrl("https://i.namu.wiki/i/sZ5okkUwRHl0oZcNTjVIwUFkzb-N2sE8oXMOzqDK14Z50hvfE1YIe436RVAB-GYSHHu5rie5MIiKpQCAPYmOHS2vodmwHsrHglF8n9lyyGMW72nonz5TFSEKxsCg-LexxEP_TAdyZklmdkUWHMondg.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("우유", "얼음"))))
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+//                        , "깔루아 30ml를 넣어줍니다."
+//                        , "우유 120ml를 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        kahluaMilk.assignUser(choosenUser);
+//        cocktailRepository.save(kahluaMilk);
+//
+//        Cocktail longIslandIceTea = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("롱 아일랜드 아이스티")
+//                .imageUrl("https://i.namu.wiki/i/j-o2cntSa14kSEi1uDhD-7TDqLSHGft-Pm-Xk77sf86EQqxDj95SkNmyM--imQNLXybEqt-Xdy_J27IdXW4NUbcvwVVSK1ypjgC9k3O9u0q10zPEzKFOLP2qKHK4YZ489a_fUzqGkQKCl1oGAErVeg.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("진", "화이트 럼", "보드카", "데킬라", "드카이퍼 트리플섹", "레몬 주스", "콜라", "얼음"))))
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+//                        , "진 15ml를 넣어줍니다."
+//                        , "화이트 럼 15ml를 넣어줍니다."
+//                        , "보드카 15ml를 넣어줍니다."
+//                        , "데킬라 15ml를 넣어줍니다."
+//                        , "드카이퍼 트리플섹 15ml를 넣어줍니다."
+//                        , "레몬 주스 45ml를 넣어줍니다."
+//                        , "콜라를 잔 끝까지 채워줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        longIslandIceTea.assignUser(choosenUser);
+//        cocktailRepository.save(longIslandIceTea);
+//
+//        Cocktail AMF = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("AMF")
+//                .imageUrl("https://i.pinimg.com/564x/c9/a7/47/c9a7478f472dc283c7f6468de873897a.jpg")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("진", "화이트 럼", "보드카", "데킬라", "블루 큐라소", "레몬 주스", "사이다", "얼음"))))
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+//                        , "진 15ml를 넣어줍니다."
+//                        , "화이트 럼 15ml를 넣어줍니다."
+//                        , "보드카 15ml를 넣어줍니다."
+//                        , "데킬라 15ml를 넣어줍니다."
+//                        , "블루 큐라소 15ml를 넣어줍니다."
+//                        , "레몬 주스 45ml를 넣어줍니다."
+//                        , "사이다를 잔 끝까지 채워줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        AMF.assignUser(choosenUser);
+//        cocktailRepository.save(AMF);
+//
+//        Cocktail tokyoIceTea = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("도쿄 아이스티")
+//                .imageUrl("https://live.staticflickr.com/5763/23741857192_bea7becf4b_c.jpg")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("진", "화이트 럼", "보드카", "데킬라", "드카이퍼 멜론", "레몬 주스", "사이다", "얼음"))))
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+//                        , "진 15ml를 넣어줍니다."
+//                        , "화이트 럼 15ml를 넣어줍니다."
+//                        , "보드카 15ml를 넣어줍니다."
+//                        , "데킬라 15ml를 넣어줍니다."
+//                        , "드카이퍼 멜론 15ml를 넣어줍니다."
+//                        , "레몬 주스 45ml를 넣어줍니다."
+//                        , "사이다를 잔 끝까지 채워줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        tokyoIceTea.assignUser(choosenUser);
+//        cocktailRepository.save(tokyoIceTea);
+//
+//        Cocktail greenWidow = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("그린 위도우")
+//                .imageUrl("https://i.namu.wiki/i/8-82cNyg2z1GjlHsRh9NZdbldqucakS70S9dxo14X0Jc0QaqC3fTc36sdj11cSNTlmiuBbY5_9xVT15MRIxIrUJSWK44j4UMmzEuihlsyTgQW-__mxNHWoc8Ot35mL3sJ3IP6ZbJfEtp216oXA31HA.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("오렌지 주스", "얼음"))))
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+//                        , "디카이퍼 블루 큐라소 30ml를 넣어줍니다."
+//                        , "오렌지 주스 45ml를 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        greenWidow.assignUser(choosenUser);
+//        cocktailRepository.save(greenWidow);
+//
+//        Cocktail baileysMilk = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("베일리스 밀크")
+//                .imageUrl("https://i.namu.wiki/i/WC9pcehWez9Z4xN2I5TYZvZDqTZcBitsMkOCg5PsLeFZG9-4nMiRGG8LcEYjW7DbWXk45IFSgi2Cx8ugNk0e_CwTacIkvPxPb33BMgt5qlz0-SYFxpuLxl4h0ZBMsO0yimurKD9CKxMsh-pMe8W3XQ.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("우유"))))
+//                .recipe(new Recipe(List.of("잔에 베일리스를 1/4만큼 넣어줍니다."
+//                        , "잔에 우유를 3/4만큼 넣어줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        baileysMilk.assignUser(choosenUser);
+//        cocktailRepository.save(baileysMilk);
+//
+//        Cocktail angelTip = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("엔젤 팁")
+//                .imageUrl("https://i.namu.wiki/i/cNgITQDIGxW0FFDo0op0N7Cmp0zNpljdb_lYZ6wHu0SXew87pzOgATreVnHdq71gVfpg3M-iMT0wvmWwHVwri3-mYKSSp51XiIkOrkApPIjEvZX9IGRyhWcETuTSv0kTuVCtP241EO92TWQneEh3Yg.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("디카이퍼 카카오 다크", "생크림"))))
+//                .recipe(new Recipe(List.of("잔에 디카이퍼 카카오 다크 22.5ml를 넣어줍니다."
+//                        , "그 위에 생크림을 7.5ml 올려줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        angelTip.assignUser(choosenUser);
+//        cocktailRepository.save(angelTip);
+//
+//        Cocktail cacaoFizz = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("카카오 피즈")
+//                .imageUrl("https://mblogthumb-phinf.pstatic.net/MjAxODA2MDNfMTYy/MDAxNTI4MDM0NDY1MzAy.Hn8dMvbg5PaGhQIzzKwAN0xBLPBJnPFnqrTXrN4OwQog.MOnMwI-x39d-eLUo3f3nLRqAAmCltatTH7QSFHJw2wgg.JPEG.infinitia00/20180603_2255221.jpg?type=w420")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("라임 주스", "설탕", "탄산수"))))
+//                .recipe(new Recipe(List.of("잔에 디카이퍼 카카오 다크 30 ~ 45ml를 넣어줍니다."
+//                        , "라임 주스 15ml를 넣어줍니다."
+//                        , "설탕 1 ~ 2티스푼을 넣어줍니다."
+//                        , "탄산수를 가득 채워줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cacaoFizz.assignUser(choosenUser);
+//        cocktailRepository.save(cacaoFizz);
+//
+//        Cocktail fernandito = Cocktail.builder()
+//                .category(Category.CATEGORY1)
+//                .liquor(Liquor.LIQUEUR)
+//                .name("페르난디토")
+//                .imageUrl("https://i.namu.wiki/i/uQmNpLrTxTCcBGDSi5me1vG-9cCC6ho8nkvdIpXSIvCgT2frLZ6k0Ykm2TM8AjcSvyKTkCcjMkt2cNKesePxZ4O3SU0mrkAblM86aqCgZM-d1W5-TDWgIKGd4O3gO8xznvPi4DGUdCPQyX23wRFITg.webp")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("콜라", "얼음"))))
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다."
+//                        , "브랑카 멘타 50ml를 넣어줍니다."
+//                        , "콜라를 가득 채워줍니다.")
+//                        , 0))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET, Tag.BITTER)))
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        fernandito.assignUser(choosenUser);
+//        cocktailRepository.save(fernandito);
+//
+//        Cocktail Salty_Dog = Cocktail.builder()
+//                .name("솔티 독")
+//                .recipe(new Recipe(List.of("잔 주둥이에 소금을 바릅니다."
+//                        , "얼음을 넣어줍니다.", "진을 40ml 넣어줍니다.", "자몽주스를 100ml 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("자몽주스", "소금", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/ogbSRDdBiP5Ykx3zmjy7QE4nesdOXp4bvqYMsTh4j1JEONxK-gTm61xc1dPW_tiDRwRqvH4WAgmkFzAE4nujm_rO7bzHYumG0dWm7NAeEQS-LCuVL9verYuwb3W5nDwbOUI2mfvh3SzCQKd48skQ1w.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Salty_Dog.assignUser(choosenUser);
+//        cocktailRepository.save(Salty_Dog);
+//
+//        Cocktail Greyhound = Cocktail.builder().
+//                name("그레이하운드")
+//                .recipe(new Recipe(List.of("잔에 소금을 넣어줍니다."
+//                        , "얼음을 넣어줍니다.", "진을 40ml 넣어줍니다.", "자몽주스를 100ml 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A1%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%83%E1%85%B3.jpeg")
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("자몽주스", "소금", "얼음"))))
+//                .rate(new Rate())
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Greyhound.assignUser(choosenUser);
+//        cocktailRepository.save(Greyhound);
+//
+//        Cocktail Bees_Knees = Cocktail.builder()
+//                .name("비스 니즈")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "꿀을 20ml 넣어줍니다.", "레몬즙을 20ml 넣어줍니다.", "진을 50ml 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("꿀", "레몬즙"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/tTZJo86mmLxc-nxMP2lIPwP2FdrYsg_1B0I6TELFXBzSHvQKQhSFgCNgdolg0-i9r3D4TL2ZfgPt09pK35lwXNQKJjalDdNGwSN-3uvXAaw2I4Gs2c5exAN-XNjItjCH2g9kRL3eylALi7HuQjJ86g.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Bees_Knees.assignUser(choosenUser);
+//        cocktailRepository.save(Bees_Knees);
+//
+//        Cocktail White_Lady = Cocktail.builder()
+//                .name("화이트 레이디")
+//                .recipe(new Recipe(List.of("잔에 레몬즙 20ml를 넣어줍니다."
+//                        , "드카이퍼 트리플섹 20ml를 넣어줍니다.", "설탕물(1:1 비율) 5ml를 넣어줍니다.", "계란 흰자를 넣어줍니다.", "거품이 날정도로 휘저어줍니다.", "얼음을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬즙", "드카이퍼 트리플섹", "설탕물", "계란흰자"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/Uftdve-CTJ02Vl4rx9dKxXpM8ZcFfB6JYyeqt7fVCoQg5ITfMzVvX63tPvEUeHbKrWOd9RSozFIqXNa4smqkl6pmEDcMxxTOF7t-8HL0XQ-bXngbLPkYW0CabG5jaJKSemb0LD_5iwTXiQv9n1EMdA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        White_Lady.assignUser(choosenUser);
+//        cocktailRepository.save(White_Lady);
+//
+//        Cocktail A1 = Cocktail.builder()
+//                .name("A1")
+//                .recipe(new Recipe(List.of("잔에 진 30ml를 넣어줍니다.", "트리플 섹 30ml를 넣어줍니다.", "레몬즙 15ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("트리플 섹", "레몬즙"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/AJjDY2dcAFC977sBw3hdCkz0VhlJ65GHEq64yQ11Xkrs1x2lCldVOYrpUqVumKY6wN2kOTS8ej_2gQM9oC6w15QdRIqTeddh56n5Ka_PPYPTVwnX8DUYtfenpZqIhUGzcevWNzZD3cCzok1EdVhwRw.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        A1.assignUser(choosenUser);
+//        cocktailRepository.save(A1);
+//
+//        Cocktail Gimlet = Cocktail.builder()
+//                .name("김렛")
+//                .recipe(new Recipe(List.of("잔에 드라이 진 45ml를 넣어줍니다.", "라임 주스 15ml를 넣어줍니다.", "설탕 1 티스푼을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("라임주스", "설탕"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_HIGH)))
+//                .imageUrl("https://i.namu.wiki/i/v-J9eRNYPK8nHtlepOjXFNEFxXy9JYELD1adPHp3t8bXQD5KUHGj3fxshGvkRu2LVqJi7V2u5yE9xzdM94ZS9lr3Rambb3n2MKkPaY_YvKkWZZhSDo7pe8GVvOAVb1ACAAWaHH9e6pmckZnAive1wQ.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Gimlet.assignUser(choosenUser);
+//        cocktailRepository.save(Gimlet);
+//
+//        Cocktail Bronx = Cocktail.builder()
+//                .name("브롱스")
+//                .recipe(new Recipe(List.of("잔에 진 30ml를 넣어줍니다.", "마티니 엑스트라 드라이 10ml를 넣어줍니다.", "마티니 로쏘 15ml를 넣어줍니다.", "오렌지 주스 15ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("마티니 엑스트라 드라이", "마티니 로쏘", "오렌지 주스"))))
+//                .tags(new Tags(List.of(Tag.SOUR, Tag.BITTER, Tag.FREQUENCY_HIGH)))
+//                .imageUrl("https://i.namu.wiki/i/hlol4F2am_ZYl7OrGAwXf_gNaEY4YaWOnWhnmyJ-U41OqQsm8RXZuYsPT85fvEZvRDHFKA3HcZIVnLAJRG7S_xkQN7A-UU7E67607JonOzzRHAA6a3tAlIuW57p9KTdine3QGGkevG6ehlRVa2wO3A.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Bronx.assignUser(choosenUser);
+//        cocktailRepository.save(Bronx);
+//
+//        Cocktail Blue_coral_reef = Cocktail.builder()
+//                .name("블루 코랄 리프")
+//                .recipe(new Recipe(List.of("잔에 진 45ml를 넣어줍니다.", "디카이퍼 민트 그린 15ml를 넣어줍니다.", "설탕물(1:1 비율)을 10ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("디카이퍼 민트 그린", "설탕물"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/0SPxsBe2sSBCYKtNrshUmMzVVZFwoxQxKE6U6SvegaygySDKZ__3ZVp1JeSJzUu4Gr5URUURlrhfjOTdNcxNKSj4KA_4wCuifAkmX2ywwM1fL7V6okSZWhpEQPxEWRhnXhio0LqfgSTxF4qwaH7-Dw.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Blue_coral_reef.assignUser(choosenUser);
+//        cocktailRepository.save(Blue_coral_reef);
+//
+//        Cocktail John_Collins = Cocktail.builder()
+//                .name("존 콜린스")
+//                .recipe(new Recipe(List.of("잔에 진 45ml를 넣어줍니다.", "레몬주스 30ml를 넣어줍니다.", "설탕물(1:1비율)을 15ml를 넣어줍니다.", "탄산수 60ml 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬주스", "설탕물", "탄산수"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/5FBROfQbd4i5nMBpF-TzfVoF9NIYHrXcOwCrFkbAiM2TUtb92gnNhp_GC5i60t70UN68ftOeJ19TwUBtsuoCHqJc4Kug7AaRjpxNVHoD9fS3k2o-18k3SUhQ5bm6JozJ2x0voqzKqh9Jtoz47EquBw.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        John_Collins.assignUser(choosenUser);
+//        cocktailRepository.save(John_Collins);
+//
+//        Cocktail Gin_lime = Cocktail.builder()
+//                .name("진 라임")
+//                .recipe(new Recipe(List.of("잔에 진 45ml를 넣어줍니다.", "라임 주스 15ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("라임 주스"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/KTfY17-ZjtuqvSq8b_wmTZIeDtrmIZHSTK1tqI0cbwVLHiq_3Ri3S22fSFaKOBx7ajDp3SAdrBY3N22VRqcJfLRYiicKFwccN06DGZnY1OsI69H1VLfxG35kR3ucU91IY_pr2ck1ht5k7RdrYmiQHA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Gin_lime.assignUser(choosenUser);
+//        cocktailRepository.save(Gin_lime);
+//
+//        Cocktail Gin_tonic = Cocktail.builder()
+//                .name("진 토닉")
+//                .recipe(new Recipe(List.of("잔에 진 45ml를 넣어줍니다.", "토닉워터를 끝까지 채워줍니다.", "레몬즙(라임즙)을 1 티스푼 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("토닉 워터", "레몬즙 또는 라임즙"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/0ENiZmUDSu2RmsphzqLDc0I-XgRAzjDifuQoDqiz5rJRifDYfeQ0HlrasA364qgHSU5ExR_xw0SJ-ZIGnRQQd23ai1_JDHUPluBL-tHIFvXCKCbkihhqk4cIC4nEt3lo6zadGfo58q0ID8BZVT7r1A.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Gin_tonic.assignUser(choosenUser);
+//        cocktailRepository.save(Gin_tonic);
+//
+//        Cocktail Parisien = Cocktail.builder()
+//                .name("파리지앵")
+//                .recipe(new Recipe(List.of("잔에 진 30ml를 넣어줍니다.", "마티니 엑스트라 드라이 30ml를 넣어줍니다.", "베드렌 크림드카시스 15ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.JIN)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("마티니 엑스트라 드라이", "베드렌 크림드카시스"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/y1GMcnyEcGZ3-I-5Y-5DllKJSUyi558bz_AZtDKwY_rgvjxb45oKiLW8A5XreLvjI3JsXcXmEgRgqKf0dftsqiGC_4tieU9upD-2bPrCaeMHdn8sQqZuLbqNAEnudqgM78nlDW-R4QETqrqbVX8VEA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Parisien.assignUser(choosenUser);
+//        cocktailRepository.save(Parisien);
+//
+//        Cocktail Daiquiri = Cocktail.builder()
+//                .name("다이키리")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "심플시럽 20ml을 넣어줍니다.", "라임즙 20ml을 넣어줍니다.", "럼 50ml 를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("심플시럽", "라임즙", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/cu7pKCeO5FIZJ3faajnrF9wWyhDeW0SN1OyHKkFlcgsxfAN3b8X13ZjdDKNse4I-EzFOQzZFSKvjU41PIdzaLPpGdhSPw49U5hr0rVZU50-xcne9LmWPHe-I-sQb1SKbQTMlKcxBVbJQ3Tc5J04vuA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Daiquiri.assignUser(choosenUser);
+//        cocktailRepository.save(Daiquiri);
+//
+//        Cocktail El_Presidente = Cocktail.builder()
+//                .name("엘 프레지덴테")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "그레나딘시럽 5ml를 넣어줍니다.", "마티니 엑스트라 드라이 20ml를 넣어줍니다.", "드카이퍼 트리플섹 10ml를 넣어줍니다.", "럼 50ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "그레나딘시럽", "마티니 엑스트라 드라이", "드카이퍼 트리플섹"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A6%E1%86%AF+%E1%84%91%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8C%E1%85%B5%E1%84%83%E1%85%A6%E1%86%AB%E1%84%90%E1%85%A6.jpeg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        El_Presidente.assignUser(choosenUser);
+//        cocktailRepository.save(El_Presidente);
+//
+//        Cocktail Dark_And_Stormy = Cocktail.builder()
+//                .name("다크 앤 스토미")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "다크럼 50ml를 넣어줍니다.", "라임즙 10ml를 넣어줍니다.", "설탕시럽을 1ml 정도 넣어줍니다.", "진저에일로 잔의 남은 공간을 가득 채워줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "라임즙", "설탕시럽", "진저에일"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/X2Ga3pKlOyyHql2KmYjEmDHOO9ZHasLdi3lk3vnjF8Qwrt03-MG9_DZczJyVS2LxXaEvM78TeWGUa60KuJziKcRSc1iMwWAjkJaR8CMDrNUG1I9KfKf8OMmV4jqO_bb6KAwq2KfNSq2HiKmfX6b7iw.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Dark_And_Stormy.assignUser(choosenUser);
+//        cocktailRepository.save(Dark_And_Stormy);
+//
+//        Cocktail No_Name = Cocktail.builder()
+//                .name("노 네임")
+//                .recipe(new Recipe(List.of("잔에 골드럼과 다크럼을 각각 48ml 넣어줍니다.", "벌꿀 12ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("벌꿀"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_HIGH)))
+//                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%82%E1%85%A9+%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7.jpeg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        No_Name.assignUser(choosenUser);
+//        cocktailRepository.save(No_Name);
+//
+//        Cocktail Grog = Cocktail.builder()
+//                .name("그로그")
+//                .recipe(new Recipe(List.of("잔에 골드 또는 다크 럼을 45ml 넣어줍니다.", "설탕을 1~2 티스푼 넣어줍니다.", "나머지를 물로 채워줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("설탕", "물"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/GLr2EhvlNCS70RTc5xszG0aj5ZLIAQSkYBknwf4E4Bzn6XoiGoKRwWGOpmf1hyqdylFX0x_xus42tNSNoSS5MRNfIRIWsORkJNJmo2b79fJaHeL64GjqtksqFjH7i55xXld4v3UXhmJloyupjfOGDQ.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Grog.assignUser(choosenUser);
+//        cocktailRepository.save(Grog);
+//
+//        Cocktail Blue_Hawaiian = Cocktail.builder()
+//                .name("블루 하와이안")
+//                .recipe(new Recipe(List.of("잔에 럼 30ml를 넣어줍니다.", "디카이퍼 블루 큐라소 30ml를 넣어줍니다.", "말리부 30ml를 넣어줍니다.", "파인애플 주스(파워에이드 마운틴블라스트, 폴라포 스포츠) 75ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("디카이퍼 블루 큐라소", "말리부", "파인애플 주스"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/ULwNSnjbq_8_BAurq6oJUjo_CLZQJPITpvPged5CWT2TbHNtEoUqT5YrAaIZUfA14nZ_rIB5x4tRPkz---KX-qoJxF-_RnzEnMHcxxdp2Ajm8nbJ3l3HyF2_kVcvpN3OfwwlAMvjRKqvQhTWbNy0tw.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Blue_Hawaiian.assignUser(choosenUser);
+//        cocktailRepository.save(Blue_Hawaiian);
+//
+//        Cocktail Cuba_Libre = Cocktail.builder()
+//                .name("쿠바 리브레")
+//                .recipe(new Recipe(List.of("잔에 럼 45ml를 넣어줍니다.", "라임주스 15ml를 넣어줍니다.", "콜라로 채워줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("라임주스", "콜라"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/8eFARAt4h9BoEsg4aA8hmw8GPTpql2MgfA75Aj7ChrhH6axyHXtuBCG6ARYqqgBwfCx8nXaJZclpC47PBu1J1s8i8tNwQfvizxO21gW_ybYdhVQJkhPNuJB2rh3l86plZA9p-mXKO1LJKcZdDvsKZA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Cuba_Libre.assignUser(choosenUser);
+//        cocktailRepository.save(Cuba_Libre);
+//
+//        Cocktail Faust = Cocktail.builder()
+//                .name("파우스트")
+//                .recipe(new Recipe(List.of("잔에 오버프루프 럼 30ml를 넣어줍니다.", "베드렌 크림 드카시스 15ml를 넣어줍니다.", "화이트럼 30ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY2)
+//                .liquor(Liquor.RUM)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("베드렌 크림 드카시스"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_HIGH)))
+//                .imageUrl("https://i.namu.wiki/i/Lphs5L_Do8BDC063t3fy6hdfK6ajm7nFo0d7vmiAB3PO2Jxt4Iar42InnJHNSvpCZWy2xZk3V6Okc_wz-h9ul6leS__xlVG8yJJqC-q3Gg9_FgEtH78CkI56kJBOHx2MxtuyZz7QJu9Wq2y1wEYciQ.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        Faust.assignUser(choosenUser);
+//        cocktailRepository.save(Faust);
+//
+//        Cocktail moscowMule = Cocktail.builder()
+//                .name("모스코뮬")
+//                .recipe(new Recipe(List.of("잔에 보드카 50ml를 넣어줍니다.",
+//                        "라임즙 15ml를 넣어줍니다.",
+//                        "설탕물(1:1 비율)을 10ml 넣어줍니다.",
+//                        "진저 에일을 잔 가득 채워줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음","라임즙", "설탕물", "진저에일"))))
+//                .tags(new Tags(List.of(Tag.SOUR, Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/jhfi7A3Od6wccMUwHH0liNQqTNgkNHAz4Kg8lHHsZ0GDQnGymlNhTaI6NZQHIH05yTlQgUicvkxLH0y_1yeWf6pToQRsCFXWtYiFdwofiFTjniZV8w22vcjYs8vpBJpT8N7uJZW51l3S6lIrXb-lsw.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        moscowMule.assignUser(choosenUser);
+//        cocktailRepository.save(moscowMule);
+//
+//        Cocktail cosmopolitan = Cocktail.builder()
+//                .name("코스모폴리탄")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.",
+//                        "보드카 30ml를 넣어줍니다.",
+//                        "라임즙 10ml를 넣어줍니다.",
+//                        "크렌베리 주스 20ml를 넣어줍니다.",
+//                        "드카이퍼 트리플섹 20ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("라임즙", "크렌베리주스", "드카이퍼 트리플섹", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/BxfDApgcwmlMuDdEnNORi_hyVspWIVyWRvOu_rj48hfWTztiVvVkYXaIcVK00CRmbuGEruLWZlSTBX_XMsycxNNA7bzmU42qRsVOw35any4k6xi7piAiyJTl3SedwiQUYTWCC-X-VWUgZBdLCx4AhA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cosmopolitan.assignUser(choosenUser);
+//        cocktailRepository.save(cosmopolitan);
+//
+//        Cocktail seaBreeze = Cocktail.builder()
+//                .name("시브리즈")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.",
+//                        "보드카 45ml를 넣어줍니다.",
+//                        "크랜베리 120ml를 넣어줍니다.",
+//                        "자몽주스 30ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "크랜베리 주스", "자몽 주스"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/reZGjc9aQ2CWgQjmLDNZbV0P_XEsf9vUiiID7E-fg7mgqY8rvi9nbGupdlueunStI_va3D_14tWxogq7AF1MAk_wTIhaj1p6jU62eInksmr6cYcN5jvwttKg8pbDA2kkefjNblCcnU0hf58yYnu0bA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        seaBreeze.assignUser(choosenUser);
+//        cocktailRepository.save(seaBreeze);
+//
+//        Cocktail russianSpringPunch = Cocktail.builder()
+//                .name("러시안 스프링 펀치")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.",
+//                        "보드카 25ml를 넣어줍니다.",
+//                        "라임 주스 25ml를 넣어줍니다.",
+//                        "베드랜 크림드카시스 15ml를 넣어줍니다.",
+//                        "설탕물(1:1 비율)을 넣어줍니다.",
+//                        "얼음을 빼줍니다.(선택사항)",
+//                        "스파클링 와인으로 잔을 가득 채워줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("베드랜 크림드카시스", "라임주스", "얼음", "설탕물", "스파클링 와인"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/FS_dLNMiUS9N4azIV4sYl_mGohW_nLZLWkbUBnfgvAcBVqCUkrepJCXNaOiVZloizQtcIHFjmmNK36TBE2t_Tda6hxyUPnLsbrDy1sCghNLxx0nKyDFGcrFDMGxPWC0r2cE_vTbqMRv8TEGk_kpNAw.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        russianSpringPunch.assignUser(choosenUser);
+//        cocktailRepository.save(russianSpringPunch);
+//
+//        Cocktail balalaika = Cocktail.builder()
+//                .name("발랄라이카")
+//                .recipe(new Recipe(List.of("잔에 보드카 30ml를 넣어줍니다.",
+//                        "레몬 주스 30ml를 넣어줍니다.",
+//                        "디카이퍼 트리플섹 30ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬주스", "디카이퍼 트리플섹"))))
+//                .tags(new Tags(List.of(Tag.SOUR, Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://i.namu.wiki/i/RP42EgthhTTDertR70B3x86XTo1uPD3Qr3U26kVS04endI57iTl3DL5GsgcMBy65ma48RcgtKRMlEXQ70F4pxhErMhKgt49EIg7ZNmnPG1-phm1f6u7WelRQIzg2eX8AlSfFH7J_gu-O82JRUfS6mQ.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        balalaika.assignUser(choosenUser);
+//        cocktailRepository.save(balalaika);
+//
+//        Cocktail vodkaTini = Cocktail.builder()
+//                .name("보드카티니")
+//                .recipe(new Recipe(List.of("보드카 45ml를 넣어줍니다.",
+//                        "마티니 엑스트라 드라이를 넣어줍니다.",
+//                        "007 시리즈를 흉내내고싶다면 젓지 말고 흔들어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("마티니 엑스트라 드라이"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://meloncoffee.com/wp-content/uploads/2022/01/martini-geb9d92c76_1280.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        vodkaTini.assignUser(choosenUser);
+//        cocktailRepository.save(vodkaTini);
+//
+//        Cocktail blackMartini = Cocktail.builder()
+//                .name("블랙 마티니")
+//                .recipe(new Recipe(List.of("잔에 보드카 30ml를 넣어줍니다.",
+//                        "깔루아 15ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("깔루아"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.BITTER, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/HoNshx8Nx3u7HdvOgBE0n9k_2g40oPuYMd4V4vYRpa1tZgIbw_C7DSESzX2KgriIH4D2vg4eDHItjOt2rALQQ2f7zx7wxBvSZPxnLeN8MLy2B59FbjQKGIM8jC3ldHuZvoI5NBGtpnHA3vcbTmhhoQ.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        blackMartini.assignUser(choosenUser);
+//        cocktailRepository.save(blackMartini);
+//
+//        Cocktail blueLagoonShort = Cocktail.builder()
+//                .name("블루 라군 숏")
+//                .recipe(new Recipe(List.of("잔에 보드가 30ml를 넣어줍니다.",
+//                        "디카이퍼 블루 큐라소 15ml를 넣어줍니다.",
+//                        "레몬주스 15ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("디카이퍼 블루 큐라소", "레몬주스"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/qJ_rXXvC9MQ-4otim3WFHO9gmMUB2x2bwrg0thOpmbpU-TzhL2gwk4rscqM1pZQSUSMvVRW8PjaRnyolnu0HbRd2vYzInqLWw01qnNXxHEWigdbu3itw1Bv4OAad-eyoj2KU3FOTMDktZRSLEmRrQA.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        blueLagoonShort.assignUser(choosenUser);
+//        cocktailRepository.save(blueLagoonShort);
+//
+//        Cocktail blueLagoonLong = Cocktail.builder()
+//                .name("블루 라군 롱")
+//                .recipe(new Recipe(List.of("잔에 보드가 40ml를 넣어줍니다.",
+//                        "디카이퍼 블루 큐라소 15ml를 넣어줍니다.",
+//                        "레몬주스 20ml를 넣어줍니다.",
+//                        "사이다를 잔 끝까지 채워줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("디카이퍼 블루 큐라소", "레몬주스", "사이다"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/jIxmQNmtxvJCCg2_wvUWWla-0lDgU9pGCJosBcPXLkcwhOAQwgBT3qOR-9ZuhNVYn5YlRzPMgP_qn1tZgvq2CFRU5ATWIZgJGzN22iYg6khAF-hQDGlrNZIdT9YQGXttjtcVPJhzwF9nJgZnf9KuPg.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        blueLagoonLong.assignUser(choosenUser);
+//        cocktailRepository.save(blueLagoonLong);
+//
+//        Cocktail screwDriver = Cocktail.builder()
+//                .name("스크루 드라이버")
+//                .recipe(new Recipe(List.of("잔에 보드카 30ml를 넣어줍니다.",
+//                        "오렌지 주스를 잔 끝까지 채워줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.VODKA)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("오렌지 주스"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://i.namu.wiki/i/W0VxMg65AqzL5u6XleCn364P41isWLdll_R6vPjI_PoV7kkdkiMlnu7kKjVrMyqBMnJIy7BJ9-eswPYV75FJrCw-75ZqUEHVa4dqKvsc4uhC7ao1jSuyT8FDaTzp7lhj2cymcgbALy1-MevpowNnyQ.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        screwDriver.assignUser(choosenUser);
+//        cocktailRepository.save(screwDriver);
+//
+//        Cocktail godFather = Cocktail.builder()
+//                .name("갓파더")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.",
+//                        "스카치 위스키 60ml를 넣어줍니다.",
+//                        "디사론노 30ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "디사론노"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_HIGH)))
+//                .imageUrl("https://i.namu.wiki/i/Rn5mbNGfnG4FfXs3JWSLUwCgnMG2lr4q7aYFHp1g9gJHVkBuNsWvuq3vuK-e8pE_WLJ9sBJPgNTDXgz4FlORS1lktxV1f0Dv471vZhxFdvGck2xXPqCnpl7PgHYaLVgDx7DO5Rp5PUQ9oLxNR7pE8g.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        godFather.assignUser(choosenUser);
+//        cocktailRepository.save(godFather);
+//
+//        Cocktail autumnDelight = Cocktail.builder()
+//                .name("어텀 딜라이트")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.",
+//                        "위스키 60ml를 넣어줍니다.",
+//                        "써머스비를 잔 가득 채워줍니다"), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "써머스비 맥주"))))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.SWEET, Tag.BITTER)))
+//                .imageUrl("https://www.thespruceeats.com/thmb/5U4MSkuutcWGhUhFEk8Ldvg1AmI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/143693764-crop-58a4b3763df78c4758d3ec92.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        autumnDelight.assignUser(choosenUser);
+//        cocktailRepository.save(autumnDelight);
+//
+//        Cocktail bloodAndSand = Cocktail.builder()
+//                .name("블러드 앤 샌드")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.",
+//                        "오렌지 주스 20ml를 넣어줍니다.",
+//                        "마티니 로쏘 20ml를 넣어줍니다.",
+//                        "드카이퍼 체리 히어링 20ml를 넣어줍니다.",
+//                        "스카치 위스키 20ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "오렌지 주스", "마티니 로쏘", "드카이퍼 체리 히어링"))))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.BITTER)))
+//                .imageUrl("https://www.liquor.com/thmb/RFXLLHRx6TpAwaJRuon7HHb4GYU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/blood-and-sand-720x720-primary-a27c8e8da61b410facde9292b600d908.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        bloodAndSand.assignUser(choosenUser);
+//        cocktailRepository.save(bloodAndSand);
+//
+//        Cocktail jackCoke = Cocktail.builder()
+//                .name("잭콕")
+//                .recipe(new Recipe(List.of("잔에 잭 다니엘 45ml를 넣어줍니다.",
+//                        "콜라를 잔 가득 채워줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("콜라"))))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_LOW, Tag.SWEET, Tag.BITTER)))
+//                .imageUrl("https://www.acouplecooks.com/wp-content/uploads/2020/12/Jack-and-Coke-003.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        jackCoke.assignUser(choosenUser);
+//        cocktailRepository.save(jackCoke);
+//
+//        Cocktail irishCoffee = Cocktail.builder()
+//                .name("아이리시 커피")
+//                .recipe(new Recipe(List.of("잔에 뜨거운 커피 120ml를 넣어줍니다.",
+//                        "제임슨 50ml를 넣어줍니다.",
+//                        "설탕 1 티스푼을 넣어줍니다.",
+//                        "크림 50ml를 위에 살짝 얹어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("뜨거운 커피", "설탕", "크림"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.BITTER, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://creative-culinary.com/wp-content/uploads/irish-coffee-2.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        irishCoffee.assignUser(choosenUser);
+//        cocktailRepository.save(irishCoffee);
+//
+//        Cocktail whiskeyFloat = Cocktail.builder()
+//                .name("위스키 플로트")
+//                .recipe(new Recipe(List.of("잔의 70%를 얼음을 넣은 차가운물로 가득 채워줍니다.",
+//                        "위스키를 남은 잔에 서로 섞이지않게 채워줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("물"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://mblogthumb-phinf.pstatic.net/20121015_69/xhobar_13502894193709m4FS_JPEG/b0040511_48c7a5ef5c878.jpg?type=w420")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        whiskeyFloat.assignUser(choosenUser);
+//        cocktailRepository.save(whiskeyFloat);
+//
+//        Cocktail presbyterian = Cocktail.builder()
+//                .name("프레스비터리언")
+//                .recipe(new Recipe(List.of("잔에 위스키 45ml를 넣어줍니다.",
+//                        "진저에일 45ml를 넣어줍니다.",
+//                        "탄산수를 잔 가득 채워줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("진저에일", "탄산수"))))
+//                .tags(new Tags(List.of(Tag.FREQUENCY_MEDIUM, Tag.BITTER)))
+//                .imageUrl("https://i.namu.wiki/i/HSAea2jji50f8izoJBTp6_134oPw8Bz80rbF5dl5LmudDKKSrVC0GT6RbYmIORMLNGipznO1y9lJ04bMb9s-6IsaNPBokkpTGb5B1kEaDyZDcuib-PwWmHidnNjH69w5mZ80Jv6RiBTnH_03GpW60w.webp")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        presbyterian.assignUser(choosenUser);
+//        cocktailRepository.save(presbyterian);
+//
+//        Cocktail highBall = Cocktail.builder()
+//                .name("하이볼")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.",
+//                        "위스키 30~ 45ml를 넣어줍니다.",
+//                        "탄산수 60~ 90ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY3)
+//                .liquor(Liquor.WHISKEY)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "탄산수"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://www.thespruceeats.com/thmb/kTGwTG-dGJ1SNghgGpBtAomBaxQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/classic-highball-cocktail-recipe-761448-hero-02-f33520a9f6394878a6975da514613142.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        highBall.assignUser(choosenUser);
+//        cocktailRepository.save(highBall);
+//
+//        Cocktail cocktail01 = Cocktail.builder()
+//                .name("레몬 사와")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 45ml를 넣어줍니다.", "레몬즙(레몬주스) 45ml, 시럽 20ml 를 넣어줍니다.", "탄산수로 잔을 채워줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "레몬즙(레몬주스)", "시럽", "탄산수"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A6%E1%84%86%E1%85%A9%E1%86%AB+%E1%84%89%E1%85%A1%E1%84%8B%E1%85%AA.jpeg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail01.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail01);
+//
+//        Cocktail cocktail02 = Cocktail.builder()
+//                .name("백세주 조선하이볼")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "백세주를 2잔(소주잔 기준) 넣어줍니다.", "토닉워터를 2잔(소주잔 기준) 넣어줍니다.", "레몬즙 3T 을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "레몬즙", "토닉워터"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.BITTER, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2020/12/04/7f0458f2b9ce35df3e61aa7c4d1aec271.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail02.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail02);
+//
+//        Cocktail cocktail03 = Cocktail.builder()
+//                .name("달고나 우유 칵테일")
+//                .recipe(new Recipe(List.of("볼에 인스턴트 커피 6개, 설탕 3T, 물 3T를 넣고 거품기로 휘핑해줍니다.", "잔에 얼음을 넣어줍니다.", "잔에 소주 1잔(소주잔 기준), 우유 200ml를 넣습니다.", "과정 1에서 휘핑 낸 커피를 올려줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("우유", "인스턴트 커피", "설탕", "물", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2020/07/27/d55c8cdc9d17fb55b7ad6bb3b76260da1.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail03.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail03);
+//
+//        Cocktail cocktail04 = Cocktail.builder()
+//                .name("깔라만시 칵테일")
+//                .recipe(new Recipe(List.of("컵에 얼음을 넣어줍니다.", "깔라만시 1팩을 붓는다.", "소주 2잔(소주잔 기준) 을 넣어줍니다.", "탄산수로 잔을 채워줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("깔라만시", "탄산수", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnWHh-E7vS-vR30Il8XKElaUus1AOHWVGmiA&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail04.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail04);
+//
+//        Cocktail cocktail05 = Cocktail.builder()
+//                .name("솜사탕 칵테일")
+//                .recipe(new Recipe(List.of("컵에 얼음을 넣어줍니다.", "소주 한잔(소주잔 기준)을 넣어줍니다.", "레몬즙(레몬주스) 45ml, 시럽 20ml 를 넣어줍니다.", "탄산수로 잔을 채워줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "레몬즙(레몬주스)", "시럽", "탄산수"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmuN468T5jGFqRd6kRqqmBVWX5-SXb1NftEw&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail05.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail05);
+//
+//        Cocktail cocktail06 = Cocktail.builder()
+//                .name("초코에몽 칵테일")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "초코에몽 120ml를 넣어줍니다.", "소주 180ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("초코에몽", "얼음"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAAkstDD5wZ4IJDr_JkKWghweIY1gTBn5ZRA&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail06.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail06);
+//
+//        Cocktail cocktail07 = Cocktail.builder()
+//                .name("레디큐 칵테일")
+//                .recipe(new Recipe(List.of("소주 1잔(소주잔 기준)과 밀키스를 얼려주세요.", "얼려놓은 술을 잔에 넣어주세요.", "레디큐를 넣어주세요."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레디큐", "밀키스", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvCUMW3xth6TdauFYH5GoXJstK1PGGWe5Sw&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail07.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail07);
+//
+//        Cocktail cocktail08 = Cocktail.builder()
+//                .name("포도주스 칵테일")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 1잔(소주잔 기준)을 넣어줍니다.", "포조두스 2잔(소주잔 기준)을 넣어줍니다.", "핫식스 3잔(소주잔 기준)을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "포도주스", "핫식스"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNgdiKqLh6JY59knynhAsnsCFQ2RyM2zV9xA&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail08.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail08);
+//
+//        Cocktail cocktail09 = Cocktail.builder()
+//                .name("데미소다 칵테일")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "데미소다 3잔(소주잔 기준)을 넣어줍니다.", "핫식스 2잔(소주잔 기준)을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("데미소다", "핫식스", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbMBM6fUXZmQYtNnAP76W-2jVJeI2H0_KKzi435X8cJXupYaapc3KrzMsgujkFzmTJOUo&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail09.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail09);
+//
+//        Cocktail cocktail10 = Cocktail.builder()
+//                .name("요구르트 칵테일")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 2잔(소주잔 기준)을 넣어줍니다", "요구르트 4잔(소주잔 기준)을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "요구르트"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnYyeotpPdeEyS-2M9J8xZDyFJnHX6AMgkpLL_CKyrUIx8c879ObM-gayJFWvIExIHu9w&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail10.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail10);
+//
+//        Cocktail cocktail11 = Cocktail.builder()
+//                .name("메로나 칵테일")
+//                .recipe(new Recipe(List.of("잔에 메로나를 넣어주세요.", "소주 2잔(소주잔 기준)을 넣어줍니다.", "사이다 3잔(소주잔 기준)을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("메로나", "사이다"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsZEOzJpmj78oIZbXqZw3y819LAoEW7icFwA&usqp=CAU")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail11.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail11);
+//
+//        Cocktail cocktail12 = Cocktail.builder()
+//                .name("에너지주")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", "소주 1잔(소주잔 기준)을 넣어줍니다.","핫식스 2잔(소주잔 기준)을 넣어줍니다.", "파워에이드 2잔(소주잔 기준)을 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.SOJU)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "파워에이드", "핫식스"))))
+//                .tags(new Tags(List.of(Tag.BITTER, Tag.SOUR, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A6%E1%84%82%E1%85%A5%E1%84%8C%E1%85%B5+%E1%84%8C%E1%85%AE.jpeg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail12.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail12);
+//
+//        Cocktail cocktail13 = Cocktail.builder()
+//                .name("칼리모쵸")
+//                .recipe(new Recipe(List.of("잔에 얼음을 넣어줍니다.", " 레드와인 60ml을 넣어줍니다.","콜라 60ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.WINE)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("콜라", "얼음"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2019/12/21/bccd4a60e0e7bab3a958a599f037c3ef1.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail13.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail13);
+//
+//        Cocktail cocktail14 = Cocktail.builder()
+//                .name("스프리처")
+//                .recipe(new Recipe(List.of("레몬 1/2를 슬라이스로 잘라 줍니다.", "잔에 레몬을 넣어줍니다.", "탄산수 240ml를 넣어줍니다.", "화이트 와인 120ml를 넣어줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.WINE)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("레몬", "탄산수"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.SOUR, Tag.FREQUENCY_LOW)))
+//                .imageUrl("https://recipe1.ezmember.co.kr/cache/recipe/2019/12/21/aa74528d83a29c304177a65d99582e161.jpg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail14.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail14);
+//
+//        Cocktail cocktail15 = Cocktail.builder()
+//                .name("크림 막걸리")
+//                .recipe(new Recipe(List.of("믹서기에 얼음을 넣어주세요.", "믹서기에 막걸리 115ml, 우유 85ml, 꿀 1.5T 을 넣고 갈아주세요.", "잔에 담아주세요."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.MAKGEOLLI)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("얼음", "우유", "꿀"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%B7+%E1%84%86%E1%85%A1%E1%86%A8%E1%84%80%E1%85%A5%E1%86%AF%E1%84%85%E1%85%B5.jpeg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail15.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail15);
+//
+//        Cocktail cocktail16 = Cocktail.builder()
+//                .name("예거피치가이")
+//                .recipe(new Recipe(List.of("잔에 반 정도 아이스가이 피치를 넣어줍니다.", "예거 라들러 피치를 채워줍니다."), 0))
+//                .category(Category.CATEGORY4)
+//                .liquor(Liquor.BEER)
+//                .ingredients(new Ingredients(new LinkedHashSet<>(Set.of("아이스가이 피치"))))
+//                .tags(new Tags(List.of(Tag.SWEET, Tag.FREQUENCY_MEDIUM)))
+//                .imageUrl("https://cocktail-project.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A8%E1%84%80%E1%85%A5+%E1%84%91%E1%85%B5%E1%84%8E%E1%85%B5%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5.jpeg")
+//                .rate(new Rate())
+//                .build();
+//
+//        choosenUser = selectRandomUser(users);
+//        cocktail16.assignUser(choosenUser);
+//        cocktailRepository.save(cocktail16);
 //    }
 //
 //    private User selectRandomUser(List<User> users) {
