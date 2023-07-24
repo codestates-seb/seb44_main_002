@@ -13,14 +13,11 @@ export const PostCocktailForm = async (form) => {
     }
   );
   if (cocktailData.status === 401) {
-    console.log('로그아웃해야함.');
     return 401;
   }
   if (cocktailData.status === 500) {
     const token = cocktailData.headers.get('Authorization');
-    console.log(token);
     if (token) {
-      console.log('재발급받고 엑세스 토큰담겨있음.');
       localStorage.setItem(
         'accessToken',
         cocktailData.headers.get('Authorization')
@@ -56,14 +53,12 @@ export const PatchCocktailForm = async (form, params) => {
     }
   );
   if (cocktailData.status === 401) {
-    console.log('로그아웃해야함.');
     return 401;
   }
   if (cocktailData.status === 500) {
     const token = cocktailData.headers.get('Authorization');
-    console.log(token);
+
     if (token) {
-      console.log('재발급받고 엑세스 토큰담겨있음.');
       localStorage.setItem(
         'accessToken',
         cocktailData.headers.get('Authorization')
@@ -101,14 +96,12 @@ export const GetCocktailForm = async (params) => {
     }
   );
   if (cocktailData.status === 401) {
-    console.log('로그아웃해야함.');
     return 401;
   }
   if (cocktailData.status === 500) {
     const token = cocktailData.headers.get('Authorization');
-    console.log(token);
+
     if (token) {
-      console.log('재발급받고 엑세스 토큰담겨있음.');
       localStorage.setItem(
         'accessToken',
         cocktailData.headers.get('Authorization')

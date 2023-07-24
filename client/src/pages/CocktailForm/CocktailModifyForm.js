@@ -77,7 +77,6 @@ export default function CocktailModifyForm() {
       })
       .then((json) => json.json())
       .then((json) => {
-        console.log(json);
         const transformedTags = divisionTags(json.tags);
         const transformedLiquor = transformLiquor(json.liquor);
         setForm({
