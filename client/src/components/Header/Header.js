@@ -77,7 +77,6 @@ export default function Header() {
       // 성공
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         navigate(`/detail/${json.cocktailId}`);
       })
       // 실패
