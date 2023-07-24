@@ -199,7 +199,7 @@ public class CocktailService {
         return createCocktailsSimpleMultiResponseDtos(email, cocktails);
     }
 
-    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagsAndCategoryCocktails(String email, String tag, String category, Sort sort) {
+    private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagsAndCategoryCocktails(String email, String category, String tag, Sort sort) {
         List<Tag> tags = createTagList(tag);
         Category selectedCategory = CategoryMapper.map(category);
         List<Cocktail> cocktails = cocktailReadService.readFilterByCategoryAndTagsCocktails(selectedCategory, tags, sort);
