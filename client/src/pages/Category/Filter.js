@@ -1,0 +1,192 @@
+import { useState, useEffect } from 'react';
+import {
+  CategoryFilter,
+  tagFrequencyData,
+  tagTasteData,
+  sortTypeData,
+} from '../../common/Data';
+import CategoryBtn from './CategoryBtn';
+import TagFrequencyButton from './TagFrequencyButton';
+import ClickButton from '../../common/Buttons/ClickButton';
+import Sort from './Sort';
+import SortConditionButton from './SortConditionButton';
+import tw from 'tailwind-styled-components';
+
+export default function Filter({ setFilterCondtion, filterCondtion }) {
+  //필터링 클릭했을 때 카테고리/태그/정렬 타입 인지 검사후 필터상태 저장
+  const [buttonStyle, setButtonStyle] = useState({
+    size: 'w-[75px] h-[30px]',
+    fontSize: 'text-[1rem]',
+    radius: 'rounded-[30px]',
+  });
+
+  const handleResize = () => {
+    const width = window.innerWidth;
+    if (width <= 700) {
+      setButtonStyle({
+        size: 'w-[60px] h-[30px]',
+        fontSize: 'text-[0.8rem]',
+        radius: 'rounded-[30px]',
+      });
+    } else {
+      setButtonStyle({
+        size: 'w-[75px] h-[30px]',
+        fontSize: 'text-[1rem]',
+        radius: 'rounded-[30px]',
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const selectMenuHandler = (idx, type) => {
+    switch (type) {
+      case 'category':
+        setFilterCondtion({
+          ...filterCondtion,
+          category: CategoryFilter[idx].type,
+        });
+        break;
+      case 'frequencyTag':
+        setFilterCondtion({
+          ...filterCondtion,
+          frequencyTag: tagFrequencyData[idx].type,
+        });
+        break;
+      case 'tasteTag': {
+        //그전에 눌렀던걸 또 눌렀다면 취소
+        if (filterCondtion.tasteTag.length === 0) {
+          const ClickedTag = filterCondtion.tasteTag;
+          const tag = tagTasteData[idx].type;
+          ClickedTag.push(tag);
+
+          setFilterCondtion({ ...filterCondtion, tasteTag: ClickedTag });
+          break;
+        }
+
+        const alreadyClickedTag = [...filterCondtion.tasteTag];
+        const Tag = tagTasteData[idx].type;
+
+        if (filterCondtion.tasteTag.indexOf(Tag) >= 0) {
+          //이미클릭된태그를 지울때
+          const newclickedList = filterCondtion.tasteTag.filter((number) => {
+            return number !== tagTasteData[idx].type;
+          });
+          setFilterCondtion({ ...filterCondtion, tasteTag: newclickedList });
+        } else {
+          //태그를 추가할때
+          alreadyClickedTag.push(tagTasteData[idx].type);
+          setFilterCondtion({
+            ...filterCondtion,
+            tasteTag: [...alreadyClickedTag],
+          });
+        }
+
+        break;
+      }
+      case 'descendingOrder':
+        setFilterCondtion({
+          ...filterCondtion,
+          descendingOrder: !filterCondtion.descendingOrder,
+        });
+        break;
+      case 'sortType':
+        setFilterCondtion({
+          ...filterCondtion,
+          sortType: sortTypeData[idx].type,
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <div className="w-[100%] ">
+      {/* 카테고리 */}
+      <CategoryContainer>
+        {CategoryFilter.map((data, idx) => (
+          <CategoryBtn
+            key={data.id}
+            data={data}
+            idx={idx}
+            filterCondtion={filterCondtion}
+            selectMenuHandler={selectMenuHandler}
+          />
+        ))}
+      </CategoryContainer>
+      {/* 태그 */}
+      <TagContainer>
+        {/* 도수별 태그 */}
+        <TagFrequencyContainer>
+          {tagFrequencyData.map((data, idx) => (
+            <TagFrequencyButton
+              key={data.id}
+              data={data}
+              idx={idx}
+              filterCondtion={filterCondtion}
+              selectMenuHandler={selectMenuHandler}
+            />
+          ))}
+        </TagFrequencyContainer>
+        <TagTasteContainer>
+          <p className="text-[#B3B3B3] text-[13px] mb-1">이중선택해보세요!</p>
+          <div className="flex flex-row gap-3">
+            {tagTasteData.map((data, idx) => (
+              <ClickButton
+                key={data.id}
+                data={data}
+                idx={idx}
+                radius={buttonStyle.radius}
+                fontSize={buttonStyle.fontSize}
+                size={buttonStyle.size}
+                onClick={() => {
+                  selectMenuHandler(idx, 'tasteTag');
+                }}
+              >
+                # {data.title}
+              </ClickButton>
+            ))}
+          </div>
+        </TagTasteContainer>
+      </TagContainer>
+      {/* sortFilter */}
+      <SortContainer>
+        <Sort
+          filterCondtion={filterCondtion}
+          selectMenuHandler={selectMenuHandler}
+        />
+
+        {sortTypeData.map((data, idx) => (
+          <SortConditionButton
+            key={data.id}
+            data={data}
+            idx={idx}
+            filterCondtion={filterCondtion}
+            selectMenuHandler={selectMenuHandler}
+          />
+        ))}
+      </SortContainer>
+    </div>
+  );
+}
+
+const CategoryContainer = tw.div`
+flex border-b-2 border-solid border-white 
+`;
+const TagContainer = tw.div`
+flex pt-4 pb-10 gap-3  max-[500px]:flex-wrap max-[500px]:pb-0  
+`;
+const TagFrequencyContainer = tw.div`
+flex flex-row gap-3  border border-dashed border-gray-500 p-[1rem] pt-6 rounded-md `;
+const TagTasteContainer = tw.div`
+  `;
+const SortContainer = tw.div`
+flex justify-end text-[#B3B3B3] pt-10 pb-2 items-center  gap-2 text-[13px] max-[500px]:justify-center   max-[500px]:mb-3 mb-5
+`;
