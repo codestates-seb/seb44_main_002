@@ -1,79 +1,77 @@
-## 🍻 Intro
+# 🍻 Intro
 
-### 지친 직장인들의 오아시스, 편의점에서 한잔 어떠세요? 편한
+## 지친 직장인들의 오아시스, 편의점에서 한잔 어떠세요? 편한
 
-[배포링크 바로가기]()
+<div align="center"><img width="100%" src="https://cdn.discordapp.com/attachments/1122692656875708549/1132247597164273705/image.png" alt="logo" /></div>
+</br>
 
-### 테스트 계정
-
-id:
-<br />
-password:
-<br />
-<br />
-
-<div align="center"><img src="http://res.heraldm.com/content/image/2015/03/12/20150312001242_0.jpg" alt="logo" /></div>
+# 🔗 배포주소 : <a href="https://release--comfortablecocktail.netlify.app/" target="_blank">편한</a>
 
 <br />
 
-## 👨‍👩‍👧‍👦 팀원 소개
+# 🔗 서비스 메뉴얼 : <a href="https://www.notion.so/984855e488254f5b968080ac588d9231" target="_blank">노션링크</a>
 
-#### Frontend
-|황찬우 (FE 팀장)|이은희 (FE 팀원)|김민재 (FE 팀원)|
-| :-: | :-: | :-: |
+</br>
+
+# 개요
+
+저희의 웹서비스, 편한은 칵테일 레시피 정보를 제공하는 웹사이트입니다.<br/>
+자신이 직접 레시피를 등록하여 다른 사용자들과 레시피를 공유할 수 있습니다. <br/>
+사용자의 나이와 성별을 기반으로 북마크한 칵테일의 태그와 관련도가 높은 칵테일을 추천해드립니다.
+
+<br />
+
+## 테스트 계정
+
+- id: test@test.com
+  <br />
+- password: test1234
+  <br />
+  <br />
+
+# 👨‍👩‍👧‍👦 팀원 소개
+
+### Frontend
+
+|                                                                                      황찬우 (FE 팀장)                                                                                       |                                            이은희 (FE 팀원)                                             |                                             김민재 (FE 팀원)                                             |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="https://images-ext-1.discordapp.net/external/kQhSS4IkcxGfV-3wNzTUXgmrU4C46M82rsWScdIZ0s4/%3Fv%3D4/https/avatars.githubusercontent.com/u/49116370?width=924&height=924" width=150> | <img src="https://avatars.githubusercontent.com/u/82435813?v=4"  alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/88226519?v=4"  alt="beucol" width="150" height="150" > |
-|[@HChanWoo](https://github.com/HChanWoo)|[@joywhy](https://github.com/joywhy)|[@crowcrow07](https://github.com/crowcrow07)|
-#### Backend
-|노재경 (BE 부팀장)|박태양 (BE 팀원)|김수민 (BE 팀원)|
-| :-: | :-: | :-: |
+|                                                                          [@HChanWoo](https://github.com/HChanWoo)                                                                           |                                  [@joywhy](https://github.com/joywhy)                                   |                               [@crowcrow07](https://github.com/crowcrow07)                               |
+
+### Backend
+
+|                                           노재경 (BE 부팀장)                                           |                                             박태양 (BE 팀원)                                             |                                             김수민 (BE 팀원)                                             |
+| :----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
 | <img src="https://avatars.githubusercontent.com/u/85445649?v=4" alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/124670911?v=4"  alt="beucol" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/109536532?v=4"  alt="beucol" width="150" height="150"> |
-|[@jkroh1995](https://github.com/jkroh1995)|[@park-tae-yang](https://github.com/park-tae-yang)|[@soomni95](https://github.com/soomni95)|
+|                               [@jkroh1995](https://github.com/jkroh1995)                               |                            [@park-tae-yang](https://github.com/park-tae-yang)                            |                                 [@soomni95](https://github.com/soomni95)                                 |
 
 <br />
 
-## 🚀 Demo
+# 🚀 Demo
 
-| 기능1                                     | 기능2                                     | 기능3                                     |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> |
-| 기능4                                     | 기능5                                     | 기능6                                     |
-| <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> |
-| 기능7                                     | 기능8                                     | 기능9                                     |
-| <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> |
+## 🔗 프로젝트 상세정보 : <a href="https://www.miricanvas.com/v/129l0hc" target="_blank">PPT</a>
+
+| 메인페이지                                                                                                                                               | 카테고리페이지                                                                                                                                           | 상세페이지                                                                                                                                               |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847111961067570/image.png" width="100%" height="100%">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847305117143130/image.png" width="100%" height="100%">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847471719100597/image.png" width="100%" height="100%">                          |
+| 칵테일등록페이지                                                                                                                                         | 마이페이지                                                                                                                                               | 댓글                                                                                                                                                     |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851756108370020/image.png" width="100%" height="100%">                          | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132848688683823194/image.png?width=2162&height=1364" width="100%" height="100%"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132847585447661649/image.png?width=2160&height=1364" width="100%" height="100%"> |
+| 회원가입페이지                                                                                                                                           | 칵테일 등록 성공페이지                                                                                                                                   | 페이지네이션                                                                                                                                             |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132853485210181702/image.png" width="100%" height="100%">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851946647199754/image.png" width="100%" height="100%">                          | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132853842791370802/image.png?width=2158&height=1364" width="100%" height="100%"> |
+| 로그인                                                                                                                                                   | 랭킹페이지                                                                                                                                               | 댓글 수정페이지                                                                                                                                          |
+| <img src="https://media.discordapp.net/attachments/1122692656875708549/1132855793457319936/image.png?width=2158&height=1364" width="100%" height="100%"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132857014951890994/image.png?width=2160&height=1364" width="100%" height="100%"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132857569048809573/image.png?width=2180&height=1361" width="100%" height="100%"> |
 
 </br>
 </br>
 
-## ⚡️ Skills
+# ⚡️ Skills
 
-### Front-end
+<img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132840534344466443/image_5.png" alt="skills">
 
-<p>
-  <img src="https://user-images.githubusercontent.com/52682603/138834243-fb74d81e-e90d-4c6a-8793-05df588f59ab.png" width=15%>
-  <img src="" width=15%>
-  <img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567749614/noticon/zgdaxpaif5ojeduonygb.png" width=15%>
-  <img src="" width=15%>
-  <img src="" width=15%>
-</p>
+</br>
+</br>
 
-### Back-end
-
-<p>
-  <img src="" width=120 height=120>
-  <img src="" width=120 height=120>
-  <img src="" width=120 height=120>
-  <img src="" width=120 height=120>
-  <img src="" width=120 height=120>
-  <img src="" width=120 height=120>
-</p>
-
-<br />
-
-## 🔌 Infrastructures
-
-<img src="">
-
-## Git-Convention
+# Git-Convention
 
 | 기능 이름 | 기능 설명                                                                          |
 | --------- | ---------------------------------------------------------------------------------- |
