@@ -50,13 +50,13 @@ password: test1234
 
 # 🚀 Demo
 
-| 기능1                                     | 기능2                                     | 기능3                                     |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> |
-| 기능4                                     | 기능5                                     | 기능6                                     |
-| <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> |
-| 기능7                                     | 기능8                                     | 기능9                                     |
-| <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> | <img src="" width="300px" height="300px"> |
+| 메인페이지                                                                                                                        | 카테고리페이지                                                                                                                                             | 상세페이지                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847111961067570/image.png" width="300px" height="300px"> | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847305117143130/image.png" width="300px" height="300px">                          | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132847471719100597/image.png" width="300px" height="300px">                          |
+| 칵테일등록페이지                                                                                                                  | 마이페이지                                                                                                                                                 | 댓글                                                                                                                                                       |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851756108370020/image.png" width="300px" height="300px"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132848688683823194/image.png?width=2162&height=1364" width="300px" height="300px"> | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132847585447661649/image.png?width=2160&height=1364" width="300px" height="300px"> |
+| 회원가입페이지                                                                                                                    | 칵테일 등록 성공페이지                                                                                                                                     | 페이지네이션                                                                                                                                               |
+| <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132853485210181702/image.png" width="300px" height="300px"> | <img src="https://cdn.discordapp.com/attachments/1122692656875708549/1132851946647199754/image.png" width="300px" height="300px">                          | <img src="https://media.discordapp.net/attachments/1122692656875708549/1132853842791370802/image.png?width=2158&height=1364" width="300px" height="300px"> |
 
 </br>
 </br>
