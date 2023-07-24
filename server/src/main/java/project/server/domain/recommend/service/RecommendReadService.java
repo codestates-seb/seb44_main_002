@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.recommend.entity.Recommend;
 import project.server.domain.recommend.repository.RecommendRepository;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 import java.util.List;
 

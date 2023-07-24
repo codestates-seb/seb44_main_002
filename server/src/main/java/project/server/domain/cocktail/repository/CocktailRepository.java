@@ -1,7 +1,6 @@
 package project.server.domain.cocktail.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import project.server.domain.cocktail.embed.category.Category;
 import project.server.domain.cocktail.embed.tag.Tag;
@@ -13,9 +12,9 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
 
     List<Cocktail> findDistinctTop3ByTagsTagsContainingAndCocktailIdNotOrderByRateRateDesc(Tag tag, long id);
 
-    Page<Cocktail> findDistinctByTagsTagsIn(List<Tag>tags, Pageable pageable);
+    List<Cocktail> findDistinctByTagsTagsIn(List<Tag> tags, Sort sort);
 
-    Page<Cocktail> findByCategory(Category category, Pageable pageable);
+    List<Cocktail> findByCategory(Category category, Sort sort);
 
-    Page<Cocktail> findDistinctByCategoryAndTagsTagsIn(Category category, List<Tag> tags, Pageable pageable);
+    List<Cocktail> findDistinctByCategoryAndTagsTagsIn(Category category, List<Tag> tags, Sort sort);
 }

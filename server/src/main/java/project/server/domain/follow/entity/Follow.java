@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.server.domain.follow.embed.Follower;
 import project.server.domain.follow.embed.Following;
-import project.server.domain.user.User;
+import project.server.domain.user.entity.User;
 
 import javax.persistence.*;
 

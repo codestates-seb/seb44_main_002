@@ -7,9 +7,9 @@ import project.server.domain.bookmark.repository.BookmarkRepository;
 import project.server.domain.bookmark.embed.CocktailInfo;
 import project.server.domain.bookmark.embed.UserInfo;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.user.User;
-import project.server.exception.BusinessLogicException;
-import project.server.exception.ExceptionCode;
+import project.server.domain.user.entity.User;
+import project.server.global.exception.BusinessLogicException;
+import project.server.global.exception.ExceptionCode;
 
 @Service
 public class BookmarkCreateService {

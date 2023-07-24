@@ -1,12 +1,11 @@
 package project.server.domain.cocktail.controller;
 
 import com.google.gson.Gson;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,14 +17,13 @@ import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.service.CocktailService;
-import project.server.domain.user.*;
-import project.server.dto.MultiResponseDto;
-import project.server.utils.UnsignedPermission;
+import project.server.global.auth.service.AuthManager;
+import project.server.global.dto.MultiResponseDto;
+import project.server.global.utils.UnsignedPermission;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -133,7 +131,7 @@ class CocktailControllerTest {
 
     @Test
     void 칵테일_검색_테스트() throws Exception {
-        MultiResponseDto fakeResponse = new MultiResponseDto(new ArrayList<>(), mock(Page.class));
+        MultiResponseDto fakeResponse = new MultiResponseDto(new ArrayList<>());
 
         Authentication authentication = new UsernamePasswordAuthenticationToken("test", "test");
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -141,7 +139,7 @@ class CocktailControllerTest {
         when(authManager.getEmailFromAuthentication(authentication, false))
                 .thenReturn("test@example.com");
 
-        when(cocktailService.readFilteredCocktails(authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get()), null, null, 1, null))
+        when(cocktailService.readFilteredCocktails(authManager.getEmailFromAuthentication(authentication, UnsignedPermission.PERMIT.get()), null, null, null))
                 .thenReturn(fakeResponse);
 
         mockMvc.perform(
