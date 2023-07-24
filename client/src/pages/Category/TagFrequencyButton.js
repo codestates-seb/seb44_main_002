@@ -24,7 +24,7 @@ export default function TagFrequencyButton({
 
   const handleResize = () => {
     const width = window.innerWidth;
-    console.log(width);
+    // console.log(width);
     if (width <= 700) {
       setButtonStyle({
         size: 'w-[90px] h-[30px]',

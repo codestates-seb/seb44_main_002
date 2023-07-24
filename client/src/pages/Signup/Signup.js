@@ -33,6 +33,7 @@ export default function Signup() {
     age: '',
     profileImageUrl: '',
   });
+  //console.log(form);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 불리언값으로나옴
@@ -54,6 +55,7 @@ export default function Signup() {
       name: form.name,
       gender: form.gender,
       age: form.age,
+      profileImageUrl: form.profileImageUrl,
     };
     // credentials: 'include',
     const allValid = Object.values(updatedIsValid).every(
@@ -61,6 +63,7 @@ export default function Signup() {
     );
     if (allValid) {
       try {
+        // console.log(userinfo);
         const response = await api.signupApi(userinfo);
         if (response === 201) {
           // 응답이 성공적인 경우
