@@ -2,11 +2,11 @@
 @import '~swiper/css/pagination';
 @import '~swiper/css/navigation';
 
-.swiper-container {
+#main .swiper-container {
   height: 100vh;
 }
 
-.swiper-slide {
+#main .swiper-slide {
   text-align: center;
   font-size: 18px;
   /* background: #fff; */
@@ -18,14 +18,14 @@
   color: white;
 }
 
-.swiper-slide img {
+#main .swiper-slide img {
   display: block;
   /* width: 100%;
   height: 100%;
   object-fit: cover; */
 }
 
-.autoplay-progress {
+#main .autoplay-progress {
   position: absolute;
   right: 16px;
   bottom: 16px;
@@ -39,7 +39,7 @@
   color: white;
 }
 
-.autoplay-progress svg {
+#main .autoplay-progress svg {
   --progress: 0;
   position: absolute;
   left: 0;
@@ -55,23 +55,59 @@
   transform: rotate(-90deg);
 }
 
-.swiper-button-prev,
-.swiper-button-next {
+#main .swiper-button-prev,
+#main .swiper-button-next {
   color: white;
 }
 
-.swiper-button-prev::after,
-.swiper-button-next::after {
+#main .swiper-button-prev::after,
+#main .swiper-button-next::after {
   font-size: 40px !important;
 }
 
 @media (max-width: 768px) {
-  .swiper-button-prev::after,
-  .swiper-button-next::after {
+  #main .swiper-button-prev::after,
+  #main .swiper-button-next::after {
     font-size: 20px !important;
   }
 }
 
-.swiper-pagination-bullet {
+#main .swiper-pagination-bullet {
   background-color: white;
+}
+
+#button-border-animate {
+  --border-size: 3px;
+  --border-angle: 0turn;
+  /* width: 60vmin;
+  height: 50vmin; */
+  background-image: conic-gradient(
+      from var(--border-angle),
+      #1A344A,
+      #4A4676 50%,
+      #1A344A
+    ),
+    conic-gradient(from var(--border-angle), transparent 20%, #08f, #f03);
+  background-size: calc(100% - (var(--border-size) * 2))
+      calc(100% - (var(--border-size) * 2)),
+    cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: bg-spin 3s linear infinite;
+}
+
+@keyframes bg-spin {
+  to {
+    --border-angle: 1turn;
+  }
+}
+
+#button-border-animate:hover {
+  animation-play-state: paused;
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0turn;
 }

@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 import tw from 'tailwind-styled-components';
 
+import { PATH } from '../constants/constants';
+
 export default function Footer() {
   const navigate = useNavigate();
 
@@ -42,8 +44,8 @@ export default function Footer() {
         <div className="flex w-[32px] h-[48px] mb-4 max-[768px]:w-[28px] max-[768px]:h-[44px]">
           <img
             role="presentation"
-            onClick={() => navigate('/')}
-            onKeyDown={() => navigate('/')}
+            onClick={() => navigate(PATH.MAIN_PAGE)}
+            onKeyDown={() => navigate(PATH.MAIN_PAGE)}
             src={process.env.PUBLIC_URL + `/images/logo.webp`}
             alt="footerLogo"
             className="cursor-pointer"

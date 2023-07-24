@@ -1,4 +1,5 @@
-import fetchWithInterceptor from './api';
+import { ALERT_MESSAGE } from '../constants/constants';
+
 const API_BASE = process.env.REACT_APP_BASE_URL;
 
 export default {
@@ -15,8 +16,31 @@ export default {
       });
       if (response.ok) {
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}cocktails/${cocktailId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -35,8 +59,31 @@ export default {
       });
       if (response.ok) {
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}bookmark/create/${cocktailId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -55,8 +102,31 @@ export default {
       });
       if (response.ok) {
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}bookmark/delete/${cocktailId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -78,8 +148,34 @@ export default {
       );
       if (response.ok) {
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(
+            `${API_BASE}cocktails/${cocktailId}/rate?value=${score}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: response.headers.get('Authorization'),
+                Refresh: localStorage.getItem('refreshToken'),
+              },
+            }
+          );
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -100,8 +196,32 @@ export default {
       if (response.ok) {
         location.reload();
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}comments/${cocktailId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+            body: JSON.stringify(commentInfo),
+          });
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -122,8 +242,32 @@ export default {
       if (response.ok) {
         location.reload();
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}replies/${commentId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+            body: JSON.stringify(replyInfo),
+          });
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -146,8 +290,34 @@ export default {
       if (response.ok) {
         location.reload();
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(
+            `${API_BASE}comments/${commentId}?cocktail-id=${cocktailId}`,
+            {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: response.headers.get('Authorization'),
+                Refresh: localStorage.getItem('refreshToken'),
+              },
+            }
+          );
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -166,8 +336,31 @@ export default {
       });
       if (response.ok) {
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}cocktails/${cocktailId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);
@@ -187,8 +380,31 @@ export default {
       if (response.ok) {
         location.reload();
         return response;
+      }
+      if (response.status === 401) {
+        return 401;
+      }
+      if (response.status === 500) {
+        const token = response.headers.get('Authorization');
+        if (token) {
+          localStorage.setItem(
+            'accessToken',
+            response.headers.get('Authorization')
+          );
+          const data = await fetch(`${API_BASE}replies/${replyId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: response.headers.get('Authorization'),
+              Refresh: localStorage.getItem('refreshToken'),
+            },
+          });
+          return data;
+        }
+
+        return response;
       } else {
-        console.log('error');
+        console.log(ALERT_MESSAGE.ERROR);
       }
     } catch (error) {
       console.log(error);

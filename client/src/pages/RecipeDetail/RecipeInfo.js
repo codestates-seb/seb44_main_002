@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hook/useLogout';
 
 import ImageModal from './ImgaeModal';
 import RecipeApi from '../../api/RecipeApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 import { PiUserCircleFill } from 'react-icons/pi';
@@ -14,6 +16,7 @@ export default function RecipeInfo({
   localData,
 }) {
   const navigate = useNavigate();
+  const logout = useLogout();
 
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
@@ -23,6 +26,11 @@ export default function RecipeInfo({
       const response = await RecipeApi.deleteCocktails(
         cocktailDetail.cocktailId
       );
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -34,6 +42,11 @@ export default function RecipeInfo({
         cocktailDetail.cocktailId,
         score2
       );
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
       const json = await response.json();
       setTotal(json.rating);
     } catch (error) {
@@ -44,20 +57,20 @@ export default function RecipeInfo({
   const changeScore = (idx) => {
     // 로그인 여부 확인
     if (localData.userId === cocktailDetail.userId) {
-      alert('자신이 작성한 레시피는 평가할 수 없습니다.');
+      alert(ALERT_MESSAGE.RATE_OWN_RECIPE);
       return;
     }
     if (isLogin) {
       setScore(idx + 1);
       modifyScore(idx + 1);
     } else {
-      alert('로그인 후 이용가능합니다.');
+      alert(ALERT_MESSAGE.LOGIN_FIRST);
     }
   };
   const deletePost = () => {
     // 삭제
-    if (window.confirm('정말로 삭제하시겠습니까?')) {
-      alert('삭제되었습니다.');
+    if (window.confirm(ALERT_MESSAGE.DOUBLE_CHECK_DELETE)) {
+      alert(ALERT_MESSAGE.DELETE);
       deleteRecipe();
       navigate('/category');
     }
@@ -67,10 +80,10 @@ export default function RecipeInfo({
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        alert('현재 주소가 클립보드에 복사되었습니다.');
+        alert(ALERT_MESSAGE.PATH_CLIPBOARD);
       })
       .catch((error) => {
-        console.error('클립보드 복사에 실패했습니다:', error);
+        console.error(error);
       });
   };
 
@@ -137,7 +150,7 @@ export default function RecipeInfo({
         <UserContainer>
           <WriterInfo>
             {cocktailDetail.activeUserWritten ? (
-              cocktailDetail.userId === 4 ? (
+              cocktailDetail.userId === 1 ? (
                 <FlexContainer>
                   <PiUserCircleFill size="24px" />
                   <NameP>관리자</NameP>
@@ -157,13 +170,14 @@ export default function RecipeInfo({
               </FlexContainer>
             )}
             <p className="mt-1 text-[10px]">
-              {getTime(cocktailDetail.createdAt)}
+              {getTime(cocktailDetail.modifiedAt)}
             </p>
           </WriterInfo>
           <LinkToCU href={encodingUrl(cocktailDetail.liquor)} target="_blank">
             <img
               src={process.env.PUBLIC_URL + '/images/btn_cu.webp'}
               alt="편의점 앱으로 이동"
+              width={'160px'}
             />
           </LinkToCU>
         </UserContainer>
@@ -194,10 +208,6 @@ flex-wrap
 const InfoContainer = tw.section`
 flex
 max-md:flex-col
-`;
-const InfoImage = tw.img`
-w-80
-rounded-[0.625rem]
 `;
 const InfoRightContainer = tw.section`
 ml-8
@@ -274,23 +284,6 @@ text-3xl
 text-gray-100
 font-bold
 `;
-const ShareContainer = tw.div`
-flex 
-h-6 
-ml-4 
-px-2 
-py-1 
-text-xs 
-text-gray-200 
-items-center 
-bg-gray-300 
-rounded-full
-cursor-pointer
-hover:text-gray-300
-hover:bg-white
-max-lg:ml-0
-max-lg:mt-2
-`;
 const NameP = tw.p`
 mt-0.5
 ml-0.5 
@@ -309,20 +302,18 @@ text-gray-300
 hover:text-pointPurple-100
 text-xs
 `;
-const LinkToCUP = tw.p`
-cursor-pointer
-`;
 const RecipeContiner = tw.div`
 mt-5
 pb-4
 text-xs
 border-b-[1px]
-border-[#7b7b7b]/50
+border-gray-300/50
+max-md:pb-0
 `;
 const RecipeHeader = tw.div`
 flex
 mb-2.5
-text-[#7b7b7b]
+text-gray-300
 font-bold
 items-center
 `;
@@ -330,15 +321,18 @@ const RecipeHr = tw.hr`
 ml-2 
 border-1 
 border-solid 
-border-[#7b7b7b]/50
-w-[calc(100%-30px)]
+border-gray-300/50
+w-[calc(100%-31px)]
 `;
 const RecipeList = tw.div`
-text-[#b3b3b3]
+text-gray-200
 h-[calc(20rem-185px)]
 overflow-y-auto
 scrollbar
+max-md:h-full
 `;
 const RecipeEle = tw.p`
 mb-2.5
+text-sm
+hover:text-pointPurple-100
 `;

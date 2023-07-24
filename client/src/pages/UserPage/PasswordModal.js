@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hook/useLogout';
 
 import UserPageApi from '../../api/UserPageApi';
 import CustomInput from '../../components/Input/CustomInput';
 import modifyPasswordValid from '../../components/Validation/ModifyPwdValidation';
-
-import { Modal, Box } from '@mui/material';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
+import { Modal, Box } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -22,6 +23,7 @@ const style = {
   borderRadius: 5,
 };
 export default function PasswordModal({ localData }) {
+  const logout = useLogout();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ password: '', checkPassword: '' });
   const [isValid, setIsValid] = useState({
@@ -40,12 +42,16 @@ export default function PasswordModal({ localData }) {
       const response = await UserPageApi.modifyUser(localData.userId, {
         password: form.password,
       });
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
   };
   const onSubmit = () => {
-    console.log(form);
     const { password, checkPassword } = modifyPasswordValid(
       form.password,
       form.checkPassword
@@ -53,7 +59,7 @@ export default function PasswordModal({ localData }) {
     setIsValid({ password: password, checkPassword: checkPassword });
     if (password === true && checkPassword === true) {
       modifyPassword();
-      alert('비밀번호가 정상적으로 변경되었습니다.');
+      alert(ALERT_MESSAGE.PASSWORD_MODIFY);
       handleClose();
     }
   };

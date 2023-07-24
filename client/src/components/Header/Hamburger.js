@@ -12,15 +12,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HeaderModal from './HeaderModal';
 import HoverButton from '../../common/Buttons/HoverButton';
 
+import { HEADER_TITLE, PATH } from '../../constants/constants';
+
 export default function Hamburger() {
   const [position, setPosition] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const userid = localStorage.getItem('userId');
 
   //리덕스툴킷
   const isLogin = useSelector((state) => state.isLogin.isLogin);
-  const dispatch = useDispatch();
+
   const handleLogOut = useLogout();
 
   // 스크롤 이벤트
@@ -94,11 +97,11 @@ export default function Hamburger() {
               <HeaderModal />
             </MenuItem>
           )}
-          <MenuItem onClick={() => openPage('/')}>
-            <HoverButton>HOME</HoverButton>
+          <MenuItem onClick={() => openPage(PATH.MAIN_PAGE)}>
+            <HoverButton>{HEADER_TITLE.HOME}</HoverButton>
           </MenuItem>
-          <MenuItem onClick={() => openPage('/category')}>
-            <HoverButton>Category</HoverButton>
+          <MenuItem onClick={() => openPage(PATH.CATEGORY_PAGE)}>
+            <HoverButton>{HEADER_TITLE.CATEGORY}</HoverButton>
           </MenuItem>
         </Menu>
       ) : (
@@ -116,11 +119,11 @@ export default function Hamburger() {
             },
           }}
         >
-          <MenuItem onClick={() => openPage('/userpage/:id')}>
-            <HoverButton>Mypage</HoverButton>
+          <MenuItem onClick={() => openPage(`/userpage/${userid}`)}>
+            <HoverButton>{HEADER_TITLE.MYPAGE}</HoverButton>
           </MenuItem>
-          <MenuItem onClick={() => openPage('/category')}>
-            <HoverButton>Category</HoverButton>
+          <MenuItem onClick={() => openPage(PATH.CATEGORY_PAGE)}>
+            <HoverButton>{HEADER_TITLE.CATEGORY}</HoverButton>
           </MenuItem>
 
           <MenuItem

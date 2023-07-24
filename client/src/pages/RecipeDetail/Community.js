@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hook/useLogout';
 
 import CommentValid from '../../components/Validation/CommentValidation';
 import RecipeApi from '../../api/RecipeApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 
@@ -13,6 +15,7 @@ export default function Community({
   localData,
 }) {
   const navigate = useNavigate();
+  const logout = useLogout();
 
   const [tag, setTag] = useState({ userId: '', userName: '' });
   const [comment, setComment] = useState('');
@@ -25,6 +28,11 @@ export default function Community({
       const response = await RecipeApi.PostComments(cocktailDetail.cocktailId, {
         content: comment,
       });
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +47,11 @@ export default function Community({
         content: comment,
       };
       const response = await RecipeApi.PostReplys(commentId, repliInfo);
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -51,6 +64,11 @@ export default function Community({
         commentId,
         cocktailDetail.cocktailId
       );
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +78,11 @@ export default function Community({
   const deleteReply = async (replyId) => {
     try {
       const response = await RecipeApi.deleteReplies(replyId);
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +93,7 @@ export default function Community({
     e.preventDefault();
 
     if (!isLogin) {
-      alert('로그인 후 이용해주세요');
+      alert(ALERT_MESSAGE.LOGIN_FIRST);
       return;
     }
 
@@ -102,6 +125,7 @@ export default function Community({
     }
   };
 
+  // 태그할 유저 정보 수정
   const clickReply = (userId, userName, commentId) => {
     changeTag(userId, userName, commentId);
     scrollToReply();

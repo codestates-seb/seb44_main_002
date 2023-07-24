@@ -5,8 +5,10 @@ import HoverButton from '../../common/Buttons/HoverButton';
 import CustomInput from '../../components/Input/CustomInput';
 import UseSignupValid from '../../components/Validation/SignupValidation';
 import GenderRadioInput from '../../components/Input/GenderRadioInput';
+import ProfileUpload from './ProfileUpload';
 
 import tw from 'tailwind-styled-components';
+import { ALERT_MESSAGE, PATH } from '../../constants/constants';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ export default function Signup() {
     confirmPassword: '',
     gender: '',
     age: '',
+    profileImageUrl: '',
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,13 +64,11 @@ export default function Signup() {
         const response = await api.signupApi(userinfo);
         if (response === 201) {
           // 응답이 성공적인 경우
-          console.log('요청이 성공했습니다.');
           setErrorMsg(null);
-          navigate('/');
-          alert('환영합니다!');
+          navigate(PATH.MAIN_PAGE);
+          alert(ALERT_MESSAGE.WELCOME);
         } else {
           // 응답이 실패한 경우
-          console.log('요청이 실패했습니다.');
           if (response === 409) {
             setErrorMsg('이미 가입된 계정입니다. 로그인해보세요!');
           }
@@ -79,8 +80,6 @@ export default function Signup() {
         console.log(error);
         //  navigate('/error');
       }
-    } else {
-      console.log('유효성 검사 작동');
     }
   };
 
@@ -102,8 +101,8 @@ export default function Signup() {
               src="images/logo.webp"
               alt="logo"
               className="w-[32.4px] h-[48px] max-[520px]:my-4  "
-              onClick={() => navigate('/')}
-              onKeyDown={() => navigate('/')}
+              onClick={() => navigate(PATH.MAIN_PAGE)}
+              onKeyDown={() => navigate(PATH.MAIN_PAGE)}
             />
           </LogoSection>
         </div>
@@ -114,14 +113,14 @@ export default function Signup() {
               <div></div>
               <SignupHeader>회원가입</SignupHeader>
               {/* 뒤로가기 버튼 */}
-              <button onClick={() => navigate('/')}>
+              <button onClick={() => navigate(PATH.MAIN_PAGE)}>
                 <img src="images/delete/x.png" alt="뒤로가기" />
               </button>
             </div>
             {errorMsg && <p className="text-error text-[13px]">{errorMsg}</p>}
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col h-full items-center"
+              className="flex flex-col items-center h-full"
             >
               <InputSection>
                 <CustomInput
@@ -134,6 +133,7 @@ export default function Signup() {
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
+                <ProfileUpload form={form} setForm={setForm} />
                 <CustomInput
                   labelName="이메일"
                   type="email"

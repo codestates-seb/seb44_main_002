@@ -15,6 +15,7 @@ import HoverButton from '../../common/Buttons/HoverButton';
 import { useLogout } from '../../hook/useLogout';
 
 import tw from 'tailwind-styled-components';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 export default function CocktailModifyForm() {
   const logout = useLogout();
@@ -67,11 +68,15 @@ export default function CocktailModifyForm() {
     // cocktailform get 요청 api 분리
     GetCocktailForm(params.id)
       .then((json) => {
-        if (response === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+        if (json === 401) {
+          alert(ALERT_MESSAGE.TOKEN_OVER);
           logout();
+          return;
         }
-        // console.log(json);
+        return json;
+      })
+      .then((json) => json.json())
+      .then((json) => {
         const transformedTags = divisionTags(json.tags);
         const transformedLiquor = transformLiquor(json.liquor);
         setForm({
@@ -83,7 +88,6 @@ export default function CocktailModifyForm() {
             process: item.process,
           })),
           degree: transformedTags.degree,
-          // 컴포넌트 설계 미스
           flavor: transformedTags.flavor,
           ingredients: json.ingredients.map((item) => ({
             ingredient: item.ingredient,
@@ -95,7 +99,6 @@ export default function CocktailModifyForm() {
   }, []);
 
   const submitHandler = (e) => {
-    // console.log(form);
     e.preventDefault();
     const { name, imageUrl, liquor, ingredients, recipe, degree, flavor } =
       useCocktailFormValid(form);
@@ -126,14 +129,20 @@ export default function CocktailModifyForm() {
       // cocktailform patch 요청 api 분리
       PatchCocktailForm(form, params.id)
         .then((json) => {
-          // console.log(json);
+          if (json === 401) {
+            alert(ALERT_MESSAGE.TOKEN_OVER);
+            logout();
+            return;
+          }
+          return json;
+        })
+        .then((json) => json.json())
+        .then((json) => {
           navigate(`/success/${json.cocktailId}`);
         })
         .catch((error) => {
           console.log(error);
         });
-    } else {
-      console.log('유효성 검사 작동');
     }
   };
 

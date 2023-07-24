@@ -21,8 +21,6 @@ export const divisionTags = (tags) => {
       degreeResult = degreeMapping[tag];
     } else if (flavorMapping[tag]) {
       flavorResult.push({ tag: flavorMapping[tag] });
-    } else {
-      console.log('태그들이 없음');
     }
   }
 

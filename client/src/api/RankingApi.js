@@ -1,7 +1,6 @@
 export const RankingApi = async (isLogin) => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   let url = `${BASE_URL}recommend/unsigned`;
-  console.log(url);
   let headers = {
     'Content-Type': 'application/json',
   };
@@ -11,16 +10,23 @@ export const RankingApi = async (isLogin) => {
     headers = {
       'Content-Type': 'application/json',
       Authorization: localStorage.getItem('accessToken'),
+      Refresh: localStorage.getItem('refreshToken'),
     };
   }
   const rankingData = await fetch(url, {
     method: 'GET',
     headers: headers,
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error('네트워크 응답이 정상이 아닙니다');
-    }
-    return res.json();
   });
+  if (rankingData.status === 401) {
+    return 401;
+  }
+  if (rankingData.status === 500) {
+    localStorage.setItem(
+      'accessToken',
+      rankingData.headers.get('Authorization')
+    );
+    localStorage.setItem('refreshToken', rankingData.headers.get('Refresh'));
+    return rankingData;
+  }
   return rankingData;
 };

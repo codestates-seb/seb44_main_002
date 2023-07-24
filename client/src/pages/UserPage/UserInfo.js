@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useLogout } from '../../hook/useLogout';
 
 import PasswordModal from './PasswordModal';
-import { logout } from '../../redux/slice/isLoginSlice';
 import UserPageApi from '../../api/UserPageApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 
 export default function UserInfo({ userInfo, isLogin, localData }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const logout = useLogout();
 
   const [buttontext, setButtonText] = useState('구독 중');
 
@@ -21,14 +23,18 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
   const deleteUser = async () => {
     try {
       const response = await UserPageApi.deleteUser(localData.userId);
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
   const clickDelete = () => {
-    if (window.confirm('정말로 탈퇴하시겠습니까?')) {
-      alert('삭제되었습니다.');
+    if (window.confirm(ALERT_MESSAGE.DOUBLE_CHECK_WITHDRAW)) {
+      alert(ALERT_MESSAGE.WITHDRAW);
       deleteUser();
       dispatch(logout());
       localStorage.clear();
@@ -39,9 +45,13 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
   const clickFollow = async () => {
     try {
       const response = await UserPageApi.createfollow(userInfo.userId);
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
       location.reload();
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
@@ -49,9 +59,13 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
   const cancelSubsctibe = async () => {
     try {
       const response = await UserPageApi.cancelfollow(userInfo.userId);
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
       location.reload();
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
@@ -61,7 +75,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
       <InfoContainer>
         <UserImg
           src={`/images/user/${
-            userInfo.userId === 4
+            userInfo.userId === 1
               ? 'user_admin.png'
               : userInfo.gender === 'male'
               ? 'user_boy.png'
@@ -77,7 +91,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
               <p>{`${userInfo.name}님 페이지입니다.`}</p>
             )}
             {isLogin &&
-              userInfo.userId !== 4 &&
+              userInfo.userId !== 1 &&
               userInfo.userId !== localData.userId &&
               (userInfo.subscribed ? (
                 <TitleButton
@@ -105,7 +119,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
               <DownInfoP>{'@' + userInfo.email.split('@')[1]}</DownInfoP>
             </InfoComponent>
             {isLogin &&
-              userInfo.userId !== 4 &&
+              userInfo.userId !== 1 &&
               userInfo.userId !== localData.userId &&
               (userInfo.subscribed ? (
                 <InfoComponent>
@@ -164,11 +178,13 @@ pt-8
 const InnerInfo = tw.div`
 flex 
 mt-6
+max-sm:flex-wrap
 `;
 const InfoComponent = tw.div`
 text-center 
 mr-10
 max-sm:mr-6
+max-sm:mb-6
 `;
 const UpInfoP = tw.p`
 text-5xl

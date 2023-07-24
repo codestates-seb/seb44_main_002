@@ -5,6 +5,7 @@ import { open } from '../../../redux/slice/isModalSlice';
 import HoverButton from '../../../common/Buttons/HoverButton';
 
 import tw from 'tailwind-styled-components';
+import { PATH } from '../../../constants/constants';
 
 export default function Advice({ error }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Advice({ error }) {
   const registrationHandler = () => {
     if (isLogin) {
       // 로그인
-      navigate('/cocktail');
+      navigate(PATH.COCKTAIL_PAGE);
     } else {
       // 로그아웃
       dispatch(open());
@@ -38,12 +39,13 @@ export default function Advice({ error }) {
             공유해보세요!
           </p>
           <p className="text-lg font-normal text-gray-200 max-[884px]:mb-4">
-            해당 페이지에 대한 상세설명
+            작성한 레시피는 유저페이지에서 확인가능해요!
           </p>
           <HoverButton
             onClick={registrationHandler}
-            size="w-40 h-[42px]"
+            size="w-40 h-[50px]"
             fontSize="text-lg"
+            borderColor="border-pointPurple-100"
           >
             등록하러가기
           </HoverButton>

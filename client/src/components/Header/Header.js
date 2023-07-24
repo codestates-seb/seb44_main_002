@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 import { useLogout } from '../../hook/useLogout';
 
 import HeaderModal from './HeaderModal';
@@ -10,6 +9,9 @@ import Hamburger from './Hamburger';
 import tw from 'tailwind-styled-components';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Swal from 'sweetalert2';
+
+import { HEADER_TITLE, PATH } from '../../constants/constants';
 
 export default function Header() {
   const [hovered, setHovered] = useState(false);
@@ -19,7 +21,6 @@ export default function Header() {
   const isLogin = useSelector((state) => state.isLogin.isLogin);
   const userinfo = useSelector((state) => state.userinfo);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const logout = useLogout();
@@ -66,25 +67,6 @@ export default function Header() {
     };
   }, []);
 
-  // useNavigate 함수
-  const MenuItem = ({ path, label }) => (
-    <div
-      className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden`}
-      role="presentation"
-      onClick={() => navigate(path)}
-      onKeyDown={() => navigate(path)}
-    >
-      {label}
-    </div>
-  );
-  // const handleLogOut = () => {
-  //   // console.log('동작');
-  //   localStorage.clear();
-  //   dispatch(logout());
-  //   dispatch(userinfoLoginOut());
-  //   navigate('/');
-  // };
-
   const randomHandler = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}cocktails/random`, {
       method: 'GET',
@@ -95,7 +77,6 @@ export default function Header() {
       // 성공
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         navigate(`/detail/${json.cocktailId}`);
       })
       // 실패
@@ -113,34 +94,34 @@ export default function Header() {
           src={process.env.PUBLIC_URL + `/images/logo.webp`}
           alt="logo"
           className="h-[40px] cursor-pointer"
-          onClick={() => navigate('/')}
-          onKeyDown={() => navigate('/')}
+          onClick={() => navigate(PATH.MAIN_PAGE)}
+          onKeyDown={() => navigate(PATH.MAIN_PAGE)}
         />
       </HeaderDiv>
       <HeaderDiv className="justify-center">
         <div
           className={`text-xl cursor-pointer mr-[10px] max-[768px]:hidden ${
-            location.pathname === '/'
+            location.pathname === PATH.MAIN_PAGE
               ? `${position ? 'text-black' : 'text-white'} font-bold`
               : 'text-gray-200 font-normal'
           }`}
           role="presentation"
-          onClick={() => navigate('/')}
-          onKeyDown={() => navigate('/')}
+          onClick={() => navigate(PATH.MAIN_PAGE)}
+          onKeyDown={() => navigate(PATH.MAIN_PAGE)}
         >
-          HOME
+          {HEADER_TITLE.HOME}
         </div>
         <div
           className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden ${
-            location.pathname === '/category'
+            location.pathname === PATH.CATEGORY_PAGE
               ? `${position ? 'text-black' : 'text-white'} font-bold`
               : 'text-gray-200 font-normal'
           }`}
           role="presentation"
-          onClick={() => navigate('/category')}
-          onKeyDown={() => navigate('/category')}
+          onClick={() => navigate(PATH.CATEGORY_PAGE)}
+          onKeyDown={() => navigate(PATH.CATEGORY_PAGE)}
         >
-          CATEGORY
+          {HEADER_TITLE.CATEGORY}
         </div>
         <div
           className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden text-gray-200`}
@@ -150,13 +131,13 @@ export default function Header() {
           onMouseEnter={randomColorHandler}
           onMouseLeave={resetColor}
         >
-          추천
+          {HEADER_TITLE.RECOMMEND}
         </div>
       </HeaderDiv>
       {isLogin ? (
         <>
           <HeaderDiv className="justify-end max-[768px]:hidden">
-            <div className="flex mx-2 font-bold items-center">
+            <div className="flex items-center mx-2 font-bold">
               {userinfo.name || name}
             </div>
             <div className="mx-2">

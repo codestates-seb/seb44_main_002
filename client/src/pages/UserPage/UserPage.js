@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useLogout } from '../../hook/useLogout';
 
 import UserInfo from './UserInfo';
 import Subscribe from './Subscribe';
 import UserRecipe from './UserRecipe';
 import UserBookmarked from './UserBookmarked';
 import UserPageApi from '../../api/UserPageApi';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
 import tw from 'tailwind-styled-components';
 
 export default function UserPage() {
   const navigate = useNavigate();
   const location = useLocation().pathname.split('/')[2];
+  const logout = useLogout();
 
-  const [userInfo, setUserInfo] = useState(dummyData);
+  const [userInfo, setUserInfo] = useState(resetData);
   const [localData, setLocalData] = useState({
     userId: '',
     IsAdmin: false,
@@ -25,10 +28,14 @@ export default function UserPage() {
   const getUser = async () => {
     try {
       const response = await UserPageApi.getUserData(location);
+      if (response === 401) {
+        alert(ALERT_MESSAGE.TOKEN_OVER);
+        logout();
+        return;
+      }
       const json = await response.json();
       setUserInfo(json);
     } catch (error) {
-      console.log(error);
       navigate('/error');
     }
   };
@@ -64,9 +71,9 @@ export default function UserPage() {
             isLogin={isLogin}
             localData={localData}
           />
-          <Subscribe userInfo={userInfo} />
+          <Subscribe userInfo={userInfo} localData={localData} />
           <UserRecipe userInfo={userInfo} localData={localData} />
-          <UserBookmarked userInfo={userInfo} />
+          <UserBookmarked userInfo={userInfo} localData={localData} />
         </Container>
       </OuterContainer>
     </Background>
@@ -88,6 +95,7 @@ bg-[#000000]/40
 px-[4.6875rem]
 py-32
 max-md:px-4
+max-sm:py-8
 `;
 const Container = tw.main`
 w-full
@@ -108,126 +116,36 @@ right-[900px]
 pointer-events-none
 `;
 
-const dummyData = {
-  userId: 1,
-  name: '숨니',
+const resetData = {
+  userId: 3,
+  name: '',
   profileImageUrl: 'sample image url',
-  gender: '여',
-  age: 20,
-  email: 'kim@example.com',
-  subscriberCount: 1200,
+  gender: '',
+  age: 0,
+  email: '',
+  subscriberCount: 0,
   cocktails: [],
   bookmarkedCocktails: [
     {
-      cocktailId: 1,
-      name: '라떼 밀크주',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210707094952-WOE78.jpg',
-      isBookmarked: true,
-    },
-    {
-      cocktailId: 2,
-      name: '논알콜 청포도 모히토',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706172910-2B1WD.jpg',
-      isBookmarked: false,
-    },
-    {
-      cocktailId: 3,
-      name: '시트러스 주스',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
-      isBookmarked: true,
-    },
-    {
-      cocktailId: 4,
-      name: '라떼 밀크주',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210707094952-WOE78.jpg',
-      isBookmarked: true,
-    },
-    {
-      cocktailId: 5,
-      name: '논알콜 청포도 모히토',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706172910-2B1WD.jpg',
-      isBookmarked: false,
-    },
-    {
       cocktailId: 6,
-      name: '시트러스 주스',
-      imageUrl: 'https://2bob.co.kr/data/recipe/20210706173724-7B5QW.jpg',
+      name: '',
+      imageUrl: '',
       isBookmarked: true,
     },
   ],
   boards: [
     {
       boardId: 1,
-      title: 'title1',
-      content: 'content1',
-    },
-    {
-      boardId: 2,
-      title: 'title2',
-      content: 'content2',
+      title: '',
+      content: '',
     },
   ],
-  follows: [
-    {
-      followingUserId: 2,
-      followingUserName: 'test2',
-      followingUserProfileImageUrl: 'url',
-    },
-  ],
+  follows: [],
   subscribe: [
     {
       userId: 1,
-      name: 'park1',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 2,
-      name: 'park2',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 3,
-      name: 'park3',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 4,
-      name: 'park4',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 5,
-      name: 'park5',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 6,
-      name: 'park6',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 7,
-      name: 'park7',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 8,
-      name: 'park8',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-    },
-    {
-      userId: 9,
-      name: 'park9',
-      profileImageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+      name: '',
+      profileImageUrl: '',
     },
   ],
   subscribed: false,
