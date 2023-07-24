@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLogout } from '../../../hook/useLogout';
 import tw from 'tailwind-styled-components';
 import { RankingApi } from '../../../api/RankingApi';
+import { ALERT_MESSAGE } from '../../../constants/constants';
 
 export default function Ranking({ error, setError }) {
   const [data, setData] = useState({
@@ -18,7 +19,7 @@ export default function Ranking({ error, setError }) {
     RankingApi(isLogin)
       .then((json) => {
         if (json === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(ALERT_MESSAGE.TOKEN_OVER);
           logout();
           return;
         }
@@ -79,5 +80,5 @@ export default function Ranking({ error, setError }) {
 }
 
 const Container = tw.div`flex flex-col text-white h-[600px] mt-[70px] w-screen max-[884px]:h-full`;
-const Title = tw.div`flex flex-[1] mb-14 font-bold text-2xl ml-24 max-[884px]:justify-center max-[884px]:ml-0 max-[884px]:mb-10`;
-const ItemContainer = tw.div`flex flex-[10] mb-24 justify-around items-center max-[884px]:flex-col max-[884px]:w-full max-[884px]:mb-12`;
+const Title = tw.div` drop-shadow-3xl flex flex-[1] mb-14 font-bold text-2xl ml-24 max-[884px]:justify-center max-[884px]:ml-0 max-[884px]:mb-10`;
+const ItemContainer = tw.div`drop-shadow-3xl flex flex-[10] mb-24 justify-around items-center max-[884px]:flex-col max-[884px]:w-full max-[884px]:mb-12`;

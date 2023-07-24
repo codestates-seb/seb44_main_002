@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
-import { ALERT_MESSAGE } from '../constants/constants';
+import { ALERT_MESSAGE } from '../../constants/constants';
 
-const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
+const ProfileUpload = ({ form, setForm }) => {
   const [imageSrc, setImageSrc] = useState(form.imageUrl);
   const inputRef = useRef();
 
@@ -35,8 +35,9 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
     formData.append('file', file);
 
     try {
+      console.log(formData);
       const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}upload/cocktails`,
+        `${process.env.REACT_APP_BASE_URL}upload/users`,
         {
           method: 'POST',
           body: formData,
@@ -47,13 +48,12 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
         // 유효성 검사 true로 변경
         const imageUrl = await response.json();
         console.log(imageUrl);
-        setForm({ ...form, imageUrl: imageUrl.url });
-        setIsValid({ ...isValid, imageUrl: true });
+        setForm({ ...form, profileImageUrl: imageUrl.url });
       } else {
         // 유효성 검사 false로 변경
         alert(ALERT_MESSAGE.IMG_FAILED);
-        setForm({ ...form, imageUrl: '' });
-        setIsValid({ ...isValid, imageUrl: false });
+        setForm({ ...form, profileImageUrl: '' });
+
         setImageSrc(null);
         inputRef.current.value = '';
 
@@ -65,13 +65,9 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
   };
 
   return (
-    <>
-      <p
-        className={`w-full flex justify-start font-bold text-error mb-1 ${
-          isValid.imageUrl && 'text-gray-200'
-        }`}
-      >
-        칵테일 사진 등록
+    <div>
+      <p className={`w-full flex justify-start font-bold text-gray-200 mb-1`}>
+        프로필 사진 등록
       </p>
       <div
         style={{
@@ -85,32 +81,32 @@ const ImageUpload = ({ form, setForm, isValid, setIsValid }) => {
           id="file-input"
           ref={inputRef}
           className={`text-gray-200 mb-1 rounded-sm w-full cursor-pointer ${
-            !imageSrc && 'h-[300px] border border-error border-solid'
-          } ${isValid.imageUrl && 'border-gray-200'}`}
+            !imageSrc && 'h-[300px] border border-gray-200 border-solid'
+          } `}
           accept="image/*"
           type="file"
           onChange={onUpload}
         />
       </div>
       <div className="h-8">
-        <p className={`h-8 text-sm text-error ${isValid.imageUrl && 'hidden'}`}>
+        {/* <p className={`h-8 text-sm text-error ${isValid.imageUrl && 'hidden'}`}>
           칵테일 사진을 등록해주세요
-        </p>
+        </p> */}
       </div>
 
       <div
-        className={`w-[355px] h-[300px] mb-5  max-[520px]:w-[320px] max-[520px]:h-full ${
+        className={`w-[355px] h-[300px] mb-5  max-[520px]:w-[280px] max-[520px]:h-full ${
           !imageSrc && 'hidden'
         }`}
       >
         <img
           className={`w-full h-full object-contain `}
-          src={form.imageUrl ? form.imageUrl : imageSrc}
+          src={form.profileImageUrl ? form.profileImageUrl : imageSrc}
           alt="preview"
         />
       </div>
-    </>
+    </div>
   );
 };
 
-export default ImageUpload;
+export default ProfileUpload;

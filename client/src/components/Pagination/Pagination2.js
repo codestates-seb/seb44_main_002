@@ -15,6 +15,7 @@ export default function Pagination2({
     setCurrentPage(page);
   };
 
+  // 페이지 네이션에 필요한 배열 생성
   const updatePageList = () => {
     const firstPage = Math.floor(currentPage / 5) * 5;
     const endPage =
@@ -22,7 +23,6 @@ export default function Pagination2({
     const array = Array.from({ length: endPage - firstPage + 1 }, (_, idx) => {
       return idx + firstPage;
     });
-    console.log(array, firstPage, endPage, totalPage);
     return array;
   };
 
@@ -52,7 +52,7 @@ export default function Pagination2({
                 key={idx}
                 onClick={() => {
                   scrollToTop();
-                  setCurrentPage(idx);
+                  setCurrentPage(page);
                 }}
                 currentPage={currentPage}
                 idx={idx}
@@ -77,6 +77,7 @@ export default function Pagination2({
 const Container = tw.div`
 leading-[13px]
 `;
+
 const MovePrev = tw.button`
 text-white
 text-base

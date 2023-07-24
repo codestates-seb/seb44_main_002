@@ -1,27 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CategoryFilter, sortTypeData } from '../../common/Data';
 import { useLogout } from '../../hook/useLogout';
-import api from '../../api/api';
+import useFilterurl from '../../components/FIlterUrl/Filterurl';
+
 import Card from '../../components/Card/Card';
 import SkeletonCard from '../../components/Card/SkeletonCard';
 import Filter from './Filter';
 import HoverButton from '../../common/Buttons/HoverButton';
-import useFilterurl from '../../components/FIlterUrl/Filterurl';
-import tw from 'tailwind-styled-components';
 import Pagination2 from '../../components/Pagination/Pagination2';
+
+import tw from 'tailwind-styled-components';
+import api from '../../api/api';
+import { PATH, ALERT_MESSAGE, TOTAL_PAGE } from '../../constants/constants';
 
 // 페이지네이션 추가
 export default function Category() {
-  //배포이후 baseUrl
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const logout = useLogout();
+
   //리덕스 임시 저장
   const isLogin = useSelector((state) => state.isLogin.isLogin);
+
   //선택된 카테고리조건 (카테고리&태그&정렬)
   const [filterCondtion, setFilterCondtion] = useState({
     category: CategoryFilter[0].type,
@@ -34,15 +37,12 @@ export default function Category() {
   //현재 페이지 인덱스
   const [currentPage, setCurrentPage] = useState(0);
   const [cocktailData, setCocktailData] = useState([]);
-  // console.log(cocktailData);
-  const [obj, setObj] = useState({
-    totalCount: 200,
-    totalPages: 5,
+  const [dataInfo, setDataInfo] = useState({
+    totalCount: 0,
+    totalPages: 0,
   });
   //에러처리
   const [errormsg, setErrormsg] = useState(null);
-  const [totalPage, setTotalPage] = useState(0);
-
   const [isLoaded, setIsLoaded] = useState(false);
 
   const useSkeleton = () => {
@@ -53,6 +53,7 @@ export default function Category() {
   };
 
   useEffect(() => {
+    setCurrentPage(0);
     useSkeleton();
     const fetchCocktails = async () => {
       const url = useFilterurl(BASE_URL, currentPage, filterCondtion);
@@ -60,42 +61,35 @@ export default function Category() {
       try {
         const response = await api.getfilter(url);
         if (response === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(`${ALERT_MESSAGE.TOKEN_OVER}`);
           logout();
           return;
         }
-
         const data = await response.json();
-        console.log(data);
-        console.log('성공');
         setCocktailData(data.data);
         setErrormsg(null);
-        setTotalPage(data.pageInfo.totalPages);
+        const dataAmount = data.data.length;
+        setDataInfo({
+          totalCount: dataAmount,
+          totalPages: Math.ceil(dataAmount / TOTAL_PAGE.COCKTAIL_PER_PAGE),
+        });
         if (data.length === 0) {
-          setErrormsg(
-            '! 데이터 요청에 성공했으나, 데이터가 없습니다. 레시피를 등록해 보세요'
-          );
+          setErrormsg(`${ALERT_MESSAGE.SUCCESS_NULL}`);
         }
         return data;
       } catch (error) {
         console.error('Error:', error);
-        // navigate('/error');
-        setErrormsg(
-          '! 데이터 요청에 실패했습니다. API가 열려있는 지 확인해보세요.'
-        );
+        setErrormsg(`${ALERT_MESSAGE.ERROR}`);
       }
     };
 
     fetchCocktails();
-    setObj({
-      totalCount: 200,
-      totalPages: 5,
-    });
-  }, [filterCondtion, currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(0);
   }, [filterCondtion]);
+
+  // 필터 변경하면 현재 페이지를 다시 1로 변경합니다.
+  useEffect(() => {
+    useSkeleton();
+  }, [currentPage]);
 
   return (
     <DivContainer>
@@ -123,12 +117,12 @@ export default function Category() {
               radius="rounded-[30px]"
               color="text-[#BB40F1] bg-transparent"
               fontSize="max-[990px]:text-sm max-[700px]:text-xs max-[500px]:text-[10px]"
-              borderColor="border-[#BB40F1]"
+              borderColor="border-[#BB40F1] "
               hoverColor="hover:text-[#BB40F1] hover:bg-[#F0F0F0]"
               onClick={() =>
                 isLogin
-                  ? navigate('/cocktail')
-                  : alert('로그인 후 진행해 주세요.')
+                  ? navigate(`${PATH.COCKTAIL_PAGE}`)
+                  : alert(`${ALERT_MESSAGE.LOGIN_FIRST}`)
               }
             >
               나만의 레시피 등록하기
@@ -145,57 +139,38 @@ export default function Category() {
             />
             {/* 필터에 따라 출력되는 데이터 */}
             <CardContainer>
-              {cocktailData.map((item, index) =>
-                isLoaded ? (
-                  <Card
-                    item={item}
-                    className="pr-4"
-                    key={index + 1}
-                    data={cocktailData}
-                    setData={setCocktailData}
-                  />
-                ) : (
-                  <SkeletonCard key={index + 1} />
+              {cocktailData
+                .slice(
+                  currentPage * TOTAL_PAGE.COCKTAIL_PER_PAGE,
+                  (currentPage + 1) * TOTAL_PAGE.COCKTAIL_PER_PAGE
                 )
-              )}
+                .map((item, index) =>
+                  isLoaded ? (
+                    <Card
+                      item={item}
+                      className="pr-4"
+                      key={index + 1}
+                      data={cocktailData}
+                      setData={setCocktailData}
+                    />
+                  ) : (
+                    <SkeletonCard key={index + 1} />
+                  )
+                )}
             </CardContainer>
             {/* 에러메시지 */}
             {errormsg && <ErrorMessage>{errormsg}</ErrorMessage>}
             {/* 페이지네이션 */}
             <PaginationContainer>
-              {obj && (
+              {dataInfo && (
                 <>
-                  {obj.totalCount > 16 && (
+                  {dataInfo.totalCount > TOTAL_PAGE.COCKTAIL_PER_PAGE && (
                     <>
                       <Pagination2
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        totalPage={totalPage}
+                        totalPage={dataInfo.totalPages}
                       />
-                      {/* {Array.from(
-                        { length: totlaPage },
-                        (_, index) => index + 1
-                      ).map((i, idx) => (
-                        <HoverButton
-                          size="w-[20px] h-[30px]"
-                          key={idx}
-                          color={`${
-                            currentPage === idx
-                              ? 'text-[#BB40F1] bg-transparent'
-                              : 'text-[#7B7B7B] bg-transparent'
-                          }`}
-                          borderColor={`${
-                            currentPage === idx
-                              ? 'border-[#BB40F1]'
-                              : 'border-[#7B7B7B]'
-                          }`}
-                          onClick={() => {
-                            setCurrentPage(idx);
-                          }}
-                        >
-                          {i}
-                        </HoverButton>
-                      ))} */}
                     </>
                   )}
                 </>
@@ -211,15 +186,15 @@ const DivContainer = tw.div`overflow-hidden`;
 
 const Container = tw.div`
 relative
- bg-gradient-to-r 
- from-gradi-to 
- to-gradi-from
-  w-screen
-   h-100% 
-   pt-[10rem]
-    flex 
-    justify-center 
-     `;
+bg-gradient-to-r 
+from-gradi-to 
+to-gradi-from
+w-screen
+h-100% 
+pt-[10rem]
+flex 
+justify-center 
+`;
 const Main = tw.main`
 w-[55rem] 
 max-[990px]:w-[40rem] 
@@ -228,7 +203,7 @@ max-[500px]:w-[20rem]
 animate-fadeInDown1
 `;
 const PostButtonContainer = tw.div`
-flex justify-end pb-5
+flex justify-end pb-5 mb-[20px]
 `;
 
 const Section = tw.section`

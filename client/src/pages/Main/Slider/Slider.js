@@ -9,6 +9,8 @@ import { Autoplay, Pagination, Navigation } from 'swiper';
 import tw from 'tailwind-styled-components';
 import './Slider.css';
 
+import { PATH } from '../../../constants/constants';
+
 export default function Slider() {
   const progressCircle = useRef(null);
   const progressContent = useRef(null);
@@ -54,7 +56,7 @@ export default function Slider() {
 
   const cocktailFormHandler = () => {
     if (isLogin) {
-      navigate('/cocktail');
+      navigate(PATH.COCKTAIL_PAGE);
     } else {
       dispatch(open());
     }
@@ -69,7 +71,7 @@ export default function Slider() {
   };
 
   return (
-    <div className="swiper-container">
+    <div id="main" className="swiper-container">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -87,7 +89,10 @@ export default function Slider() {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
         {/* TODO: 커스텀이미지 안쓰고 사진만 넣을거면 밑에 복붙해서 링크만 바꾸면 됨 */}
-        <SwiperSlide className="relative flex max-[520px]:items-center max-[520px]:justify-center swiper-slide">
+        <SwiperSlide
+          id="main"
+          className="relative flex max-[520px]:items-center max-[520px]:justify-center swiper-slide"
+        >
           <img
             className="absolute object-cover w-full h-full"
             src="images/swiper/슬라이더샘플3.png"
@@ -109,7 +114,7 @@ export default function Slider() {
             </p>
             <button
               id="button-border-animate"
-              onClick={() => navigate('/category')}
+              onClick={() => navigate(PATH.CATEGORY_PAGE)}
               className="flex items-center justify-center w-40 h-24 text-lg rounded-sm"
             >
               한잔 마시러 가기 ➡️
@@ -130,7 +135,7 @@ export default function Slider() {
             </p>
             <button
               id="button-border-animate"
-              onClick={() => navigate('/category')}
+              onClick={() => navigate(PATH.CATEGORY_PAGE)}
               className="w-40 h-24 text-lg rounded-sm max-[520px]:h-8"
             >
               레시피 찾아보기 ➡️
@@ -143,7 +148,7 @@ export default function Slider() {
           <SliderCustomImg src="images/swiper/chat.png" alt="chat" />
           <SliderCustomText2>
             <p>
-              <span className="text-pointPurple-100">댓글</span>
+              <span className="text-pointPurple-100">대댓글</span>
               <span>로</span>
             </p>
             <p>다양한 유저와</p>
@@ -195,7 +200,7 @@ export default function Slider() {
             </p>
             <button
               id="button-border-animate"
-              onClick={() => navigate('/category')}
+              onClick={() => navigate(PATH.CATEGORY_PAGE)}
               className="w-48 h-24 text-lg max-[520px]:h-8"
             >
               레시피 찾아보기 ➡️
@@ -204,7 +209,7 @@ export default function Slider() {
           <SliderCustomImg src="images/swiper/filter.png" alt="filter" />
         </SwiperSlide>
 
-        <div className="autoplay-progress" slot="container-end">
+        <div id="main" className="autoplay-progress" slot="container-end">
           <svg viewBox="0 0 48 48" ref={progressCircle}>
             <circle cx="24" cy="24" r="20"></circle>
           </svg>

@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateBookmark } from '../../redux/slice/userInfoSlice';
-import api from '../../api/api';
 import { useLogout } from '../../hook/useLogout';
+
+import api from '../../api/api';
+
 import BookmarkBtn from '../BookmarkButton/BookmarkBtn';
 import tw from 'tailwind-styled-components';
 
+import { PATH, ALERT_MESSAGE, TOTAL_PAGE } from '../../constants/constants';
 export default function Card({ item }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,7 +33,7 @@ export default function Card({ item }) {
       try {
         const response = await api.createbookmarkApi(item);
         if (response === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(`${ALERT_MESSAGE.TOKEN_OVER}`);
           logout();
         }
       } catch (error) {
@@ -41,7 +44,7 @@ export default function Card({ item }) {
       try {
         const response = await api.deletebookmarkApi(item);
         if (response === 401) {
-          alert('토큰만료로 로그아웃되었습니다.');
+          alert(`${ALERT_MESSAGE.TOKEN_OVER}`);
           logout();
         }
       } catch (error) {
@@ -62,7 +65,7 @@ export default function Card({ item }) {
         <CocktailImg
           src={item.imageUrl}
           alt="칵테일 사진"
-          onClick={() => navigate(`/detail/${item.cocktailId}`)}
+          onClick={() => navigate(`${PATH.DETAIL_PAGE}${item.cocktailId}`)}
         />
         {/* 투명한 검은 박스 */}
         <Hoverocktail ishovering={hoveredIndex === item.cocktailId} />
@@ -115,7 +118,7 @@ w-[11.25rem]
   rounded-tl-2xl 
   rounded-br-2xl  
   bg-black 
-bg-opacity-50
+bg-opacity-20
   box-border
   ${(props) => (props.ishovering ? `hidden` : ``)}
 `;
