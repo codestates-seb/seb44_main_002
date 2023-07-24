@@ -6,6 +6,7 @@ import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.comment.dto.CommentDto;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,12 +15,19 @@ public class CocktailDto {
     @Getter
     @Setter
     public static class Post {
+        @NotNull
         private String name;
+        @NotNull
         private String imageUrl;
+        @NotNull
         private String liquor;
+        @NotNull
         private List<IngredientDto.Post> ingredients;
+        @NotNull
         private List<RecipeDto.Post> recipe;
+        @NotNull
         private String degree;
+        @NotNull
         private List<TagDto.Post> flavor;
     }
 
@@ -60,11 +68,17 @@ public class CocktailDto {
 
     @Getter
     public static class Patch {
+        @NotNull
         private String name;
+        @NotNull
         private String imageUrl;
+        @NotNull
         private List<IngredientDto.Post> ingredients;
+        @NotNull
         private List<RecipeDto.Post> recipe;
+        @NotNull
         private String degree;
+        @NotNull
         private List<TagDto.Post> flavor;
     }
 }
