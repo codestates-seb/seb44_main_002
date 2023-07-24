@@ -17,10 +17,6 @@ public class Ingredients {
     @Column(name = "ingredient")
     private Set<String> ingredients;
 
-    public Ingredients(Set<String> ingredients){
-        this.ingredients = ingredients;
-    }
-
     public Ingredients(List<IngredientDto.Post> ingredients) {
         this.ingredients = ingredients.stream()
                 .map(IngredientDto.Post::getIngredient)
