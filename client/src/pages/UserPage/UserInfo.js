@@ -207,7 +207,7 @@ const Button = tw.button`
 mb-2
 px-6
 py-2
-border-[1px]
+border
 border-gray-400
 rounded-md
 text-xs
