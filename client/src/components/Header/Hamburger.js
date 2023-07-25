@@ -101,7 +101,9 @@ export default function Hamburger() {
             <HoverButton>{HEADER_TITLE.HOME}</HoverButton>
           </MenuItem>
           <MenuItem onClick={() => openPage(PATH.CATEGORY_PAGE)}>
-            <HoverButton>{HEADER_TITLE.CATEGORY}</HoverButton>
+            <HoverButton fontSize="text-sm">
+              {HEADER_TITLE.CATEGORY}
+            </HoverButton>
           </MenuItem>
         </Menu>
       ) : (
@@ -123,7 +125,9 @@ export default function Hamburger() {
             <HoverButton>{HEADER_TITLE.MYPAGE}</HoverButton>
           </MenuItem>
           <MenuItem onClick={() => openPage(PATH.CATEGORY_PAGE)}>
-            <HoverButton>{HEADER_TITLE.CATEGORY}</HoverButton>
+            <HoverButton fontSize="text-md">
+              {HEADER_TITLE.CATEGORY}
+            </HoverButton>
           </MenuItem>
 
           <MenuItem
