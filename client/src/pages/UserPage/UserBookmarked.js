@@ -7,7 +7,10 @@ import tw from 'tailwind-styled-components';
 export default function UserBookmarked({ userInfo, localData }) {
   return (
     <Container>
-      <Title>북마크 된 레시피</Title>
+      <Title>
+        {userInfo.userId === localData.userId ? '자신' : userInfo.name + ' 님'}
+        이 북마크한 레시피
+      </Title>
       <Bookmark>
         {userInfo.bookmarkedCocktails.length === 0 ? (
           <div className="text-white mx-auto text-center">
