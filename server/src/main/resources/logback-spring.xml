@@ -12,7 +12,7 @@
         </rollingPolicy>
         <encoder>
             <pattern>
-                %d{HH:mm:ss.SSS} [%thread] [traceId=%X{traceId}] %-5level %logger{36}.%M - %msg%n
+                %d{HH:mm:ss.SSS} [%thread] %-5level %msg%n
             </pattern>
         </encoder>
     </appender>
