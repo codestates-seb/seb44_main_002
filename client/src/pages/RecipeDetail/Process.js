@@ -71,7 +71,7 @@ const ProcessContainer = tw.div`
 pb-4
 text-gray-200
 text-sm
-border-b-[1px]
+border-b
 border-gray-300/50
 `;
 const ProcessHeader = tw.div`
@@ -81,7 +81,7 @@ mt-14
 `;
 const ProcessHr = tw.hr`
 ml-2 
-border-1 
+border
 border-solid 
 border-gray-300/50
 w-[calc(100%-60px)]
@@ -97,7 +97,7 @@ items-center
 mr-2
 px-1
 py-0.5
-border-[1px] 
+border
 border-gray-300/50
 h-5
 text-[10px]

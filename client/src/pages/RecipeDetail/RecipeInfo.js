@@ -261,7 +261,7 @@ hover:text-pointPurple-100
 const Separator = tw.div`
 ml-2
 h-4
-border-r-[1px]
+border-r
 border-white
 `;
 const TitleContainer = tw.div`
@@ -306,7 +306,7 @@ const RecipeContiner = tw.div`
 mt-5
 pb-4
 text-xs
-border-b-[1px]
+border-b
 border-gray-300/50
 max-md:pb-0
 `;
@@ -319,7 +319,7 @@ items-center
 `;
 const RecipeHr = tw.hr`
 ml-2 
-border-1 
+border-1
 border-solid 
 border-gray-300/50
 w-[calc(100%-31px)]

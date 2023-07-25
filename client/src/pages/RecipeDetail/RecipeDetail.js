@@ -227,7 +227,7 @@ const cocktailDetail = {
   adminWritten: false,
   userId: 1,
   userName: '',
-  name: '체리주',
+  name: '',
   imageUrl: '',
   activeUserWritten: true,
   liquor: '럼',
@@ -245,7 +245,7 @@ const cocktailDetail = {
       tag: '',
     },
   ],
-  rating: 4.5,
+  rating: 0,
   comments: [
     {
       commentId: 1,
