@@ -8,6 +8,10 @@ export default function RankingCard({ item, idx }) {
   const [isHover, setIsHover] = useState(false);
   const navigate = useNavigate();
 
+  const handleError = (event) => {
+    event.target.src = process.env.PUBLIC_URL + '/images/cocktail_error.jpeg';
+  };
+
   return (
     <div className="relative cursor-pointer">
       <Item
@@ -28,6 +32,8 @@ export default function RankingCard({ item, idx }) {
             }`}
             src={item.cocktailImageUrl}
             alt="sample"
+            referrerPolicy="no-referrer"
+            onError={handleError}
           />
         </ImageContainer>
         <ItemText className="z-10">{item.cocktailName}</ItemText>

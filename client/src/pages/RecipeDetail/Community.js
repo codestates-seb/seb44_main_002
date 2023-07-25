@@ -274,7 +274,7 @@ const InputContainer = tw.div`
 flex 
 p-4 
 my-5 
-border-[1px] 
+border
 border-gray-300/50 
 text-xs 
 text-gray-200 
@@ -286,7 +286,7 @@ inline-block
 px-2 
 py-1.5 
 mb-4 
-border-[1px] 
+border
 border-gray-400 
 rounded-md 
 cursor-pointer
@@ -303,7 +303,7 @@ h-8
 w-20 
 ml-6
 pb-0.5 
-border-[1px] 
+border
 border-gray-400
 rounded-md  
 inline-block 
@@ -317,7 +317,7 @@ flex-col
 items-end
 justify-between
 py-3
-border-b-[1px]
+border-b
 border-gray-300/50
 max-md:flex-col
 max-md:items-start
@@ -357,7 +357,7 @@ const CommentButton = tw.button`
 w-13
 h-7
 ml-2
-border-[1px]
+border
 border-gray-400
 rounded-md
 text-xs
@@ -368,4 +368,6 @@ hover:border-white
 max-md:ml-0
 max-md:mr-1
 max-md:mt-4
+max-[380px]:text-[10px]
+max-[380px]:p-[5px]
 `;

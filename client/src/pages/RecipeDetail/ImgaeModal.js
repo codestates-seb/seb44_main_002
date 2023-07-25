@@ -20,9 +20,19 @@ export default function ImageModal({ imageUrl }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleError = (event) => {
+    event.target.src = process.env.PUBLIC_URL + '/images/cocktail_error.jpeg';
+  };
   return (
     <>
-      <InfoImage src={imageUrl} onClick={handleOpen} alt="와인사진" />
+      <InfoImage
+        src={imageUrl}
+        onClick={handleOpen}
+        alt="와인사진"
+        referrerPolicy="no-referrer"
+        onError={handleError}
+      />
       <Modal
         open={open}
         onClose={handleClose}
@@ -30,7 +40,7 @@ export default function ImageModal({ imageUrl }) {
         aria-describedby="parent-modal-description"
       >
         <Box sx={style} onClick={handleClose}>
-          <ModalImage src={imageUrl} alt="와인사진" />
+          <ModalImage src={imageUrl} alt="와인사진" onError={handleError} />
           <CloseP>✕</CloseP>
         </Box>
       </Modal>

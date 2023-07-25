@@ -54,6 +54,10 @@ export default function Card({ item }) {
     }
     dispatch(updateBookmark({ id, item }));
   };
+  const handleError = (event) => {
+    event.target.src = process.env.PUBLIC_URL + '/images/cocktail_error.jpeg';
+  };
+
   return (
     <Container
       onMouseOver={() => handleMouseOver(item.cocktailId)}
@@ -66,6 +70,8 @@ export default function Card({ item }) {
           src={item.imageUrl}
           alt="칵테일 사진"
           onClick={() => navigate(`${PATH.DETAIL_PAGE}${item.cocktailId}`)}
+          referrerPolicy="no-referrer"
+          onError={handleError}
         />
         {/* 투명한 검은 박스 */}
         <Hoverocktail ishovering={hoveredIndex === item.cocktailId} />
