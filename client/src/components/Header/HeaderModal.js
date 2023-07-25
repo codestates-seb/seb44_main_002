@@ -90,7 +90,7 @@ export default function HeaderModal() {
     }
   };
   // Login 버튼 클릭시 실행되는 함수
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, isguest = false) => {
     e.preventDefault();
     // 유효성 검사 로직
     const { email, password } = useLoginValid(form);
@@ -98,11 +98,14 @@ export default function HeaderModal() {
       email,
       password,
     });
-
+    const guestform = {};
+    if (isguest) {
+      guestform = { email: 'test@test.com', password: 'test1234' };
+    }
     if (email && password) {
       //분리된 api 연결
       try {
-        const response = await api.loginApi(form);
+        const response = await api.loginApi(isguest ? form : guestform);
         //성공
         if (response.status === 200) {
           //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
@@ -173,8 +176,12 @@ export default function HeaderModal() {
                 text={'비밀번호를 확인해주세요'}
               />
               {errorMSG && <p className="text-error text-[13px]">{errorMSG}</p>}
-              <div className="flex justify-center">
+              <div className="flex justify-center gap-3">
                 <HoverButton type="submit">LOGIN</HoverButton>
+                <HoverButton onClick={handleSubmit(e, true)}>
+                  {' '}
+                  GUEST LOGIN{' '}
+                </HoverButton>
               </div>
             </form>
             <div className="flex-[1] flex items-end">
