@@ -89,7 +89,7 @@ export default function HeaderModal() {
       navigate('/error');
     }
   };
-  // 로그인 버튼 클릭시 실행되는 함수
+  // Login 버튼 클릭시 실행되는 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 유효성 검사 로직
@@ -136,8 +136,11 @@ export default function HeaderModal() {
   return (
     <div>
       <HoverButton>
-        <Button style={{ color: '#8F8F8F' }} onClick={handleOpen}>
-          로그인
+        <Button
+          style={{ color: '#8F8F8F', fontWeight: 'bold' }}
+          onClick={handleOpen}
+        >
+          LOGIN
         </Button>
       </HoverButton>
       <Modal
@@ -171,7 +174,7 @@ export default function HeaderModal() {
               />
               {errorMSG && <p className="text-error text-[13px]">{errorMSG}</p>}
               <div className="flex justify-center">
-                <HoverButton type="submit">로그인</HoverButton>
+                <HoverButton type="submit">LOGIN</HoverButton>
               </div>
             </form>
             <div className="flex-[1] flex items-end">

@@ -14,7 +14,7 @@ export const PATH = Object.freeze({
 export const HEADER_TITLE = Object.freeze({
   HOME: 'HOME',
   CATEGORY: 'CATEGORY',
-  RECOMMEND: '추천',
+  RECOMMEND: 'RANDOM',
   MYPAGE: 'MYPAGE',
 });
 
