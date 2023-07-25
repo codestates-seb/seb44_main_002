@@ -47,6 +47,7 @@
 
 <br />
 
+# 개발파트 소개
 <details>
 <summary>개발 파트</summary>
 <div markdown="1">
@@ -109,6 +110,8 @@
 
 </div>
 </details>
+
+<br />
 
 # 🚀 Demo
 
