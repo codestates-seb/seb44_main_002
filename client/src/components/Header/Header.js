@@ -124,7 +124,7 @@ export default function Header() {
           {HEADER_TITLE.CATEGORY}
         </div>
         <div
-          className={`text-xl font-bold cursor-pointer mr-[10px] max-[768px]:hidden text-gray-200`}
+          className={`text-xl cursor-pointer mr-[10px] max-[768px]:hidden text-gray-200`}
           role="presentation"
           onClick={randomHandler}
           style={{ color: hovered ? randomColor : '' }}
