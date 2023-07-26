@@ -56,12 +56,12 @@ export default function TagFrequencyButton({
       color={`${
         filterCondtion.frequencyTag === data.type
           ? 'text-[#BB40F1] bg-transparent'
-          : 'text-[#7B7B7B] bg-transparent'
+          : 'text-gray-200 bg-transparent'
       }`}
       borderColor={`${
         filterCondtion.frequencyTag === data.type
           ? 'border-[#BB40F1]'
-          : 'border-[#7B7B7B]'
+          : 'border-gray-200'
       }`}
       onClick={() => {
         // setfocusFrequencyTag(data.type);
