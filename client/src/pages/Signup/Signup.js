@@ -175,7 +175,7 @@ export default function Signup() {
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
                 <CustomInput
-                  placeholder="최소 8자, 문자, 숫자, 특수문자는 1개이상 "
+                  placeholder="최소 8자, 문자, 숫자 1개 이상 "
                   labelName="비밀번호"
                   type="password"
                   // text={passwordErrorMsg}
