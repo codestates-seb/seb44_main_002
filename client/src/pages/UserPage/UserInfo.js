@@ -107,7 +107,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
           <InnerInfo>
             <InfoComponent>
               <UpInfoP>{convertNum(userInfo.subscriberCount)}</UpInfoP>
-              <DownInfoP>구독자수</DownInfoP>
+              <DownInfoP className="w-14">구독자수</DownInfoP>
             </InfoComponent>
             <InfoComponent>
               <UpInfoP>{userInfo.age}</UpInfoP>
@@ -155,13 +155,14 @@ max-sm:text-sm
 `;
 const Container = tw.div`
 flex
+mx-12
 justify-between
-w-full
 max-lg:flex-col-reverse
 `;
 const InfoContainer = tw.div`
 flex
 text-white
+max-[470px]:flex-col
 `;
 const UserImg = tw.img`
 w-[140px] 
@@ -176,6 +177,7 @@ max-lg:w-[120px]
 max-lg:h-[120px]
 max-sm:w-[100px]
 max-sm:h-[100px]
+max-[470px]:mx-auto
 `;
 const UserContainer = tw.div`
 pt-8
