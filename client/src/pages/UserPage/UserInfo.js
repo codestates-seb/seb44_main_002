@@ -70,18 +70,17 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
     }
   };
 
+  const handleError = (event) => {
+    event.target.src = process.env.PUBLIC_URL + '/images/profile_error.jpeg';
+  };
+
   return (
     <Container>
       <InfoContainer>
         <UserImg
-          src={`/images/user/${
-            userInfo.userId === 1
-              ? 'user_admin.png'
-              : userInfo.gender === 'male'
-              ? 'user_boy.png'
-              : 'user_girl.png'
-          }`}
+          src={userInfo.profileImageUrl}
           alt="user img"
+          onError={handleError}
         />
         <UserContainer>
           <FlexContainer>
@@ -167,6 +166,12 @@ text-white
 const UserImg = tw.img`
 w-[140px] 
 h-[140px]
+mr-8
+mt-8
+object-cover
+rounded-full
+border-4
+border-white
 max-lg:w-[120px]
 max-lg:h-[120px]
 max-sm:w-[100px]
