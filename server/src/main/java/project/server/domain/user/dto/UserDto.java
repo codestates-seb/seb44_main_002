@@ -6,6 +6,7 @@ import lombok.Setter;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.follow.embed.Following;
 import project.server.domain.user.entity.User;
+import project.server.global.validator.Password;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class UserDto {
     @Setter
     public static class Post {
         private String email;
+        @Password
         private String password;
         private String name;
         private String gender;
@@ -58,6 +60,7 @@ public class UserDto {
     @Getter
     @Setter
     public static class Patch {
+        @Password
         private String password;
     }
 }

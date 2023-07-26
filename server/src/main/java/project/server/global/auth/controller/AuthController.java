@@ -25,7 +25,6 @@ public class AuthController {
         return ResponseEntity.ok("Signed out successfully.");
     }
 
-
     @PostMapping("/reissue")
     public ResponseEntity reissue(@RequestHeader("refresh") String refreshToken) {
         String accessToken = authService.reissue(refreshToken);
