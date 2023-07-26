@@ -43,7 +43,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Cocktail> cocktails = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany
     private Set<Bookmark> bookmarks = new HashSet<>();
 
     @Embedded
@@ -124,9 +124,5 @@ public class User {
 
     public void subtractSubscriberCount() {
         subscriberCount--;
-    }
-
-    public void deleteAllBookmarks() {
-        bookmarks.clear();
     }
 }
