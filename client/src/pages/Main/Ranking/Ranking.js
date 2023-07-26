@@ -14,8 +14,8 @@ export default function Ranking({ error, setError }) {
 
   //console.log(ageRange);
   const [data, setData] = useState({
-    bestCocktails: null,
-    recommendedCocktails: null,
+    totalRank: null,
+    signedUserRank: null,
   });
   const isLogin = useSelector((state) => state.isLogin.isLogin);
 
@@ -33,17 +33,17 @@ export default function Ranking({ error, setError }) {
       })
       .then((json) => json.json())
       .then((json) => {
-        if (json.bestCocktails.length === 0) {
+        if (json.totalRank.length === 0) {
           setError(true);
-        } else if (json.recommendedCocktails === undefined) {
+        } else if (json.signedUserRank === undefined) {
           setError(false);
-          setData({ ...data, bestCocktails: json.bestCocktails });
+          setData({ ...data, totalRank: json.totalRank });
         } else {
           setError(false);
           setData({
             ...data,
-            bestCocktails: json.bestCocktails,
-            recommendedCocktails: json.recommendedCocktails,
+            totalRank: json.totalRank,
+            signedUserRank: json.signedUserRank,
           });
         }
       })
@@ -58,8 +58,8 @@ export default function Ranking({ error, setError }) {
       {/* 가장 핫한 레시피글만 모아봤어요!  */}
       <Title>많은 분들이 저장한 칵테일 레시피에요!</Title>
       <ItemContainer className="mb-2">
-        {data.bestCocktails &&
-          data.bestCocktails.map((item, index) => (
+        {data.totalRank &&
+          data.totalRank.map((item, index) => (
             <RankingCard key={index} item={item} idx={index} />
           ))}
         {error && (
@@ -75,8 +75,8 @@ export default function Ranking({ error, setError }) {
         }분들이 많이 저장한 칵테일 레시피에요!`}
       </Title>
       <ItemContainer className={`${!isLogin && 'hidden'}`}>
-        {data.recommendedCocktails &&
-          data.recommendedCocktails.map((item, index) => (
+        {data.signedUserRank &&
+          data.signedUserRank.map((item, index) => (
             <RankingCard key={index} item={item} idx={index} />
           ))}
         {error && (
