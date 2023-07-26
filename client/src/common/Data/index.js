@@ -12,17 +12,17 @@ export const CategoryFilter = [
   },
   {
     id: 1,
-    title: 'liqueur N tequila',
+    title: 'liqueur & tequila',
     type: 'category_one',
   },
   {
     id: 2,
-    title: 'rum N gin',
+    title: 'rum & gin',
     type: 'category_two',
   },
   {
     id: 3,
-    title: 'vodka N whiskey',
+    title: 'vodka & whiskey',
     type: 'category_three',
   },
   {
