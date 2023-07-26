@@ -4,22 +4,12 @@
 //import org.springframework.beans.factory.InitializingBean;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.stereotype.Component;
-//import project.server.domain.cocktail.embed.category.Category;
-//import project.server.domain.cocktail.embed.ingredient.Ingredients;
-//import project.server.domain.cocktail.embed.liquor.Liquor;
-//import project.server.domain.cocktail.embed.rate.Rate;
-//import project.server.domain.cocktail.embed.recipe.Recipe;
-//import project.server.domain.cocktail.embed.tag.Tag;
-//import project.server.domain.cocktail.embed.tag.Tags;
-//import project.server.domain.cocktail.entity.Cocktail;
+//import project.server.domain.bookmark.repository.BookmarkRepository;
 //import project.server.domain.cocktail.repository.CocktailRepository;
 //import project.server.domain.user.entity.User;
 //import project.server.domain.user.repository.UserRepository;
 //
-//import java.util.ArrayList;
-//import java.util.LinkedHashSet;
 //import java.util.List;
-//import java.util.Set;
 //
 //@Component
 //@RequiredArgsConstructor
@@ -27,11 +17,21 @@
 //
 //    private final UserRepository userRepository;
 //    private final CocktailRepository cocktailRepository;
+//    private final BookmarkRepository bookmarkRepository;
 //    private final PasswordEncoder passwordEncoder;
 //
 //    @Override
 //    public void afterPropertiesSet() throws Exception {
 //        init();
+//    }
+//
+//    private void init() {
+//        List<User>users = userRepository.findAll();
+//        for(User user : users){
+//            user.deleteAllBookmarks();
+//            userRepository.save(user);
+//        }
+//        bookmarkRepository.deleteAll();
 //    }
 //
 //    private User selectRandomUser(List<User> users) {
