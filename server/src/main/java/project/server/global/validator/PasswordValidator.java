@@ -15,6 +15,10 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
     private static final Pattern PASSWORD_CHARACTER = Pattern.compile(".*[a-zA-Z].*");
 
     @Override
+    public void initialize(Password constraintAnnotation) {
+    }
+
+    @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         if (password == null) {
             return false;
@@ -38,9 +42,5 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             }
         }
         return isValid;
-    }
-
-    @Override
-    public void initialize(Password constraintAnnotation) {
     }
 }
