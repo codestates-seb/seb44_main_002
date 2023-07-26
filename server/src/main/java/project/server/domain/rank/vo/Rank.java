@@ -1,6 +1,6 @@
-package project.server.domain.recommend.entity;
+package project.server.domain.rank.vo;
 
-public interface Recommend {
+public interface Rank {
     long getCocktailId();
 
     String getName();

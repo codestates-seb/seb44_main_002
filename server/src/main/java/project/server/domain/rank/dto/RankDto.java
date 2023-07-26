@@ -1,37 +1,37 @@
-package project.server.domain.recommend.dto;
+package project.server.domain.rank.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import project.server.domain.recommend.entity.Recommend;
+import project.server.domain.rank.vo.Rank;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RecommendDto {
+public class RankDto {
     @Getter
     public static class UnsignedResponse {
-        private final List<RecommendDto.Response> bestCocktails;
+        private final List<RankDto.Response> bestCocktails;
 
-        public UnsignedResponse(List<Recommend> bestCocktails) {
+        public UnsignedResponse(List<Rank> bestCocktails) {
             this.bestCocktails = bestCocktails.stream()
-                    .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
+                    .map(cocktail -> new RankDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
         }
     }
 
     @Getter
     public static class SignedResponse {
-        private final List<RecommendDto.Response> bestCocktails;
-        private final List<RecommendDto.Response> recommendedCocktails;
+        private final List<RankDto.Response> bestCocktails;
+        private final List<RankDto.Response> recommendedCocktails;
 
-        public SignedResponse(List<Recommend> bestCocktails, List<Recommend> recommendedCocktails){
+        public SignedResponse(List<Rank> bestCocktails, List<Rank> recommendedCocktails){
             this.bestCocktails = bestCocktails.stream()
-                    .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
+                    .map(cocktail -> new RankDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
 
             this.recommendedCocktails = recommendedCocktails.stream()
-                    .map(cocktail -> new RecommendDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
+                    .map(cocktail -> new RankDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
         }
     }
