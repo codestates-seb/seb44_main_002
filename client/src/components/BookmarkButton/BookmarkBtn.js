@@ -21,7 +21,7 @@ export default function BookmarkBtn({
           setbookmarked(!bookmarked);
           onClick();
         } else {
-          alert(ALERT_MESSAGE.RATE_OWN_RECIPE);
+          alert(ALERT_MESSAGE.LOGIN_FIRST);
         }
       }}
       absolute={absolute}
