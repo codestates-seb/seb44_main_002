@@ -48,6 +48,6 @@ max-[700px]:rounded-t-2xl
 
 ${(props) =>
   props.filterCondtion.category === props.data.type
-    ? 'text-[#ffffff] border-[#ffffff]'
-    : 'text-[#8F8F8F] border-[#8F8F8F]'}
+    ? 'text-[#ffffff] border-[#ffffff] bg-gray-500'
+    : 'text-gray-200 border-gray-200'}
 `;

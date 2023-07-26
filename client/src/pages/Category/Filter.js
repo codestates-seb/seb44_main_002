@@ -146,6 +146,8 @@ export default function Filter({ setFilterCondtion, filterCondtion }) {
                 radius={buttonStyle.radius}
                 fontSize={buttonStyle.fontSize}
                 size={buttonStyle.size}
+                borderColor="border-gray-200"
+                color="text-gray-200 bg-transparent"
                 onClick={() => {
                   selectMenuHandler(idx, 'tasteTag');
                 }}

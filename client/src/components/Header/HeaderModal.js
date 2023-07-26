@@ -90,7 +90,7 @@ export default function HeaderModal() {
     }
   };
   // Login 버튼 클릭시 실행되는 함수
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, isguest = false) => {
     e.preventDefault();
     // 유효성 검사 로직
     const { email, password } = useLoginValid(form);
@@ -132,7 +132,38 @@ export default function HeaderModal() {
       }
     }
   };
-
+  const handleGuestSubmit = async () => {
+    const guestform = { email: 'test@test.com', password: 'test1234' };
+    try {
+      const response = await api.loginApi(guestform);
+      //성공
+      if (response.status === 200) {
+        //리덕스에 저장 ->  할필요가 있을까? 새로고침되는데?
+        dispatch(
+          userinfoLogin({
+            userId: response.headers.get('userId'),
+            accessToken: response.headers.get('Authorization'),
+            IsAdmin: response.headers.get('IsAdmin'),
+          })
+        );
+        //사용자 정보 조회
+        handleUserInfo(response.headers.get('userId'));
+        // 전역상태관리 로그인으로 변경
+        dispatch(login());
+        handleClose();
+        handleNaviModal(response.headers.get('userId'));
+      } else {
+        // 응답 실패
+        if (response === 401) {
+          setErrorMSG('없는 계정입니다. 회원가입 진행해 주세요');
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      handleClose();
+      navigate('/error');
+    }
+  };
   return (
     <div>
       <HoverButton>
@@ -173,10 +204,18 @@ export default function HeaderModal() {
                 text={'비밀번호를 확인해주세요'}
               />
               {errorMSG && <p className="text-error text-[13px]">{errorMSG}</p>}
-              <div className="flex justify-center">
+              <div className="flex justify-center gap-3">
                 <HoverButton type="submit">LOGIN</HoverButton>
+                <HoverButton
+                  onClick={() => handleGuestSubmit()}
+                  size="w-[110px] h-[36px]"
+                >
+                  {' '}
+                  GUEST LOGIN{' '}
+                </HoverButton>
               </div>
             </form>
+
             <div className="flex-[1] flex items-end">
               <button
                 className="items-end font-bold text-gray-300"

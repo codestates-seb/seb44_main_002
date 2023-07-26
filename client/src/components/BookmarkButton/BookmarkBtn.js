@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ALERT_MESSAGE } from '../../constants/constants';
 import tw from 'tailwind-styled-components';
 export default function BookmarkBtn({
   onClick,
@@ -20,7 +21,7 @@ export default function BookmarkBtn({
           setbookmarked(!bookmarked);
           onClick();
         } else {
-          alert('로그인해야 가능합니다');
+          alert(ALERT_MESSAGE.RATE_OWN_RECIPE);
         }
       }}
       absolute={absolute}
