@@ -206,13 +206,13 @@ export default function HeaderModal() {
               {errorMSG && <p className="text-error text-[13px]">{errorMSG}</p>}
               <div className="flex justify-center gap-3">
                 <HoverButton type="submit">LOGIN</HoverButton>
-                <HoverButton
+                {/* <HoverButton
                   onClick={() => handleGuestSubmit()}
                   size="w-[110px] h-[36px]"
                 >
                   {' '}
                   GUEST LOGIN{' '}
-                </HoverButton>
+                </HoverButton> */}
               </div>
             </form>
 
