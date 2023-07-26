@@ -8,57 +8,57 @@ const API_BASE = process.env.REACT_APP_BASE_URL;
 //   logout();
 // }
 //리프래쉬 재발급 요청
-// const fetchrefreshToken = async () => {
-//   try {
-//     const response = await fetch(`${API_BASE}auth/reissue`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Refresh: localStorage.getItem('refreshToken'),
-//       },
-//     });
-//     //완전히 만료 ->로그아웃진행
-//     if (response.status === 401) {
-//       return false;
-//     }
-//     //재발급 성공
-//     if (response.ok) {
-//       console.log('재발급 성공');
-//       localStorage.setItem(
-//         'accessToken',
-//         response.headers.get('Authorization')
-//       );
-//       const token = response.headers.get('Authorization');
-//       return token;
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     return null;
-//   }
-// };
+const fetchrefreshToken = async () => {
+  try {
+    const response = await fetch(`${API_BASE}auth/reissue`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Refresh: localStorage.getItem('refreshToken'),
+      },
+    });
+    //완전히 만료 ->로그아웃진행
+    if (response.status === 401) {
+      return false;
+    }
+    //재발급 성공
+    if (response.ok) {
+      console.log('재발급 성공');
+      localStorage.setItem(
+        'accessToken',
+        response.headers.get('Authorization')
+      );
+      const token = response.headers.get('Authorization');
+      return token;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 // Fetch API 인터셉터 함수
-// export const fetchWithInterceptor = async (url, options) => {
-//   const response = await fetch(url, options);
-//   // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
-//   if (response.status === 401) {
-//     const newToken = await fetchrefreshToken();
+export const fetchWithInterceptor = async (url, options) => {
+  const response = await fetch(url, options);
+  // 엑세스 토큰 만료로 리프래쉬로 토큰 재발급
+  if (response.status === 401) {
+    const newToken = await fetchrefreshToken();
 
-//     if (newToken) {
-//       // 새로 발급받은 토큰을 헤더에 포함하여 다시 요청
-//       options.headers.Authorization = newToken;
-//       const response = await fetch(url, options);
-//       return response;
-//     } else {
-//       return 401;
-//     }
-//   }
-//   //   200 이면 성공
-//   if (response.status === 200) {
-//     console.log('요청 성공');
-//   }
-//   return response;
-// };
+    if (newToken) {
+      // 새로 발급받은 토큰을 헤더에 포함하여 다시 요청
+      options.headers.Authorization = newToken;
+      const response = await fetch(url, options);
+      return response;
+    } else {
+      return 401;
+    }
+  }
+  //   200 이면 성공
+  if (response.status === 200) {
+    console.log('요청 성공');
+  }
+  return response;
+};
 
 export default {
   //회원가입
