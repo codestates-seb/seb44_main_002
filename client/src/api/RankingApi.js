@@ -1,12 +1,12 @@
 export const RankingApi = async (isLogin) => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
-  let url = `${BASE_URL}recommend/unsigned`;
+  let url = `${BASE_URL}rank/unsigned`;
   let headers = {
     'Content-Type': 'application/json',
   };
 
   if (isLogin) {
-    url = `${BASE_URL}recommend/signed`;
+    url = `${BASE_URL}rank/signed`;
     headers = {
       'Content-Type': 'application/json',
       Authorization: localStorage.getItem('accessToken'),
