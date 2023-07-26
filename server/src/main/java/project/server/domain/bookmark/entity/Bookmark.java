@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.server.domain.bookmark.embed.CocktailInfo;
 import project.server.domain.bookmark.embed.UserInfo;
+import project.server.domain.cocktail.entity.Cocktail;
 
 import javax.persistence.*;
 
@@ -21,13 +21,13 @@ public class Bookmark {
     @Embedded
     private UserInfo userInfo;
 
-    @Embedded
-    private CocktailInfo cocktailInfo;
+    @ManyToOne
+    private Cocktail cocktail;
 
     @Builder
-    public Bookmark(UserInfo userInfo, CocktailInfo cocktailInfo) {
+    public Bookmark(UserInfo userInfo, Cocktail cocktail) {
         this.userInfo = userInfo;
-        this.cocktailInfo = cocktailInfo;
+        this.cocktail = cocktail;
     }
 
     public long getUserId() {
@@ -35,14 +35,14 @@ public class Bookmark {
     }
 
     public long getCocktailId() {
-        return cocktailInfo.getCocktailId();
+        return cocktail.getCocktailId();
     }
 
     public String getCocktailName(){
-        return cocktailInfo.getCocktailName();
+        return cocktail.getName();
     }
 
     public String getCocktailImageUrl(){
-        return cocktailInfo.getCocktailImageUrl();
+        return cocktail.getImageUrl();
     }
 }

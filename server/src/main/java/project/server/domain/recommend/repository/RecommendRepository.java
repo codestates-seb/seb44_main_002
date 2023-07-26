@@ -11,17 +11,19 @@ import java.util.List;
 
 public interface RecommendRepository extends JpaRepository<Bookmark, Long> {
 
-    @Query(value = "select distinct cocktail_id as cocktailId, cocktail_name as name, cocktail_image_url as imageUrl " +
-            "from bookmarks b " +
+    @Query(value = "select distinct c.cocktail_id as cocktailId, c.name as name, c.image_url as imageUrl, count(c.cocktail_id) as cocktail_count " +
+            "from cocktails c " +
+            "right join bookmarks b on b.cocktail_cocktail_id = c.cocktail_id " +
             "group by cocktail_id, gender, age " +
-            "order by COUNT(cocktail_id) desc", nativeQuery = true)
+            "order by cocktail_count desc", nativeQuery = true)
     List<Recommend> findBestCocktails(Pageable pageable);
 
-    @Query(value = "select distinct cocktail_id as cocktailId, cocktail_name as name, cocktail_image_url as imageUrl " +
-            "from bookmarks b " +
-            "where age=:age and gender=:gender " +
+    @Query(value = "select distinct c.cocktail_id as cocktailId, c.name as name, c.image_url as imageUrl, count(c.cocktail_id) as cocktail_count " +
+            "from cocktails c " +
+            "right join bookmarks b on b.cocktail_cocktail_id = c.cocktail_id " +
+            "where b.age = :age and b.gender = :gender " +
             "group by cocktail_id, gender, age " +
-            "order by COUNT(cocktail_id) desc ", nativeQuery = true)
+            "order by cocktail_count desc", nativeQuery = true)
     List<Recommend> findRecommendCocktails(@Param(value = "age") int userAgeGroup,
                                            @Param(value = "gender") String gender,
                                            Pageable pageable);

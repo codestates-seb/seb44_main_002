@@ -2,10 +2,9 @@ package project.server.domain.bookmark.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.server.domain.bookmark.embed.UserInfo;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.bookmark.repository.BookmarkRepository;
-import project.server.domain.bookmark.embed.CocktailInfo;
-import project.server.domain.bookmark.embed.UserInfo;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.user.entity.User;
 import project.server.global.exception.BusinessLogicException;
@@ -27,7 +26,7 @@ public class BookmarkCreateService {
         }
 
         Bookmark bookmark = Bookmark.builder()
-                .cocktailInfo(new CocktailInfo(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
+                .cocktail(cocktail)
                 .userInfo(new UserInfo(user.getUserId(), getUserAgeGroup(user), user.getGender()))
                 .build();
         user.bookmark(bookmark);
