@@ -14,7 +14,7 @@ export default function Signup() {
   const navigate = useNavigate();
   const [test, setTest] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
+  // const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
   // 유효성검사 state
   const [isValid, setIsValid] = useState({
     name: true,
@@ -59,7 +59,7 @@ export default function Signup() {
       profileImageUrl: form.profileImageUrl,
     };
 
-    validatePassword(form.password);
+    // validatePassword(form.password);
 
     // credentials: 'include',
     const allValid = Object.values(updatedIsValid).every(
@@ -90,29 +90,29 @@ export default function Signup() {
     }
   };
 
-  const validatePassword = (value) => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[a-z\d@$!%*#?&]{8,}$/;
-    const specialCharRegex = /[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/;
-    const letterRegex = /[a-zA-Z]+/;
-    const numberRegex = /\d+/;
+  // const validatePassword = (value) => {
+  //   const passwordRegex =
+  //     /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[a-z\d@$!%*#?&]{8,}$/;
+  //   const specialCharRegex = /[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/;
+  //   const letterRegex = /[a-zA-Z]+/;
+  //   const numberRegex = /\d+/;
 
-    if (!value) {
-      setPasswordErrorMsg('비밀번호를 입력해주세요.');
-    } else if (value.length < 8) {
-      setPasswordErrorMsg('8자리 이상의 비밀번호를 입력해주세요.');
-    } else if (!letterRegex.test(value)) {
-      setPasswordErrorMsg('영어를 포함해주세요.');
-    } else if (!numberRegex.test(value)) {
-      setPasswordErrorMsg('숫자를 포함해주세요.');
-    } else if (!specialCharRegex.test(value)) {
-      setPasswordErrorMsg('특수문자를 포함해주세요.');
-    } else if (!passwordRegex.test(value)) {
-      setPasswordErrorMsg('올바른 형식의 비밀번호를 입력해주세요.');
-    } else {
-      setPasswordErrorMsg(''); // 유효성 검사 통과
-    }
-  };
+  //   if (!value) {
+  //     setPasswordErrorMsg('비밀번호를 입력해주세요.');
+  //   } else if (value.length < 8) {
+  //     setPasswordErrorMsg('8자리 이상의 비밀번호를 입력해주세요.');
+  //   } else if (!letterRegex.test(value)) {
+  //     setPasswordErrorMsg('영어를 포함해주세요.');
+  //   } else if (!numberRegex.test(value)) {
+  //     setPasswordErrorMsg('숫자를 포함해주세요.');
+  //   } else if (!specialCharRegex.test(value)) {
+  //     setPasswordErrorMsg('특수문자를 포함해주세요.');
+  //   } else if (!passwordRegex.test(value)) {
+  //     setPasswordErrorMsg('올바른 형식의 비밀번호를 입력해주세요.');
+  //   } else {
+  //     setPasswordErrorMsg(''); // 유효성 검사 통과
+  //   }
+  // };
 
   return (
     <SignupScreen>
@@ -178,7 +178,8 @@ export default function Signup() {
                   placeholder="최소 8자, 문자, 숫자, 특수문자는 1개이상 "
                   labelName="비밀번호"
                   type="password"
-                  text={passwordErrorMsg}
+                  // text={passwordErrorMsg}
+                  text="비밀번호를 확인해주세요"
                   size="w-[22rem] h-[2.5rem] max-[520px]:w-[280px]"
                   isValid={isValid.password}
                   value={form.password}
