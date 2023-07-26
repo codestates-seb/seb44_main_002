@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 public class RankDto {
     @Getter
     public static class UnsignedResponse {
-        private final List<RankDto.Response> bestCocktails;
+        private final List<RankDto.Response> totalRank;
 
-        public UnsignedResponse(List<Rank> bestCocktails) {
-            this.bestCocktails = bestCocktails.stream()
+        public UnsignedResponse(List<Rank> totalRank) {
+            this.totalRank = totalRank.stream()
                     .map(cocktail -> new RankDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
         }
@@ -22,15 +22,15 @@ public class RankDto {
 
     @Getter
     public static class SignedResponse {
-        private final List<RankDto.Response> bestCocktails;
-        private final List<RankDto.Response> recommendedCocktails;
+        private final List<RankDto.Response> totalRank;
+        private final List<RankDto.Response> signedUserRank;
 
-        public SignedResponse(List<Rank> bestCocktails, List<Rank> recommendedCocktails){
-            this.bestCocktails = bestCocktails.stream()
+        public SignedResponse(List<Rank> totalRank, List<Rank> signedUserRank){
+            this.totalRank = totalRank.stream()
                     .map(cocktail -> new RankDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
 
-            this.recommendedCocktails = recommendedCocktails.stream()
+            this.signedUserRank = signedUserRank.stream()
                     .map(cocktail -> new RankDto.Response(cocktail.getCocktailId(), cocktail.getName(), cocktail.getImageUrl()))
                     .collect(Collectors.toList());
         }
