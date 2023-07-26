@@ -26,6 +26,11 @@ public class AppConfiguration implements InitializingBean {
     }
 
     private void init() {
+        List<User>users = userRepository.findAll();
+        for(User user : users){
+            user.deleteAllBookmarks();
+            userRepository.save(user);
+        }
         bookmarkRepository.deleteAll();
     }
 
