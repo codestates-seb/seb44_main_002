@@ -43,7 +43,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Cocktail> cocktails = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Bookmark> bookmarks = new HashSet<>();
 
     @Embedded
