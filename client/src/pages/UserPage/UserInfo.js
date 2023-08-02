@@ -107,7 +107,7 @@ export default function UserInfo({ userInfo, isLogin, localData }) {
           <InnerInfo>
             <InfoComponent>
               <UpInfoP>{convertNum(userInfo.subscriberCount)}</UpInfoP>
-              <DownInfoP className="w-14">구독자수</DownInfoP>
+              <DownInfoP className="w-15">구독자수</DownInfoP>
             </InfoComponent>
             <InfoComponent>
               <UpInfoP>{userInfo.age}</UpInfoP>
