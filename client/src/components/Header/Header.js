@@ -27,25 +27,27 @@ export default function Header() {
 
   const name = localStorage.getItem('name');
   const userid = localStorage.getItem('userId');
+
   // 글자 색 바꾸기
   useEffect(() => {
-    // 0.2초마다 함수 실행
-    const interval = setInterval(generateRandomColor, 200);
-
-    return () => {
-      clearInterval(interval); // 컴포넌트가 언마운트될 때 interval을 정리합니다.
+    let animationFrameId;
+    let lastTime = 0;
+    const generateRandomColor = (timestamp) => {
+      if (timestamp - lastTime >= 200) {
+        setRandomColor(getRandomColor());
+        lastTime = timestamp;
+      }
+      animationFrameId = requestAnimationFrame(generateRandomColor);
     };
-  }, []);
-
-  // 색깔 랜덤으로 띄우는 함수
-  const generateRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+    if (hovered) {
+      animationFrameId = requestAnimationFrame(generateRandomColor);
+    } else {
+      cancelAnimationFrame(animationFrameId);
     }
-    setRandomColor(color);
-  };
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [hovered]);
 
   const randomColorHandler = () => {
     setHovered(true);
@@ -194,6 +196,15 @@ export default function Header() {
     </HeaderContainer>
   );
 }
+
+const getRandomColor = () => {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
 
 const HeaderContainer = tw.header`
   fixed

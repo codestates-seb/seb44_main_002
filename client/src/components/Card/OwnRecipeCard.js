@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
 export default function OwnRecipeCard({ item }) {
+  const handleError = (event) => {
+    event.target.src = process.env.PUBLIC_URL + '/images/cocktail_error.jpeg';
+  };
   return (
     <Link to={`/detail/${item.cocktailId}`}>
       <Container>
         {/* 좌측 칵테일 이미지 */}
         <ImgButton>
-          <CocktailImg src={item.imageUrl} alt="칵테일 사진" />
+          <CocktailImg
+            src={item.imageUrl}
+            alt="칵테일 사진"
+            onError={handleError}
+          />
         </ImgButton>
         {/* 우측 설명 */}
         <ContainerP>
