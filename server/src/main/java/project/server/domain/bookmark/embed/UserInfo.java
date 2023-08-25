@@ -17,7 +17,7 @@ public class UserInfo {
     private long userId;
 
     @Column(updatable = false)
-    private int age;
+    private int ageGroup;
 
     @Column(updatable = false)
     private String gender;
