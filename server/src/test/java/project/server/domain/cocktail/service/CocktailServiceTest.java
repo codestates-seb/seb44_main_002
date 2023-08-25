@@ -10,8 +10,7 @@ import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.cocktail.utils.CocktailDeserializer;
-import project.server.domain.cocktail.utils.CocktailSerializer;
+import project.server.domain.cocktail.utils.CocktailConverter;
 import project.server.domain.user.entity.User;
 import project.server.domain.user.service.UserService;
 
@@ -31,10 +30,7 @@ class CocktailServiceTest {
     private CocktailCommandService cocktailCommandService;
 
     @Mock
-    private CocktailSerializer cocktailSerializer;
-
-    @Mock
-    private CocktailDeserializer cocktailDeserializer;
+    private CocktailConverter cocktailConverter;
 
     @Mock
     private UserService userService;
@@ -54,7 +50,7 @@ class CocktailServiceTest {
         Cocktail savedCocktail = mock(Cocktail.class);
 
         when(userService.findUserByEmail(email)).thenReturn(user);
-        when(cocktailDeserializer.postDtoToEntity(dto)).thenReturn(cocktail);
+        when(cocktailConverter.convertPostDtoToEntity(dto)).thenReturn(cocktail);
         when(cocktailCommandService.create(user, cocktail)).thenReturn(savedCocktail);
 //        when(savedCocktail.getTags()).thenReturn(tags);
         when(savedCocktail.getCocktailId()).thenReturn(1L);
@@ -67,7 +63,7 @@ class CocktailServiceTest {
                 .isBookmarked(false)
                 .build();
 
-        when(cocktailSerializer.entityToSignedUserResponse(user, savedCocktail, false, user.getRate(savedCocktail.getCocktailId())))
+        when(cocktailConverter.convertEntityToSignedUserResponseDto(user, savedCocktail, user.getRate(savedCocktail.getCocktailId())))
                 .thenReturn(response);
 
         // when

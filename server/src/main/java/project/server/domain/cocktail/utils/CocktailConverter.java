@@ -3,44 +3,54 @@ package project.server.domain.cocktail.utils;
 import org.springframework.stereotype.Service;
 import project.server.domain.bookmark.entity.Bookmark;
 import project.server.domain.cocktail.dto.CocktailDto;
+import project.server.domain.cocktail.embed.category.CategoryMapper;
+import project.server.domain.cocktail.embed.ingredient.Ingredients;
+import project.server.domain.cocktail.embed.liquor.LiquorMapper;
+import project.server.domain.cocktail.embed.rate.Rate;
+import project.server.domain.cocktail.embed.recipe.Recipe;
+import project.server.domain.cocktail.embed.tag.Tag;
+import project.server.domain.cocktail.embed.tag.TagDto;
+import project.server.domain.cocktail.embed.tag.TagMapper;
+import project.server.domain.cocktail.embed.tag.Tags;
 import project.server.domain.cocktail.entity.Cocktail;
 import project.server.domain.comment.CommentSerializer;
 import project.server.domain.user.entity.User;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CocktailSerializer {
+public class CocktailConverter {
 
     private final CommentSerializer commentSerializer;
 
-    public CocktailSerializer(CommentSerializer commentSerializer) {
+    public CocktailConverter(CommentSerializer commentSerializer) {
         this.commentSerializer = commentSerializer;
     }
 
-    public CocktailDto.Response entityToSignedUserResponse(User readUser, Cocktail cocktail, boolean isBookmark, int rate) {
+    public CocktailDto.Response convertEntityToSignedUserResponseDto(User readUser, Cocktail cocktail, int rate) {
         User author = cocktail.getUser();
-        return entityToResponse(cocktail, isBookmark, author)
+        return convertEntityToResponseDto(cocktail, readUser.isBookmarked(cocktail.getCocktailId()), author)
                 .recommends(cocktail.getRecommends().stream()
                         .map(recommendedCocktail
-                                -> entityToSimpleResponse(readUser.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
+                                -> convertEntityToSimpleResponseDto(readUser.isBookmarked(recommendedCocktail.getCocktailId()), recommendedCocktail))
                         .collect(Collectors.toList()))
                 .userRate(rate)
                 .build();
     }
 
-    public CocktailDto.Response entityToUnsignedResponse(Cocktail cocktail, boolean unsignedUserBookmark, int unsignedUserRate) {
+    public CocktailDto.Response convertEntityToUnsignedResponseDto(Cocktail cocktail, boolean unsignedUserBookmark, int unsignedUserRate) {
         User author = cocktail.getUser();
-        return entityToResponse(cocktail, unsignedUserBookmark, author)
+        return convertEntityToResponseDto(cocktail, unsignedUserBookmark, author)
                 .recommends(cocktail.getRecommends().stream()
                         .map(recommendedCocktail
-                                -> entityToSimpleResponse(unsignedUserBookmark, recommendedCocktail))
+                                -> convertEntityToSimpleResponseDto(unsignedUserBookmark, recommendedCocktail))
                         .collect(Collectors.toList()))
                 .userRate(unsignedUserRate)
                 .build();
     }
 
-    public CocktailDto.SimpleResponse entityToSimpleResponse(boolean isBookmarked, Cocktail cocktail) {
+    public CocktailDto.SimpleResponse convertEntityToSimpleResponseDto(boolean isBookmarked, Cocktail cocktail) {
         return CocktailDto.SimpleResponse.builder()
                 .cocktailId(cocktail.getCocktailId())
                 .name(cocktail.getName())
@@ -60,7 +70,26 @@ public class CocktailSerializer {
                 .build();
     }
 
-    private CocktailDto.Response.ResponseBuilder entityToResponse(Cocktail cocktail, boolean isBookmark, User author) {
+    public Cocktail convertPostDtoToEntity(CocktailDto.Post dto) {
+        List<Tag> tags =dto.getFlavor().stream()
+                .map(TagDto.Post::getTag)
+                .map(TagMapper::map)
+                .collect(Collectors.toList());
+        tags.add(TagMapper.map(dto.getDegree()));
+
+        return Cocktail.builder()
+                .name(dto.getName())
+                .imageUrl(dto.getImageUrl())
+                .recipe(new Recipe(dto.getRecipe()))
+                .tags(new Tags(tags))
+                .category(CategoryMapper.map(dto.getLiquor()))
+                .rate(new Rate())
+                .liquor(LiquorMapper.map(dto.getLiquor()))
+                .ingredients(new Ingredients(dto.getIngredients()))
+                .build();
+    }
+
+    private CocktailDto.Response.ResponseBuilder convertEntityToResponseDto(Cocktail cocktail, boolean isBookmark, User author) {
         return CocktailDto.Response.builder()
                 .cocktailId(cocktail.getCocktailId())
                 .isAdminWritten(author.isAdmin())

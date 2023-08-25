@@ -1,7 +1,7 @@
 package project.server.domain.user.service;
 
 import org.springframework.stereotype.Service;
-import project.server.domain.cocktail.utils.CocktailSerializer;
+import project.server.domain.cocktail.utils.CocktailConverter;
 import project.server.domain.follow.entity.Follow;
 import project.server.domain.user.dto.UserDto;
 import project.server.domain.user.entity.User;
@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 @Service
 public class UserSerializer {
 
-    private final CocktailSerializer cocktailSerializer;
+    private final CocktailConverter cocktailConverter;
 
-    public UserSerializer(CocktailSerializer cocktailSerializer) {
-        this.cocktailSerializer = cocktailSerializer;
+    public UserSerializer(CocktailConverter cocktailConverter) {
+        this.cocktailConverter = cocktailConverter;
     }
 
     public UserDto.Response entityToUnsignedResponse(User user){
@@ -27,10 +27,10 @@ public class UserSerializer {
                 .profileImageUrl(user.getProfileImageUrl())
                 .subscriberCount(user.getSubscriberCount())
                 .cocktails(user.getCocktails().stream()
-                        .map(cocktail -> cocktailSerializer.entityToSimpleResponse(false, cocktail))
+                        .map(cocktail -> cocktailConverter.convertEntityToSimpleResponseDto(false, cocktail))
                         .collect(Collectors.toList()))
                 .bookmarkedCocktails(user.getBookmarks().stream()
-                        .map(bookmark -> cocktailSerializer.bookmarkEntityToSimpleResponse(false, bookmark))
+                        .map(bookmark -> cocktailConverter.bookmarkEntityToSimpleResponse(false, bookmark))
                         .collect(Collectors.toList()))
                 .follows(user.getFollows().stream()
                         .map(Follow::getFollowing)
@@ -49,10 +49,10 @@ public class UserSerializer {
                 .profileImageUrl(user.getProfileImageUrl())
                 .subscriberCount(user.getSubscriberCount())
                 .cocktails(user.getCocktails().stream()
-                        .map(cocktail -> cocktailSerializer.entityToSimpleResponse(readUser.isBookmarked(cocktail.getCocktailId()), cocktail))
+                        .map(cocktail -> cocktailConverter.convertEntityToSimpleResponseDto(readUser.isBookmarked(cocktail.getCocktailId()), cocktail))
                         .collect(Collectors.toList()))
                 .bookmarkedCocktails(user.getBookmarks().stream()
-                        .map(bookmark -> cocktailSerializer.bookmarkEntityToSimpleResponse(readUser.isBookmarked(bookmark.getCocktailId()), bookmark))
+                        .map(bookmark -> cocktailConverter.bookmarkEntityToSimpleResponse(readUser.isBookmarked(bookmark.getCocktailId()), bookmark))
                         .collect(Collectors.toList()))
                 .follows(user.getFollows().stream()
                         .map(Follow::getFollowing)
