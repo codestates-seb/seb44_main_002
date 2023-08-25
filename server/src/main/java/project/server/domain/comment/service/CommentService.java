@@ -3,7 +3,7 @@ package project.server.domain.comment.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.server.domain.cocktail.entity.Cocktail;
-import project.server.domain.cocktail.service.CocktailReadService;
+import project.server.domain.cocktail.service.CocktailQueryService;
 import project.server.domain.comment.CommentSerializer;
 import project.server.domain.comment.dto.CommentDto;
 import project.server.domain.comment.entity.Comment;
@@ -17,21 +17,21 @@ import project.server.global.exception.ExceptionCode;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final CommentSerializer commentSerializer;
-    private final CocktailReadService cocktailReadService;
+    private final CocktailQueryService cocktailQueryService;
     private final UserService userService;
 
     public CommentService(CommentRepository commentRepository,
-                          CommentSerializer commentSerializer, CocktailReadService cocktailReadService, UserService userService) {
+                          CommentSerializer commentSerializer, CocktailQueryService cocktailQueryService, UserService userService) {
         this.commentRepository = commentRepository;
         this.commentSerializer = commentSerializer;
-        this.cocktailReadService = cocktailReadService;
+        this.cocktailQueryService = cocktailQueryService;
         this.userService = userService;
     }
 
     @Transactional
     public CommentDto.Response createComment(String email, Long cocktailId, CommentDto.Post post) {
         User user = userService.findUserByEmail(email);
-        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        Cocktail cocktail = cocktailQueryService.readCocktail(cocktailId);
         Comment comment = post.postToEntity();
         comment.setUser(user);
         Comment savedComment = commentRepository.save(comment);
@@ -63,7 +63,7 @@ public class CommentService {
         if(!user.hasAuthority(comment.getUserId())){
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
-        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        Cocktail cocktail = cocktailQueryService.readCocktail(cocktailId);
         cocktail.removeComment(comment);
         commentRepository.delete(comment);
     }
