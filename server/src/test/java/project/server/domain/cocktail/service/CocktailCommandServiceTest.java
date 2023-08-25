@@ -25,13 +25,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CocktailCreateServiceTest {
+class CocktailCommandServiceTest {
 
     @Mock
     private CocktailRepository cocktailRepository;
 
     @InjectMocks
-    private CocktailCreateService cocktailCreateService;
+    private CocktailCommandService cocktailCommandService;
 
     @Test
     void createTest(){
@@ -47,7 +47,7 @@ class CocktailCreateServiceTest {
                 .thenReturn(result);
 
         //when
-        Cocktail savedCocktail = cocktailCreateService.create(user, cocktail);
+        Cocktail savedCocktail = cocktailCommandService.create(user, cocktail);
 
         //then
         assertThat(result.getCocktailId()).isEqualTo(savedCocktail.getCocktailId());

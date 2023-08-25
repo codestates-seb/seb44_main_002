@@ -14,11 +14,11 @@ import project.server.global.exception.ExceptionCode;
 import java.util.List;
 
 @Service
-public class CocktailReadService {
+public class CocktailQueryService {
 
     private final CocktailRepository cocktailRepository;
 
-    public CocktailReadService(CocktailRepository cocktailRepository) {
+    public CocktailQueryService(CocktailRepository cocktailRepository) {
         this.cocktailRepository = cocktailRepository;
     }
 

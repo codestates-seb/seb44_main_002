@@ -16,7 +16,7 @@ public class FollowCreateService {
     }
 
     @Transactional
-    public void createFollow(User follower, User following) {
+    public void create(User follower, User following) {
         Follow follow = Follow.builder()
                 .follower(follower)
                 .following(following)

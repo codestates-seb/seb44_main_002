@@ -26,20 +26,20 @@ public class FollowService {
     }
 
     @Transactional
-    public void createFollow(String followerEmail, long followingUserId) {
+    public void follow(String followerEmail, long followingUserId) {
         User follower = userService.findUserByEmail(followerEmail);
         User following = userService.findUserByUserId(followingUserId);
         verifyFollowTarget(follower, following);
-        followCreateService.createFollow(follower, following);
+        followCreateService.create(follower, following);
         log.info("# followerUserId : {}, followingUserId : {} FollowService#createFollow 성공", follower.getUserId(), followingUserId);
     }
 
     @Transactional
-    public void removeFollow(String followerEmail, long followingUserId) {
+    public void unfollow(String followerEmail, long followingUserId) {
         User follower = userService.findUserByEmail(followerEmail);
         Follow follow = followReadService.findFollowByFollowerIdAndFollowingId(follower.getUserId(), followingUserId);
         User following = userService.findUserByUserId(followingUserId);
-        followDeleteService.cancelFollow(follower, follow, following);
+        followDeleteService.delete(follower, follow, following);
         log.info("# followerUserId : {}, followingUserId : {} FollowService#deleteFollow 성공", follower.getUserId(), followingUserId);
     }
 

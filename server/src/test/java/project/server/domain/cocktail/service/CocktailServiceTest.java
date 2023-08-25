@@ -23,17 +23,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CocktailServiceTest {
 
-    @Mock
-    private CocktailCreateService cocktailCreateService;
 
     @Mock
-    private CocktailReadService cocktailReadService;
+    private CocktailQueryService cocktailQueryService;
 
     @Mock
-    private CocktailUpdateService cocktailUpdateService;
-
-    @Mock
-    private CocktailDeleteService cocktailDeleteService;
+    private CocktailCommandService cocktailCommandService;
 
     @Mock
     private CocktailSerializer cocktailSerializer;
@@ -60,7 +55,7 @@ class CocktailServiceTest {
 
         when(userService.findUserByEmail(email)).thenReturn(user);
         when(cocktailDeserializer.postDtoToEntity(dto)).thenReturn(cocktail);
-        when(cocktailCreateService.create(user, cocktail)).thenReturn(savedCocktail);
+        when(cocktailCommandService.create(user, cocktail)).thenReturn(savedCocktail);
 //        when(savedCocktail.getTags()).thenReturn(tags);
         when(savedCocktail.getCocktailId()).thenReturn(1L);
         when(user.getRate(savedCocktail.getCocktailId())).thenReturn(0);
@@ -85,7 +80,7 @@ class CocktailServiceTest {
         assertThat(result.getRating()).isEqualTo(user.getRate(savedCocktail.getCocktailId()));
 
         verify(userService).findUserByEmail(email);
-        verify(cocktailCreateService).create(user, cocktail);
+        verify(cocktailCommandService).create(user, cocktail);
     }
 
     private CocktailDto.Post createPostDto() {

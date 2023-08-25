@@ -33,19 +33,15 @@ public class CocktailService {
     private static final boolean BOOKMARK_DEFAULT = false;
     private static final int UNSIGNED_USER_RATE = 0;
 
-    private final CocktailCreateService cocktailCreateService;
-    private final CocktailDeleteService cocktailDeleteService;
-    private final CocktailReadService cocktailReadService;
-    private final CocktailUpdateService cocktailUpdateService;
+    private final CocktailCommandService cocktailCommandService;
+    private final CocktailQueryService cocktailQueryService;
     private final CocktailSerializer cocktailSerializer;
     private final CocktailDeserializer cocktailDeserializer;
     private final UserService userService;
 
-    public CocktailService(CocktailCreateService cocktailCreateService, CocktailDeleteService cocktailDeleteService, CocktailReadService cocktailReadService, CocktailUpdateService cocktailUpdateService, CocktailSerializer cocktailSerializer, CocktailDeserializer cocktailDeserializer, UserService userService) {
-        this.cocktailCreateService = cocktailCreateService;
-        this.cocktailDeleteService = cocktailDeleteService;
-        this.cocktailReadService = cocktailReadService;
-        this.cocktailUpdateService = cocktailUpdateService;
+    public CocktailService(CocktailQueryService cocktailQueryService,CocktailCommandService cocktailCommandService, CocktailSerializer cocktailSerializer, CocktailDeserializer cocktailDeserializer, UserService userService) {
+        this.cocktailCommandService = cocktailCommandService;
+        this.cocktailQueryService = cocktailQueryService;
         this.cocktailSerializer = cocktailSerializer;
         this.cocktailDeserializer = cocktailDeserializer;
         this.userService = userService;
@@ -54,15 +50,15 @@ public class CocktailService {
     public CocktailDto.Response createCocktail(String email, CocktailDto.Post dto) {
         User user = userService.findUserByEmail(email);
         Cocktail cocktail = cocktailDeserializer.postDtoToEntity(dto);
-        Cocktail savedCocktail = cocktailCreateService.create(user, cocktail);
+        Cocktail savedCocktail = cocktailCommandService.create(user, cocktail);
         log.info("# userId : {}, cocktailId : {}, cocktailName : {} CocktailService#createCocktail 성공", user.getUserId(), savedCocktail.getCocktailId(), savedCocktail.getName());
-        savedCocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
+        savedCocktail.assignRecommends(cocktailQueryService.readDetailPageRecommendCocktails(savedCocktail.getTags(), savedCocktail.getCocktailId()));
         return cocktailSerializer.entityToSignedUserResponse(user, savedCocktail, BOOKMARK_DEFAULT, user.getRate(savedCocktail.getCocktailId()));
     }
 
     public CocktailDto.Response readCocktail(String email, long cocktailId) {
-        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
-        cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+        Cocktail cocktail = cocktailQueryService.readCocktail(cocktailId);
+        cocktail.assignRecommends(cocktailQueryService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         cocktail.incrementViewCount();
         if (unsigned(email)) {
             log.info("# cocktailId : {} CocktailService#readCocktail 성공", cocktailId);
@@ -76,7 +72,7 @@ public class CocktailService {
     public MultiResponseDto readFilteredCocktails(String email, String category, String tag, String sortValue) {
         Sort sort = setSort(sortValue);
         if (isNotSelectCategoryAndTag(category, tag)) {
-            List<Cocktail> cocktails = cocktailReadService.readAllCocktails(sort);
+            List<Cocktail> cocktails = cocktailQueryService.readAllCocktails(sort);
             log.info("# CocktailService#readFilterdCocktails 성공");
             return createCocktailsSimpleMultiResponseDtos(email, cocktails);
         }
@@ -91,26 +87,26 @@ public class CocktailService {
 
     public CocktailDto.Response updateCocktail(String email, long cocktailId, CocktailDto.Patch patch) {
         User user = userService.findUserByEmail(email);
-        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        Cocktail cocktail = cocktailQueryService.readCocktail(cocktailId);
         verifyUser(user, cocktail);
-        cocktailUpdateService.modify(cocktail, patch);
+        cocktailCommandService.modify(cocktail, patch);
         log.info("# cocktailId : {} CocktailService#updateCocktail 성공", cocktailId);
-        cocktail.assignRecommends(cocktailReadService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
+        cocktail.assignRecommends(cocktailQueryService.readDetailPageRecommendCocktails(cocktail.getTags(), cocktail.getCocktailId()));
         return cocktailSerializer.entityToSignedUserResponse(user, cocktail, user.isBookmarked(cocktailId), user.getRate(cocktailId));
     }
 
     public void deleteCocktail(String email, long cocktailId) {
         User user = userService.findUserByEmail(email);
-        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        Cocktail cocktail = cocktailQueryService.readCocktail(cocktailId);
         verifyUser(user, cocktail);
-        cocktailDeleteService.delete(cocktail);
+        cocktailCommandService.delete(cocktail);
         log.info("# cocktailId : {} CocktailService#deleteCocktail", cocktailId);
     }
 
     public RateDto.Response rateCocktail(String email, long cocktailId, int value) {
         verifyRateValue(value);
         User user = userService.findUserByEmail(email);
-        Cocktail cocktail = cocktailReadService.readCocktail(cocktailId);
+        Cocktail cocktail = cocktailQueryService.readCocktail(cocktailId);
         if (user.isAlreadyRated(cocktailId)) {
             return reCalculateCocktailsRate(cocktailId, value, user, cocktail);
         }
@@ -118,7 +114,7 @@ public class CocktailService {
     }
 
     public CocktailDto.Response readRandomCocktail(String email) {
-        Cocktail cocktail = cocktailReadService.readRandomCocktail();
+        Cocktail cocktail = cocktailQueryService.readRandomCocktail();
         if(unsigned(email)){
             log.info("# CocktailService#readRandomCocktail 성공");
             return cocktailSerializer.entityToUnsignedResponse(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
@@ -180,7 +176,7 @@ public class CocktailService {
 
     private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagCocktailsSimpleResponse(String email, String tag, Sort sort) {
         List<Tag> tags = createTagList(tag);
-        List<Cocktail> cocktails = cocktailReadService.readFilteredByTagsCocktails(tags,sort);
+        List<Cocktail> cocktails = cocktailQueryService.readFilteredByTagsCocktails(tags,sort);
         log.info("# tag : {} CocktailService#filterByTagCocktailsSimpleResponse 성공", tag);
         return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktails);
     }
@@ -194,7 +190,7 @@ public class CocktailService {
 
     private MultiResponseDto<CocktailDto.SimpleResponse> filterByCategoryCocktailsSimpleResponse(String email, String category, Sort sort) {
         Category selectedCategory = CategoryMapper.map(category);
-        List<Cocktail> cocktails = cocktailReadService.readFilteredByCategoryCocktails(selectedCategory, sort);
+        List<Cocktail> cocktails = cocktailQueryService.readFilteredByCategoryCocktails(selectedCategory, sort);
         log.info("# category : {} CocktailService#filterByCategoryCocktailsSimpleResponse 성공", category);
         return createCocktailsSimpleMultiResponseDtos(email, cocktails);
     }
@@ -202,7 +198,7 @@ public class CocktailService {
     private MultiResponseDto<CocktailDto.SimpleResponse> filterByTagsAndCategoryCocktails(String email, String category, String tag, Sort sort) {
         List<Tag> tags = createTagList(tag);
         Category selectedCategory = CategoryMapper.map(category);
-        List<Cocktail> cocktails = cocktailReadService.readFilterByCategoryAndTagsCocktails(selectedCategory, tags, sort);
+        List<Cocktail> cocktails = cocktailQueryService.readFilterByCategoryAndTagsCocktails(selectedCategory, tags, sort);
         log.info("# tag : {}, category : {} CocktailService#filterByTagsAndCategoryCocktails성공", tag, category);
         return createFilteredByTagCockatilsMultiResponseDto(email, tags, cocktails);
     }
