@@ -26,7 +26,7 @@ public class FollowController {
                                      @PathVariable("user-id") long userId){
         log.info("# FollowController#postFollow 실행");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
-        followService.createFollow(email, userId);
+        followService.follow(email, userId);
         log.info("# FollowController#postFollow 완료");
         return ResponseEntity.accepted().build();
     }
@@ -36,7 +36,7 @@ public class FollowController {
                                        @PathVariable("user-id") long userId){
         log.info("# FollowController#deleteFollow 실행");
         String email = authManager.getEmailFromAuthentication(authentication, UnsignedPermission.NOT_PERMIT.get());
-        followService.removeFollow(email, userId);
+        followService.unfollow(email, userId);
         log.info("# FollowController#deleteFollow 완료");
         return ResponseEntity.noContent().build();
     }
