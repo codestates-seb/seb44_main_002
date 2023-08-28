@@ -1,4 +1,4 @@
-package project.server.domain.cocktail.service;
+package project.server.domain.cocktail;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
@@ -11,6 +11,8 @@ import project.server.domain.cocktail.embed.tag.Tag;
 import project.server.domain.cocktail.embed.tag.TagMapper;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.entity.Cocktail;
+import project.server.domain.cocktail.service.CocktailCommandService;
+import project.server.domain.cocktail.service.CocktailQueryService;
 import project.server.domain.cocktail.utils.CocktailConverter;
 import project.server.domain.user.entity.User;
 import project.server.domain.user.service.UserService;
