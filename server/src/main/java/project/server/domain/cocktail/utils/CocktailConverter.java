@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 @Service
 public class CocktailConverter {
 
+    private static final boolean UNSIGNED_USER_BOOKMARK = false;
+    private static final int UNSIGNED_USER_RATE = 0;
+
     private final CommentSerializer commentSerializer;
 
     public CocktailConverter(CommentSerializer commentSerializer) {
@@ -39,14 +42,14 @@ public class CocktailConverter {
                 .build();
     }
 
-    public CocktailDto.Response convertEntityToUnsignedResponseDto(Cocktail cocktail, boolean unsignedUserBookmark, int unsignedUserRate) {
+    public CocktailDto.Response convertEntityToUnsignedResponseDto(Cocktail cocktail) {
         User author = cocktail.getUser();
-        return convertEntityToResponseDto(cocktail, unsignedUserBookmark, author)
+        return convertEntityToResponseDto(cocktail, UNSIGNED_USER_BOOKMARK, author)
                 .recommends(cocktail.getRecommends().stream()
                         .map(recommendedCocktail
-                                -> convertEntityToSimpleResponseDto(unsignedUserBookmark, recommendedCocktail))
+                                -> convertEntityToSimpleResponseDto(UNSIGNED_USER_BOOKMARK, recommendedCocktail))
                         .collect(Collectors.toList()))
-                .userRate(unsignedUserRate)
+                .userRate(UNSIGNED_USER_RATE)
                 .build();
     }
 

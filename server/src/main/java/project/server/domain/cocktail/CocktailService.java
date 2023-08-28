@@ -32,7 +32,6 @@ public class CocktailService {
     private static final int MAX_RATE_VALUE = 5;
     private static final int MIN_RATE_VALUE = 1;
     private static final boolean BOOKMARK_DEFAULT = false;
-    private static final int UNSIGNED_USER_RATE = 0;
 
     private final CocktailCommandService cocktailCommandService;
     private final CocktailQueryService cocktailQueryService;
@@ -61,7 +60,7 @@ public class CocktailService {
         cocktail.incrementViewCount();
         if (unsigned(email)) {
             log.info("# cocktailId : {} CocktailService#readCocktail 성공", cocktailId);
-            return cocktailConverter.convertEntityToUnsignedResponseDto(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
+            return cocktailConverter.convertEntityToUnsignedResponseDto(cocktail);
         }
         User user = userService.findUserByEmail(email);
         log.info("# userId : {}, cocktailId : {} CocktailService#readCocktail 성공", user.getUserId(), cocktailId);
@@ -116,7 +115,7 @@ public class CocktailService {
         Cocktail cocktail = cocktailQueryService.readRandomCocktail();
         if(unsigned(email)){
             log.info("# CocktailService#readRandomCocktail 성공");
-            return cocktailConverter.convertEntityToUnsignedResponseDto(cocktail, BOOKMARK_DEFAULT, UNSIGNED_USER_RATE);
+            return cocktailConverter.convertEntityToUnsignedResponseDto(cocktail);
         }
         User user = userService.findUserByEmail(email);
         log.info("# userId : {} CocktailService#readRandomCocktail 성공", user.getUserId());
