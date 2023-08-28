@@ -16,7 +16,7 @@ import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.rate.RateDto;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;
 import project.server.domain.cocktail.embed.tag.TagDto;
-import project.server.domain.cocktail.service.CocktailService;
+import project.server.domain.cocktail.CocktailService;
 import project.server.global.auth.service.AuthManager;
 import project.server.global.dto.MultiResponseDto;
 import project.server.global.utils.UnsignedPermission;

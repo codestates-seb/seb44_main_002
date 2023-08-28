@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import project.server.domain.cocktail.CocktailService;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.domain.cocktail.embed.ingredient.IngredientDto;
 import project.server.domain.cocktail.embed.recipe.RecipeDto;

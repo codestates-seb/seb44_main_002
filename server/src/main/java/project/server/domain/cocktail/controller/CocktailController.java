@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.server.domain.cocktail.embed.rate.RateDto;
-import project.server.domain.cocktail.service.CocktailService;
+import project.server.domain.cocktail.CocktailService;
 import project.server.domain.cocktail.dto.CocktailDto;
 import project.server.global.auth.service.AuthManager;
 import project.server.global.dto.MultiResponseDto;
