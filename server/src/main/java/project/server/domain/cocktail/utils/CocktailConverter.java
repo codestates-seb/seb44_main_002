@@ -42,7 +42,7 @@ public class CocktailConverter {
                 .build();
     }
 
-    public CocktailDto.Response convertEntityToUnsignedResponseDto(Cocktail cocktail) {
+    public CocktailDto.Response convertEntityToUnsignedUserResponseDto(Cocktail cocktail) {
         User author = cocktail.getUser();
         return convertEntityToResponseDto(cocktail, UNSIGNED_USER_BOOKMARK, author)
                 .recommends(cocktail.getRecommends().stream()
@@ -64,7 +64,7 @@ public class CocktailConverter {
                 .build();
     }
 
-    public CocktailDto.SimpleResponse bookmarkEntityToSimpleResponse(boolean isBookmarked, Bookmark bookmark) {
+    public CocktailDto.SimpleResponse bookmarkEntityToSimpleResponseDto(boolean isBookmarked, Bookmark bookmark) {
         return CocktailDto.SimpleResponse.builder()
                 .cocktailId(bookmark.getCocktailId())
                 .name(bookmark.getCocktailName())

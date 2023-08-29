@@ -60,7 +60,7 @@ public class CocktailService {
         cocktail.incrementViewCount();
         if (unsigned(email)) {
             log.info("# cocktailId : {} CocktailService#readCocktail 성공", cocktailId);
-            return cocktailConverter.convertEntityToUnsignedResponseDto(cocktail);
+            return cocktailConverter.convertEntityToUnsignedUserResponseDto(cocktail);
         }
         User user = userService.findUserByEmail(email);
         log.info("# userId : {}, cocktailId : {} CocktailService#readCocktail 성공", user.getUserId(), cocktailId);
@@ -115,7 +115,7 @@ public class CocktailService {
         Cocktail cocktail = cocktailQueryService.readRandomCocktail();
         if(unsigned(email)){
             log.info("# CocktailService#readRandomCocktail 성공");
-            return cocktailConverter.convertEntityToUnsignedResponseDto(cocktail);
+            return cocktailConverter.convertEntityToUnsignedUserResponseDto(cocktail);
         }
         User user = userService.findUserByEmail(email);
         log.info("# userId : {} CocktailService#readRandomCocktail 성공", user.getUserId());
